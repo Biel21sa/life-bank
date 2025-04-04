@@ -36,3 +36,5 @@ Caso queira contribuir com o projeto, sinta-se à vontade para abrir uma issue o
 
 ## 📩 Contato
 📧 gabriel21silvaalves@gmail.com
+📧 andreyeeddm@gmail.com
+📧 alencarr94@gmail.com
