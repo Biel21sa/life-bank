@@ -1,0 +1,6 @@
+Apontamentos: 
+-Requisitos não funcionais - Ok
+-Protótipos de telas -  OK
+Diagramas de Casos de Uso:  
+-Verificar os relacionamentos entre os casos de usos.
+-Nomenclatura do Diagrama está como Diagrama de Classes, alterar para Diagrama de Caso de Uso
