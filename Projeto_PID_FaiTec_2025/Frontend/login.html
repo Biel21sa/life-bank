@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="loginstylesheet.css">
+    <title>Log In</title>
+    <link rel="icon" type="image/x-icon" href="resources/favicon.ico">
+</head>
+<body>
+    <div class="left">
+        <article>
+            <h1>Lorem ipsum.</h1>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Exercitationem alias amet et blanditiis nisi, consequuntur unde nesciunt magni beatae dolorum facilis voluptate laboriosam, saepe aliquam? Iste quo dolores accusantium eveniet! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium, dicta vel. Facilis error consequatur omnis velit eius eum dicta quod accusamus natus magni! Quod, fuga saepe enim quo aspernatur consequuntur. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel iure deserunt perspiciatis labore quasi nostrum ut eaque ex ratione molestiae corrupti rem eos inventore, soluta temporibus magni quos doloribus saepe.</p>
+        </article>
+        <svg xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="10" cy="10" rx="8" ry="8" style="fill:white;"/>
+            <ellipse cx="48" cy="10" rx="8" ry="8" style="fill:rgba(255, 255, 255, 0.5);"/>
+            <ellipse cx="86" cy="10" rx="8" ry="8" style="fill:rgba(255, 255, 255, 0.5);"/> 
+        </svg>
+    </div>
+    <div class="right">
+        <main>
+            <h2>Login</h2>
+            <p>Acesse sua conta</p>
+            <form>
+                <input placeholder="Email" type="email" required> <br>
+                <input placeholder="Senha" type="password" required> <br>
+                <span class="credentialSpan">
+                    <input type="checkbox" id="rememberme">
+                    <label for="rememeberme">Lembrar usuário</label>
+                    <a href="#">Esqueceu a senha?</a>
+                </span>
+                <input value="Login" type="submit" class="Login" formnovalidate> <!--remover formnovalidate depois-->
+                <p>Sem conta? <a href="signup.html">Cadastrar</a></p>
+            </form>
+            <p class="linebreak">Ou acesse com</p>
+            <hr>
+            <span class="loginAlts">
+                <button id="twitter"></button>
+                <button id="linkedin"></button>
+                <button id="google"></button>
+                <button id="apple"></button>
+            </span>
+        </main>
+        <a href="index.html">← Retornar</a>
+    </div>
+</body>
+</html>
