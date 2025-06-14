@@ -1,0 +1,139 @@
+body{
+	background-color: var(--secondary);
+	display: flex;
+	height: 100vh;
+}
+
+main{
+	margin: 25px;
+	width: 100%;
+}
+.welcome{
+	display: flex;
+	align-items: flex-end;
+	margin-bottom: 2%;
+}
+.welcome > img{
+	width: 80px;
+	height: 80px;
+	padding-right: 1%;
+}
+.welcome > h1{
+	font-weight: 400;
+}
+
+.warning {
+	background-image: linear-gradient(to right, rgb(255,110,85), rgb(236,76,49));
+	
+}
+.alert{
+	background-image: linear-gradient(to right, rgb(255,158,61), rgb(255,128,16));
+}
+.warning, .alert, .header{
+	box-shadow: 0px 3px 4px var(--shadow_blue);
+	border-radius: 8px;
+	color: white;
+	padding: 0.5% 1%;
+	margin-bottom: 1%;
+}
+.warning > h1, .alert> h1{
+	font-weight: 500;
+}
+.header{
+	background-image: linear-gradient(to right, rgb(12,104,239), rgb(14,85,238));
+}
+.header > h1{
+	font-weight: 350;
+}
+.header > h2{
+	font-weight: 550;
+	font-size: 1.5ch;
+}
+.header > h3{
+	font-weight: 250;
+	font-size: 1.2ch;
+	margin-bottom: 3%;
+}
+.header > div{
+	display: flex;
+}
+.header > div > section{
+	background-color: #4EAAFF;
+	border-radius: 15px;
+	display: flex;
+	align-items: center;
+	width: 12%;
+	padding: 1.5%;
+	margin: 1% .5%;
+}
+.header > div > section > fa-icon{
+	padding: 5%;
+}
+.header > div > section > div > h1{
+	font-weight: 600;
+	font-size: 1.3ch;
+}
+.header > div > section > div > h2{
+	font-weight: 200;
+	font-size: 1.3ch;
+}
+
+.infosider{
+	display: flex;
+}
+.infosider > div{
+	width: 70dvh;
+}
+.infosider > div > h1{
+	font-weight: 300;
+}
+.entries{
+	display: flex;
+	flex-wrap: wrap;
+}
+.entries  > section{
+	background-color: white;
+	height: 100px;
+	width: 30dvh;
+	border-radius: 8px;
+	box-shadow: 0px 3px 4px var(--shadow_blue);
+	padding: 2%;
+	margin: 1%;
+}
+.entries > section > hr{
+	border-top: solid 5px #D7D7D7;
+	border-radius: 100px;
+	width: 80%;
+	margin: 5%;
+}
+#minor{
+	width: 50%;
+}
+
+.generaldata{
+	display: flex;
+	flex-wrap: wrap;
+}
+.generaldata > section{
+	background-color: white;
+	box-shadow: 0px 3px 4px var(--shadow_blue);
+	color: var(--primary-gray);
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	width: 200px;
+	height: 75px;
+	padding: 3%;
+	margin: 1% 1%;
+}
+.generaldata > section > fa-icon{
+	padding: 5%;
+}
+.generaldata > section > div > h1{
+	font-weight: 200;
+	font-size: 1.3ch;
+}
+.generaldata > section > div > h2{
+	font-weight: 600;
+	font-size: 1.3ch;
+}
