@@ -1,6 +1,8 @@
 package br.fai.lds.lifebank.configuration;
 
+import br.fai.lds.lifebank.implementation.dao.fake.BloodFakeDaoImpl;
 import br.fai.lds.lifebank.implementation.dao.fake.UserFakeDaoImpl;
+import br.fai.lds.lifebank.port.dao.blood.BloodDao;
 import br.fai.lds.lifebank.port.dao.user.UserDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,5 +26,10 @@ public class AppConfiguration {
     @Bean
     public UserDao getUserFakeDao() {
         return new UserFakeDaoImpl();
+    }
+
+    @Bean
+    public BloodDao getBloodFakeDao() {
+        return new BloodFakeDaoImpl();
     }
 }
