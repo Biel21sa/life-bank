@@ -4,9 +4,11 @@ import br.fai.lds.lifebank.domain.BloodModel;
 import br.fai.lds.lifebank.domain.enuns.BloodType;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
 import br.fai.lds.lifebank.port.service.blood.BloodService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class BloodServiceImpl implements BloodService {
 
     private final BloodDao bloodDao;

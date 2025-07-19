@@ -5,17 +5,21 @@ import br.fai.lds.lifebank.domain.enuns.BloodType;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Repository
 public class BloodFakeDaoImpl implements BloodDao {
 
     private final List<BloodModel> entities = new ArrayList<>();
     private static int ID = 0;
 
-    public BloodFakeDaoImpl() {    }
+    public BloodFakeDaoImpl() {
+        BloodModel entity1 = new BloodModel(getNextId(), BloodType.A_NEGATIVE, 200, LocalDate.of(2025, 7, 15), LocalDate.of(2025, 8, 29), 100, 500);
+
+        entities.add(entity1);
+    }
 
     private int getNextId() {
         ID += 1;

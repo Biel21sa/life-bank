@@ -30,12 +30,6 @@ public class BloodRestController {
     @GetMapping("/{id}")
     public ResponseEntity<BloodModel> getEntityById(@PathVariable final int id) {
         BloodModel entity = bloodService.findByid(id);
-//
-//        if (entity == null){
-//            return ResponseEntity.notFound().build();
-//        }
-//
-//        return ResponseEntity.ok(entity);
 
         return entity == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(entity);
     }
