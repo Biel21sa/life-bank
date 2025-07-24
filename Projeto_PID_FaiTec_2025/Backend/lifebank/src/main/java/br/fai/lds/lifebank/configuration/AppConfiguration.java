@@ -2,9 +2,11 @@ package br.fai.lds.lifebank.configuration;
 
 import br.fai.lds.lifebank.implementation.dao.fake.BloodFakeDaoImpl;
 import br.fai.lds.lifebank.implementation.dao.fake.DonationFakeDaoImpl;
+import br.fai.lds.lifebank.implementation.dao.fake.DonorFakeDaoImpl;
 import br.fai.lds.lifebank.implementation.dao.fake.UserFakeDaoImpl;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
 import br.fai.lds.lifebank.port.dao.donation.DonationDao;
+import br.fai.lds.lifebank.port.dao.donor.DonorDao;
 import br.fai.lds.lifebank.port.dao.user.UserDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,5 +40,10 @@ public class AppConfiguration {
     @Bean
     public DonationDao getDonationFakeDao() {
         return new DonationFakeDaoImpl();
+    }
+
+    @Bean
+    public DonorDao getDonorFakeDao() {
+        return new DonorFakeDaoImpl();
     }
 }

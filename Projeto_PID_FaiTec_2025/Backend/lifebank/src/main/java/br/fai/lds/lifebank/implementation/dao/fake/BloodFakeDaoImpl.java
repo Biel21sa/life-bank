@@ -87,7 +87,6 @@ public class BloodFakeDaoImpl implements BloodDao {
         }
         BloodModel removeEntity = entities.remove(itemIndex);
         System.out.println("A entidade: " + removeEntity.getBloodType() + " foi removida com sucesso");
-
     }
 }
 
