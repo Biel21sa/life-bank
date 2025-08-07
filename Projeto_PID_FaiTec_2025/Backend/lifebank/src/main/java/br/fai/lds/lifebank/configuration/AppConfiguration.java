@@ -1,9 +1,7 @@
 package br.fai.lds.lifebank.configuration;
 
-import br.fai.lds.lifebank.implementation.dao.fake.BloodFakeDaoImpl;
-import br.fai.lds.lifebank.implementation.dao.fake.DonationFakeDaoImpl;
-import br.fai.lds.lifebank.implementation.dao.fake.DonorFakeDaoImpl;
-import br.fai.lds.lifebank.implementation.dao.fake.UserFakeDaoImpl;
+import br.fai.lds.lifebank.implementation.dao.fake.*;
+import br.fai.lds.lifebank.port.dao.benefit.BenefitDao;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
 import br.fai.lds.lifebank.port.dao.donation.DonationDao;
 import br.fai.lds.lifebank.port.dao.donor.DonorDao;
@@ -45,5 +43,10 @@ public class AppConfiguration {
     @Bean
     public DonorDao getDonorFakeDao() {
         return new DonorFakeDaoImpl();
+    }
+
+    @Bean
+    public BenefitDao getBenefitDao() {
+        return new BenefitFakeDaoImpl();
     }
 }
