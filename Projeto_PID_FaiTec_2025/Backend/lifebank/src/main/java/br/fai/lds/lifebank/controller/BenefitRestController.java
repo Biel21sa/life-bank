@@ -1,8 +1,6 @@
 package br.fai.lds.lifebank.controller;
 
 import br.fai.lds.lifebank.domain.BenefitModel;
-import br.fai.lds.lifebank.domain.BloodModel;
-import br.fai.lds.lifebank.domain.DonationModel;
 import br.fai.lds.lifebank.port.service.benefit.BenefitService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

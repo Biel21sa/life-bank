@@ -1,6 +1,7 @@
 package br.fai.lds.lifebank.implementation.service.benefit;
 
 import br.fai.lds.lifebank.domain.BenefitModel;
+import br.fai.lds.lifebank.port.dao.benefit.BenefitDao;
 import br.fai.lds.lifebank.port.service.benefit.BenefitService;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,10 @@ import java.util.List;
 @Service
 public class BenefitServiceImpl implements BenefitService {
 
-    private final BenefitService benefitService;
+    private final BenefitDao benefitDao;
 
-    public BenefitServiceImpl(BenefitService benefitService) {
-        this.benefitService = benefitService;
+    public BenefitServiceImpl(BenefitDao benefitDao) {
+        this.benefitDao = benefitDao;
     }
 
     @Override
@@ -22,7 +23,7 @@ public class BenefitServiceImpl implements BenefitService {
             return new ArrayList<>();
         }
 
-        List<BenefitModel> benefits = benefitService.findByClinicId(clinicId);
+        List<BenefitModel> benefits = benefitDao.findByClinicId(clinicId);
 
         return benefits;
     }
@@ -41,7 +42,7 @@ public class BenefitServiceImpl implements BenefitService {
             return invalidResponse;
         }
 
-        final int id = benefitService.create(entity);
+        final int id = benefitDao.create(entity);
         return id;
     }
 
@@ -51,7 +52,7 @@ public class BenefitServiceImpl implements BenefitService {
             return;
         }
 
-        benefitService.delete(id);
+        benefitDao.delete(id);
     }
 
     @Override
@@ -60,13 +61,13 @@ public class BenefitServiceImpl implements BenefitService {
             return null;
         }
 
-        BenefitModel entity = benefitService.findByid(id);
+        BenefitModel entity = benefitDao.findByid(id);
         return entity;
     }
 
     @Override
     public List<BenefitModel> findAll() {
-        final List<BenefitModel> entities = benefitService.findAll();
+        final List<BenefitModel> entities = benefitDao.findAll();
         return entities;
     }
 
@@ -81,6 +82,6 @@ public class BenefitServiceImpl implements BenefitService {
             return;
         }
 
-        benefitService.update(id, entity);
+        benefitDao.update(id, entity);
     }
 }
