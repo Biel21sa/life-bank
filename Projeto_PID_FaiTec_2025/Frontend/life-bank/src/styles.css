@@ -6,8 +6,8 @@
 	--tertiary: #E9F2FF;
     --primary-gray: #8B8B8B;
     --secondary-gray: #626264;
-	--shadow_blue: rgba(40,90,185,0.2);
-    --shadow_gray: rgba(105,105,105,0.2);
+	--shadow_blue: rgba(40,90,185,0.3);
+    --shadow_gray: rgba(105,105,105,0.4);
 }
 
 * {
