@@ -5,6 +5,7 @@ import br.fai.lds.lifebank.port.dao.benefit.BenefitDao;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
 import br.fai.lds.lifebank.port.dao.clinic.ClinicDao;
 import br.fai.lds.lifebank.port.dao.donation.DonationDao;
+import br.fai.lds.lifebank.port.dao.donationlocation.DonationLocationDao;
 import br.fai.lds.lifebank.port.dao.donor.DonorDao;
 import br.fai.lds.lifebank.port.dao.user.UserDao;
 import org.springframework.context.annotation.Bean;
@@ -54,5 +55,10 @@ public class AppConfiguration {
     @Bean
     public ClinicDao getClinicDao() {
         return new ClinicFakeDaoImpl();
+    }
+
+    @Bean
+    public DonationLocationDao getDonationLocationDao() {
+        return new DonationLocationFakeDaoImpl();
     }
 }
