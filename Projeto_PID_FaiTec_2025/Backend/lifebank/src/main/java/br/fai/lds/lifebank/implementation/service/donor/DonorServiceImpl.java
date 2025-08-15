@@ -1,8 +1,6 @@
 package br.fai.lds.lifebank.implementation.service.donor;
 
-import br.fai.lds.lifebank.domain.BloodModel;
 import br.fai.lds.lifebank.domain.DonorModel;
-import br.fai.lds.lifebank.domain.UserModel;
 import br.fai.lds.lifebank.port.dao.donor.DonorDao;
 import br.fai.lds.lifebank.port.service.donor.DonorService;
 import org.springframework.stereotype.Service;

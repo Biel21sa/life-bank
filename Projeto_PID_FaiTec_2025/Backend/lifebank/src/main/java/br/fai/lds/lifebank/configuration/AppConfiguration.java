@@ -3,6 +3,7 @@ package br.fai.lds.lifebank.configuration;
 import br.fai.lds.lifebank.implementation.dao.fake.*;
 import br.fai.lds.lifebank.port.dao.benefit.BenefitDao;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
+import br.fai.lds.lifebank.port.dao.clinic.ClinicDao;
 import br.fai.lds.lifebank.port.dao.donation.DonationDao;
 import br.fai.lds.lifebank.port.dao.donor.DonorDao;
 import br.fai.lds.lifebank.port.dao.user.UserDao;
@@ -48,5 +49,10 @@ public class AppConfiguration {
     @Bean
     public BenefitDao getBenefitDao() {
         return new BenefitFakeDaoImpl();
+    }
+
+    @Bean
+    public ClinicDao getClinicDao() {
+        return new ClinicFakeDaoImpl();
     }
 }

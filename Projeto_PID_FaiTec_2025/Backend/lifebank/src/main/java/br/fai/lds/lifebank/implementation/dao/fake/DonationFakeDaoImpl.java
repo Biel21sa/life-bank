@@ -25,7 +25,6 @@ public class DonationFakeDaoImpl implements DonationDao {
         return ID;
     }
 
-
     @Override
     public int create(DonationModel entity) {
         final int id = getNextId();
