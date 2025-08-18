@@ -1,42 +1,32 @@
 <body>
 
-    <mat-sidenav-container>
-        <mat-sidenav opened mode="side" [style.width]="sidenavWidth" class="sidebar">
-            <div id="profileborder" (click)="activate('profile')">
-                <button id="profile">icon</button>
-                <div>
-                    <h1>John Doe</h1>
-                    <h2>Administrador</h2>
-                </div>
-            </div>   
-            <mat-nav-list (click)="collapse()">
-                <span mat-list-item ><fa-icon [icon]="FontAwesome.faHouse" size="2x"></fa-icon></span>
-                <p matListItemTitle>Menu</p>
-            </mat-nav-list>
-            <mat-nav-list (click)="activate('chart')">
-                <span mat-list-item ><fa-icon [icon]="FontAwesome.faChartSimple" size="2x"></fa-icon></span>
-                <p matListItemTitle>Gráficos</p>
-            </mat-nav-list>
-            <mat-nav-list (click)="activate('database')">
-                <span mat-list-item ><fa-icon [icon]="FontAwesome.faDatabase" size="2x"></fa-icon></span>
-                <p matListItemTitle>Banco de Dados</p>
-            </mat-nav-list>
-        </mat-sidenav>
-        <mat-sidenav-content [style.margin-left]="sidenavWidth">
-            <router-outlet></router-outlet>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
-
-    <!--
-    <div class="sidebar">
-        <div id="profileborder">
-            <button id="profile"><fa-icon [icon]="FontAwesome.faUser" size="2x"></fa-icon></button>
+    <div class="sidebar" (mouseenter)="isCollapsed.set(false)" (mouseleave)="isCollapsed.set(true)" [ngStyle]="{'width': isCollapsed() ? '50px' : '200px'}">
+        <div id="profileborder" (click)="activate('profile')">
+            <button id="profile">icon</button>
+            <div [ngStyle]="{'visibility': isCollapsed() ? 'hidden' : 'visible'}">
+                <h1>John Doe</h1>
+                <h2>Administrador</h2>
+            </div>
         </div>   
-        <button id="home" (click)="activate('home')"><fa-icon [icon]="FontAwesome.faHouse" size="2x"></fa-icon></button>
-        <button id="chart" (click)="activate('chart')"><fa-icon [icon]="FontAwesome.faChartSimple" size="2x"></fa-icon></button>
-        <button id="database" (click)="activate('database')"><fa-icon [icon]="FontAwesome.faDatabase" size="2x"></fa-icon></button>
+        @for (item of navItems; track $index) {
+            <button id = "navbarButton" (click)="activate(item.name)"
+                                                    [ngStyle]="{'background-color': item.isActive ? 'white' : 'Inherited',
+                                                    'color': item.isActive ? 'var(--primary)' : 'Inherited',
+                                                    'box-shadow': item.isActive ? '0px 3px 4px var(--shadow_blue)' : 'Inherited',
+                                                    'justify-content': isCollapsed() ? 'center' : 'flex-start'}">
+
+                <span [ngStyle]="{'padding-right': isCollapsed() ? '0%' : '10%'}"><fa-icon [icon]="item.icon" size="2x"></fa-icon></span>
+                @if (!isCollapsed()) {
+                    <p>{{item.name}}</p>
+                }
+              
+            </button>
+        }
+       
     </div>
-    -->
+
     
-    <!--<button><ng-icon name="phosphorHouseSimpleBold" size="32"></ng-icon></button>-->
+    <!--<button><ng-icon name="phosphorHouseSimpleBold" size="32"></ng-icon></button>    -->
+    <router-outlet></router-outlet>
+
 </body>

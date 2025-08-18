@@ -15,6 +15,7 @@ import * as fontawesome from '@fortawesome/free-solid-svg-icons';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 
 import { phosphorHouseSimpleBold } from '@ng-icons/phosphor-icons/bold'
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-main',
@@ -33,6 +34,7 @@ import { phosphorHouseSimpleBold } from '@ng-icons/phosphor-icons/bold'
     RouterModule,
     NgIcon,
     MatListModule,
+    CommonModule
   ],
   providers: [
     provideIcons({phosphorHouseSimpleBold})
@@ -42,19 +44,32 @@ import { phosphorHouseSimpleBold } from '@ng-icons/phosphor-icons/bold'
 })
 
 export class Main {
-  FontAwesome = fontawesome
+  readonly FontAwesome = fontawesome
+
+  navItems = [
+    {
+      name: "Menu",
+      icon: fontawesome.faHouse,
+      route: "/main",
+      isActive: true
+    },
+    {
+      name: "Gráficos",
+      icon: fontawesome.faChartSimple,
+      route: "/charts",
+      isActive: false
+    },
+    {
+      name: "Banco de Dados",
+      icon: fontawesome.faDatabase,
+      route: "/database",
+      isActive: false
+    },
+  ]
+
+  isCollapsed = signal(true);
 
   activate(button: string){
     console.log(button + " activated.");
-  }
-
-
-  sidenavWidth = '250px'
-  collapse(){
-    if (this.sidenavWidth == '250px'){
-      this.sidenavWidth = '70px'
-    }else{
-      this.sidenavWidth = '250px'
-    }
   }
 }
