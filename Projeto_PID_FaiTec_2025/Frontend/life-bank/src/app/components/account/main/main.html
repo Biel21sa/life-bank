@@ -1,18 +1,21 @@
 <body>
 
     <div class="sidebar" (mouseenter)="isCollapsed.set(false)" (mouseleave)="isCollapsed.set(true)" [ngStyle]="{'width': isCollapsed() ? '50px' : '200px'}">
-        <div id="profileborder" (click)="activate('profile')">
+        <div id="profileborder" (click)="activate('profile')" [ngStyle]="{'padding-right': isCollapsed() ? '5px' : '10%', 'padding-left': isCollapsed() ? '5px' : '5%'}" >
             <button id="profile">icon</button>
-            <div [ngStyle]="{'visibility': isCollapsed() ? 'hidden' : 'visible'}">
-                <h1>John Doe</h1>
-                <h2>Administrador</h2>
-            </div>
+            <span>
+                @if (!isCollapsed()) {
+                    <h1>John Doe</h1>
+                    <h2>Administrador</h2>
+                }
+            </span>
         </div>   
         @for (item of navItems; track $index) {
-            <button id = "navbarButton" (click)="activate(item.name)"
-                                                    [ngStyle]="{'background-color': item.isActive ? 'white' : 'Inherited',
-                                                    'color': item.isActive ? 'var(--primary)' : 'Inherited',
-                                                    'box-shadow': item.isActive ? '0px 3px 4px var(--shadow_blue)' : 'Inherited',
+            <button routerLink= {{item.route}} id = "navbarButton" (click)="activate(item.name)"
+                                                    [ngStyle]="{'background-color': item.isActive() ? 'white' : 'transparent',
+                                                    'width': isCollapsed() ? '50px' : '200px',
+                                                    'color': item.isActive() ? 'var(--primary)' : 'white',
+                                                    'box-shadow': item.isActive() ? '0px 3px 4px var(--shadow_blue)' : null,
                                                     'justify-content': isCollapsed() ? 'center' : 'flex-start'}">
 
                 <span [ngStyle]="{'padding-right': isCollapsed() ? '0%' : '10%'}"><fa-icon [icon]="item.icon" size="2x"></fa-icon></span>

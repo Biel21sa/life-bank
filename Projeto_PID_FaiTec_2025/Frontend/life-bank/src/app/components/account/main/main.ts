@@ -51,25 +51,31 @@ export class Main {
       name: "Menu",
       icon: fontawesome.faHouse,
       route: "/main",
-      isActive: true
+      isActive: signal(true)
     },
     {
       name: "Gráficos",
       icon: fontawesome.faChartSimple,
-      route: "/charts",
-      isActive: false
+      route: "charts",
+      isActive: signal(false)
     },
     {
       name: "Banco de Dados",
       icon: fontawesome.faDatabase,
-      route: "/database",
-      isActive: false
+      route: "database",
+      isActive: signal(false)
     },
   ]
 
   isCollapsed = signal(true);
 
-  activate(button: string){
-    console.log(button + " activated.");
+  activate(selected:string){
+    for (let button of this.navItems){
+      if (button.name == selected){
+        button.isActive.set(true)
+        continue
+      }
+      button.isActive.set(false)
+    }
   }
 }
