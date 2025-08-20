@@ -18,7 +18,7 @@ import { phosphorHouseSimpleBold } from '@ng-icons/phosphor-icons/bold'
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-main',
+  selector: 'app-home',
   imports: [
     RouterOutlet,
     MatToolbarModule,
@@ -39,18 +39,18 @@ import { CommonModule } from '@angular/common';
   providers: [
     provideIcons({phosphorHouseSimpleBold})
   ],
-  templateUrl: './main.html',
-  styleUrl: './main.css'
+  templateUrl: './home.html',
+  styleUrl: './home.css'
 })
 
-export class Main {
+export class Home {
   readonly FontAwesome = fontawesome
 
   navItems = [
     {
       name: "Menu",
       icon: fontawesome.faHouse,
-      route: "/main",
+      route: "/home",
       isActive: signal(true)
     },
     {

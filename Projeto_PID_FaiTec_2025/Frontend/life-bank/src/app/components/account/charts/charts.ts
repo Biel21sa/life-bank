@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { Home } from "../home/home";
 
 @Component({
   selector: 'app-charts',
-  imports: [],
+  imports: [Home],
   templateUrl: './charts.html',
   styleUrl: './charts.css'
 })
