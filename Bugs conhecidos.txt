@@ -1,3 +1,4 @@
 FRONTEND
 -Reiniciar a página reinicia a seleção dos botões do sidenav para o menu.
 -A borda do botão de perfil não segue o sidenav corretamente.
+- Botões da página inicial/index possuem um espaço por conta dos ícones.
