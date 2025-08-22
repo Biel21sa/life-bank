@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -9,6 +9,12 @@ import { RouterModule } from '@angular/router';
   templateUrl: './signup.html',
   styleUrl: './signup.css'
 })
+
+
 export class Signup {
+
+  signupStage = signal("type")
+
+  
 
 }
