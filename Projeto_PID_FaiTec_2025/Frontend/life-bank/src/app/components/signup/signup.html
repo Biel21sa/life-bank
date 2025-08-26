@@ -17,19 +17,19 @@
                 <p>Cadastrar conta</p>
                 <form onsubmit="return false">
                     <div id="typeCheckmark">
-                        <div class="checkmark_unchecked">
+                        <div  [ngClass]="accountType == 'doador' ? 'checkmark_checked' : 'checkmark_unchecked'" (click)="updateAccountType('doador')">
                            <span></span>
                         </div>
-                        <span>
+                        <span (click)="updateAccountType('doador')">
                             <h2>Doador</h2>
                             <p>Quero doar e receber benefícios</p>
                         </span>
                     </div>
-                    <div id="typeCheckmark">
-                        <div class="checkmark_checked">
+                    <div id="typeCheckmark" (click)="updateAccountType('clinica')">
+                        <div [ngClass]="accountType == 'clinica' ? 'checkmark_checked' : 'checkmark_unchecked'" (click)="updateAccountType('clinica')">
                             <span></span>
                         </div>
-                        <span>
+                        <span (click)="updateAccountType('clinica')">
                             <h2>Clínica</h2>
                             <p>Quero trazer benefícios a doadores regulares</p>
                         </span>

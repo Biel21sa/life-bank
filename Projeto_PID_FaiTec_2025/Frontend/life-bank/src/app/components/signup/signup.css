@@ -166,6 +166,6 @@ form > p > a{
         max-width: var(--radius);
         max-height: var(--radius);
         background-color: var(--primary);
-        transform: translate(0.6px, -.3px);
+        transform: translate(2%, -2%);
     }
 }

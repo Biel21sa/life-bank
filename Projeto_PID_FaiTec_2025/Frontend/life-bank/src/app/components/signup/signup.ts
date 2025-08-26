@@ -1,10 +1,12 @@
+import { NgClass } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   imports: [
-    RouterModule
+    RouterModule,
+    NgClass
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css'
@@ -13,8 +15,12 @@ import { RouterModule } from '@angular/router';
 
 export class Signup {
 
-  signupStage = signal("type")
+  signupStage = signal("type");
+  accountType = "doador";
 
+  updateAccountType(type:string){
+    this.accountType = type;
+  }
   
 
 }
