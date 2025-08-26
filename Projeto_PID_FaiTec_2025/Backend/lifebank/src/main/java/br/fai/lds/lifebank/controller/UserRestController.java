@@ -1,6 +1,7 @@
 package br.fai.lds.lifebank.controller;
 
 import br.fai.lds.lifebank.domain.UserModel;
+import br.fai.lds.lifebank.domain.dto.UpdatePasswordDto;
 import br.fai.lds.lifebank.domain.dto.UpdateUserDto;
 import br.fai.lds.lifebank.port.service.user.UserService;
 import org.springframework.http.ResponseEntity;
@@ -66,8 +67,27 @@ public class UserRestController {
         userService.update(id, entity);
 
         return ResponseEntity.noContent().build();
+    }
 
+    @PutMapping("/update-password")
+    public ResponseEntity<Void> updatePassword(@RequestBody final UpdatePasswordDto data) {
 
+        final boolean response = userService.updatePassword(
+                data.getId(),
+                data.getOldPassword(),
+                data.getNewPassword());
+
+        return response ? ResponseEntity.ok().build()
+                : ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UserModel> getEntityByEmail(@PathVariable final String email) {
+        final UserModel entity = userService.findByEmail(email);
+        if(entity == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(entity);
     }
 
 }
