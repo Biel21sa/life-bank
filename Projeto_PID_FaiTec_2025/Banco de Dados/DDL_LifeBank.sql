@@ -1,102 +1,108 @@
- 
- BEGIN;
+BEGIN;
 
-    CREATE TABLE municipio (
-        id SERIAL PRIMARY KEY,
-        nome VARCHAR(100) NOT NULL,
-        uf CHAR(2) NOT NULL,
-        UNIQUE(nome, uf)
-    );
+CREATE TYPE user_role AS ENUM ('ADMINISTRATOR', 'DONOR', 'CLINIC');
 
-    CREATE TABLE usuario (
-        id SERIAL PRIMARY KEY,
-        nome VARCHAR(100) NOT NULL,
-        cpf VARCHAR(14) NOT NULL UNIQUE,
-        tipo VARCHAR(50) NOT NULL,
-        email VARCHAR(100) NOT NULL UNIQUE,
-        telefone VARCHAR(20) NOT NULL,
-        senha VARCHAR(100) NOT NULL,
-        logradouro VARCHAR(100) NOT NULL,
-        numero VARCHAR(10) NOT NULL,
-        bairro VARCHAR(100) NOT NULL,
-        cep VARCHAR(10) NOT NULL,
-        municipio_id INTEGER NOT NULL REFERENCES municipio(id)
-    );
+CREATE TABLE municipality (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    state CHAR(2) NOT NULL,
+    UNIQUE(name, state)
+);
 
-    CREATE TABLE doador (
-        id SERIAL PRIMARY KEY,
-        tipo_sanguineo VARCHAR(3) NOT NULL CHECK (
-        tipo_sanguineo IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')
-        ),
-        apto BOOLEAN NOT NULL DEFAULT TRUE,
-        usuario_id INTEGER NOT NULL REFERENCES usuario(id),
-        UNIQUE(usuario_id)
-    );
+CREATE TABLE user_model (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    role user_role NOT NULL, 
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    phone VARCHAR(20) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    street VARCHAR(100) NOT NULL,
+    number VARCHAR(10) NOT NULL,
+    neighborhood VARCHAR(100) NOT NULL,
+    postal_code VARCHAR(10) NOT NULL,
+    municipality_id INTEGER NOT NULL REFERENCES municipality(id)
+);
 
-    CREATE TABLE clinica (
-        id SERIAL PRIMARY KEY,
-        nome VARCHAR(100) NOT NULL,
-        cnpj CHAR(14) NOT NULL UNIQUE,
-        logradouro VARCHAR(100) NOT NULL,
-        numero VARCHAR(10) NOT NULL,
-        bairro VARCHAR(100) NOT NULL,
-        cep VARCHAR(10) NOT NULL,
-        municipio_id INTEGER NOT NULL REFERENCES municipio(id)
-    );
+CREATE TABLE donor (
+    id SERIAL PRIMARY KEY,
+    blood_type VARCHAR(3) NOT NULL CHECK (
+        blood_type IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')
+    ),
+    eligible BOOLEAN NOT NULL DEFAULT TRUE,
+    user_id INTEGER NOT NULL REFERENCES "user"(id),
+    UNIQUE(user_id)
+);
 
-    CREATE TABLE funcionario (
-        id SERIAL PRIMARY KEY,
-        usuario_id INTEGER NOT NULL REFERENCES usuario(id),
-        clinica_id INTEGER NOT NULL REFERENCES clinica(id),
-        UNIQUE(usuario_id)
-    );
+CREATE TABLE clinic (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    cnpj CHAR(14) NOT NULL UNIQUE,
+    street VARCHAR(100) NOT NULL,
+    number VARCHAR(10) NOT NULL,
+    neighborhood VARCHAR(100) NOT NULL,
+    postal_code VARCHAR(10) NOT NULL,
+    municipality_id INTEGER NOT NULL REFERENCES municipality(id)
+);
 
-    CREATE TABLE sangue (
-        id SERIAL PRIMARY KEY,
-        tipo VARCHAR(3) UNIQUE NOT NULL CHECK (
-        tipo IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')
-        ),
-        estoque DECIMAL(10,2) NOT NULL,
-        nivel_minimo DECIMAL(10,2) NOT NULL,
-        nivel_maximo DECIMAL(10,2) NOT NULL
-    );
+CREATE TABLE blood (
+    id SERIAL PRIMARY KEY,
+    blood_type VARCHAR(3) UNIQUE NOT NULL CHECK (
+        blood_type IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')
+    ),
+    quantity DECIMAL(10,2) NOT NULL,
+    expiration_date DATE NOT NULL
+);
 
-    CREATE TABLE local_doacao (
-        id SERIAL PRIMARY KEY,
-        nome VARCHAR(100) NOT NULL UNIQUE,
-        logradouro VARCHAR(100) NOT NULL,
-        numero VARCHAR(10) NOT NULL,
-        bairro VARCHAR(100) NOT NULL,
-        cep VARCHAR(10) NOT NULL,
-        municipio_id INTEGER NOT NULL REFERENCES municipio(id)
-    );
+CREATE TABLE donation_location (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    street VARCHAR(100) NOT NULL,
+    number VARCHAR(10) NOT NULL,
+    neighborhood VARCHAR(100) NOT NULL,
+    postal_code VARCHAR(10) NOT NULL,
+    municipality_id INTEGER NOT NULL REFERENCES municipality(id)
+);
 
-    CREATE TABLE doacao (
-        id SERIAL PRIMARY KEY,
-        quantidade DECIMAL(10,2) NOT NULL,
-        data_coleta DATE NOT NULL DEFAULT NOW(),
-        data_validade DATE NOT NULL,
-        doador_id INTEGER NOT NULL REFERENCES doador(id),
-        local_doacao_id INTEGER NOT NULL REFERENCES local_doacao(id),
-        sangue_id INTEGER NOT NULL REFERENCES sangue(id),
-        UNIQUE(doador_id, data_coleta)
-    );
+CREATE TABLE blood_stock (
+    id SERIAL PRIMARY KEY,
+    blood_type VARCHAR(3) NOT NULL CHECK (
+        blood_type IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')
+    ),
+    minimum_stock DECIMAL(10,2) NOT NULL,
+    maximum_stock DECIMAL(10,2) NOT NULL,
+    current_stock DECIMAL(10,2) NOT NULL DEFAULT 0,
+    donation_location INTEGER NOT NULL REFERENCES donation_location(id),
+    UNIQUE(blood_type, donation_location)
+);
 
-    CREATE TABLE beneficio (
-        id SERIAL PRIMARY KEY,
-        valor DECIMAL(10,2) NOT NULL,
-        validade DATE NOT NULL,
-        descricao TEXT NOT NULL,
-        clinica_id INTEGER NOT NULL REFERENCES clinica(id),
-        doacao_id INTEGER NOT NULL UNIQUE REFERENCES doacao(id)
-    );
 
-    CREATE TABLE notificacao (
-        id SERIAL PRIMARY KEY,
-        mensagem TEXT NOT NULL,
-        data_hora DATE NOT NULL DEFAULT NOW(),
-        doador_id INTEGER NOT NULL REFERENCES doador(id),
-        UNIQUE(doador_id, data_hora)
-    );
+CREATE TABLE donation (
+    id SERIAL PRIMARY KEY,
+    quantity DECIMAL(10,2) NOT NULL,
+    collection_date DATE NOT NULL DEFAULT NOW(),
+    expiration_date DATE NOT NULL,
+    donor_id INTEGER NOT NULL REFERENCES donor(id),
+    donation_location_id INTEGER NOT NULL REFERENCES donation_location(id),
+    blood_id INTEGER NOT NULL REFERENCES blood(id),
+    UNIQUE(donor_id, collection_date)
+);
 
- COMMIT;
+CREATE TABLE benefit (
+    id SERIAL PRIMARY KEY,
+    amount DECIMAL(10,2) NOT NULL,
+    expiration_date DATE NOT NULL,
+    description TEXT NOT NULL,
+    clinic_id INTEGER NOT NULL REFERENCES clinic(id),
+    donation_id INTEGER NOT NULL UNIQUE REFERENCES donation(id)
+);
+
+CREATE TABLE notification (
+    id SERIAL PRIMARY KEY,
+    message TEXT NOT NULL,
+    timestamp DATE NOT NULL DEFAULT NOW(),
+    donor_id INTEGER NOT NULL REFERENCES donor(id),
+    UNIQUE(donor_id, timestamp)
+);
+
+COMMIT;
