@@ -21,8 +21,8 @@
                            <span></span>
                         </div>
                         <span (click)="updateAccountType('doador')">
-                            <h2>Doador</h2>
-                            <p>Quero doar e receber benefícios</p>
+                            <h2 [ngStyle]="{'color': accountType == 'doador' ? 'var(--primary)': 'black'}">Doador</h2>
+                            <p [ngStyle]="{'color': accountType == 'doador' ? 'var(--primary)': 'black'}">Quero doar e receber benefícios</p>
                         </span>
                     </div>
                     <div id="typeCheckmark" (click)="updateAccountType('clinica')">
@@ -30,8 +30,8 @@
                             <span></span>
                         </div>
                         <span (click)="updateAccountType('clinica')">
-                            <h2>Clínica</h2>
-                            <p>Quero trazer benefícios a doadores regulares</p>
+                            <h2 [ngStyle]="{'color': accountType == 'clinica' ? 'var(--primary)': 'black'}">Clínica</h2>
+                            <p [ngStyle]="{'color': accountType == 'clinica' ? 'var(--primary)': 'black'}">Quero trazer benefícios a doadores regulares</p>
                         </span>
                     </div>
                     <button class="Login" (click)="signupStage.set('credentials')">Próximo</button>
@@ -49,6 +49,9 @@
                 <form>
                     <input placeholder="Nome" required> <br>
                     <input placeholder="Email" type="email" required> <br>
+                    @if (accountType == "clinica"){
+                        <input placeholder="CNPJ" required> <br>
+                    }
                     <input placeholder="Senha" type="password" required> <br>
                     <input placeholder="Repita a senha" type="password" required> <br>
                     <button class="Login">Sign Up</button>

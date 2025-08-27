@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -6,7 +6,8 @@ import { RouterModule } from '@angular/router';
   selector: 'app-signup',
   imports: [
     RouterModule,
-    NgClass
+    NgClass,
+    NgStyle
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css'

@@ -104,8 +104,8 @@ main > form > input {
 
 form > p{
     font-size: 1.2ch;
-    padding-top: 2%;
-    padding-bottom: 2%;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
 form > p > a{
     color: var(--primary);
