@@ -3,7 +3,9 @@ package br.fai.lds.lifebank.implementation.service.authentication;
 import br.fai.lds.lifebank.domain.UserModel;
 import br.fai.lds.lifebank.port.dao.user.UserDao;
 import br.fai.lds.lifebank.port.service.authentication.AuthenticationService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserDao userDao;
