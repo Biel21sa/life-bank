@@ -1,5 +1,6 @@
 BEGIN;
 
+DROP TYPE IF EXISTS user_role;
 CREATE TYPE user_role AS ENUM ('ADMINISTRATOR', 'DONOR', 'CLINIC');
 
 CREATE TABLE municipality (
@@ -30,7 +31,7 @@ CREATE TABLE donor (
         blood_type IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')
     ),
     eligible BOOLEAN NOT NULL DEFAULT TRUE,
-    user_id INTEGER NOT NULL REFERENCES "user"(id),
+    user_id INTEGER NOT NULL REFERENCES user_model(id),
     UNIQUE(user_id)
 );
 
