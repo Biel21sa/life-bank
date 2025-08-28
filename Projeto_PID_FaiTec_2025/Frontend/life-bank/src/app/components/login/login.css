@@ -104,47 +104,10 @@ main > form > input {
 
 form > p{
     font-size: 1.2ch;
-    padding-top: 2%;
-    padding-bottom: 2%;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
 form > p > a{
     color: var(--primary);
     text-decoration: none;
-}
-
-.linebreak{
-    background-color: white;
-    color: var(--primary-gray);
-    font-size: 1.2ch;
-    position: relative;
-    margin-left: 35%;
-    margin-right: 35%;
-    top: 5%;
-    padding-bottom: 0%;
-}
-
-hr{
-    margin: 0% 8%;
-    border-top: 1px solid #DBDBDB;
-}
-
-.loginAlts > button{
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: 30px;
-    height: 30px;
-    border: none;
-    margin: 8% 2%;
-}
-#twitter{
-    background-image: url(/login_twitter.png);
-}
-#linkedin{
-    background-image: url(/login_linkedin.png);
-}
-#google{
-    background-image: url(/login_google.png);
-}
-#apple{
-    background-image: url(/login_apple.png);   
 }

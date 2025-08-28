@@ -7,9 +7,9 @@ import * as fontawesome from '@fortawesome/free-solid-svg-icons';
   imports: [
     FontAwesomeModule,
   ],
-  templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css'
+  templateUrl: './database.html',
+  styleUrl: './database.css'
 })
-export class Dashboard {
+export class Database {
   FontAwesome = fontawesome
 }

@@ -1,0 +1,37 @@
+<body>
+
+    <div class="sidebar" (mouseenter)="isCollapsed.set(false)" (mouseleave)="isCollapsed.set(true)" [ngStyle]="{'width': isCollapsed() ? '50px' : '200px'}">
+        <div id="profileborder" (click)="activate('profile')" [ngStyle]="{'padding-right': isCollapsed() ? '5px' : '10%', 'padding-left': isCollapsed() ? '5px' : '5%'}" >
+            <button id="profile">icon</button>
+            <span>
+                @if (!isCollapsed()) {
+                    <h1>John Doe</h1>
+                    <h2>Administrador</h2>
+                }
+            </span>
+        </div>   
+        @for (item of navItems; track $index) {
+            <button routerLink= {{item.route}} id = "navbarButton" (click)="activate(item.name)"
+                                                    [ngStyle]="{'background-color': item.isActive() ? 'white' : 'transparent',
+                                                    'width': isCollapsed() ? '50px' : '200px',
+                                                    'color': item.isActive() ? 'var(--primary)' : 'white',
+                                                    'box-shadow': item.isActive() ? '0px 3px 4px var(--shadow_blue)' : null,
+                                                    'justify-content': isCollapsed() ? 'center' : 'flex-start'}">
+
+                <span [ngStyle]="{'padding-right': isCollapsed() ? '0%' : '10%'}"><fa-icon [icon]="item.icon" size="2x"></fa-icon></span>
+                @if (!isCollapsed()) {
+                    <p>{{item.name}}</p>
+                }
+              
+            </button>
+        }
+       
+    </div>
+
+    
+    <!--<button><ng-icon name="phosphorHouseSimpleBold" size="32"></ng-icon></button>    -->
+    <main>
+        <router-outlet></router-outlet>
+    </main>
+
+</body>

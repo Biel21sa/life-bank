@@ -10,27 +10,55 @@
             <ellipse cx="86" cy="10" rx="8" ry="8" style="fill:rgba(255, 255, 255, 0.5);"/> 
         </svg>
     </div>
-    <div class="right">
-        <main>
-            <h2>Sign in</h2>
-            <p>Cadastrar conta</p>
-            <form>
-                <input placeholder="Nome" required> <br>
-                <input placeholder="Email" type="email" required> <br>
-                <input placeholder="Senha" type="password" required> <br>
-                <input placeholder="Repita a senha" type="password" required> <br>
-                <button class="Login">Sign Up</button>
-                <p>Já possuí conta? <a routerLink="/login">Entrar</a></p>
-            </form>
-            <p class="linebreak">Ou acesse com</p>
-            <hr>
-            <span class="loginAlts">
-                <button id="twitter"></button>
-                <button id="linkedin"></button>
-                <button id="google"></button>
-                <button id="apple"></button>
-            </span>
-        </main>
-        <a routerLink="">← Retornar</a>
-    </div>
+    @if (signupStage() == 'type') {
+        <div class="right">
+            <main>
+                <h2>Cadastrar como</h2>
+                <p>Cadastrar conta</p>
+                <form onsubmit="return false">
+                    <div id="typeCheckmark">
+                        <div  [ngClass]="accountType == 'doador' ? 'checkmark_checked' : 'checkmark_unchecked'" (click)="updateAccountType('doador')">
+                           <span></span>
+                        </div>
+                        <span (click)="updateAccountType('doador')">
+                            <h2 [ngStyle]="{'color': accountType == 'doador' ? 'var(--primary)': 'black'}">Doador</h2>
+                            <p [ngStyle]="{'color': accountType == 'doador' ? 'var(--primary)': 'black'}">Quero doar e receber benefícios</p>
+                        </span>
+                    </div>
+                    <div id="typeCheckmark" (click)="updateAccountType('clinica')">
+                        <div [ngClass]="accountType == 'clinica' ? 'checkmark_checked' : 'checkmark_unchecked'" (click)="updateAccountType('clinica')">
+                            <span></span>
+                        </div>
+                        <span (click)="updateAccountType('clinica')">
+                            <h2 [ngStyle]="{'color': accountType == 'clinica' ? 'var(--primary)': 'black'}">Clínica</h2>
+                            <p [ngStyle]="{'color': accountType == 'clinica' ? 'var(--primary)': 'black'}">Quero trazer benefícios a doadores regulares</p>
+                        </span>
+                    </div>
+                    <button class="Login" (click)="signupStage.set('credentials')">Próximo</button>
+                    <p>Já possuí conta? <a routerLink="/login">Entrar</a></p>
+                </form>
+            </main>
+            <a routerLink="">← Retornar</a>
+        </div>
+    }
+    @if (signupStage() == 'credentials') {
+        <div class="right">
+            <main>
+                <h2>Sign in</h2>
+                <p>Cadastrar conta</p>
+                <form>
+                    <input placeholder="Nome" required> <br>
+                    <input placeholder="Email" type="email" required> <br>
+                    @if (accountType == "clinica"){
+                        <input placeholder="CNPJ" required> <br>
+                    }
+                    <input placeholder="Senha" type="password" required> <br>
+                    <input placeholder="Repita a senha" type="password" required> <br>
+                    <button class="Login">Sign Up</button>
+                    <p>Já possuí conta? <a routerLink="/login">Entrar</a></p>
+                </form>
+            </main>
+            <a (click)="signupStage.set('type')" style="cursor: pointer;">← Voltar</a>
+        </div>
+    }
 </body>

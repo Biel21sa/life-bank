@@ -99,51 +99,73 @@ main > form > input {
     padding: 2.5%;
     margin-top: 5%;
     font-size: 1.7ch;
+    cursor: pointer;
 }
 
 form > p{
     font-size: 1.2ch;
-    padding-top: 2%;
-    padding-bottom: 3%;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
 form > p > a{
     color: var(--primary);
     text-decoration: none;
 }
 
-.linebreak{
-    background-color: white;
-    color: var(--primary-gray);
-    font-size: 1.2ch;
-    position: relative;
-    margin-left: 35%;
-    margin-right: 35%;
-    top: 4%;
-    padding-bottom: 0%;
+#typeCheckmark{
+    display: flex;
+    padding: 3% 10%;
+    align-items: center;
+
+    >span{
+        display: flex;
+        flex-wrap: wrap;
+        cursor: pointer;
+
+        >h2{
+            padding-bottom: 2.5%;
+        }
+        >p{
+            text-align: left;
+        }
+    }
 }
 
-hr{
-    margin: 0% 8%;
-    border-top: 1px solid #DBDBDB;
+.checkmark_unchecked{
+    --radius: 25px;
+    border-radius: 100%;
+    min-width: var(--radius);
+    min-height: var(--radius);
+    max-width: var(--radius);
+    max-height: var(--radius);
+    cursor: pointer;
+    border: 1px solid var(--primary);
+    margin-right: 5%;
 }
 
-.loginAlts > button{
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: 30px;
-    height: 30px;
-    border: none;
-    margin: 8% 2%;
-}
-#twitter{
-    background-image: url(/login_twitter.png);
-}
-#linkedin{
-    background-image: url(/login_linkedin.png);
-}
-#google{
-    background-image: url(/login_google.png);
-}
-#apple{
-    background-image: url(/login_apple.png);   
+.checkmark_checked{
+    --radius: 25px;
+    border-radius: 100%;
+    min-width: var(--radius);
+    min-height: var(--radius);
+    max-width: var(--radius);
+    max-height: var(--radius);
+    border: 1px solid var(--primary);
+    margin-right: 5%;
+    cursor: pointer;
+    box-shadow: 0px 3px 4px var(--shadow_gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    >span{
+        --radius: 20px;
+        border-radius: 100%;
+        min-width: var(--radius);
+        min-height: var(--radius);
+        max-width: var(--radius);
+        max-height: var(--radius);
+        background-color: var(--primary);
+        transform: translate(2%, -2%);
+    }
 }

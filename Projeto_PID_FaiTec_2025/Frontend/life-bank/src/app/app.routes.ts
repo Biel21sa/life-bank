@@ -2,8 +2,10 @@ import { Routes } from '@angular/router';
 import { Index } from './components/index';
 import { Login } from './components/login/login';
 import { Signup } from './components/signup/signup';
-import { Dashboard } from './components/account/dashboard/dashboard';
-import { Main } from './components/account/main/main';
+import { Database } from './components/account/database/database';
+import { Home } from './components/account/home/home';
+import { Menu } from './components/account/menu/menu';
+import { Charts } from './components/account/charts/charts';
 
 export const routes: Routes = [
     {
@@ -19,13 +21,22 @@ export const routes: Routes = [
         component: Signup
     },
     {
-        path: "main",
-        component: Main,
+        path: "home",
+        component: Home,
         children: [
             {
                 path: "",
-                component: Dashboard
+                component: Menu
+            },
+            {
+                path: "charts",
+                component: Charts
+            },
+            {
+                path: "database",
+                component: Database
             }
+            
         ]
     },
     
