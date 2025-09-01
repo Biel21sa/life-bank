@@ -101,6 +101,9 @@ main > form > input {
     font-size: 1.7ch;
     cursor: pointer;
 }
+.Login:disabled{
+    background-color: var(--primary-gray);
+}
 
 form > p{
     font-size: 1.2ch;

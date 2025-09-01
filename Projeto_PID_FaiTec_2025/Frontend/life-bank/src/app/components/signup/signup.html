@@ -46,15 +46,15 @@
             <main>
                 <h2>Sign in</h2>
                 <p>Cadastrar conta</p>
-                <form>
-                    <input placeholder="Nome" required> <br>
-                    <input placeholder="Email" type="email" required> <br>
+                <form [formGroup]="form">
+                    <input placeholder="Nome" required formControlName="fullname"> <br>
+                    <input placeholder="Email" type="email" required formControlName="email"> <br>
                     @if (accountType == "clinica"){
-                        <input placeholder="CNPJ" required> <br>
+                        <input placeholder="CNPJ" required formControlName="cnpj"> <br>
                     }
-                    <input placeholder="Senha" type="password" required> <br>
-                    <input placeholder="Repita a senha" type="password" required> <br>
-                    <button class="Login">Sign Up</button>
+                    <input placeholder="Senha" type="password" required formControlName="password"> <br>
+                    <input placeholder="Repita a senha" type="password" required formControlName="repeatpassword"> <br>
+                    <button class="Login" [disabled]="!validateCredentials()">Sign Up</button>
                     <p>Já possuí conta? <a routerLink="/login">Entrar</a></p>
                 </form>
             </main>

@@ -101,6 +101,9 @@ main > form > input {
     margin-top: 5%;
     font-size: 1.7ch;
 }
+.Login:disabled{
+    background-color: var(--primary-gray);
+}
 
 form > p{
     font-size: 1.2ch;
