@@ -1,0 +1,33 @@
+{
+    "donators":[
+        {"id": 1, 
+        "fullname": "John Doe", 
+        "email": "johndoe@gmail.com",
+        "password": "123456",
+        "state": null,
+        "city": null,
+        "bloodType": "A+",
+        "donatorType": "AVAILABLE",
+        "benefit": false},
+
+        {"id": 2, 
+        "fullname": "Jane Doe", 
+        "email": "janedoe@gmail.com",
+        "password": "098765",
+        "state": null,
+        "city": null,
+        "bloodType": "B+",
+        "donatorType": "STANDBY",
+        "benefit": true}
+    ],
+
+    "clinics": [
+        {"id": 1,
+        "fullname": "Clínica1",
+        "email": "clinica@clinica.com",
+        "cnpj": "00.623.904/0001-73",
+        "password": "123456",
+        "state": null,
+        "city": null}
+    ]
+}
