@@ -172,3 +172,10 @@ form > p > a{
         transform: translate(2%, -2%);
     }
 }
+
+#error-red{
+    color: #fd2a2a;
+    padding: 0% 7%;
+    text-align: left;
+    height: 0px;
+}

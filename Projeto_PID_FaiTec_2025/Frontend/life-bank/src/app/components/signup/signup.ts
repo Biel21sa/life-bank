@@ -20,6 +20,10 @@ import { RouterModule } from '@angular/router';
 export class Signup {
   
   form!: FormGroup
+  fullnameCharacterMin = 4;
+  fullnameCharacterMax = 30;
+  passwordCharacterMin = 6;
+  passwordCharacterMax = 20;
 
   signupStage = signal("type");
   accountType = "doador";
@@ -32,8 +36,8 @@ export class Signup {
     this.form = this.formBuilder.group({
       fullname: ['', [
         Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(100)
+        Validators.minLength(this.fullnameCharacterMin),
+        Validators.maxLength(this.fullnameCharacterMax)
       ]],
       email: ['', [
         Validators.required,
@@ -41,7 +45,8 @@ export class Signup {
       ]],
       cnpj: ['',[
         Validators.required,
-        Validators.minLength(14)
+        Validators.minLength(14),
+        Validators.maxLength(14)
       ]],
       password:['',[
         Validators.required,
@@ -50,8 +55,8 @@ export class Signup {
       ]],
       repeatpassword:['',[
         Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(20)
+        Validators.minLength(this.passwordCharacterMin),
+        Validators.maxLength(this.passwordCharacterMax)
       ]]
     })
   }
@@ -61,13 +66,17 @@ export class Signup {
     let validEmail = this.form.controls['email'].valid
     let validCnpj = this.form.controls['cnpj'].valid
     let validPassword = this.form.controls['password'].valid
-    let equalPasswords = this.form.controls['repeatpassword'].valid && this.form.controls['repeatpassword'].value === this.form.controls['password'].value
+    let equalPasswords = this.passwordsAreEqual()
     
     if (this.accountType == 'doador'){
       return validName && validEmail && validPassword && equalPasswords
     } else {
       return validName && validEmail && validCnpj && validPassword && equalPasswords
     }
+  }
+
+  passwordsAreEqual():boolean {
+    return this.form.controls['repeatpassword'].valid && this.form.controls['repeatpassword'].value === this.form.controls['password'].value
   }
 
   updateAccountType(type:string){

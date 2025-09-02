@@ -47,13 +47,42 @@
                 <h2>Sign in</h2>
                 <p>Cadastrar conta</p>
                 <form [formGroup]="form">
-                    <input placeholder="Nome" required formControlName="fullname"> <br>
-                    <input placeholder="Email" type="email" required formControlName="email"> <br>
-                    @if (accountType == "clinica"){
-                        <input placeholder="CNPJ" required formControlName="cnpj"> <br>
+                    <input placeholder="Nome" required formControlName="fullname" 
+                    [ngStyle]="{'border': form.controls['fullname'].hasError('minlength') || form.controls['fullname'].hasError('maxlength') ? 'solid 2px #fd2a2a' : null}"> 
+                    @if(form.controls['fullname'].hasError('minlength')){
+                        <p id="error-red">Nome possui menos que {{fullnameCharacterMin}} caracteres.</p>
+                    }@else if (form.controls['fullname'].hasError('maxlength')) {
+                        <p id="error-red">Nome possui mais que {{fullnameCharacterMax}} caracteres.</p>
                     }
-                    <input placeholder="Senha" type="password" required formControlName="password"> <br>
-                    <input placeholder="Repita a senha" type="password" required formControlName="repeatpassword"> <br>
+                    <br>
+                    <input placeholder="Email" type="email" required formControlName="email"
+                    [ngStyle]="{'border': form.controls['email'].hasError('email') ? 'solid 2px #fd2a2a' : null}">
+                    @if (form.controls['email'].hasError('email')) {
+                        <p id="error-red">Credencial não coincide com um email.</p>
+                    }
+                    <br>
+                    @if (accountType == "clinica"){
+                        <input placeholder="CNPJ" required formControlName="cnpj"
+                        [ngStyle]="{'border': form.controls['cnpj'].hasError('minlength') || form.controls['cnpj'].hasError('maxlength') ? 'solid 2px #fd2a2a' : null}"> 
+                        @if (form.controls['cnpj'].hasError('maxlength') || form.controls['cnpj'].hasError('minlength')) {
+                            <p id="error-red">Credencial incorreta.</p>
+                        }
+                        <br>
+                    }
+                    <input placeholder="Senha" type="password" required formControlName="password"
+                    [ngStyle]="{'border': form.controls['password'].hasError('minlength') || form.controls['password'].hasError('maxlength') ? 'solid 2px #fd2a2a' : null}"> 
+                    @if(form.controls['password'].hasError('minlength')){
+                        <p id="error-red">Senha possui menos que {{passwordCharacterMin}} caracteres.</p>
+                    }@else if (form.controls['password'].hasError('maxlength')) {
+                        <p id="error-red">Senha possui mais que {{passwordCharacterMax}} caracteres.</p>
+                    }
+                    <br>
+                    <input placeholder="Repita a senha" type="password" required formControlName="repeatpassword"
+                    [ngStyle]="{'border': !passwordsAreEqual() ? 'solid 2px #fd2a2a' : null}">
+                    @if(!passwordsAreEqual()){
+                        <p id="error-red">Senhas não coincidem.</p>
+                    }
+                    <br>
                     <button class="Login" [disabled]="!validateCredentials()">Sign Up</button>
                     <p>Já possuí conta? <a routerLink="/login">Entrar</a></p>
                 </form>
