@@ -1,8 +1,5 @@
 BEGIN;
 
-DROP TYPE IF EXISTS user_role;
-CREATE TYPE user_role AS ENUM ('ADMINISTRATOR', 'DONOR', 'CLINIC');
-
 CREATE TABLE municipality (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -10,10 +7,22 @@ CREATE TABLE municipality (
     UNIQUE(name, state)
 );
 
+CREATE TABLE donation_location (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    street VARCHAR(100) NOT NULL,
+    number VARCHAR(10) NOT NULL,
+    neighborhood VARCHAR(100) NOT NULL,
+    postal_code VARCHAR(10) NOT NULL,
+    municipality_id INTEGER NOT NULL REFERENCES municipality(id)
+);
+
 CREATE TABLE user_model (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    role user_role NOT NULL, 
+    role VARCHAR(50) NOT NULL CHECK (
+        role IN ('ADMINISTRATOR', 'DONOR', 'CLINIC')
+    ), 
     cpf VARCHAR(14) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(20) NOT NULL,
@@ -22,7 +31,8 @@ CREATE TABLE user_model (
     number VARCHAR(10) NOT NULL,
     neighborhood VARCHAR(100) NOT NULL,
     postal_code VARCHAR(10) NOT NULL,
-    municipality_id INTEGER NOT NULL REFERENCES municipality(id)
+    municipality_id INTEGER NOT NULL REFERENCES municipality(id),
+    donation_location_id INTEGER REFERENCES donation_location(id)
 );
 
 CREATE TABLE donor (
@@ -55,16 +65,6 @@ CREATE TABLE blood (
     expiration_date DATE NOT NULL
 );
 
-CREATE TABLE donation_location (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL UNIQUE,
-    street VARCHAR(100) NOT NULL,
-    number VARCHAR(10) NOT NULL,
-    neighborhood VARCHAR(100) NOT NULL,
-    postal_code VARCHAR(10) NOT NULL,
-    municipality_id INTEGER NOT NULL REFERENCES municipality(id)
-);
-
 CREATE TABLE blood_stock (
     id SERIAL PRIMARY KEY,
     blood_type VARCHAR(3) NOT NULL CHECK (
@@ -76,7 +76,6 @@ CREATE TABLE blood_stock (
     donation_location INTEGER NOT NULL REFERENCES donation_location(id),
     UNIQUE(blood_type, donation_location)
 );
-
 
 CREATE TABLE donation (
     id SERIAL PRIMARY KEY,
