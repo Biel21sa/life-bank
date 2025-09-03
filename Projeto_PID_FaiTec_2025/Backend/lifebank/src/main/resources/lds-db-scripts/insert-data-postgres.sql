@@ -10,19 +10,19 @@ VALUES
 ('Hemocentro Campinas', 'Rua das Doações', '123', 'Centro', '13000-100', 2);
 
 -- Administrator
-INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, municipality_id, donation_location_id)
+INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, donation_location_id)
 VALUES
-('João Admin', 'ADMINISTRATOR', '00000000000', 'admin@example.com', '(11) 99999-0000', 'hashedpassword', 'Av. Central', '100', 'Centro', '01000-000', 1, 1);
+('João Admin', 'ADMINISTRATOR', '00000000000', 'admin@example.com', '(11) 99999-0000', 'aa', 'Av. Central', '100', 'Centro', '01000-000', 1);
 
 -- Donor
-INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, municipality_id, donation_location_id)
+INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, donation_location_id)
 VALUES
-('Maria Doadora', 'DONOR', '11111111111', 'maria@example.com', '(11) 98888-1111', 'hashedpassword', 'Rua das Flores', '200', 'Jardim', '13000-000', 2, NULL);
+('Maria Doadora', 'USER', '11111111111', 'maria@example.com', '(11) 98888-1111', 'aa', 'Rua das Flores', '200', 'Jardim', '13000-000', NULL);
 
 -- Clinic User
-INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, municipality_id, donation_location_id    )
+INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, donation_location_id)
 VALUES
-('Carlos Clínica', 'CLINIC', '22222222222', 'clinica@example.com', '(21) 97777-2222', 'hashedpassword', 'Rua da Saúde', '300', 'Boa Vista', '20000-000', 3, NULL);
+('Carlos Clínica', 'CLINIC', '22222222222', 'clinica@example.com', '(21) 97777-2222', 'aa', 'Rua da Saúde', '300', 'Boa Vista', '20000-000', NULL);
 
 INSERT INTO donor (blood_type, eligible, user_id)
 VALUES ('O+', TRUE, 2);
@@ -52,9 +52,3 @@ VALUES
 INSERT INTO notification (message, donor_id)
 VALUES
 ('Obrigado por sua doação! Seu sangue pode salvar vidas.', 1);
-
--- insert into user_model (email, name, password, role) values ('a@a', 'tiburssin tiburssius', crypt('aa', gen_salt('bf')), 'ADMINISTRATOR');
--- insert into user_model (email, name, password, role) values ('s@s', 'aroldo aroldus', crypt('aa', gen_salt('bf')), 'ADMINISTRATOR');
--- insert into user_model (email, name, password, role) values ('d@d', 'cabral cabralzius', crypt('aa', gen_salt('bf')), 'USER');
--- insert into user_model (email, name, password, role) values ('f@f', 'tonin toninhus', crypt('aa', gen_salt('bf')), 'USER');
--- insert into user_model (email, name, password, role) values ('g@g', 'g g', crypt('aa', gen_salt('bf')), 'USER');

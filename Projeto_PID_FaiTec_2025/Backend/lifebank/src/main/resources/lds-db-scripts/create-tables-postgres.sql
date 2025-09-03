@@ -30,7 +30,7 @@ CREATE TABLE user_model (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     role VARCHAR(50) NOT NULL CHECK (
-        role IN ('ADMINISTRATOR', 'DONOR', 'CLINIC')
+        role IN ('ADMINISTRATOR', 'USER', 'CLINIC', 'SYSTEM')
     ),
     cpf VARCHAR(14) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -40,7 +40,6 @@ CREATE TABLE user_model (
     number VARCHAR(10) NOT NULL,
     neighborhood VARCHAR(100) NOT NULL,
     postal_code VARCHAR(10) NOT NULL,
-    municipality_id INTEGER NOT NULL REFERENCES municipality(id),
     donation_location_id INTEGER REFERENCES donation_location(id)
 );
 
