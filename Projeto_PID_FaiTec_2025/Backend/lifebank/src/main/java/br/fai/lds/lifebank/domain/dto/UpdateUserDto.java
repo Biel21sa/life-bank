@@ -12,7 +12,7 @@ public class UpdateUserDto {
     public UserModel toUserModel() {
         UserModel entity = new UserModel();
         entity.setId(id);
-        entity.setFullname(fullName);
+        entity.setName(fullName);
         return entity;
     }
 }

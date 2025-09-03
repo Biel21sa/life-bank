@@ -26,7 +26,7 @@ public class UserPostgresDaoImpl implements UserDao {
     public int create(UserModel entity) {
         logger.log(Level.INFO, "Inserindo usuário no banco de dados.");
 
-        String sql = "INSERT INTO user_model(password, fullname, email, role) ";
+        String sql = "INSERT INTO user_model(password, name, email, role) ";
         sql += " VALUES (?, ?, ?, ?)";
 
         PreparedStatement preparedStatement;
@@ -39,7 +39,7 @@ public class UserPostgresDaoImpl implements UserDao {
             preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, entity.getPassword());
-            preparedStatement.setString(2, entity.getFullname());
+            preparedStatement.setString(2, entity.getName());
             preparedStatement.setString(3, entity.getEmail());
             preparedStatement.setString(4, entity.getRole().name());
 
@@ -98,14 +98,14 @@ public class UserPostgresDaoImpl implements UserDao {
             ResultSet resultSet = preparedStatement.executeQuery(sql);
             if (resultSet.next()) {
                 final int entityId = resultSet.getInt("id");
-                final String fullname = resultSet.getString("fullname");
+                final String name = resultSet.getString("name");
                 final String email = resultSet.getString("email");
                 final String password = resultSet.getString("password");
                 final String auxRole = resultSet.getString("role");
                 final UserModel.UserRole role = UserModel.UserRole.valueOf(auxRole);
                 final UserModel user = new UserModel();
                 user.setId(entityId);
-                user.setFullname(fullname);
+                user.setName(name);
                 user.setEmail(email);
                 user.setPassword(password);
                 user.setRole(role);
@@ -133,7 +133,7 @@ public class UserPostgresDaoImpl implements UserDao {
 
             while (resultSet.next()) {
                 int entityId = resultSet.getInt("id");
-                String fullname = resultSet.getString("fullname");
+                String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
                 String auxRole = resultSet.getString("role");
@@ -141,7 +141,7 @@ public class UserPostgresDaoImpl implements UserDao {
 
                 UserModel user = new UserModel();
                 user.setId(entityId);
-                user.setFullname(fullname);
+                user.setName(name);
                 user.setEmail(email);
                 user.setPassword(password);
                 user.setRole(role);
@@ -158,13 +158,13 @@ public class UserPostgresDaoImpl implements UserDao {
 
     @Override
     public void update(int id, UserModel entity) {
-        String sql = "UPDATE user_model SET fullname = ? ; ";
+        String sql = "UPDATE user_model SET name = ? ; ";
         sql += "WHERE id = ? ; ";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setString(1, entity.getFullname());
+            preparedStatement.setString(1, entity.getName());
             preparedStatement.setInt(2, entity.getId());
             preparedStatement.execute();
             preparedStatement.close();
@@ -184,7 +184,7 @@ public class UserPostgresDaoImpl implements UserDao {
 
             if (resultSet.next()) {
                 final int entityId = resultSet.getInt("id");
-                final String fullname = resultSet.getString("fullname");
+                final String name = resultSet.getString("name");
                 final String entityEmail = resultSet.getString("email");
                 final String password = resultSet.getString("password");
                 final String auxRole = resultSet.getString("role");
@@ -192,7 +192,7 @@ public class UserPostgresDaoImpl implements UserDao {
 
                 final UserModel user = new UserModel();
                 user.setId(entityId);
-                user.setFullname(fullname);
+                user.setName(name);
                 user.setEmail(entityEmail);
                 user.setPassword(password);
                 user.setRole(role);

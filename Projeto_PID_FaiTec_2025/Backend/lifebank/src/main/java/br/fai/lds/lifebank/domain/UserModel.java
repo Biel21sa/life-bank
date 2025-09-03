@@ -5,22 +5,24 @@ public class UserModel {
     private int id;
     private String email;
     private String password;
-    private String fullname;
+    private String name;
     private UserRole role;
 
     public enum UserRole {
-        Administrator,
-        User
+        ADMINISTRATOR,
+        CLINIC,
+        USER,
+        SYSTEM
     }
 
     public UserModel() {
     }
 
-    public UserModel(int id, String email, String password, String fullname, UserRole role) {
+    public UserModel(int id, String email, String password, String name, UserRole role) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.fullname = fullname;
+        this.name = name;
         this.role = role;
     }
 
@@ -48,12 +50,12 @@ public class UserModel {
         this.password = password;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getName() {
+        return name;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public UserRole getRole() {

@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
             return invalidResponse;
         }
 
-        if (entity.getFullname().isEmpty() || entity.getEmail().isEmpty() || isPassWordInvalid(entity.getPassword())) {
+        if (entity.getName().isEmpty() || entity.getEmail().isEmpty() || isPassWordInvalid(entity.getPassword())) {
             return invalidResponse;
         }
 

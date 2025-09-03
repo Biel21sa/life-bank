@@ -14,18 +14,19 @@ public class UserFakeDaoImpl implements UserDao {
 
     public UserFakeDaoImpl() {
 
-        UserModel entity1 = new UserModel(getNextId(), "gabriel@gmail.com", "12125", "Gabriel", UserModel.UserRole.Administrator);
+        UserModel entity1 = new UserModel(getNextId(), "gabriel@gmail.com", "12125", "Gabriel",
+                UserModel.UserRole.ADMINISTRATOR);
 
         UserModel entity2 = new UserModel();
         entity2.setId(getNextId());
         entity2.setEmail("luciano@email.com");
         entity2.setPassword("48884");
-        entity2.setFullname("Luciano");
-        entity2.setRole(UserModel.UserRole.User);
+        entity2.setName("Luciano");
+        entity2.setRole(UserModel.UserRole.USER);
 
-        UserModel entity3 = new UserModel(getNextId(), "carlos@gmail.com", "9854", "Carlos", UserModel.UserRole.User);
+        UserModel entity3 = new UserModel(getNextId(), "carlos@gmail.com", "9854", "Carlos", UserModel.UserRole.USER);
 
-        UserModel entity4 = new UserModel(getNextId(), "ricardo@gmail.com", "8745", "Ricardo", UserModel.UserRole.User);
+        UserModel entity4 = new UserModel(getNextId(), "ricardo@gmail.com", "8745", "Ricardo", UserModel.UserRole.USER);
 
         entities.add(entity1);
         entities.add(entity2);
@@ -64,7 +65,7 @@ public class UserFakeDaoImpl implements UserDao {
             return;
         }
         UserModel removeEntity = entities.remove(itemIndex);
-        System.out.println("A entidade: " + removeEntity.getFullname() + " foi removida com sucesso");
+        System.out.println("A entidade: " + removeEntity.getName() + " foi removida com sucesso");
 
     }
 
@@ -87,7 +88,7 @@ public class UserFakeDaoImpl implements UserDao {
     public void update(int id, UserModel entity) {
         for (UserModel data : entities) {
             if (data.getId() == id) {
-                data.setFullname(entity.getFullname());
+                data.setName(entity.getName());
                 break;
             }
         }
