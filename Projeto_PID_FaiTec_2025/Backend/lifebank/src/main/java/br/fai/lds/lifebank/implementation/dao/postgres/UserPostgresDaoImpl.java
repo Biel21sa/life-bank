@@ -90,25 +90,15 @@ public class UserPostgresDaoImpl implements UserDao {
 
     @Override
     public UserModel findByid(int id) {
-        final String sql = "SELECT * FROM user_model WHERE id = ? ;";
+        final String sql = "SELECT * FROM user_model WHERE id = ?;";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
-                final int entityId = resultSet.getInt("id");
-                final String name = resultSet.getString("name");
-                final String email = resultSet.getString("email");
-                final String password = resultSet.getString("password");
-                final String auxRole = resultSet.getString("role");
-                final UserModel.UserRole role = UserModel.UserRole.valueOf(auxRole);
-                final UserModel user = new UserModel();
-                user.setId(entityId);
-                user.setName(name);
-                user.setEmail(email);
-                user.setPassword(password);
-                user.setRole(role);
+                UserModel user = mapResultSetToUserModel(resultSet);
 
                 preparedStatement.close();
                 resultSet.close();
@@ -124,30 +114,17 @@ public class UserPostgresDaoImpl implements UserDao {
     @Override
     public List<UserModel> findAll() {
         final List<UserModel> users = new ArrayList<>();
-
-        final String sql = "SELECT * FROM user_model; ";
+        final String sql = "SELECT * FROM user_model;";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int entityId = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String email = resultSet.getString("email");
-                String password = resultSet.getString("password");
-                String auxRole = resultSet.getString("role");
-                UserModel.UserRole role = UserModel.UserRole.valueOf(auxRole);
-
-                UserModel user = new UserModel();
-                user.setId(entityId);
-                user.setName(name);
-                user.setEmail(email);
-                user.setPassword(password);
-                user.setRole(role);
-
+                UserModel user = mapResultSetToUserModel(resultSet);
                 users.add(user);
             }
+
             resultSet.close();
             preparedStatement.close();
             return users;
@@ -158,15 +135,25 @@ public class UserPostgresDaoImpl implements UserDao {
 
     @Override
     public void update(int id, UserModel entity) {
-        String sql = "UPDATE user_model SET name = ? ; ";
-        sql += "WHERE id = ? ; ";
+        String sql = "UPDATE user_model SET "
+                + "name = ?, cpf = ?, email = ?, phone = ?, "
+                + "street = ?, number = ?, neighborhood = ?, postal_code = ?, "
+                + "WHERE id = ?;";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, entity.getName());
-            preparedStatement.setInt(2, entity.getId());
-            preparedStatement.execute();
+            preparedStatement.setString(2, entity.getCpf());
+            preparedStatement.setString(3, entity.getEmail());
+            preparedStatement.setString(4, entity.getPhone());
+            preparedStatement.setString(5, entity.getStreet());
+            preparedStatement.setString(6, entity.getNumber());
+            preparedStatement.setString(7, entity.getNeighborhood());
+            preparedStatement.setString(8, entity.getPostalCode());
+            preparedStatement.setInt(9, id);
+
+            preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -175,7 +162,7 @@ public class UserPostgresDaoImpl implements UserDao {
 
     @Override
     public UserModel findByEmail(String email) {
-        final String sql = "SELECT * FROM user_model WHERE email = ? ; ";
+        final String sql = "SELECT * FROM user_model WHERE email = ?;";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -183,19 +170,7 @@ public class UserPostgresDaoImpl implements UserDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                final int entityId = resultSet.getInt("id");
-                final String name = resultSet.getString("name");
-                final String entityEmail = resultSet.getString("email");
-                final String password = resultSet.getString("password");
-                final String auxRole = resultSet.getString("role");
-                final UserModel.UserRole role = UserModel.UserRole.valueOf(auxRole);
-
-                final UserModel user = new UserModel();
-                user.setId(entityId);
-                user.setName(name);
-                user.setEmail(entityEmail);
-                user.setPassword(password);
-                user.setRole(role);
+                UserModel user = mapResultSetToUserModel(resultSet);
 
                 preparedStatement.close();
                 resultSet.close();
@@ -225,5 +200,27 @@ public class UserPostgresDaoImpl implements UserDao {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private UserModel mapResultSetToUserModel(ResultSet rs) throws SQLException {
+        UserModel user = new UserModel();
+
+        user.setId(rs.getInt("id"));
+        user.setName(rs.getString("name"));
+        user.setRole(UserModel.UserRole.valueOf(rs.getString("role")));
+        user.setCpf(rs.getString("cpf"));
+        user.setEmail(rs.getString("email"));
+        user.setPhone(rs.getString("phone"));
+        user.setPassword(rs.getString("password"));
+        user.setStreet(rs.getString("street"));
+        user.setNumber(rs.getString("number"));
+        user.setNeighborhood(rs.getString("neighborhood"));
+        user.setPostalCode(rs.getString("postal_code"));
+        user.setDonationLocationId(rs.getInt("donation_location_id"));
+        user.setBloodType(rs.getString("blood_type"));
+        user.setNameClinic(rs.getString("nameClinic"));
+        user.setCnpj(rs.getString("cnpj"));
+
+        return user;
     }
 }

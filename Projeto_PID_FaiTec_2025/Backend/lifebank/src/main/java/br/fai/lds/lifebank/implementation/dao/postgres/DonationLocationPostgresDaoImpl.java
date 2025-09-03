@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class DonationLocationPostgresDaoImpl implements DonationLocationDao {
 
-    private static final Logger logger = Logger.getLogger(UserPostgresDaoImpl.class.getName());
+    private static final Logger logger = Logger.getLogger(DonationLocationPostgresDaoImpl.class.getName());
 
     private final Connection connection;
 
