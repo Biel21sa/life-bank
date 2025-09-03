@@ -1,6 +1,7 @@
 package br.fai.lds.lifebank.configuration;
 
 import br.fai.lds.lifebank.implementation.dao.fake.*;
+import br.fai.lds.lifebank.implementation.dao.postgres.DonationLocationPostgresDaoImpl;
 import br.fai.lds.lifebank.implementation.dao.postgres.UserPostgresDaoImpl;
 import br.fai.lds.lifebank.port.dao.benefit.BenefitDao;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
@@ -77,7 +78,8 @@ public class AppConfiguration {
     }
 
     @Bean
-    public DonationLocationDao getDonationLocationDao() {
-        return new DonationLocationFakeDaoImpl();
+    public DonationLocationDao getDonationLocationDao(final Connection connection) {
+        //return new DonationLocationFakeDaoImpl();
+        return new DonationLocationPostgresDaoImpl(connection);
     }
 }

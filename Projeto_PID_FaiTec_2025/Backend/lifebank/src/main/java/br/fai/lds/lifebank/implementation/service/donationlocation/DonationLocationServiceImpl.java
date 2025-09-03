@@ -25,7 +25,7 @@ public class DonationLocationServiceImpl implements DonationLocationService {
             return invalidResponse;
         }
 
-        if (entity.getName() == null || entity.getAddress() == null) {
+        if (entity.getName() == null || entity.getStreet() == null) {
             return invalidResponse;
         }
 
