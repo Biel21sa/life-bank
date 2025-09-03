@@ -1,8 +1,7 @@
 package br.fai.lds.lifebank.configuration;
 
 import br.fai.lds.lifebank.implementation.dao.fake.*;
-import br.fai.lds.lifebank.implementation.dao.postgres.DonationLocationPostgresDaoImpl;
-import br.fai.lds.lifebank.implementation.dao.postgres.UserPostgresDaoImpl;
+import br.fai.lds.lifebank.implementation.dao.postgres.*;
 import br.fai.lds.lifebank.port.dao.benefit.BenefitDao;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
 import br.fai.lds.lifebank.port.dao.clinic.ClinicDao;
@@ -53,28 +52,33 @@ public class AppConfiguration {
     }
 
     @Bean
-    public BloodDao getBloodFakeDao() {
-        return new BloodFakeDaoImpl();
+    public BloodDao getBloodFakeDao(final Connection connection) {
+        //return new BloodFakeDaoImpl();
+        return new BloodPostgresDaoImpl(connection);
     }
 
     @Bean
-    public DonationDao getDonationFakeDao() {
-        return new DonationFakeDaoImpl();
+    public DonationDao getDonationFakeDao(final Connection connection) {
+        //return new DonationFakeDaoImpl();
+        return new DonationPostgresDaoImpl(connection);
     }
 
     @Bean
-    public DonorDao getDonorFakeDao() {
-        return new DonorFakeDaoImpl();
+    public DonorDao getDonorFakeDao(final Connection connection) {
+        //return new DonorFakeDaoImpl();
+        return new DonorPostgresDaoImpl(connection);
     }
 
     @Bean
-    public BenefitDao getBenefitDao() {
-        return new BenefitFakeDaoImpl();
+    public BenefitDao getBenefitDao(final Connection connection) {
+        //return new BenefitFakeDaoImpl();
+        return new BenefitPostgresDaoImpl(connection);
     }
 
     @Bean
-    public ClinicDao getClinicDao() {
-        return new ClinicFakeDaoImpl();
+    public ClinicDao getClinicDao(final Connection connection) {
+        //return new ClinicFakeDaoImpl();
+        return new ClinicPostgresDaoImpl(connection);
     }
 
     @Bean
