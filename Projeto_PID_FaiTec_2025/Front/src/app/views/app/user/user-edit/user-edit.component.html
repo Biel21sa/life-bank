@@ -1,0 +1,45 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="">Usuário</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Editar</li>
+    </ol>
+</nav>
+<h1>Editar usuário</h1>
+<hr>
+
+<form class="form" [formGroup]="form" (ngSubmit)="update()">
+    <div class="form-row">
+        <div class="form-group col-12 mt-2">
+            <label for="name">Nome</label>
+            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Nome">
+
+            @if(form.controls['name'].hasError('required')) {
+            <p class="text-danger">Campo obrigatório</p>
+            }
+            @else if(form.controls['name'].hasError('minlength')) {
+            <p class="text-danger">
+                Nome deve ter no mínimo {{nameMinLength}}
+            </p>
+            }
+            @else if(form.controls['name'].hasError('maxlength')) {
+            <p class="text-danger">
+                Nome deve ter no máximo {{nameMaxLength}}
+            </p>
+            }
+
+        </div>
+
+        <div class="col-12 text-end mt-2">
+            <div class="col-12 text-end mt-2">
+                <a class="btn btn-secondary col-2 me-4" routerLink="/user/list">Voltar</a>
+
+                <button class="btn btn-primary col-2" [disabled]="!validateFields()">
+                    Atualizar
+                </button>
+
+            </div>
+        </div>
+    </div>
+</form>

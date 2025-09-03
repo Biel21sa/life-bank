@@ -1,0 +1,113 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Criar Usuário</mat-card-title>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Campos comuns -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Tipo de Usuário</mat-label>
+        <mat-select formControlName="role" required>
+          <mat-option *ngFor="let role of userRoles" [value]="role">
+            {{ userRoleLabels[role] }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>CPF</mat-label>
+        <input matInput formControlName="cpf" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Telefone</mat-label>
+        <input matInput formControlName="phone" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" formControlName="password" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Rua</mat-label>
+        <input matInput formControlName="street" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Número</mat-label>
+        <input matInput formControlName="number" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Bairro</mat-label>
+        <input matInput formControlName="neighborhood" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>CEP</mat-label>
+        <input matInput formControlName="postal_code" required>
+      </mat-form-field>
+
+      <!-- Campo específico para ADMINISTRATOR -->
+      <mat-form-field *ngIf="selectedRole === 'ADMINISTRATOR'" appearance="outline" class="full-width">
+        <mat-label>Local de Doação</mat-label>
+        <mat-select formControlName="donation_location_id">
+          <mat-option *ngFor="let location of donationLocations" [value]="location.id">
+            {{ location.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Campo específico para USER (doador) -->
+      <mat-form-field *ngIf="selectedRole === 'USER'" appearance="outline" class="full-width">
+        <mat-label>Tipo Sanguíneo</mat-label>
+        <mat-select formControlName="blood_type">
+          <mat-option value="A+">A+</mat-option>
+          <mat-option value="A-">A-</mat-option>
+          <mat-option value="B+">B+</mat-option>
+          <mat-option value="B-">B-</mat-option>
+          <mat-option value="AB+">AB+</mat-option>
+          <mat-option value="AB-">AB-</mat-option>
+          <mat-option value="O+">O+</mat-option>
+          <mat-option value="O-">O-</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Campos específicos para CLINIC -->
+      <div *ngIf="selectedRole === 'CLINIC'">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nome da Clínica</mat-label>
+          <input matInput formControlName="nameClinic">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>CNPJ</mat-label>
+          <input matInput formControlName="cnpj">
+        </mat-form-field>
+      </div>
+
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!userForm.valid">
+      Criar Usuário
+    </button>
+    <button mat-button (click)="onCancel()">
+      Cancelar
+    </button>
+  </mat-card-actions>
+</mat-card>
