@@ -1,5 +1,5 @@
 {
-    "donators":[
+    "donator":[
         {"id": 1, 
         "fullname": "John Doe", 
         "email": "johndoe@gmail.com",
@@ -21,7 +21,7 @@
         "benefit": true}
     ],
 
-    "clinics": [
+    "clinic": [
         {"id": 1,
         "fullname": "Clínica1",
         "email": "clinica@clinica.com",
