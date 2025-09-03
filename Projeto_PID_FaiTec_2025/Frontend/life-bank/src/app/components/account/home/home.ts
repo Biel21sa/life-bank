@@ -34,7 +34,7 @@ import { CommonModule } from '@angular/common';
     RouterModule,
     NgIcon,
     MatListModule,
-    CommonModule
+    CommonModule,
   ],
   providers: [
     provideIcons({phosphorHouseSimpleBold})
@@ -45,6 +45,8 @@ import { CommonModule } from '@angular/common';
 
 export class Home {
   readonly FontAwesome = fontawesome
+
+  constructor(private router: Router){}
 
   navItems = [
     {
@@ -66,7 +68,7 @@ export class Home {
       isActive: signal(false)
     },
   ]
-
+  
   isCollapsed = signal(true);
 
   activate(selected:string){
@@ -77,5 +79,9 @@ export class Home {
       }
       button.isActive.set(false)
     }
+  }
+
+  routToProfile(){
+    this.router.navigate(['home/profile'])
   }
 }

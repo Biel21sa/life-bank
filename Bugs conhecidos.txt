@@ -1,5 +1,6 @@
 FRONTEND
--Reiniciar a página reinicia a seleção dos botões do sidenav para o menu.
--A borda do botão de perfil não segue o sidenav corretamente.
+- Reiniciar a página reinicia a seleção dos botões do sidenav para o menu.
+- A borda do botão de perfil não segue o sidenav corretamente.
 - Botões da página inicial/index possuem um espaço por conta dos ícones.
 - Botões de "cadastrar como" não estão corretamente centralizados.
+- "Repita a senha" em sign in alerta erro mesmo antes de interagir.

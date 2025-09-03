@@ -1,7 +1,8 @@
 <body>
 
     <div class="sidebar" (mouseenter)="isCollapsed.set(false)" (mouseleave)="isCollapsed.set(true)" [ngStyle]="{'width': isCollapsed() ? '50px' : '200px'}">
-        <div id="profileborder" (click)="activate('profile')" [ngStyle]="{'padding-right': isCollapsed() ? '5px' : '10%', 'padding-left': isCollapsed() ? '5px' : '5%'}" >
+        <div id="profileborder" (click)="activate('profile')" (click)="routToProfile()"
+        [ngStyle]="{'padding-right': isCollapsed() ? '5px' : '10%', 'padding-left': isCollapsed() ? '5px' : '5%'}" >
             <button id="profile">icon</button>
             <span>
                 @if (!isCollapsed()) {

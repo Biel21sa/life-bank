@@ -71,6 +71,7 @@ body{
 	align-items: center;
 	justify-content: center;
 	transition: width 1;
+	cursor: pointer;
 
 	> span{
 		padding-left: 3%;

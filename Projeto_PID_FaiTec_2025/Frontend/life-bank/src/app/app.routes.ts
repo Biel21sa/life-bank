@@ -6,6 +6,7 @@ import { Database } from './components/account/database/database';
 import { Home } from './components/account/home/home';
 import { Menu } from './components/account/menu/menu';
 import { Charts } from './components/account/charts/charts';
+import { Profile } from './components/account/profile/profile';
 
 export const routes: Routes = [
     {
@@ -35,6 +36,10 @@ export const routes: Routes = [
             {
                 path: "database",
                 component: Database
+            },
+            {
+                path: "profile",
+                component: Profile
             }
             
         ]

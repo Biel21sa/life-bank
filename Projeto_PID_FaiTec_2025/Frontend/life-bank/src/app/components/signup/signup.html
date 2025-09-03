@@ -58,7 +58,7 @@
                     <input placeholder="Email" type="email" required formControlName="email"
                     [ngStyle]="{'border': form.controls['email'].hasError('email') ? 'solid 2px #fd2a2a' : null}">
                     @if (form.controls['email'].hasError('email')) {
-                        <p id="error-red">Credencial não coincide com um email.</p>
+                        <p id="error-red">Dado não é um email (exemplo&#64;mail.com).</p>
                     }
                     <br>
                     @if (accountType == "clinica"){
