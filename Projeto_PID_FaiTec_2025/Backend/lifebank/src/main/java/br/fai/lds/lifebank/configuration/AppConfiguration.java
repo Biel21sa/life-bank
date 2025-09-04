@@ -1,6 +1,5 @@
 package br.fai.lds.lifebank.configuration;
 
-import br.fai.lds.lifebank.implementation.dao.fake.*;
 import br.fai.lds.lifebank.implementation.dao.postgres.*;
 import br.fai.lds.lifebank.port.dao.benefit.BenefitDao;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
@@ -8,6 +7,7 @@ import br.fai.lds.lifebank.port.dao.clinic.ClinicDao;
 import br.fai.lds.lifebank.port.dao.donation.DonationDao;
 import br.fai.lds.lifebank.port.dao.donationlocation.DonationLocationDao;
 import br.fai.lds.lifebank.port.dao.donor.DonorDao;
+import br.fai.lds.lifebank.port.dao.municipality.MunicipalityDao;
 import br.fai.lds.lifebank.port.dao.user.UserDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.sql.Connection;
-import java.util.Arrays;
 
 @Configuration
 public class AppConfiguration {
@@ -25,10 +24,6 @@ public class AppConfiguration {
 
     public AppConfiguration(Environment environment) {
         this.environment = environment;
-
-        System.out.println("---------");
-        System.out.println(Arrays.toString(environment.getActiveProfiles()));
-        System.out.println("---------");
     }
 
     @Bean
@@ -85,5 +80,10 @@ public class AppConfiguration {
     public DonationLocationDao getDonationLocationDao(final Connection connection) {
         //return new DonationLocationFakeDaoImpl();
         return new DonationLocationPostgresDaoImpl(connection);
+    }
+
+    @Bean
+    public MunicipalityDao getMunicipalityDao(final Connection connection) {
+        return new MunicipalityPostgresDaoImpl(connection);
     }
 }
