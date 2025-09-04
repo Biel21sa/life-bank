@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -38,6 +39,7 @@ import { UserCredentialDto } from '../../../domain/dto/user-credential-dto';
     FontAwesomeModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatFormFieldModule,
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css'
@@ -51,6 +53,7 @@ export class SignInComponent {
   ]);
 
   isLoginIncorrect : boolean = false;
+  hidePassword: boolean = true;
 
   constructor(
     private router: Router,

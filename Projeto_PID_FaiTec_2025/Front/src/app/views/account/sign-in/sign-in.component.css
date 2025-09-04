@@ -1,20 +1,151 @@
-.base-form {
-    height: 100%;
-    background: linear-gradient(180deg, rgba(2, 0, 36, 1) 0%, #4050b5, rgb(202, 246, 255) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+  padding: 20px;
 }
 
-.form {
-    width: 30rem;
-    margin: auto;
-    background-color: rgb(255, 255, 255);
-    padding: 4rem 1rem;
-    border-radius: 1rem;
+.login-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
-div {
-    display: block;
+.login-header {
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+  color: white;
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.logo-section h1 {
+  margin: 15px 0 5px 0;
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+.subtitle {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+.logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.logo-icon mat-icon {
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.login-form {
+  padding: 40px 30px;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-title h2 {
+  margin: 0 0 5px 0;
+  color: #333;
+  font-weight: 400;
+}
+
+.form-title p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.login-button {
+  width: 100%;
+  height: 48px;
+  margin: 20px 0;
+  font-size: 1rem;
+  border-radius: 8px;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #f44336;
+  background: #ffebee;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.error-message mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.help-section {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.help-section p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.help-text {
+  font-size: 0.8rem !important;
+  color: #999 !important;
+}
+
+/* Botão de mostrar/ocultar senha */
+.mat-mdc-form-field button[mat-icon-button] {
+  color: #666;
+}
+
+.mat-mdc-form-field button[mat-icon-button]:hover {
+  color: #1976d2;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 10px;
+  }
+  
+  .login-header {
+    padding: 30px 20px;
+  }
+  
+  .login-form {
+    padding: 30px 20px;
+  }
+  
+  .logo-section h1 {
+    font-size: 1.5rem;
+  }
 }
