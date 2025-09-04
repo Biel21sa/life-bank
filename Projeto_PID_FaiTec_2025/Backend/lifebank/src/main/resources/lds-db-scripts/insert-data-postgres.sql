@@ -9,17 +9,14 @@ INSERT INTO donation_location (name, street, number, neighborhood, postal_code, 
 VALUES
 ('Hemocentro Campinas', 'Rua das Doações', '123', 'Centro', '13000-100', 2);
 
--- Administrator
 INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, donation_location_id)
 VALUES
 ('João Admin', 'ADMINISTRATOR', '00000000000', 'admin@example.com', '(11) 99999-0000', 'aa', 'Av. Central', '100', 'Centro', '01000-000', 1);
 
--- Donor
 INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, donation_location_id)
 VALUES
 ('Maria Doadora', 'USER', '11111111111', 'maria@example.com', '(11) 98888-1111', 'aa', 'Rua das Flores', '200', 'Jardim', '13000-000', NULL);
 
--- Clinic User
 INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, donation_location_id)
 VALUES
 ('Carlos Clínica', 'CLINIC', '22222222222', 'clinica@example.com', '(21) 97777-2222', 'aa', 'Rua da Saúde', '300', 'Boa Vista', '20000-000', NULL);

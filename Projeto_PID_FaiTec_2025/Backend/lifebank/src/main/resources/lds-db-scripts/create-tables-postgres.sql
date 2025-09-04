@@ -20,7 +20,7 @@ CREATE TABLE donation_location (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
     street VARCHAR(100) NOT NULL,
-    number VARCHAR(10) NOT NULL,
+    number VARCHAR(100) NOT NULL,
     neighborhood VARCHAR(100) NOT NULL,
     postal_code VARCHAR(10) NOT NULL,
     municipality_id INTEGER NOT NULL REFERENCES municipality(id)
@@ -39,7 +39,7 @@ CREATE TABLE user_model (
     street VARCHAR(100) NOT NULL,
     number VARCHAR(10) NOT NULL,
     neighborhood VARCHAR(100) NOT NULL,
-    postal_code VARCHAR(10) NOT NULL,
+    postal_code VARCHAR(14) NOT NULL,
     donation_location_id INTEGER REFERENCES donation_location(id)
 );
 
