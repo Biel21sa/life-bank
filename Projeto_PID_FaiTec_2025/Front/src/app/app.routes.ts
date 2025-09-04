@@ -11,6 +11,10 @@ import { UserListComponent } from './views/app/user/user-list/user-list.componen
 import { UserEditComponent } from './views/app/user/user-edit/user-edit.component';
 import { UserDetailComponent } from './views/app/user/user-detail/user-detail.component';
 import { UserCreateComponent } from './views/app/user/user-create/user-create.component';
+import { DonationLocationListComponent } from './views/app/donation-location/donation-location-list/donation-location-list.component';
+import { DonationLocationEditComponent } from './views/app/donation-location/donation-location-edit/donation-location-edit.component';
+import { DonationLocationDetailComponent } from './views/app/donation-location/donation-location-detail/donation-location-detail.component';
+import { DonationLocationCreateComponent } from './views/app/donation-location/donation-location-create/donation-location-create.component';
 
 export const routes: Routes = [
     {
@@ -57,6 +61,27 @@ export const routes: Routes = [
                     {
                         path: 'create',
                         component: UserCreateComponent
+                    },
+                ]
+            },
+            {
+                path: 'donation-location',
+                children: [
+                    {
+                        path: 'list',
+                        component: DonationLocationListComponent
+                    },
+                    {
+                        path: 'edit/:id',
+                        component: DonationLocationEditComponent
+                    },
+                    {
+                        path: 'detail/:id',
+                        component: DonationLocationDetailComponent
+                    },
+                    {
+                        path: 'create',
+                        component: DonationLocationCreateComponent
                     },
                 ]
             },
