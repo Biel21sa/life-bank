@@ -56,11 +56,15 @@ export class UserCreateComponent {
       street: ['', Validators.required],
       number: ['', Validators.required],
       neighborhood: ['', Validators.required],
-      postal_code: ['', Validators.required],
-      donation_location_id: [''],
+      postalCode: ['', Validators.required],
+      donationLocationId: [''],
       blood_type: [''],
       nameClinic: [''],
       cnpj: ['']
+    });
+
+    this.userForm.get('role')?.valueChanges.subscribe(() => {
+      this.updateValidators();
     });
 
     this.loadDonationLocations();
@@ -79,6 +83,74 @@ export class UserCreateComponent {
 
   get selectedRole() {
     return this.userForm.get('role')?.value;
+  }
+
+  updateValidators() {
+    const role = this.selectedRole;
+
+    // Reset validators
+    this.userForm.get('donationLocationId')?.clearValidators();
+    this.userForm.get('blood_type')?.clearValidators();
+    this.userForm.get('nameClinic')?.clearValidators();
+    this.userForm.get('cnpj')?.clearValidators();
+
+    // Add validators based on role
+    if (role === UserRole.ADMINISTRATOR) {
+      this.userForm.get('donationLocationId')?.setValidators([Validators.required]);
+    } else if (role === UserRole.USER) {
+      this.userForm.get('blood_type')?.setValidators([Validators.required]);
+    } else if (role === UserRole.CLINIC) {
+      this.userForm.get('nameClinic')?.setValidators([Validators.required]);
+      this.userForm.get('cnpj')?.setValidators([Validators.required]);
+    }
+
+    // Update form validation
+    this.userForm.get('donationLocationId')?.updateValueAndValidity();
+    this.userForm.get('blood_type')?.updateValueAndValidity();
+    this.userForm.get('nameClinic')?.updateValueAndValidity();
+    this.userForm.get('cnpj')?.updateValueAndValidity();
+  }
+
+  applyCpfMask(event: any) {
+    let value = event.target.value.replace(/\D/g, '');
+    if (value.length <= 11) {
+      value = value.replace(/(\d{3})(\d)/, '$1.$2');
+      value = value.replace(/(\d{3})(\d)/, '$1.$2');
+      value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    }
+    event.target.value = value;
+    this.userForm.get('cpf')?.setValue(value);
+  }
+
+  applyPhoneMask(event: any) {
+    let value = event.target.value.replace(/\D/g, '');
+    if (value.length <= 11) {
+      value = value.replace(/(\d{2})(\d)/, '($1) $2');
+      value = value.replace(/(\d{4,5})(\d{4})$/, '$1-$2');
+    }
+    event.target.value = value;
+    this.userForm.get('phone')?.setValue(value);
+  }
+
+  applyCnpjMask(event: any) {
+    let value = event.target.value.replace(/\D/g, '');
+    if (value.length <= 14) {
+      value = value.replace(/(\d{2})(\d)/, '$1.$2');
+      value = value.replace(/(\d{3})(\d)/, '$1.$2');
+      value = value.replace(/(\d{3})(\d)/, '$1/$2');
+      value = value.replace(/(\d{4})(\d{1,2})$/, '$1-$2');
+    }
+    event.target.value = value;
+    this.userForm.get('cnpj')?.setValue(value);
+  }
+
+  applyCepMask(event: any) {
+    let value = event.target.value.replace(/\D/g, '');
+    if (value.length <= 8) {
+      value = value.replace(/(\d{5})(\d)/, '$1-$2');
+    }
+    event.target.value = value;
+    this.userForm.get('postalCode')?.setValue(value);
   }
 
   onSubmit() {

@@ -2,10 +2,10 @@
   <mat-card-header>
     <mat-card-title>Criar Usuário</mat-card-title>
   </mat-card-header>
-  
+
   <mat-card-content>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-      
+
       <!-- Campos comuns -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nome</mat-label>
@@ -23,7 +23,8 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>CPF</mat-label>
-        <input matInput formControlName="cpf" required>
+        <input matInput formControlName="cpf" (input)="applyCpfMask($event)" placeholder="000.000.000-00" maxlength="14"
+          required>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
@@ -33,7 +34,8 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Telefone</mat-label>
-        <input matInput formControlName="phone" required>
+        <input matInput formControlName="phone" (input)="applyPhoneMask($event)" placeholder="(00) 00000-0000"
+          maxlength="15" required>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
@@ -58,13 +60,13 @@
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>CEP</mat-label>
-        <input matInput formControlName="postal_code" required>
+        <input matInput formControlName="postalCode" (input)="applyCepMask($event)" placeholder="00000-000" maxlength="9" required>
       </mat-form-field>
 
       <!-- Campo específico para ADMINISTRATOR -->
       <mat-form-field *ngIf="selectedRole === 'ADMINISTRATOR'" appearance="outline" class="full-width">
         <mat-label>Local de Doação</mat-label>
-        <mat-select formControlName="donation_location_id">
+        <mat-select formControlName="donationLocationId" required>
           <mat-option *ngFor="let location of donationLocations" [value]="location.id">
             {{ location.name }}
           </mat-option>
@@ -74,7 +76,7 @@
       <!-- Campo específico para USER (doador) -->
       <mat-form-field *ngIf="selectedRole === 'USER'" appearance="outline" class="full-width">
         <mat-label>Tipo Sanguíneo</mat-label>
-        <mat-select formControlName="blood_type">
+        <mat-select formControlName="blood_type" required>
           <mat-option value="A+">A+</mat-option>
           <mat-option value="A-">A-</mat-option>
           <mat-option value="B+">B+</mat-option>
@@ -90,12 +92,13 @@
       <div *ngIf="selectedRole === 'CLINIC'">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nome da Clínica</mat-label>
-          <input matInput formControlName="nameClinic">
+          <input matInput formControlName="nameClinic" required>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>CNPJ</mat-label>
-          <input matInput formControlName="cnpj">
+          <input matInput formControlName="cnpj" (input)="applyCnpjMask($event)" placeholder="00.000.000/0000-00"
+            maxlength="18" required>
         </mat-form-field>
       </div>
 
