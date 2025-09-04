@@ -14,16 +14,9 @@ export class UserUpdateService {
     private userReadService: UserReadService
   ) { }
 
-  async update(id: string, name: string): Promise<any> {
-    let userToUpdate: User = await this.userReadService.findById(id);
-    if (userToUpdate == null) {
-      throw new Error('Usuario nao encontrado');
-    }
-
-    userToUpdate.name = name;
-
+  async update(id: string, user: User): Promise<any> {
     return firstValueFrom(this.http.put<any>(
-      `${environment.api_endpoint}/user/${id}`, userToUpdate));
+      `${environment.api_endpoint}/user/${id}`, user));
   }
 
   async updatePassword(id: string,
