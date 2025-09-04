@@ -1,0 +1,48 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="">Local de Doação</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Lista</li>
+    </ol>
+</nav>
+<h1>Lista de Locais de Doação</h1>
+<hr>
+
+<div class="mat-elevation-z8">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Endereço</th>
+                <th scope="col">Bairro</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(item of donationLocations; track $index) {
+            <tr>
+                <th scope="row">{{ item.id }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.street }}, {{ item.number }}</td>
+                <td>{{ item.neighborhood }}</td>
+                <td>
+                    <div class="row">
+                        <div class="col-4">
+                            <a class="btn btn-primary" routerLink="/donation-location/detail/{{item.id}}">
+                                <fa-icon [icon]="fa.faAddressBook"></fa-icon>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a class="btn btn-warning" routerLink="/donation-location/edit/{{item.id}}">
+                                <fa-icon [icon]="fa.faEdit"></fa-icon>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
