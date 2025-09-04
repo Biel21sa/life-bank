@@ -1,3 +1,4 @@
+import { DonationLocation } from "./donation-location";
 import { UserRole } from "./user-role";
 
 export interface User {
@@ -11,9 +12,10 @@ export interface User {
     street: string,
     number: string,
     neighborhood: string,
-    postal_code: string,
-    donation_location_id?: string,
-    blood_type?: string,
+    postalCode: string,
+    donationLocationId?: string,
+    donationLocation: DonationLocation,
+    bloodType?: string,
     nameClinic?: string,
     cnpj?: string
 }
