@@ -20,6 +20,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import * as fontawesome from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationService } from '../../../services/security/authentication.service';
 import { UserCredentialDto } from '../../../domain/dto/user-credential-dto';
+import { AuthenticatedUserDto } from '../../../domain/dto/authenticated-user-dto';
 
 
 
@@ -100,9 +101,10 @@ export class SignInComponent {
         next: (value: any) => {
           console.log(value);
 
-          let user: UserCredentialDto = {
+          let user: AuthenticatedUserDto = {
             email: value.email,
-            password: value.password
+            password: credentials.password,
+            role: value.role
           };
 
           this.authenticationService.addDataToLocalStorage(user);

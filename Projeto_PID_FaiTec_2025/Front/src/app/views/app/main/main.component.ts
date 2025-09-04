@@ -46,6 +46,10 @@ export class MainComponent {
     private authenticationService: AuthenticationService
   ){}
 
+  isSystemAdmin(): boolean {
+    return this.authenticationService.isSystemAdmin();
+  }
+
   public logout() {
     console.log('logout clicado');
     this.authenticationService.logout();

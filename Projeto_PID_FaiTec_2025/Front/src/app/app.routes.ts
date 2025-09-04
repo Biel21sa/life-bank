@@ -6,6 +6,7 @@ import { MainComponent } from './views/app/main/main.component';
 import { HomeComponent } from './views/app/home/home.component';
 import { NotFoundComponent } from './views/not-found/not-found.component';
 import { authenticationGuard } from './services/security/guard/authentication.guard';
+import { AdminGuard } from './guards/admin.guard';
 import { UserListComponent } from './views/app/user/user-list/user-list.component';
 import { UserEditComponent } from './views/app/user/user-edit/user-edit.component';
 import { UserDetailComponent } from './views/app/user/user-detail/user-detail.component';
@@ -14,6 +15,10 @@ import { DonationLocationListComponent } from './views/app/donation-location/don
 import { DonationLocationEditComponent } from './views/app/donation-location/donation-location-edit/donation-location-edit.component';
 import { DonationLocationDetailComponent } from './views/app/donation-location/donation-location-detail/donation-location-detail.component';
 import { DonationLocationCreateComponent } from './views/app/donation-location/donation-location-create/donation-location-create.component';
+import { RoleHomeComponent } from './views/app/role-home/role-home.component';
+import { UserHomeComponent } from './views/app/user-home/user-home.component';
+import { ClinicHomeComponent } from './views/app/clinic-home/clinic-home.component';
+import { AdminHomeComponent } from './views/app/admin-home/admin-home.component';
 
 export const routes: Routes = [
     {
@@ -28,7 +33,24 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                component: HomeComponent
+                component: RoleHomeComponent
+            },
+            {
+                path: 'system-home',
+                component: HomeComponent,
+                canActivate: [AdminGuard]
+            },
+            {
+                path: 'admin-home',
+                component: AdminHomeComponent
+            },
+            {
+                path: 'clinic-home',
+                component: ClinicHomeComponent
+            },
+            {
+                path: 'user-home',
+                component: UserHomeComponent
             },
             {
                 path: 'account/my-profile',
@@ -40,6 +62,7 @@ export const routes: Routes = [
             },
             {
                 path: 'user',
+                canActivate: [AdminGuard],
                 children: [
                     {
                         path: 'list',
@@ -61,6 +84,7 @@ export const routes: Routes = [
             },
             {
                 path: 'donation-location',
+                canActivate: [AdminGuard],
                 children: [
                     {
                         path: 'list',
