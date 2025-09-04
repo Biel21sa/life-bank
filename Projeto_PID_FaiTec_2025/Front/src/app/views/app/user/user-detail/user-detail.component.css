@@ -1,0 +1,37 @@
+.section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.section h3 {
+  color: #1976d2;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.detail-row {
+  margin-bottom: 12px;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+}
+
+.detail-row strong {
+  min-width: 150px;
+  color: #333;
+}
+
+mat-card {
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+mat-card-actions {
+  display: flex;
+  gap: 10px;
+}
