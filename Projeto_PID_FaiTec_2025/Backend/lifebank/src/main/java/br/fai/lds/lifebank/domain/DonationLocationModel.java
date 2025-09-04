@@ -7,7 +7,8 @@ public class DonationLocationModel {
     private String neighborhood;
     private int number;
     private String postalCode;
-    private int municipality_id;
+    private int municipalityId;
+    private MunicipalityModel municipality;
 
     public DonationLocationModel() {
     }
@@ -68,12 +69,20 @@ public class DonationLocationModel {
         this.postalCode = postalCode;
     }
 
-    public int getMunicipality_id() {
-        return municipality_id;
+    public int getMunicipalityId() {
+        return municipalityId;
     }
 
-    public void setMunicipality_id(int municipality_id) {
-        this.municipality_id = municipality_id;
+    public void setMunicipalityId(int municipalityId) {
+        this.municipalityId = municipalityId;
+    }
+
+    public MunicipalityModel getMunicipality() {
+        return municipality;
+    }
+
+    public void setMunicipality(MunicipalityModel municipality) {
+        this.municipality = municipality;
     }
 }
 

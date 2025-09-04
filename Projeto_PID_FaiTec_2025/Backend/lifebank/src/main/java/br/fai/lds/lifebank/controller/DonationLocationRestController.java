@@ -51,7 +51,7 @@ public class DonationLocationRestController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/`{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<DonationLocationModel> update(@PathVariable final int id, @RequestBody final DonationLocationModel data) {
 
         DonationLocationModel entity = data;
