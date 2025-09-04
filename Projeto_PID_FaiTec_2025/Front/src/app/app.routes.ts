@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { SignInComponent } from './views/account/sign-in/sign-in.component';
 
 import { MyProfileComponent } from './views/account/my-profile/my-profile.component';
-import { HelpComponent } from './views/app/help/help.component';
 import { MainComponent } from './views/app/main/main.component';
 import { HomeComponent } from './views/app/home/home.component';
 import { NotFoundComponent } from './views/not-found/not-found.component';
@@ -34,10 +33,6 @@ export const routes: Routes = [
             {
                 path: 'account/my-profile',
                 component: MyProfileComponent
-            },
-            {
-                path: 'help',
-                component: HelpComponent
             },
             {
                 path: 'main',
