@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../../domain/model/user';
 import { UserRole } from '../../../../domain/model/user-role';
@@ -23,7 +24,8 @@ import { DonationLocationReadService } from '../../../../services/donation-locat
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule
   ],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.css'

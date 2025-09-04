@@ -1,116 +1,153 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Criar Usuário</mat-card-title>
-  </mat-card-header>
+<div class="container">
+  <div class="page-header">
+    <h1>Criar Usuário</h1>
+    <p>Cadastre um novo usuário no sistema</p>
+  </div>
 
-  <mat-card-content>
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>person_add</mat-icon>
+        Formulário de Cadastro
+      </mat-card-title>
+    </mat-card-header>
 
-      <!-- Campos comuns -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Nome</mat-label>
-        <input matInput formControlName="name" required>
-      </mat-form-field>
+    <mat-card-content>
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Tipo de Usuário</mat-label>
-        <mat-select formControlName="role" required>
-          <mat-option *ngFor="let role of userRoles" [value]="role">
-            {{ userRoleLabels[role] }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <!-- Informações Pessoais -->
+        <div class="section">
+          <h3>Informações Pessoais</h3>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>CPF</mat-label>
-        <input matInput formControlName="cpf" (input)="applyCpfMask($event)" placeholder="000.000.000-00" maxlength="14"
-          required>
-      </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nome Completo</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" required>
-      </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Tipo de Usuário</mat-label>
+            <mat-select formControlName="role" required>
+              <mat-option *ngFor="let role of userRoles" [value]="role">
+                {{ userRoleLabels[role] }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matSuffix>badge</mat-icon>
+          </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Telefone</mat-label>
-        <input matInput formControlName="phone" (input)="applyPhoneMask($event)" placeholder="(00) 00000-0000"
-          maxlength="15" required>
-      </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>CPF</mat-label>
+            <input matInput formControlName="cpf" (input)="applyCpfMask($event)" placeholder="000.000.000-00" maxlength="14" required>
+            <mat-icon matSuffix>credit_card</mat-icon>
+          </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Senha</mat-label>
-        <input matInput type="password" formControlName="password" required>
-      </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" required>
+            <mat-icon matSuffix>email</mat-icon>
+          </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Rua</mat-label>
-        <input matInput formControlName="street" required>
-      </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Telefone</mat-label>
+            <input matInput formControlName="phone" (input)="applyPhoneMask($event)" placeholder="(00) 00000-0000" maxlength="15" required>
+            <mat-icon matSuffix>phone</mat-icon>
+          </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Número</mat-label>
-        <input matInput formControlName="number" required>
-      </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Senha</mat-label>
+            <input matInput type="password" formControlName="password" required>
+            <mat-icon matSuffix>lock</mat-icon>
+          </mat-form-field>
+        </div>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Bairro</mat-label>
-        <input matInput formControlName="neighborhood" required>
-      </mat-form-field>
+        <!-- Endereço -->
+        <div class="section">
+          <h3>Endereço</h3>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>CEP</mat-label>
-        <input matInput formControlName="postalCode" (input)="applyCepMask($event)" placeholder="00000-000" maxlength="9" required>
-      </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Rua</mat-label>
+            <input matInput formControlName="street" required>
+            <mat-icon matSuffix>home</mat-icon>
+          </mat-form-field>
 
-      <!-- Campo específico para ADMINISTRATOR -->
-      <mat-form-field *ngIf="selectedRole === 'ADMINISTRATOR'" appearance="outline" class="full-width">
-        <mat-label>Local de Doação</mat-label>
-        <mat-select formControlName="donationLocationId" required>
-          <mat-option *ngFor="let location of donationLocations" [value]="location.id">
-            {{ location.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Número</mat-label>
+            <input matInput formControlName="number" required>
+            <mat-icon matSuffix>tag</mat-icon>
+          </mat-form-field>
 
-      <!-- Campo específico para USER (doador) -->
-      <mat-form-field *ngIf="selectedRole === 'USER'" appearance="outline" class="full-width">
-        <mat-label>Tipo Sanguíneo</mat-label>
-        <mat-select formControlName="blood_type" required>
-          <mat-option value="A+">A+</mat-option>
-          <mat-option value="A-">A-</mat-option>
-          <mat-option value="B+">B+</mat-option>
-          <mat-option value="B-">B-</mat-option>
-          <mat-option value="AB+">AB+</mat-option>
-          <mat-option value="AB-">AB-</mat-option>
-          <mat-option value="O+">O+</mat-option>
-          <mat-option value="O-">O-</mat-option>
-        </mat-select>
-      </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Bairro</mat-label>
+            <input matInput formControlName="neighborhood" required>
+            <mat-icon matSuffix>location_city</mat-icon>
+          </mat-form-field>
 
-      <!-- Campos específicos para CLINIC -->
-      <div *ngIf="selectedRole === 'CLINIC'">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nome da Clínica</mat-label>
-          <input matInput formControlName="nameClinic" required>
-        </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>CEP</mat-label>
+            <input matInput formControlName="postalCode" (input)="applyCepMask($event)" placeholder="00000-000" maxlength="9" required>
+            <mat-icon matSuffix>place</mat-icon>
+          </mat-form-field>
+        </div>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>CNPJ</mat-label>
-          <input matInput formControlName="cnpj" (input)="applyCnpjMask($event)" placeholder="00.000.000/0000-00"
-            maxlength="18" required>
-        </mat-form-field>
-      </div>
+        <!-- Campos Específicos -->
+        <div class="section" *ngIf="selectedRole === 'ADMINISTRATOR'">
+          <h3>Informações do Administrador</h3>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Local de Doação</mat-label>
+            <mat-select formControlName="donationLocationId" required>
+              <mat-option *ngFor="let location of donationLocations" [value]="location.id">
+                {{ location.name }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matSuffix>business</mat-icon>
+          </mat-form-field>
+        </div>
 
-    </form>
-  </mat-card-content>
+        <div class="section" *ngIf="selectedRole === 'USER'">
+          <h3>Informações do Doador</h3>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Tipo Sanguíneo</mat-label>
+            <mat-select formControlName="blood_type" required>
+              <mat-option value="A+">A+</mat-option>
+              <mat-option value="A-">A-</mat-option>
+              <mat-option value="B+">B+</mat-option>
+              <mat-option value="B-">B-</mat-option>
+              <mat-option value="AB+">AB+</mat-option>
+              <mat-option value="AB-">AB-</mat-option>
+              <mat-option value="O+">O+</mat-option>
+              <mat-option value="O-">O-</mat-option>
+            </mat-select>
+            <mat-icon matSuffix>bloodtype</mat-icon>
+          </mat-form-field>
+        </div>
 
-  <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!userForm.valid">
-      Criar Usuário
-    </button>
-    <button mat-button (click)="onCancel()">
-      Cancelar
-    </button>
-  </mat-card-actions>
-</mat-card>
+        <div class="section" *ngIf="selectedRole === 'CLINIC'">
+          <h3>Informações da Clínica</h3>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nome da Clínica</mat-label>
+            <input matInput formControlName="nameClinic" required>
+            <mat-icon matSuffix>local_hospital</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>CNPJ</mat-label>
+            <input matInput formControlName="cnpj" (input)="applyCnpjMask($event)" placeholder="00.000.000/0000-00" maxlength="18" required>
+            <mat-icon matSuffix>business_center</mat-icon>
+          </mat-form-field>
+        </div>
+
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!userForm.valid">
+        <mat-icon>save</mat-icon>
+        Criar Usuário
+      </button>
+      <button mat-button (click)="onCancel()">
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
