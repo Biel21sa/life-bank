@@ -4,26 +4,387 @@ body {
     margin: 0;
 }
 
+.main-root {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #f8faff;
+}
+
+/* Toolbar moderno */
+.mat-toolbar {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%) !important;
+    box-shadow: 0 4px 20px rgba(25, 118, 210, 0.3);
+    z-index: 1000;
+}
+
+.mat-toolbar span {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.logo-title {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.logo-title:hover {
+    background: rgba(255,255,255,0.1);
+    transform: scale(1.05);
+}
+
 .toolbar-item-spacer {
     flex: 1 1 auto;
 }
 
+/* Container principal */
 .app-container {
-    min-height: 80vh;
+    flex: 1;
+    background: #f8faff;
 }
 
+/* Sidenav moderno */
 .app-sidenav {
-    width: 230px;
+    width: 280px;
+    background: white;
+    border-right: 1px solid #e0e7ff;
+    box-shadow: 4px 0 20px rgba(25, 118, 210, 0.1);
 }
 
-.main-root {
+.mat-nav-list {
+    padding: 20px 0;
+}
+
+.mat-list-item {
+    height: 48px !important;
+    margin: 4px 16px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    color: #666;
+    position: relative;
+    overflow: hidden;
+}
+
+.mat-list-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    width: 3px;
+    background: #1976d2;
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
 }
 
-footer {
-    margin-top: auto;
-    background-color: #3f51b5;
-    color: white;
+.mat-list-item:hover {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%) !important;
+    color: #1976d2;
+    transform: translateX(8px);
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.15);
 }
+
+.mat-list-item:hover::before {
+    transform: scaleY(1);
+}
+
+.mat-list-item.mat-list-item-active {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%) !important;
+    color: white;
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.4);
+}
+
+.mat-list-item.mat-list-item-active::before {
+    transform: scaleY(1);
+    background: white;
+}
+
+.mat-list-item mat-icon {
+    margin-right: 16px;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+.mat-list-item:hover mat-icon {
+    transform: scale(1.1);
+}
+
+/* Expansion panels */
+.mat-expansion-panel {
+    margin: 8px 16px !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    border: 1px solid #e0e7ff;
+}
+
+.mat-expansion-panel-header {
+    height: 48px !important;
+    padding: 0 16px !important;
+    color: #1976d2;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.mat-expansion-panel-header mat-icon {
+    margin-right: 12px;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.mat-expansion-panel-header span {
+    flex: 1;
+}
+
+.mat-expansion-panel-header:hover {
+    background: #e3f2fd !important;
+}
+
+.mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
+.mat-expansion-panel .mat-nav-list {
+    padding: 8px 0;
+}
+
+.mat-expansion-panel .mat-list-item {
+    margin: 4px 12px !important;
+    padding: 8px 16px !important;
+    font-size: 0.9rem;
+    display: flex !important;
+    align-items: center !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    color: #666;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    height: 40px !important;
+    min-height: 40px !important;
+}
+
+.mat-expansion-panel .mat-list-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: #1976d2;
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.mat-expansion-panel .mat-list-item:hover {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+    color: #1976d2;
+    transform: translateX(8px);
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.15);
+}
+
+.mat-expansion-panel .mat-list-item:hover::before {
+    transform: scaleY(1);
+}
+
+.mat-expansion-panel .mat-list-item.mat-list-item-active {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.4);
+}
+
+.mat-expansion-panel .mat-list-item.mat-list-item-active::before {
+    transform: scaleY(1);
+    background: white;
+}
+
+.mat-expansion-panel .mat-list-item mat-icon {
+    margin-right: 12px !important;
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+    color: inherit;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.mat-expansion-panel .mat-list-item:hover mat-icon {
+    transform: scale(1.1);
+}
+
+.mat-expansion-panel .mat-list-item span {
+    flex: 1;
+    font-weight: 500;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* Conteúdo principal */
+.page-wrap {
+    flex: 1;
+    overflow-y: auto;
+    background: #f8faff;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+/* Footer moderno */
+footer {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    box-shadow: 0 -4px 20px rgba(25, 118, 210, 0.2);
+}
+
+footer fa-icon {
+    color: #ff4081;
+    margin: 0 4px;
+}
+
+/* Menu dropdown */
+.mat-menu-panel {
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+}
+
+.mat-menu-item {
+    height: 44px !important;
+    border-radius: 8px;
+    margin: 4px 8px;
+    transition: all 0.2s ease;
+}
+
+.mat-menu-item:hover {
+    background: #e3f2fd !important;
+    color: #1976d2;
+}
+
+.mat-menu-item mat-icon {
+    margin-right: 12px;
+    color: inherit;
+}
+
+/* Botões da toolbar */
+.mat-toolbar button {
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.mat-toolbar button:hover {
+    background: rgba(255,255,255,0.1) !important;
+    transform: scale(1.05);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .app-sidenav {
+        width: 100%;
+    }
+    
+    .container {
+        padding: 15px;
+    }
+    
+    .mat-toolbar span {
+        font-size: 1.2rem;
+    }
+}
+
+/* Estilos específicos para itens dos submenus */
+mat-expansion-panel mat-nav-list a[mat-list-item] {
+    margin: 4px 12px !important;
+    padding: 0 16px !important;
+    font-size: 0.9rem !important;
+    display: flex !important;
+    align-items: center !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    color: #666 !important;
+    text-decoration: none !important;
+    position: relative !important;
+    overflow: hidden !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    line-height: 40px !important;
+}
+
+mat-expansion-panel mat-nav-list a[mat-list-item] .mdc-list-item__content {
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important;
+    padding: 0 !important;
+}
+
+mat-expansion-panel mat-nav-list a[mat-list-item]::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: #1976d2;
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+mat-expansion-panel mat-nav-list a[mat-list-item]:hover {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%) !important;
+    color: #1976d2 !important;
+    transform: translateX(8px) !important;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.15) !important;
+}
+
+mat-expansion-panel mat-nav-list a[mat-list-item]:hover::before {
+    transform: scaleY(1);
+}
+
+mat-expansion-panel mat-nav-list a[mat-list-item] mat-icon {
+    margin-right: 12px !important;
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+    color: inherit !important;
+    transition: all 0.3s ease !important;
+    flex-shrink: 0 !important;
+    vertical-align: middle !important;
+}
+
+mat-expansion-panel mat-nav-list a[mat-list-item]:hover mat-icon {
+    transform: scale(1.1) !important;
+}
+
+mat-expansion-panel mat-nav-list a[mat-list-item] span {
+    flex: 1 !important;
+    font-weight: 500 !important;
+    line-height: 40px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+}
+
+/* Animações */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.mat-nav-list {
+    animation: slideIn 0.5s ease-out;
+}
+
