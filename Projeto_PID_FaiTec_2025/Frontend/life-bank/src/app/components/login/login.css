@@ -100,9 +100,11 @@ main > form > input {
     padding: 2.5%;
     margin-top: 5%;
     font-size: 1.7ch;
+    cursor: pointer;
 }
 .Login:disabled{
     background-color: var(--primary-gray);
+    cursor: default;
 }
 
 form > p{

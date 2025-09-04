@@ -14,15 +14,15 @@
         <main>
             <h2>Login</h2>
             <p>Acesse sua conta</p>
-            <form>
-                <input placeholder="Email" type="email" required> <br>
-                <input placeholder="Senha" type="password" required> <br>
+            <form onsubmit="return false" [formGroup]="form" >
+                <input placeholder="Email" type="email" formControlName="email"> <br>
+                <input placeholder="Senha" type="password" formControlName="password"> <br>
                 <span class="credentialSpan">
                     <input type="checkbox" id="rememberme">
                     <label for="rememeberme">Lembrar usuário</label>
                     <a href="#">Esqueceu a senha?</a>
                 </span>
-                <button class="Login">Login</button>
+                <button class="Login" [disabled]="!validateFields()" (click)="login()">Login</button>
                 <p>Sem conta? <a routerLink="/signup">Cadastrar</a></p>
             </form>
         </main>
