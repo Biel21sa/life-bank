@@ -15,6 +15,7 @@ public class UserModel {
     private String postalCode;
 
     // Campos opcionais
+    private DonationLocationModel donationLocation;
     private int donationLocationId;
     private String bloodType;
     private String nameClinic;
@@ -162,5 +163,13 @@ public class UserModel {
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
+    }
+
+    public DonationLocationModel getDonationLocation() {
+        return donationLocation;
+    }
+
+    public void setDonationLocation(DonationLocationModel donationLocation) {
+        this.donationLocation = donationLocation;
     }
 }

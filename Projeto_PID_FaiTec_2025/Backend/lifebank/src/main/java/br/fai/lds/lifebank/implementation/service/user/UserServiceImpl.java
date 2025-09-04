@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
             return true;
         }
 
-        if (password.length() < 3) {
+        if (password.length() < 2) {
             return true;
         }
 
