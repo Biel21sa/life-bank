@@ -1,0 +1,30 @@
+<mat-card *ngIf="donationLocation">
+  <mat-card-header>
+    <mat-card-title>Detalhes do Local de Doação</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="detail-row">
+      <strong>Nome:</strong> {{ donationLocation.name }}
+    </div>
+    <div class="detail-row">
+      <strong>Endereço:</strong> {{ donationLocation.street }}, {{ donationLocation.number }}
+    </div>
+    <div class="detail-row">
+      <strong>Bairro:</strong> {{ donationLocation.neighborhood }}
+    </div>
+    <div class="detail-row">
+      <strong>CEP:</strong> {{ donationLocation.postalCode }}
+    </div>
+    <div class="detail-row">
+      <strong>Município:</strong> {{ donationLocation.municipality.name }}, {{
+      donationLocation.municipality.state }}
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="goBack()">
+      Voltar
+    </button>
+  </mat-card-actions>
+</mat-card>

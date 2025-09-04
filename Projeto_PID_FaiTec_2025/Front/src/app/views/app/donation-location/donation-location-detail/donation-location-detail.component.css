@@ -1,0 +1,14 @@
+.detail-row {
+  margin-bottom: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+mat-card {
+  max-width: 600px;
+  margin: 20px auto;
+}
