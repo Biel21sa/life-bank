@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DonationLocationUpdateService } from '../../../../services/donation-location/donation-location-update.service';
 import { DonationLocation } from '../../../../domain/model/donation-location';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-donation-location-detail',
   imports: [
     CommonModule,
+    RouterModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    NgxMaskPipe
   ],
   templateUrl: './donation-location-detail.component.html',
   styleUrl: './donation-location-detail.component.css'

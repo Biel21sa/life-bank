@@ -1,30 +1,60 @@
-<mat-card *ngIf="donationLocation">
-  <mat-card-header>
-    <mat-card-title>Detalhes do Local de Doação</mat-card-title>
-  </mat-card-header>
+<div class="container">
+  <div class="page-header">
+    <h1>Detalhes do Local de Doação</h1>
+    <p>Visualize as informações completas do local de doação</p>
+  </div>
 
-  <mat-card-content>
-    <div class="detail-row">
-      <strong>Nome:</strong> {{ donationLocation.name }}
-    </div>
-    <div class="detail-row">
-      <strong>Endereço:</strong> {{ donationLocation.street }}, {{ donationLocation.number }}
-    </div>
-    <div class="detail-row">
-      <strong>Bairro:</strong> {{ donationLocation.neighborhood }}
-    </div>
-    <div class="detail-row">
-      <strong>CEP:</strong> {{ donationLocation.postalCode }}
-    </div>
-    <div class="detail-row">
-      <strong>Município:</strong> {{ donationLocation.municipality.name }}, {{
-      donationLocation.municipality.state }}
-    </div>
-  </mat-card-content>
+  <mat-card *ngIf="donationLocation">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>add_location</mat-icon>
+        {{ donationLocation.name }}
+      </mat-card-title>
+    </mat-card-header>
 
-  <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="goBack()">
-      Voltar
-    </button>
-  </mat-card-actions>
-</mat-card>
+    <mat-card-content>
+      <div class="section">
+        <h3>Informações Básicas</h3>
+        <div class="detail-row">
+          <strong>Nome:</strong>
+          <span>{{ donationLocation.name }}</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Endereço</h3>
+        <div class="detail-row">
+          <strong>Rua:</strong>
+          <span>{{ donationLocation.street }}</span>
+        </div>
+        <div class="detail-row">
+          <strong>Número:</strong>
+          <span>{{ donationLocation.number }}</span>
+        </div>
+        <div class="detail-row">
+          <strong>Bairro:</strong>
+          <span>{{ donationLocation.neighborhood }}</span>
+        </div>
+        <div class="detail-row">
+          <strong>CEP:</strong>
+          <span>{{ donationLocation.postalCode | mask: '00000-000' }}</span>
+        </div>
+        <div class="detail-row">
+          <strong>Município:</strong>
+          <span>{{ donationLocation.municipality.name }}, {{ donationLocation.municipality.state }}</span>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" [routerLink]="['/donation-location/edit', donationLocation.id]">
+        <mat-icon>edit</mat-icon>
+        Editar
+      </button>
+      <button mat-button routerLink="/donation-location/list">
+        <mat-icon>arrow_back</mat-icon>
+        Voltar
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
