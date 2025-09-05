@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, A
 import { User } from '../../../domain/model/user';
 import { ToastrService } from 'ngx-toastr';
 import { UserUpdateService } from '../../../services/user/user-update.service';
+import { DonationLocationReadService } from '../../../services/donation-location/donation-location-read.service';
+import { DonationLocation } from '../../../domain/model/donation-location';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -39,6 +41,7 @@ export class MyProfileComponent implements OnInit {
 
   user: User | null = null;
   selectedTab = 0;
+  donationLocations: DonationLocation[] = [];
 
   dataForm: FormGroup;
   passwordForm: FormGroup;
@@ -54,12 +57,14 @@ export class MyProfileComponent implements OnInit {
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private userUpdateService: UserUpdateService,
+    private donationLocationService: DonationLocationReadService,
   ) {
     this.initializeForms();
   }
 
   ngOnInit() {
     this.loadUserData();
+    this.loadDonationLocations();
   }
 
   initializeForms() {
@@ -72,7 +77,8 @@ export class MyProfileComponent implements OnInit {
       number: ['', [Validators.required]],
       neighborhood: ['', [Validators.required]],
       postalCode: ['', [Validators.required]],
-      blood_type: [''],
+      donationLocationId: [''],
+      bloodType: [''],
       nameClinic: [''],
       cnpj: ['']
     });
@@ -109,7 +115,8 @@ export class MyProfileComponent implements OnInit {
           number: this.user.number,
           neighborhood: this.user.neighborhood,
           postalCode: this.user.postalCode,
-          blood_type: this.user.bloodType,
+          donationLocationId: this.user.donationLocationId,
+          bloodType: this.user.bloodType,
           nameClinic: this.user.nameClinic,
           cnpj: this.user.cnpj
         });
@@ -120,13 +127,24 @@ export class MyProfileComponent implements OnInit {
     }
   }
 
+  loadDonationLocations() {
+    this.donationLocationService.findAll().subscribe({
+      next: (locations) => {
+        this.donationLocations = locations;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar locais de doação:', error);
+      }
+    });
+  }
+
   async updateData() {
     if (this.dataForm.valid && this.user) {
       try {
         const updatedUser = { ...this.user, ...this.dataForm.value };
         await this.userUpdateService.update(updatedUser.id, updatedUser);
         this.toastr.success('Dados atualizados com sucesso!');
-        this.loadUserData(); // Recarrega os dados
+        this.loadUserData();
       } catch (error) {
         this.toastr.error('Erro ao atualizar dados');
         console.error(error);
