@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -24,6 +25,7 @@ import { NgxMaskDirective } from 'ngx-mask';
     MatSelectModule,
     MatButtonModule,
     MatCardModule,
+    MatIconModule,
     NgxMaskDirective
   ],
   templateUrl: './donation-location-create.component.html',
