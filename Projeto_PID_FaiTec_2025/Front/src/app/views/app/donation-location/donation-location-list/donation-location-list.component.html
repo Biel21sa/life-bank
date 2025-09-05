@@ -55,6 +55,9 @@
                                 [routerLink]="['/donation-location/edit', location.id]" matTooltip="Editar">
                                 <mat-icon>edit</mat-icon>
                             </button>
+                            <!-- <button mat-icon-button color="warn" (click)="deleteLocation(location.id!)" matTooltip="Excluir">
+                                <mat-icon>delete</mat-icon>
+                            </button> -->
                         </div>
                     </td>
                 </ng-container>
@@ -74,12 +77,12 @@
         align-items: center;
         gap: 16px;
     }
-    
+
     .search-box {
         flex: 1;
         max-width: 400px;
     }
-    
+
     .search-field {
         width: 100%;
     }

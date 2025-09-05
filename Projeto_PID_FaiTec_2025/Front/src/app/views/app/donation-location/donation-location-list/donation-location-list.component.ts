@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DonationLocationReadService } from '../../../../services/donation-location/donation-location-read.service';
+import { DonationLocationDeleteService } from '../../../../services/donation-location/donation-location-delete.service';
 import { DonationLocation } from '../../../../domain/model/donation-location';
+import { ToastrService } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,6 +38,8 @@ export class DonationLocationListComponent implements OnInit {
 
   constructor(
     private donationLocationReadService: DonationLocationReadService,
+    private donationLocationDeleteService: DonationLocationDeleteService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -57,5 +61,18 @@ export class DonationLocationListComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  async deleteLocation(locationId: string) {
+    if (confirm('Tem certeza que deseja excluir este local de doação?')) {
+      try {
+        await this.donationLocationDeleteService.delete(locationId);
+        this.toastr.success('Local de doação removido com sucesso!');
+        this.loadDonationLocations();
+      } catch (error) {
+        this.toastr.error('Erro ao remover local de doação');
+        console.error(error);
+      }
+    }
   }
 }
