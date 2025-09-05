@@ -60,11 +60,10 @@ public class UserRestController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/`{id}")
-    public ResponseEntity<UserModel> update(@PathVariable final int id, @RequestBody final UpdateUserDto data) {
+    @PutMapping("/{id}")
+    public ResponseEntity<UserModel> update(@PathVariable final int id, @RequestBody final UserModel data) {
 
-        UserModel entity = data.toUserModel();
-        userService.update(id, entity);
+        userService.update(id, data);
 
         return ResponseEntity.noContent().build();
     }
@@ -84,6 +83,15 @@ public class UserRestController {
     @GetMapping("/email/{email}")
     public ResponseEntity<UserModel> getEntityByEmail(@PathVariable final String email) {
         final UserModel entity = userService.findByEmail(email);
+        if(entity == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(entity);
+    }
+
+    @GetMapping("/role/{role}")
+    public ResponseEntity<List<UserModel>> getEntityByRole(@PathVariable final String role) {
+        final List<UserModel> entity = userService.findByRole(role);
         if(entity == null) {
             return ResponseEntity.notFound().build();
         }

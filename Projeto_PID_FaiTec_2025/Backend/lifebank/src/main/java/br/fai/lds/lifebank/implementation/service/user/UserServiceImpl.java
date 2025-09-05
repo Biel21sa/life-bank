@@ -1,10 +1,12 @@
 package br.fai.lds.lifebank.implementation.service.user;
 
+import br.fai.lds.lifebank.domain.DonationModel;
 import br.fai.lds.lifebank.domain.UserModel;
 import br.fai.lds.lifebank.port.dao.user.UserDao;
 import br.fai.lds.lifebank.port.service.user.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -109,5 +111,16 @@ public class UserServiceImpl implements UserService {
 
         userDao.updatePassword(id, newPassword);
         return true;
+    }
+
+    @Override
+    public List<UserModel> findByRole(String role) {
+        if (role == null) {
+            return new ArrayList<>();
+        }
+
+        List<UserModel> users = userDao.findByRole(role);
+
+        return users;
     }
 }
