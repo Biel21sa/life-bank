@@ -65,12 +65,6 @@ public class DonationLocationPostgresDaoImpl implements DonationLocationDao {
         logger.log(Level.INFO, "Preparando para remover o local de doação.");
         
         try {
-            String updateSql = "UPDATE user_model SET donation_location_id = NULL WHERE donation_location_id = ?";
-            PreparedStatement updateStatement = connection.prepareStatement(updateSql);
-            updateStatement.setInt(1, id);
-            updateStatement.execute();
-            updateStatement.close();
-
             String deleteSql = "DELETE FROM donation_location WHERE id = ?";
             PreparedStatement deleteStatement = connection.prepareStatement(deleteSql);
             deleteStatement.setInt(1, id);
