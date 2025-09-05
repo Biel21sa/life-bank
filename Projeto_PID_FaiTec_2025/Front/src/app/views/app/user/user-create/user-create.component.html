@@ -37,7 +37,8 @@
 
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>CPF</mat-label>
-            <input matInput formControlName="cpf" (input)="applyCpfMask($event)" placeholder="000.000.000-00" maxlength="14" required>
+            <input matInput formControlName="cpf" (input)="applyCpfMask($event)" placeholder="000.000.000-00"
+              maxlength="14" required>
             <mat-icon matSuffix>credit_card</mat-icon>
           </mat-form-field>
 
@@ -49,7 +50,8 @@
 
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Telefone</mat-label>
-            <input matInput formControlName="phone" (input)="applyPhoneMask($event)" placeholder="(00) 00000-0000" maxlength="15" required>
+            <input matInput formControlName="phone" (input)="applyPhoneMask($event)" placeholder="(00) 00000-0000"
+              maxlength="15" required>
             <mat-icon matSuffix>phone</mat-icon>
           </mat-form-field>
 
@@ -72,7 +74,7 @@
 
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Número</mat-label>
-            <input matInput formControlName="number" required>
+            <input matInput formControlName="number" type="number" required>
             <mat-icon matSuffix>tag</mat-icon>
           </mat-form-field>
 
@@ -84,7 +86,8 @@
 
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>CEP</mat-label>
-            <input matInput formControlName="postalCode" (input)="applyCepMask($event)" placeholder="00000-000" maxlength="9" required>
+            <input matInput formControlName="postalCode" (input)="applyCepMask($event)" placeholder="00000-000"
+              maxlength="9" required>
             <mat-icon matSuffix>place</mat-icon>
           </mat-form-field>
         </div>
@@ -107,7 +110,7 @@
           <h3>Informações do Doador</h3>
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Tipo Sanguíneo</mat-label>
-            <mat-select formControlName="blood_type" required>
+            <mat-select formControlName="bloodType" required>
               <mat-option value="A+">A+</mat-option>
               <mat-option value="A-">A-</mat-option>
               <mat-option value="B+">B+</mat-option>
@@ -131,7 +134,8 @@
 
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>CNPJ</mat-label>
-            <input matInput formControlName="cnpj" (input)="applyCnpjMask($event)" placeholder="00.000.000/0000-00" maxlength="18" required>
+            <input matInput formControlName="cnpj" (input)="applyCnpjMask($event)" placeholder="00.000.000/0000-00"
+              maxlength="18" required>
             <mat-icon matSuffix>business_center</mat-icon>
           </mat-form-field>
         </div>
