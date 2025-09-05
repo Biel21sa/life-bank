@@ -113,21 +113,21 @@ export class UserEditComponent implements OnInit {
     const role = this.selectedRole;
 
     this.form.get('donationLocationId')?.clearValidators();
-    this.form.get('blood_type')?.clearValidators();
+    this.form.get('bloodType')?.clearValidators();
     this.form.get('nameClinic')?.clearValidators();
     this.form.get('cnpj')?.clearValidators();
 
     if (role === UserRole.ADMINISTRATOR) {
       this.form.get('donationLocationId')?.setValidators([Validators.required]);
     } else if (role === UserRole.USER) {
-      this.form.get('blood_type')?.setValidators([Validators.required]);
+      this.form.get('bloodType')?.setValidators([Validators.required]);
     } else if (role === UserRole.CLINIC) {
       this.form.get('nameClinic')?.setValidators([Validators.required]);
       this.form.get('cnpj')?.setValidators([Validators.required]);
     }
 
     this.form.get('donationLocationId')?.updateValueAndValidity();
-    this.form.get('blood_type')?.updateValueAndValidity();
+    this.form.get('bloodType')?.updateValueAndValidity();
     this.form.get('nameClinic')?.updateValueAndValidity();
     this.form.get('cnpj')?.updateValueAndValidity();
   }
