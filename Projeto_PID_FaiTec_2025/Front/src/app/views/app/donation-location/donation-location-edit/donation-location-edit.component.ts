@@ -10,7 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { NgxMaskDirective } from 'ngx-mask';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -22,7 +24,9 @@ import { ToastrService } from 'ngx-toastr';
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule,
+    NgxMaskDirective
   ],
   templateUrl: './donation-location-edit.component.html',
   styleUrl: './donation-location-edit.component.css'
@@ -42,6 +46,7 @@ export class DonationLocationEditComponent implements OnInit {
     private toastrService: ToastrService
   ) {
     this.donationLocationForm = this.fb.group({
+      id: [''],
       name: ['', Validators.required],
       street: ['', Validators.required],
       number: ['', Validators.required],
