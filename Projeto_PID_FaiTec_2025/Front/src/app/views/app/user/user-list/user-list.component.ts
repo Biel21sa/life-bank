@@ -13,6 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
+import { NgxMaskPipe } from 'ngx-mask';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -27,6 +28,7 @@ import { MatTableDataSource } from '@angular/material/table';
     MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
+    NgxMaskPipe,
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css'

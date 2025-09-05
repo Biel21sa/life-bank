@@ -79,7 +79,7 @@
             <th mat-header-cell *matHeaderCellDef>Contato</th>
             <td mat-cell *matCellDef="let user">
               <div class="contact-info">
-                <div class="phone">{{ user.phone }}</div>
+                <div class="phone">{{ user.phone | mask: '(00) 00000-0000' }}</div>
               </div>
             </td>
           </ng-container>
