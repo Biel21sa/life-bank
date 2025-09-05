@@ -21,12 +21,16 @@ INSERT INTO user_model (name, role, cpf, email, phone, password, street, number,
 VALUES
 ('Carlos Clínica', 'CLINIC', '22222222222', 'clinica@example.com', '(21) 97777-2222', 'aa', 'Rua da Saúde', '300', 'Boa Vista', '20000-000', NULL);
 
+INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, donation_location_id)
+VALUES
+('Gabriel System', 'SYSTEM', '33333333333', 'system@example.com', '(21) 98888-4444', 'aa', 'Rua da Paz', '150', 'Estrela', '15264-111', NULL);
+
 INSERT INTO donor (blood_type, eligible, user_id)
 VALUES ('O+', TRUE, 2);
 
-INSERT INTO clinic (name, cnpj, street, number, neighborhood, postal_code, municipality_id)
+INSERT INTO clinic (name, cnpj, street, number, neighborhood, postal_code, municipality_id, user_id)
 VALUES
-('Clínica Vida', '12345678000199', 'Av. Saúde', '400', 'Centro', '20010-000', 3);
+('Clínica Vida', '12345678000199', 'Av. Saúde', '400', 'Centro', '20010-000', 3, 3);
 
 INSERT INTO blood (blood_type, quantity, expiration_date)
 VALUES

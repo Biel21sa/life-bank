@@ -23,7 +23,7 @@ CREATE TABLE donation_location (
     number VARCHAR(100) NOT NULL,
     neighborhood VARCHAR(100) NOT NULL,
     postal_code VARCHAR(10) NOT NULL,
-    municipality_id INTEGER NOT NULL REFERENCES municipality(id)
+    municipality_id INTEGER NOT NULL REFERENCES municipality(id) ON DELETE CASCADE
 );
 
 CREATE TABLE user_model (
@@ -40,7 +40,7 @@ CREATE TABLE user_model (
     number VARCHAR(10) NOT NULL,
     neighborhood VARCHAR(100) NOT NULL,
     postal_code VARCHAR(14) NOT NULL,
-    donation_location_id INTEGER REFERENCES donation_location(id)
+    donation_location_id INTEGER REFERENCES donation_location(id) ON DELETE SET NULL
 );
 
 CREATE TABLE donor (
@@ -49,7 +49,7 @@ CREATE TABLE donor (
         blood_type IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')
     ),
     eligible BOOLEAN NOT NULL DEFAULT TRUE,
-    user_id INTEGER NOT NULL REFERENCES user_model(id),
+    user_id INTEGER NOT NULL REFERENCES user_model(id) ON DELETE CASCADE,
     UNIQUE(user_id)
 );
 
@@ -61,7 +61,8 @@ CREATE TABLE clinic (
     number VARCHAR(10) NOT NULL,
     neighborhood VARCHAR(100) NOT NULL,
     postal_code VARCHAR(10) NOT NULL,
-    municipality_id INTEGER NOT NULL REFERENCES municipality(id)
+    municipality_id INTEGER NOT NULL REFERENCES municipality(id) ON DELETE CASCADE,
+    user_id INTEGER NOT NULL REFERENCES user_model(id) ON DELETE CASCADE
 );
 
 CREATE TABLE blood (
@@ -81,7 +82,7 @@ CREATE TABLE blood_stock (
     minimum_stock DECIMAL(10,2) NOT NULL,
     maximum_stock DECIMAL(10,2) NOT NULL,
     current_stock DECIMAL(10,2) NOT NULL DEFAULT 0,
-    donation_location INTEGER NOT NULL REFERENCES donation_location(id),
+    donation_location INTEGER NOT NULL REFERENCES donation_location(id) ON DELETE CASCADE,
     UNIQUE(blood_type, donation_location)
 );
 
@@ -90,9 +91,9 @@ CREATE TABLE donation (
     quantity DECIMAL(10,2) NOT NULL,
     collection_date DATE NOT NULL DEFAULT NOW(),
     expiration_date DATE NOT NULL,
-    donor_id INTEGER NOT NULL REFERENCES donor(id),
-    donation_location_id INTEGER NOT NULL REFERENCES donation_location(id),
-    blood_id INTEGER NOT NULL REFERENCES blood(id),
+    donor_id INTEGER NOT NULL REFERENCES donor(id) ON DELETE CASCADE,
+    donation_location_id INTEGER NOT NULL REFERENCES donation_location(id) ON DELETE CASCADE,
+    blood_id INTEGER NOT NULL REFERENCES blood(id) ON DELETE CASCADE,
     UNIQUE(donor_id, collection_date)
 );
 
@@ -101,14 +102,14 @@ CREATE TABLE benefit (
     amount DECIMAL(10,2) NOT NULL,
     expiration_date DATE NOT NULL,
     description TEXT NOT NULL,
-    clinic_id INTEGER NOT NULL REFERENCES clinic(id),
-    donation_id INTEGER NOT NULL UNIQUE REFERENCES donation(id)
+    clinic_id INTEGER NOT NULL REFERENCES clinic(id) ON DELETE CASCADE,
+    donation_id INTEGER NOT NULL UNIQUE REFERENCES donation(id) ON DELETE CASCADE
 );
 
 CREATE TABLE notification (
     id SERIAL PRIMARY KEY,
     message TEXT NOT NULL,
     timestamp DATE NOT NULL DEFAULT NOW(),
-    donor_id INTEGER NOT NULL REFERENCES donor(id),
+    donor_id INTEGER NOT NULL REFERENCES donor(id) ON DELETE CASCADE,
     UNIQUE(donor_id, timestamp)
 );
