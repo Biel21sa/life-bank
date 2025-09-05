@@ -98,4 +98,9 @@ public class UserFakeDaoImpl implements UserDao {
 
         return false;
     }
+
+    @Override
+    public List<UserModel> findByRole(String role) {
+        return null;
+    }
 }

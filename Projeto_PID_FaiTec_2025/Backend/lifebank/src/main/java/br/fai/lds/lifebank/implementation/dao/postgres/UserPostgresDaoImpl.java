@@ -111,10 +111,13 @@ public class UserPostgresDaoImpl implements UserDao {
     public UserModel findByid(int id) {
         final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                           "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
-                          "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state " +
+                          "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
+                          "d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
                           "FROM user_model u " +
                           "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
                           "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
+                          "LEFT JOIN donor d ON u.id = d.user_id " +
+                          "LEFT JOIN clinic c ON u.id = c.user_id " +
                           "WHERE u.id = ?";
 
         try {
@@ -141,10 +144,13 @@ public class UserPostgresDaoImpl implements UserDao {
         final List<UserModel> users = new ArrayList<>();
         final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                           "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
-                          "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state " +
+                          "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
+                          "d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
                           "FROM user_model u " +
                           "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
-                          "LEFT JOIN municipality m ON dl.municipality_id = m.id";
+                          "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
+                          "LEFT JOIN donor d ON u.id = d.user_id " +
+                          "LEFT JOIN clinic c ON u.id = c.user_id";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -167,10 +173,12 @@ public class UserPostgresDaoImpl implements UserDao {
     public void update(int id, UserModel entity) {
         String sql = "UPDATE user_model SET "
                 + "name = ?, cpf = ?, email = ?, phone = ?, "
-                + "street = ?, number = ?, neighborhood = ?, postal_code = ?, "
-                + "WHERE id = ?;";
+                + "street = ?, number = ?, neighborhood = ?, postal_code = ?, donation_location_id = ? "
+                + "WHERE id = ?";
 
         try {
+            connection.setAutoCommit(false);
+            
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, entity.getName());
@@ -181,11 +189,33 @@ public class UserPostgresDaoImpl implements UserDao {
             preparedStatement.setString(6, entity.getNumber());
             preparedStatement.setString(7, entity.getNeighborhood());
             preparedStatement.setString(8, entity.getPostalCode());
-            preparedStatement.setInt(9, id);
+            
+            // Atualizar donation_location_id apenas para ADMINISTRATOR
+            if (entity.getRole() == UserModel.UserRole.ADMINISTRATOR) {
+                preparedStatement.setInt(9, entity.getDonationLocationId());
+            } else {
+                preparedStatement.setNull(9, java.sql.Types.INTEGER);
+            }
+            
+            preparedStatement.setInt(10, id);
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            
+            // Atualizar tabelas específicas baseado no tipo de usuário
+            if (entity.getRole() == UserModel.UserRole.USER && entity.getBloodType() != null) {
+                updateDonor(id, entity.getBloodType());
+            } else if (entity.getRole() == UserModel.UserRole.CLINIC) {
+                updateClinic(id, entity.getNameClinic(), entity.getCnpj());
+            }
+            
+            connection.commit();
         } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
             throw new RuntimeException(e);
         }
     }
@@ -194,10 +224,13 @@ public class UserPostgresDaoImpl implements UserDao {
     public UserModel findByEmail(String email) {
         final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                           "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
-                          "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state " +
+                          "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
+                          "d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
                           "FROM user_model u " +
                           "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
                           "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
+                          "LEFT JOIN donor d ON u.id = d.user_id " +
+                          "LEFT JOIN clinic c ON u.id = c.user_id " +
                           "WHERE u.email = ?";
 
         try {
@@ -249,7 +282,7 @@ public class UserPostgresDaoImpl implements UserDao {
     }
 
     private void insertClinic(int userId, String name, String cnpj, String street, String number, String neighborhood, String postalCode, int municipalityId) throws SQLException {
-        String sql = "INSERT INTO clinic (name, cnpj, street, number, neighborhood, postal_code, municipality_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO clinic (name, cnpj, street, number, neighborhood, postal_code, municipality_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, name);
             stmt.setString(2, cnpj);
@@ -258,8 +291,28 @@ public class UserPostgresDaoImpl implements UserDao {
             stmt.setString(5, neighborhood);
             stmt.setString(6, postalCode);
             stmt.setInt(7, municipalityId);
+            stmt.setInt(8, userId);
             stmt.executeUpdate();
             logger.log(Level.INFO, "Clínica criada com sucesso para o usuário ID: " + userId);
+        }
+    }
+    
+    private void updateDonor(int userId, String bloodType) throws SQLException {
+        String sql = "UPDATE donor SET blood_type = ? WHERE user_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, bloodType);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
+        }
+    }
+    
+    private void updateClinic(int userId, String name, String cnpj) throws SQLException {
+        String sql = "UPDATE clinic SET name = ?, cnpj = ? WHERE user_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, name);
+            stmt.setString(2, cnpj);
+            stmt.setInt(3, userId);
+            stmt.executeUpdate();
         }
     }
 
@@ -278,6 +331,14 @@ public class UserPostgresDaoImpl implements UserDao {
         user.setNeighborhood(rs.getString("neighborhood"));
         user.setPostalCode(rs.getString("postal_code"));
         user.setDonationLocationId(rs.getInt("donation_location_id"));
+
+        // Mapear informações específicas por tipo de usuário
+        if (user.getRole() == UserModel.UserRole.USER && rs.getObject("donor_blood_type") != null) {
+            user.setBloodType(rs.getString("donor_blood_type"));
+        } else if (user.getRole() == UserModel.UserRole.CLINIC && rs.getObject("clinic_name") != null) {
+            user.setNameClinic(rs.getString("clinic_name"));
+            user.setCnpj(rs.getString("clinic_cnpj"));
+        }
 
         // Mapear DonationLocation completo se existir
         if (rs.getObject("dl_id") != null) {
@@ -303,5 +364,37 @@ public class UserPostgresDaoImpl implements UserDao {
         }
 
         return user;
+    }
+
+    @Override
+    public List<UserModel> findByRole(String role) {
+        final List<UserModel> users = new ArrayList<>();
+        final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
+                          "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
+                          "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
+                          "d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
+                          "FROM user_model u " +
+                          "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
+                          "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
+                          "LEFT JOIN donor d ON u.id = d.user_id " +
+                          "LEFT JOIN clinic c ON u.id = c.user_id " +
+                          "WHERE u.role = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, role);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                UserModel user = mapResultSetToUserModel(resultSet);
+                users.add(user);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            return users;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
