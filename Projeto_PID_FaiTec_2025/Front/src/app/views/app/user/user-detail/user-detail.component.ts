@@ -7,6 +7,7 @@ import { UserRole } from '../../../../domain/model/user-role';
 import { UserReadService } from '../../../../services/user/user-read.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
 
@@ -18,6 +19,7 @@ import { NgxMaskPipe } from 'ngx-mask';
     FontAwesomeModule,
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
     CommonModule,
     NgxMaskPipe,
   ],
@@ -49,6 +51,26 @@ export class UserDetailComponent implements OnInit {
   async loadUserById(userId: string) {
     this.user = await this.userReadService.findById(userId);
     console.log(this.user);
+  }
+
+  getRoleClass(role: UserRole): string {
+    const classes = {
+      [UserRole.ADMINISTRATOR]: 'role-admin',
+      [UserRole.USER]: 'role-user', 
+      [UserRole.CLINIC]: 'role-clinic',
+      [UserRole.SYSTEM]: 'role-system'
+    };
+    return classes[role] || '';
+  }
+
+  getRoleIcon(role: UserRole): string {
+    const icons = {
+      [UserRole.ADMINISTRATOR]: 'admin_panel_settings',
+      [UserRole.USER]: 'volunteer_activism',
+      [UserRole.CLINIC]: 'local_hospital',
+      [UserRole.SYSTEM]: 'settings'
+    };
+    return icons[role] || 'person';
   }
 
 }

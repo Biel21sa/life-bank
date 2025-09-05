@@ -1,60 +1,174 @@
-<mat-card *ngIf="user">
-  <mat-card-header>
-    <mat-card-title>Detalhes do Usuário</mat-card-title>
-  </mat-card-header>
+<div class="container">
+  <div class="page-header">
+    <h1>Detalhes do Usuário</h1>
+    <p>Visualize as informações completas do usuário</p>
+  </div>
 
-  <mat-card-content>
-    <!-- Informações Básicas -->
-    <div class="section">
-      <h3>Informações Pessoais</h3>
-      <div class="detail-row">
-        <strong>Nome:</strong> {{ user.name }}
-      </div>
-      <div class="detail-row">
-        <strong>Email:</strong> {{ user.email }}
-      </div>
-      <div class="detail-row">
-        <strong>CPF:</strong> {{ user.cpf | mask: '000.000.000-00' }}
-      </div>
-      <div class="detail-row">
-        <strong>Telefone:</strong> {{ user.phone | mask: '(00) 00000-0000' }}
-      </div>
-      <div class="detail-row">
-        <strong>Tipo de Usuário:</strong> {{ userRoleLabels[user.role] }}
-      </div>
-    </div>
+  <mat-card *ngIf="user">
+    <mat-card-header>
+      <mat-card-title>
+        <div class="user-avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="user-title-info">
+          <h2>{{ user.name }}</h2>
+          <span class="role-badge" [ngClass]="getRoleClass(user.role)">
+            <mat-icon>{{ getRoleIcon(user.role) }}</mat-icon>
+            {{ userRoleLabels[user.role] }}
+          </span>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
 
-    <!-- Endereço -->
-    <div class="section">
-      <h3>Endereço</h3>
-      <div class="detail-row">
-        <strong>Rua:</strong> {{ user.street }}
+    <mat-card-content>
+      <!-- Informações Pessoais -->
+      <div class="section">
+        <h3>
+          <mat-icon>person</mat-icon>
+          Informações Pessoais
+        </h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <mat-icon>person</mat-icon>
+            <div class="detail-content">
+              <strong>Nome Completo</strong>
+              <span>{{ user.name }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>email</mat-icon>
+            <div class="detail-content">
+              <strong>Email</strong>
+              <span>{{ user.email }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>credit_card</mat-icon>
+            <div class="detail-content">
+              <strong>CPF</strong>
+              <span>{{ user.cpf | mask: '000.000.000-00' }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>phone</mat-icon>
+            <div class="detail-content">
+              <strong>Telefone</strong>
+              <span>{{ user.phone | mask: '(00) 00000-0000' }}</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="detail-row">
-        <strong>Número:</strong> {{ user.number }}
-      </div>
-      <div class="detail-row">
-        <strong>Bairro:</strong> {{ user.neighborhood }}
-      </div>
-      <div class="detail-row">
-        <strong>CEP:</strong> {{ user.postalCode | mask: '00000-000' }}
-      </div>
-    </div>
 
-    <div class="section" *ngIf="user.role === 'ADMINISTRATOR' && user.donationLocationId">
-      <h3>Informações do Administrador</h3>
-      <div class="detail-row">
-        <strong>Local de Doação:</strong> {{ user.donationLocation.name }}
+      <!-- Endereço -->
+      <div class="section">
+        <h3>
+          <mat-icon>home</mat-icon>
+          Endereço
+        </h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <mat-icon>home</mat-icon>
+            <div class="detail-content">
+              <strong>Rua</strong>
+              <span>{{ user.street }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>tag</mat-icon>
+            <div class="detail-content">
+              <strong>Número</strong>
+              <span>{{ user.number }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>location_city</mat-icon>
+            <div class="detail-content">
+              <strong>Bairro</strong>
+              <span>{{ user.neighborhood }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>place</mat-icon>
+            <div class="detail-content">
+              <strong>CEP</strong>
+              <span>{{ user.postalCode | mask: '00000-000' }}</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </mat-card-content>
 
-  <mat-card-actions>
-    <button mat-raised-button color="primary" [routerLink]="['/user/edit', user.id]">
-      Editar
-    </button>
-    <button mat-button routerLink="/user/list">
-      Voltar
-    </button>
-  </mat-card-actions>
-</mat-card>
+      <!-- Informações Específicas -->
+      <div class="section" *ngIf="user.role === 'ADMINISTRATOR' && user.donationLocation">
+        <h3>
+          <mat-icon>admin_panel_settings</mat-icon>
+          Informações do Administrador
+        </h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <mat-icon>business</mat-icon>
+            <div class="detail-content">
+              <strong>Local de Doação</strong>
+              <span>{{ user.donationLocation.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" *ngIf="user.role === 'USER' && user.bloodType">
+        <h3>
+          <mat-icon>volunteer_activism</mat-icon>
+          Informações do Doador
+        </h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <mat-icon>bloodtype</mat-icon>
+            <div class="detail-content">
+              <strong>Tipo Sanguíneo</strong>
+              <span class="blood-type">{{ user.bloodType }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" *ngIf="user.role === 'CLINIC'">
+        <h3>
+          <mat-icon>local_hospital</mat-icon>
+          Informações da Clínica
+        </h3>
+        <div class="detail-grid">
+          <div class="detail-item" *ngIf="user.nameClinic">
+            <mat-icon>local_hospital</mat-icon>
+            <div class="detail-content">
+              <strong>Nome da Clínica</strong>
+              <span>{{ user.nameClinic }}</span>
+            </div>
+          </div>
+          <div class="detail-item" *ngIf="user.cnpj">
+            <mat-icon>business_center</mat-icon>
+            <div class="detail-content">
+              <strong>CNPJ</strong>
+              <span>{{ user.cnpj | mask: '00.000.000/0000-00' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" [routerLink]="['/user/edit', user.id]">
+        <mat-icon>edit</mat-icon>
+        Editar Usuário
+      </button>
+      <button mat-button routerLink="/user/list">
+        <mat-icon>arrow_back</mat-icon>
+        Voltar à Lista
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- Loading state -->
+  <div class="loading-container" *ngIf="!user">
+    <div class="loading-spinner"></div>
+    <p>Carregando informações do usuário...</p>
+  </div>
+</div>
