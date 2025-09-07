@@ -78,8 +78,17 @@
     }
 }
 
-div{
-    >h2{
-        font-weight: 300;
+h2{
+    font-weight: 300;
+}
+
+.notfound{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    >ng-icon, h2{
+        color: #ADC1CE;
     }
 }
