@@ -16,6 +16,8 @@ public class DonationModel {
     private DonorModel donor;
     private BloodModel blood;
     private DonationLocationModel donationLocation;
+    private String donorName;
+    private String donorCpf;
 
     public DonationModel() {
     }
@@ -116,5 +118,21 @@ public class DonationModel {
 
     public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
+    }
+
+    public String getDonorName() {
+        return donorName;
+    }
+
+    public void setDonorName(String donorName) {
+        this.donorName = donorName;
+    }
+
+    public String getDonorCpf() {
+        return donorCpf;
+    }
+
+    public void setDonorCpf(String donorCpf) {
+        this.donorCpf = donorCpf;
     }
 }
