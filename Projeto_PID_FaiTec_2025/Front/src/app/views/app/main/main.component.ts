@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,6 +23,7 @@ import { AuthenticationService } from '../../../services/security/authentication
   selector: 'app-main',
   imports: [
     RouterOutlet,
+    CommonModule,
     MatToolbarModule,
     FormsModule,
     MatButtonModule,
@@ -50,10 +52,25 @@ export class MainComponent {
     return this.authenticationService.isSystemAdmin();
   }
 
+  isAdministrator(): boolean {
+    return this.authenticationService.isAdministrator();
+  }
+
   public logout() {
     console.log('logout clicado');
     this.authenticationService.logout();
     this.router.navigate(['account/sign-in']);
+  }
+
+  onSidenavClosed() {
+    // Fechar todos os expansion panels quando o sidenav fechar
+    const expansionPanels = document.querySelectorAll('mat-expansion-panel');
+    expansionPanels.forEach(panel => {
+      const panelElement = panel as any;
+      if (panelElement._body && panelElement.expanded) {
+        panelElement.close();
+      }
+    });
   }
 
 }
