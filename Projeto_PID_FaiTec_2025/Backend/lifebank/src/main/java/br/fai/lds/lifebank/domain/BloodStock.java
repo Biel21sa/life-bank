@@ -5,14 +5,14 @@ import br.fai.lds.lifebank.domain.enuns.BloodType;
 public class BloodStock {
 
     private int id;
-    private BloodType bloodType;
+    private String bloodType;
     private Double minimumStock;
     private Double maximumStock;
     private Double currentStock;
     private DonationLocationModel donationLocation;
     private int donationLocationId;
 
-    public BloodStock(int id, BloodType bloodType, Double minimumStock, Double maximumStock, Double currentStock, DonationLocationModel donationLocation, int donationLocationId) {
+    public BloodStock(int id, String bloodType, Double minimumStock, Double maximumStock, Double currentStock, DonationLocationModel donationLocation, int donationLocationId) {
         this.id = id;
         this.bloodType = bloodType;
         this.minimumStock = minimumStock;
@@ -33,11 +33,11 @@ public class BloodStock {
         this.id = id;
     }
 
-    public BloodType getBloodType() {
+    public String getBloodType() {
         return bloodType;
     }
 
-    public void setBloodType(BloodType bloodType) {
+    public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
     }
 

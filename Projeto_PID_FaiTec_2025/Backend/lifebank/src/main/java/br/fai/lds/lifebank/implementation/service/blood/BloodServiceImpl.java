@@ -27,7 +27,7 @@ public class BloodServiceImpl implements BloodService {
 
         if (entity.getBloodType() == null ||
                 entity.getQuantity() <= 0 ||
-                entity.getValidity() == null) {
+                entity.getExpirationDate() == null) {
             return invalidResponse;
         }
 
