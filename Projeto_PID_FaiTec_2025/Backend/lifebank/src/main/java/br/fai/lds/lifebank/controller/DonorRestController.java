@@ -33,22 +33,9 @@ public class DonorRestController {
         return entity == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(entity);
     }
 
-    @GetMapping("/find-by-cpf")
-    public ResponseEntity<DonorModel> getEntityByCpf(@RequestBody final String cpf) {
-        DonorModel entity = donorService.findByCpf(cpf);
-
-        return entity == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(entity);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable final int id) {
         donorService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("/{cpf}")
-    public ResponseEntity<Boolean> deleteByCpf(@PathVariable final String cpf) {
-        donorService.deleteByCpf(cpf);
         return ResponseEntity.noContent().build();
     }
 
