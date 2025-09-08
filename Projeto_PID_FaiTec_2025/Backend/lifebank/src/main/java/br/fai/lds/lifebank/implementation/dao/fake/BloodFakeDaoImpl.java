@@ -16,7 +16,7 @@ public class BloodFakeDaoImpl implements BloodDao {
     private static int ID = 0;
 
     public BloodFakeDaoImpl() {
-        BloodModel entity1 = new BloodModel(getNextId(), BloodType.A_NEGATIVE, 200, LocalDate.of(2025, 7, 15), LocalDate.of(2025, 8, 29), 100, 500);
+        BloodModel entity1 = new BloodModel(getNextId(), "O-", 200.00, LocalDate.of(2025, 8, 29));
 
         entities.add(entity1);
     }
