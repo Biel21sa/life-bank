@@ -1,0 +1,103 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="logo-section">
+        <div class="logo-icon">
+          <mat-icon>admin_panel_settings</mat-icon>
+        </div>
+        <h1>Painel Administrativo</h1>
+        <p class="hero-subtitle">Gerencie todo o sistema Life Bank</p>
+      </div>
+
+      <div class="hero-description">
+        <p>
+          Controle total sobre doadores, clínicas e doações.
+          Monitore estatísticas e mantenha o sistema funcionando perfeitamente.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <mat-icon>people</mat-icon>
+        <div class="stat-number">1,247</div>
+        <div class="stat-label">Doadores Cadastrados</div>
+      </div>
+      <div class="stat-card">
+        <mat-icon>local_hospital</mat-icon>
+        <div class="stat-number">23</div>
+        <div class="stat-label">Clínicas Ativas</div>
+      </div>
+      <div class="stat-card">
+        <mat-icon>bloodtype</mat-icon>
+        <div class="stat-number">3,892</div>
+        <div class="stat-label">Doações Registradas</div>
+      </div>
+      <div class="stat-card">
+        <mat-icon>trending_up</mat-icon>
+        <div class="stat-number">98%</div>
+        <div class="stat-label">Taxa de Sucesso</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Cards -->
+  <div class="navigation-section">
+    <h2>Gerenciamento</h2>
+    <div class="navigation-grid">
+
+      <mat-card class="nav-card" (click)="navigateToDonors()">
+        <div class="card-icon">
+          <mat-icon>people</mat-icon>
+        </div>
+        <mat-card-content>
+          <h3>Doadores</h3>
+          <p>Gerencie cadastros, histórico e status dos doadores do sistema</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary">
+            Acessar
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="nav-card" (click)="navigateToClinics()">
+        <div class="card-icon">
+          <mat-icon>local_hospital</mat-icon>
+        </div>
+        <mat-card-content>
+          <h3>Clínicas</h3>
+          <p>Administre clínicas parceiras, credenciamentos e parcerias</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary">
+            Acessar
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="nav-card" (click)="navigateToDonations()">
+        <div class="card-icon">
+          <mat-icon>bloodtype</mat-icon>
+        </div>
+        <mat-card-content>
+          <h3>Doações</h3>
+          <p>Controle histórico, estatísticas e relatórios de doações</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary">
+            Acessar
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+    </div>
+  </div>
+</div>
