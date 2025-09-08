@@ -28,4 +28,8 @@ export class UserReadService {
     return firstValueFrom(this.http.get<any>(`${environment.api_endpoint}/user/email/${email}`));
   }
 
+  findByRole(role: string): Promise<User[]> {
+    return firstValueFrom(this.http.get<any>(`${environment.api_endpoint}/user/role/${role}`));
+  }
+
 }
