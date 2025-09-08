@@ -51,7 +51,7 @@ public class DonorRestController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/`{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<DonorModel> update(@PathVariable final int id, @RequestBody final DonorModel data) {
 
         DonorModel entity = data;

@@ -59,7 +59,7 @@ public class BloodRestController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/`{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<BloodModel> update(@PathVariable final int id, @RequestBody final BloodModel data) {
 
         BloodModel entity = data;

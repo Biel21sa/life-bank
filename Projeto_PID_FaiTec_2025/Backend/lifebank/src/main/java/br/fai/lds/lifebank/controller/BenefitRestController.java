@@ -51,7 +51,7 @@ public class BenefitRestController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/`{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<BenefitModel> update(@PathVariable final int id, @RequestBody final BenefitModel data) {
 
         BenefitModel entity = data;

@@ -58,7 +58,7 @@ public class ClinicRestController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/`{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ClinicModel> update(@PathVariable final int id, @RequestBody final ClinicModel data) {
 
         ClinicModel entity = data;
