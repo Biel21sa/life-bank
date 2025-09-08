@@ -21,6 +21,7 @@ import * as fontawesome from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationService } from '../../../services/security/authentication.service';
 import { UserCredentialDto } from '../../../domain/dto/user-credential-dto';
 import { AuthenticatedUserDto } from '../../../domain/dto/authenticated-user-dto';
+import { User } from '../../../domain/model/user';
 
 
 
@@ -49,17 +50,17 @@ export class SignInComponent {
 
   email = new FormControl(null);
   password = new FormControl(null, [
-    Validators.minLength(1), 
+    Validators.minLength(1),
     Validators.maxLength(4),
   ]);
 
-  isLoginIncorrect : boolean = false;
+  isLoginIncorrect: boolean = false;
   hidePassword: boolean = true;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-  ){
+  ) {
     console.log('sign-in constructor');
   }
 
@@ -70,9 +71,9 @@ export class SignInComponent {
     // this.loginIfCredentialIsValid();
   }
 
-  loginIfCredentialIsValid(){
+  loginIfCredentialIsValid() {
     console.log('verificando as credenciais...');
-    if(this.authenticationService.isAuthenticated()) {
+    if (this.authenticationService.isAuthenticated()) {
       console.log('credenciais validas, navegando para tela principal');
       this.router.navigate(['']);
       return;
@@ -86,7 +87,7 @@ export class SignInComponent {
     return this.email.valid && this.password.valid;
   }
 
-  login(){
+  login() {
     console.log('botao de login clicado');
 
     let credentials: UserCredentialDto = {
@@ -98,13 +99,14 @@ export class SignInComponent {
 
     this.authenticationService.authenticate(credentials)
       .subscribe({
-        next: (value: any) => {
+        next: (value: User) => {
           console.log(value);
 
           let user: AuthenticatedUserDto = {
             email: value.email,
             password: credentials.password,
-            role: value.role
+            role: value.role,
+            donationLocationId: String(value.donationLocationId)
           };
 
           this.authenticationService.addDataToLocalStorage(user);

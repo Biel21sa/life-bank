@@ -42,6 +42,9 @@ export class AuthenticationService {
     localStorage.setItem('email', user.email);
     localStorage.setItem('password', user.password);
     localStorage.setItem('role', user.role);
+    if (user.role === 'ADMINISTRATOR' && user.donationLocationId) {
+      localStorage.setItem('donationLocationId', user.donationLocationId.toString());
+    }
   }
 
   logout() {
@@ -70,5 +73,17 @@ export class AuthenticationService {
     } catch {
       return false;
     }
+  }
+
+  isAdministrator(): boolean {
+    try {
+      return this.getAuthenticatedUserRole() === 'ADMINISTRATOR';
+    } catch {
+      return false;
+    }
+  }
+
+  getDonationLocationId(): string | null {
+    return localStorage.getItem('donationLocationId');
   }
 }
