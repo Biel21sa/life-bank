@@ -18,11 +18,6 @@ public class BenefitPostgresDaoImpl implements BenefitDao {
     }
 
     @Override
-    public List<BenefitModel> findByClinicId(int clinicId) {
-        return List.of();
-    }
-
-    @Override
     public int create(BenefitModel entity) {
         return 0;
     }
