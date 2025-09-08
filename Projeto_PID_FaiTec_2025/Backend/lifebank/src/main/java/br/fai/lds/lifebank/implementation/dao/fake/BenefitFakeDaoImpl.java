@@ -1,6 +1,8 @@
 package br.fai.lds.lifebank.implementation.dao.fake;
 
 import br.fai.lds.lifebank.domain.BenefitModel;
+import br.fai.lds.lifebank.domain.DonationModel;
+import br.fai.lds.lifebank.domain.DonorModel;
 import br.fai.lds.lifebank.port.dao.benefit.BenefitDao;
 
 import java.time.LocalDate;
@@ -14,7 +16,7 @@ public class BenefitFakeDaoImpl implements BenefitDao {
     private static int ID = 0;
 
     public BenefitFakeDaoImpl() {
-        BenefitModel entity1 = new BenefitModel(getNextId(), "Benefício", 150.00, LocalDate.parse("2025-08-07"), 1);
+        BenefitModel entity1 = new BenefitModel(getNextId(), "Benefício", 150.00, LocalDate.parse("2025-08-07"), 1, 1);
 
         entities.add(entity1);
     }
@@ -22,18 +24,6 @@ public class BenefitFakeDaoImpl implements BenefitDao {
     private int getNextId() {
         ID += 1;
         return ID;
-    }
-
-    @Override
-    public List<BenefitModel> findByClinicId(int clinicId) {
-        List<BenefitModel> foundDonations = new ArrayList<>();
-
-        for (BenefitModel entity : entities) {
-            if (Objects.equals(entity.getClinicId(), clinicId)) {
-                foundDonations.add(entity);
-            }
-        }
-        return foundDonations;
     }
 
     @Override
