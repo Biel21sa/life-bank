@@ -18,17 +18,6 @@ public class BenefitServiceImpl implements BenefitService {
     }
 
     @Override
-    public List<BenefitModel> findByClinicId(int clinicId) {
-        if (clinicId <= 0) {
-            return new ArrayList<>();
-        }
-
-        List<BenefitModel> benefits = benefitDao.findByClinicId(clinicId);
-
-        return benefits;
-    }
-
-    @Override
     public int create(BenefitModel entity) {
         int invalidResponse = -1;
 
@@ -37,8 +26,8 @@ public class BenefitServiceImpl implements BenefitService {
         }
 
         if (entity.getDescription() == null ||
-                entity.getClinicId() <= 0 ||
-                entity.getValidity() == null) {
+                entity.getDonorId() <= 0 ||
+                entity.getExpirationDate() == null) {
             return invalidResponse;
         }
 
