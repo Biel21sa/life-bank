@@ -4,7 +4,7 @@ import br.fai.lds.lifebank.implementation.dao.postgres.*;
 import br.fai.lds.lifebank.port.dao.benefit.BenefitDao;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
 import br.fai.lds.lifebank.port.dao.clinic.ClinicDao;
-import br.fai.lds.lifebank.port.dao.donation.DonationDao;
+import br.fai.lds.lifebank.port.dao.donation.DonationDaoDao;
 import br.fai.lds.lifebank.port.dao.donationlocation.DonationLocationDao;
 import br.fai.lds.lifebank.port.dao.donor.DonorDao;
 import br.fai.lds.lifebank.port.dao.municipality.MunicipalityDao;
@@ -53,9 +53,9 @@ public class AppConfiguration {
     }
 
     @Bean
-    public DonationDao getDonationFakeDao(final Connection connection) {
+    public DonationDaoDao getDonationFakeDao(final Connection connection) {
         //return new DonationFakeDaoImpl();
-        return new DonationPostgresDaoImpl(connection);
+        return new DonationPostgresDaoImplDao(connection);
     }
 
     @Bean
