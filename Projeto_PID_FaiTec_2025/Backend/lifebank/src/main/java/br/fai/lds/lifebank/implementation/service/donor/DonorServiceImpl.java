@@ -24,7 +24,7 @@ public class DonorServiceImpl implements DonorService {
             return invalidResponse;
         }
 
-        if (entity.getBloodType() == null || entity.getCpf() == null) {
+        if (entity.getBloodType() == null) {
             return invalidResponse;
         }
 
@@ -69,24 +69,5 @@ public class DonorServiceImpl implements DonorService {
         }
 
         donorDao.update(id, entity);
-    }
-
-    @Override
-    public void deleteByCpf(String cpf) {
-        if (cpf.isEmpty()) {
-            return;
-        }
-
-        donorDao.deleteByCpf(cpf);
-    }
-
-    @Override
-    public DonorModel findByCpf(String cpf) {
-        if (cpf.isEmpty()) {
-            return null;
-        }
-
-        DonorModel entity = donorDao.findByCpf(cpf);
-        return entity;
     }
 }
