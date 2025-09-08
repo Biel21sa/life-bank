@@ -1,5 +1,7 @@
 package br.fai.lds.lifebank.domain;
 
+import java.time.LocalDate;
+
 public class UserModel {
 
     private int id;
@@ -15,11 +17,18 @@ public class UserModel {
     private String postalCode;
 
     // Campos opcionais
+    private int municipalityId;
+    private MunicipalityModel municipality;
     private DonationLocationModel donationLocation;
     private int donationLocationId;
+    private int donorId;
+    private DonorModel donor;
     private String bloodType;
     private String nameClinic;
     private String cnpj;
+    private boolean apto;
+    private LocalDate lastDonationDate;
+    private String gender;
 
     public enum UserRole {
         ADMINISTRATOR,
@@ -171,5 +180,61 @@ public class UserModel {
 
     public void setDonationLocation(DonationLocationModel donationLocation) {
         this.donationLocation = donationLocation;
+    }
+
+    public int getMunicipalityId() {
+        return municipalityId;
+    }
+
+    public void setMunicipalityId(int municipalityId) {
+        this.municipalityId = municipalityId;
+    }
+
+    public MunicipalityModel getMunicipality() {
+        return municipality;
+    }
+
+    public void setMunicipality(MunicipalityModel municipality) {
+        this.municipality = municipality;
+    }
+
+    public int getDonorId() {
+        return donorId;
+    }
+
+    public void setDonorId(int donorId) {
+        this.donorId = donorId;
+    }
+
+    public DonorModel getDonor() {
+        return donor;
+    }
+
+    public void setDonor(DonorModel donor) {
+        this.donor = donor;
+    }
+
+    public boolean isApto() {
+        return apto;
+    }
+
+    public void setApto(boolean apto) {
+        this.apto = apto;
+    }
+
+    public LocalDate getLastDonationDate() {
+        return lastDonationDate;
+    }
+
+    public void setLastDonationDate(LocalDate lastDonationDate) {
+        this.lastDonationDate = lastDonationDate;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
