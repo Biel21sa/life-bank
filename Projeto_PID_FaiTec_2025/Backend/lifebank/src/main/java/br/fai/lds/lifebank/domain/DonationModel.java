@@ -6,24 +6,28 @@ import java.time.LocalDate;
 
 public class DonationModel {
     private int id;
-    private BloodType bloodType;
-    private int quantity;
+    private Double quantity;
+    private String bloodType;
     private LocalDate collectionDate;
-    private LocalDate validityDate;
-    private String donorCpf;
-    private int locationId;
+    private LocalDate expirationDate;
+    private int donorId;
+    private int donationLocationId;
+    private int bloodId;
+    private DonorModel donor;
+    private BloodModel blood;
+    private DonationLocationModel donationLocation;
 
     public DonationModel() {
     }
 
-    public DonationModel(int id, BloodType bloodType, int quantity, LocalDate collectionDate, LocalDate validityDate, String donorCpf, int locationId) {
+    public DonationModel(int id, Double quantity, String bloodType, LocalDate collectionDate, LocalDate expirationDate, int donorId, int donationLocationId) {
         this.id = id;
-        this.bloodType = bloodType;
         this.quantity = quantity;
         this.collectionDate = collectionDate;
-        this.validityDate = validityDate;
-        this.donorCpf = donorCpf;
-        this.locationId = locationId;
+        this.expirationDate = expirationDate;
+        this.donorId = donorId;
+        this.donationLocationId = donationLocationId;
+        this.bloodType = bloodType;
     }
 
     public int getId() {
@@ -34,19 +38,11 @@ public class DonationModel {
         this.id = id;
     }
 
-    public BloodType getBloodType() {
-        return bloodType;
-    }
-
-    public void setBloodType(BloodType bloodType) {
-        this.bloodType = bloodType;
-    }
-
-    public int getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 
@@ -58,27 +54,67 @@ public class DonationModel {
         this.collectionDate = collectionDate;
     }
 
-    public LocalDate getValidityDate() {
-        return validityDate;
+    public LocalDate getExpirationDate() {
+        return expirationDate;
     }
 
-    public void setValidityDate(LocalDate validityDate) {
-        this.validityDate = validityDate;
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
-    public String getDonorCpf() {
-        return donorCpf;
+    public int getDonorId() {
+        return donorId;
     }
 
-    public void setDonorCpf(String donorCpf) {
-        this.donorCpf = donorCpf;
+    public void setDonorId(int donorId) {
+        this.donorId = donorId;
     }
 
-    public int getLocationId() {
-        return locationId;
+    public int getDonationLocationId() {
+        return donationLocationId;
     }
 
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
+    public void setDonationLocationId(int donationLocationId) {
+        this.donationLocationId = donationLocationId;
+    }
+
+    public int getBloodId() {
+        return bloodId;
+    }
+
+    public void setBloodId(int bloodId) {
+        this.bloodId = bloodId;
+    }
+
+    public DonorModel getDonor() {
+        return donor;
+    }
+
+    public void setDonor(DonorModel donor) {
+        this.donor = donor;
+    }
+
+    public BloodModel getBlood() {
+        return blood;
+    }
+
+    public void setBlood(BloodModel blood) {
+        this.blood = blood;
+    }
+
+    public DonationLocationModel getDonationLocation() {
+        return donationLocation;
+    }
+
+    public void setDonationLocation(DonationLocationModel donationLocation) {
+        this.donationLocation = donationLocation;
+    }
+
+    public String getBloodType() {
+        return bloodType;
+    }
+
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
     }
 }
