@@ -28,6 +28,8 @@ import { ClinicCreateComponent } from './views/app/clinic/clinic-create/clinic-c
 import { ClinicEditComponent } from './views/app/clinic/clinic-edit/clinic-edit.component';
 import { ClinicDetailComponent } from './views/app/clinic/clinic-detail/clinic-detail.component';
 import { DonationCreateComponent } from './views/app/donation-create/donation-create.component';
+import { DonationHistoryComponent } from './views/app/donation-history/donation-history.component';
+import { DonationDetailComponent } from './views/app/donation-detail/donation-detail.component';
 
 export const routes: Routes = [
     {
@@ -138,6 +140,16 @@ export const routes: Routes = [
             {
                 path: 'donation-create',
                 component: DonationCreateComponent,
+                canActivate: [AdministratorGuard]
+            },
+            {
+                path: 'donation-history',
+                component: DonationHistoryComponent,
+                canActivate: [AdministratorGuard]
+            },
+            {
+                path: 'donation-detail/:id',
+                component: DonationDetailComponent,
                 canActivate: [AdministratorGuard]
             },
             {
