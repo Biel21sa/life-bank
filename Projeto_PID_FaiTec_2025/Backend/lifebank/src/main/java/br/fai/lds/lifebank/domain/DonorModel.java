@@ -12,6 +12,8 @@ public class DonorModel {
     private boolean apto;
     private LocalDate lastDonationDate;
     private String gender;
+    private String cpf;
+    private String name;
 
     public DonorModel() {
     }
@@ -37,8 +39,6 @@ public class DonorModel {
     public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
     }
-
-
 
     public int getUserId() {
         return userId;
@@ -78,6 +78,22 @@ public class DonorModel {
 
     public void setApto(boolean apto) {
         this.apto = apto;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 
