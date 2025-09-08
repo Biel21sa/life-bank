@@ -1,8 +1,10 @@
 package br.fai.lds.lifebank.implementation.dao.postgres;
 
+import br.fai.lds.lifebank.domain.DonationLocationModel;
 import br.fai.lds.lifebank.domain.DonationModel;
-import br.fai.lds.lifebank.domain.enuns.BloodType;
-import br.fai.lds.lifebank.port.dao.donation.DonationDao;
+import br.fai.lds.lifebank.domain.DonorModel;
+import br.fai.lds.lifebank.domain.UserModel;
+import br.fai.lds.lifebank.port.dao.donation.DonationDaoDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,18 +12,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DonationPostgresDaoImpl implements DonationDao {
+public class DonationPostgresDaoImplDao implements DonationDaoDao {
 
-    private static final Logger logger = Logger.getLogger(DonationPostgresDaoImpl.class.getName());
+    private static final Logger logger = Logger.getLogger(DonationPostgresDaoImplDao.class.getName());
 
     private final Connection connection;
 
-    public DonationPostgresDaoImpl(Connection connection) {
+    public DonationPostgresDaoImplDao(Connection connection) {
         this.connection = connection;
     }
 
@@ -102,8 +103,16 @@ public class DonationPostgresDaoImpl implements DonationDao {
 
     @Override
     public DonationModel findByid(int id) {
-        final String sql = "SELECT d.*, b.blood_type FROM donation d " +
+        final String sql = "SELECT d.*, b.blood_type, " +
+                "dr.id as donor_id, dr.blood_type as donor_blood_type, dr.gender as donor_gender, dr.last_donation_date, " +
+                "u.name as donor_name, u.email as donor_email, u.cpf as donor_cpf, u.phone as donor_phone, " +
+                "dl.id as location_id, dl.name as location_name, dl.street as location_street, " +
+                "dl.number as location_number, dl.neighborhood as location_neighborhood, dl.postal_code as location_postal_code " +
+                "FROM donation d " +
                 "JOIN blood b ON d.blood_id = b.id " +
+                "JOIN donor dr ON d.donor_id = dr.id " +
+                "JOIN user_model u ON dr.user_id = u.id " +
+                "JOIN donation_location dl ON d.donation_location_id = dl.id " +
                 "WHERE d.id = ?";
 
         try {
@@ -112,11 +121,9 @@ public class DonationPostgresDaoImpl implements DonationDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                DonationModel donation = mapResultSetToDonationModel(resultSet);
-
+                DonationModel donation = mapResultSetToDonationModelComplete(resultSet);
                 preparedStatement.close();
                 resultSet.close();
-
                 return donation;
             }
         } catch (SQLException e) {
@@ -199,6 +206,34 @@ public class DonationPostgresDaoImpl implements DonationDao {
         }
     }
 
+    @Override
+    public List<DonationModel> findByDonationLocationId(int donationLocationId) {
+        final List<DonationModel> donations = new ArrayList<>();
+        final String sql = "SELECT d.*, b.blood_type, u.name as donor_name, u.cpf as donor_cpf " +
+                "FROM donation d " +
+                "JOIN blood b ON d.blood_id = b.id " +
+                "JOIN donor dr ON d.donor_id = dr.id " +
+                "JOIN user_model u ON dr.user_id = u.id " +
+                "WHERE d.donation_location_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, donationLocationId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                DonationModel donation = mapResultSetToDonationModelWithDonor(resultSet);
+                donations.add(donation);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            return donations;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private int insertBlood(String bloodType, Double quantity, LocalDate expirationDate) throws SQLException {
         String sql = "INSERT INTO blood(blood_type, quantity, expiration_date) VALUES (?, ?, ?) RETURNING id";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -259,4 +294,63 @@ public class DonationPostgresDaoImpl implements DonationDao {
 
         return donation;
     }
+
+    private DonationModel mapResultSetToDonationModelWithDonor(ResultSet rs) throws SQLException {
+        DonationModel donation = new DonationModel();
+
+        donation.setId(rs.getInt("id"));
+        donation.setBloodType(rs.getString("blood_type"));
+        donation.setQuantity(rs.getDouble("quantity"));
+        donation.setCollectionDate(rs.getDate("collection_date").toLocalDate());
+        donation.setExpirationDate(rs.getDate("expiration_date").toLocalDate());
+        donation.setDonorId(rs.getInt("donor_id"));
+        donation.setDonationLocationId(rs.getInt("donation_location_id"));
+        donation.setDonorName(rs.getString("donor_name"));
+        donation.setDonorCpf(rs.getString("donor_cpf"));
+
+        return donation;
+    }
+
+    private DonationModel mapResultSetToDonationModelComplete(ResultSet rs) throws SQLException {
+        DonationModel donation = new DonationModel();
+
+        donation.setId(rs.getInt("id"));
+        donation.setBloodType(rs.getString("blood_type"));
+        donation.setQuantity(rs.getDouble("quantity"));
+        donation.setCollectionDate(rs.getDate("collection_date").toLocalDate());
+        donation.setExpirationDate(rs.getDate("expiration_date").toLocalDate());
+        donation.setDonorId(rs.getInt("donor_id"));
+        donation.setDonationLocationId(rs.getInt("donation_location_id"));
+
+        // Criar objeto DonorModel completo
+        DonorModel donor = new DonorModel();
+        donor.setId(rs.getInt("donor_id"));
+        donor.setBloodType(rs.getString("donor_blood_type"));
+        donor.setGender(rs.getString("donor_gender"));
+        if (rs.getDate("last_donation_date") != null) {
+            donor.setLastDonationDate(rs.getDate("last_donation_date").toLocalDate());
+        }
+        
+        UserModel user = new UserModel();
+        user.setName(rs.getString("donor_name"));
+        user.setEmail(rs.getString("donor_email"));
+        user.setCpf(rs.getString("donor_cpf"));
+        user.setPhone(rs.getString("donor_phone"));
+        donor.setUser(user);
+        donation.setDonor(donor);
+
+        // Criar objeto DonationLocationModel completo
+        DonationLocationModel location = new DonationLocationModel();
+        location.setId(rs.getInt("location_id"));
+        location.setName(rs.getString("location_name"));
+        location.setStreet(rs.getString("location_street"));
+        location.setNumber(rs.getInt("location_number"));
+        location.setNeighborhood(rs.getString("location_neighborhood"));
+        location.setPostalCode(rs.getString("location_postal_code"));
+        donation.setDonationLocation(location);
+
+        return donation;
+    }
+
+
 }
