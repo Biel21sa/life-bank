@@ -1,21 +1,25 @@
 package br.fai.lds.lifebank.domain;
 
-import br.fai.lds.lifebank.domain.enuns.BloodType;
+
+import java.time.LocalDate;
 
 public class DonorModel {
     private int id;
-    private String cpf;
-    private BloodType bloodType;
+    private String bloodType;
+
+    private int userId;
+    private UserModel user;
     private boolean apto;
+    private LocalDate lastDonationDate;
+    private String gender;
 
     public DonorModel() {
     }
 
-    public DonorModel(int id, String cpf, BloodType bloodType, boolean apto) {
+    public DonorModel(int id, String bloodType, String gender) {
         this.id = id;
-        this.cpf = cpf;
         this.bloodType = bloodType;
-        this.apto = apto;
+        this.gender = gender;
     }
 
     public int getId() {
@@ -26,20 +30,46 @@ public class DonorModel {
         this.id = id;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public BloodType getBloodType() {
+    public String getBloodType() {
         return bloodType;
     }
 
-    public void setBloodType(BloodType bloodType) {
+    public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
+    }
+
+
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
+
+    public LocalDate getLastDonationDate() {
+        return lastDonationDate;
+    }
+
+    public void setLastDonationDate(LocalDate lastDonationDate) {
+        this.lastDonationDate = lastDonationDate;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public boolean isApto() {
