@@ -43,6 +43,12 @@
                     <td mat-cell *matCellDef="let location">{{ location.neighborhood }}</td>
                 </ng-container>
 
+                <ng-container matColumnDef="municipality">
+                    <th mat-header-cell *matHeaderCellDef>Município</th>
+                    <td mat-cell *matCellDef="let location">{{ location.municipality.name }}, {{
+                        location.municipality.state }}</td>
+                </ng-container>
+
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef>Ações</th>
                     <td mat-cell *matCellDef="let location">

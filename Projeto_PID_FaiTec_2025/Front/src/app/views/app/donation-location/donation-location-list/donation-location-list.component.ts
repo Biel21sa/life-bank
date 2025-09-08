@@ -7,12 +7,11 @@ import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-donation-location-list',
@@ -34,7 +33,7 @@ export class DonationLocationListComponent implements OnInit {
 
   donationLocations: DonationLocation[] = [];
   dataSource = new MatTableDataSource(this.donationLocations);
-  displayedColumns: string[] = ['name', 'address', 'neighborhood', 'actions'];
+  displayedColumns: string[] = ['name', 'address', 'neighborhood', 'municipality', 'actions'];
 
   constructor(
     private donationLocationReadService: DonationLocationReadService,
@@ -63,16 +62,16 @@ export class DonationLocationListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  async deleteLocation(locationId: string) {
-    if (confirm('Tem certeza que deseja excluir este local de doação?')) {
-      try {
-        await this.donationLocationDeleteService.delete(locationId);
-        this.toastr.success('Local de doação removido com sucesso!');
-        this.loadDonationLocations();
-      } catch (error) {
-        this.toastr.error('Erro ao remover local de doação');
-        console.error(error);
-      }
-    }
-  }
+  // async deleteLocation(locationId: string) {
+  //   if (confirm('Tem certeza que deseja excluir este local de doação?')) {
+  //     try {
+  //       await this.donationLocationDeleteService.delete(locationId);
+  //       this.toastr.success('Local de doação removido com sucesso!');
+  //       this.loadDonationLocations();
+  //     } catch (error) {
+  //       this.toastr.error('Erro ao remover local de doação');
+  //       console.error(error);
+  //     }
+  //   }
+  // }
 }
