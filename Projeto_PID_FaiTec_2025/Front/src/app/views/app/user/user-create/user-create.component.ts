@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +13,7 @@ import { UserRole } from '../../../../domain/model/user-role';
 import { UserCreateService } from '../../../../services/user/user-create.service';
 import { DonationLocation } from '../../../../domain/model/donation-location';
 import { DonationLocationReadService } from '../../../../services/donation-location/donation-location-read.service';
+import { MunicipalityReadService } from '../../../../services/municipality/municipality-read.service';
 
 @Component({
   selector: 'app-user-create',
@@ -30,10 +31,11 @@ import { DonationLocationReadService } from '../../../../services/donation-locat
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.css'
 })
-export class UserCreateComponent {
+export class UserCreateComponent implements OnInit {
   userForm: FormGroup;
   userRoles = Object.values(UserRole);
   donationLocations: DonationLocation[] = [];
+  municipalities: any[] = [];
 
   userRoleLabels = {
     [UserRole.ADMINISTRATOR]: 'Administrador',
@@ -46,6 +48,7 @@ export class UserCreateComponent {
     private fb: FormBuilder,
     private userCreateService: UserCreateService,
     private router: Router,
+    private municipalityService: MunicipalityReadService,
     private donationLocationService: DonationLocationReadService
   ) {
     this.userForm = this.fb.group({
@@ -60,9 +63,11 @@ export class UserCreateComponent {
       neighborhood: ['', Validators.required],
       postalCode: ['', Validators.required],
       donationLocationId: [''],
-      blood_type: [''],
+      bloodType: [''],
+      gender: [''],
       nameClinic: [''],
-      cnpj: ['']
+      cnpj: [''],
+      municipalityId: ['']
     });
 
     this.userForm.get('role')?.valueChanges.subscribe(() => {
@@ -92,25 +97,46 @@ export class UserCreateComponent {
 
     // Reset validators
     this.userForm.get('donationLocationId')?.clearValidators();
-    this.userForm.get('blood_type')?.clearValidators();
+    this.userForm.get('bloodType')?.clearValidators();
+    this.userForm.get('gender')?.clearValidators();
     this.userForm.get('nameClinic')?.clearValidators();
     this.userForm.get('cnpj')?.clearValidators();
+    this.userForm.get('municipalityId')?.clearValidators();
 
     // Add validators based on role
     if (role === UserRole.ADMINISTRATOR) {
       this.userForm.get('donationLocationId')?.setValidators([Validators.required]);
     } else if (role === UserRole.USER) {
-      this.userForm.get('blood_type')?.setValidators([Validators.required]);
+      this.userForm.get('bloodType')?.setValidators([Validators.required]);
+      this.userForm.get('gender')?.setValidators([Validators.required]);
     } else if (role === UserRole.CLINIC) {
       this.userForm.get('nameClinic')?.setValidators([Validators.required]);
       this.userForm.get('cnpj')?.setValidators([Validators.required]);
+      this.userForm.get('municipalityId')?.setValidators([Validators.required]);
     }
 
     // Update form validation
     this.userForm.get('donationLocationId')?.updateValueAndValidity();
-    this.userForm.get('blood_type')?.updateValueAndValidity();
+    this.userForm.get('bloodType')?.updateValueAndValidity();
+    this.userForm.get('gender')?.updateValueAndValidity();
     this.userForm.get('nameClinic')?.updateValueAndValidity();
     this.userForm.get('cnpj')?.updateValueAndValidity();
+    this.userForm.get('municipalityId')?.updateValueAndValidity();
+  }
+
+  ngOnInit(): void {
+    this.loadMunicipalities();
+  }
+
+  loadMunicipalities() {
+    this.municipalityService.findAll().subscribe({
+      next: (municipalities) => {
+        this.municipalities = municipalities;
+      },
+      error: (error: any) => {
+        console.error('Erro ao carregar municípios:', error);
+      }
+    });
   }
 
   applyCpfMask(event: any) {

@@ -122,6 +122,15 @@
             </mat-select>
             <mat-icon matSuffix>bloodtype</mat-icon>
           </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Gênero</mat-label>
+            <mat-select formControlName="gender" required>
+              <mat-option value="MASCULINO">Masculino</mat-option>
+              <mat-option value="FEMININO">Feminino</mat-option>
+            </mat-select>
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
         </div>
 
         <div class="section" *ngIf="selectedRole === 'CLINIC'">
@@ -137,6 +146,16 @@
             <input matInput formControlName="cnpj" (input)="applyCnpjMask($event)" placeholder="00.000.000/0000-00"
               maxlength="18" required>
             <mat-icon matSuffix>business_center</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Município</mat-label>
+            <mat-select formControlName="municipalityId" required>
+              <mat-option *ngFor="let municipality of municipalities" [value]="municipality.id">
+                {{ municipality.name }} - {{ municipality.state }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matSuffix>location_on</mat-icon>
           </mat-form-field>
         </div>
 
