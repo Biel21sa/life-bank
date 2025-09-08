@@ -33,17 +33,6 @@ public class BenefitRestController {
         return entity == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(entity);
     }
 
-    @GetMapping("/find-by-clinic-id")
-    public ResponseEntity<List<BenefitModel>> getEntityByClinicId(@RequestBody final int clinicId) {
-        if (clinicId <= 0) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        List<BenefitModel> entities = benefitService.findByClinicId(clinicId);
-
-        return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable final int id) {
         benefitService.delete(id);
