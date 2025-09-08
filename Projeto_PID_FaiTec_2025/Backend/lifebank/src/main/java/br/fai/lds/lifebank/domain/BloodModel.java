@@ -7,81 +7,50 @@ import java.time.LocalDate;
 public class BloodModel {
 
     private int id;
-    private BloodType bloodType;
-    private int quantity;
-    private LocalDate collectionDate;
-    private LocalDate validity;
-    private int minimumLevel;
-    private int maximumLevel;
+    private String bloodType;
+    private Double quantity;
+    private LocalDate expirationDate;
 
     public BloodModel() {
     }
 
-    public BloodModel(int id, BloodType bloodType, int quantity, LocalDate collectionDate, LocalDate validity,
-                      int minimumLevel, int maximumLevel) {
+    public BloodModel(int id, String bloodType, Double quantity, LocalDate expirationDate) {
         this.id = id;
         this.bloodType = bloodType;
         this.quantity = quantity;
-        this.collectionDate = collectionDate;
-        this.validity = validity;
-        this.minimumLevel = minimumLevel;
-        this.maximumLevel = maximumLevel;
+        this.expirationDate = expirationDate;
     }
 
     public int getId() {
         return id;
     }
 
-    public BloodType getBloodType() {
+    public String getBloodType() {
         return bloodType;
     }
 
-    public int getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public LocalDate getCollectionDate() {
-        return collectionDate;
-    }
-
-    public LocalDate getValidity() {
-        return validity;
-    }
-
-    public int getMinimumLevel() {
-        return minimumLevel;
-    }
-
-    public int getMaximumLevel() {
-        return maximumLevel;
+    public LocalDate getExpirationDate() {
+        return expirationDate;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setBloodType(BloodType bloodType) {
+    public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 
-    public void setCollectionDate(LocalDate collectionDate) {
-        this.collectionDate = collectionDate;
-    }
-
-    public void setValidity(LocalDate validity) {
-        this.validity = validity;
-    }
-
-    public void setMinimumLevel(int minimumLevel) {
-        this.minimumLevel = minimumLevel;
-    }
-
-    public void setMaximumLevel(int maximumLevel) {
-        this.maximumLevel = maximumLevel;
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
     }
 }
 
