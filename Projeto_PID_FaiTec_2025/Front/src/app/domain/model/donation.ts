@@ -14,4 +14,6 @@ export interface Donation {
     donor?: Donor;
     blood?: Blood;
     donationLocation?: DonationLocation;
+    donorName?: string;
+    donorCpf?: string;
 }
