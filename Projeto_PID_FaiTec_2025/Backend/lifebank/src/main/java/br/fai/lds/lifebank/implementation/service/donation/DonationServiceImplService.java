@@ -1,19 +1,19 @@
 package br.fai.lds.lifebank.implementation.service.donation;
 
 import br.fai.lds.lifebank.domain.DonationModel;
-import br.fai.lds.lifebank.port.dao.donation.DonationDao;
-import br.fai.lds.lifebank.port.service.donation.DonationService;
+import br.fai.lds.lifebank.port.dao.donation.DonationDaoDao;
+import br.fai.lds.lifebank.port.service.donation.DonationServiceService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DonationServiceImpl implements DonationService {
+public class DonationServiceImplService implements DonationServiceService {
 
-    private final DonationDao donationDao;
+    private final DonationDaoDao donationDao;
 
-    public DonationServiceImpl(DonationDao donationDao) {
+    public DonationServiceImplService(DonationDaoDao donationDao) {
         this.donationDao = donationDao;
     }
 
@@ -81,6 +81,17 @@ public class DonationServiceImpl implements DonationService {
         }
 
         List<DonationModel> donations = donationDao.findByDonorCpf(cpf);
+
+        return donations;
+    }
+
+    @Override
+    public List<DonationModel> findByDonationLocationId(int id) {
+        if (id == 0) {
+            return new ArrayList<>();
+        }
+
+        List<DonationModel> donations = donationDao.findByDonationLocationId(id);
 
         return donations;
     }
