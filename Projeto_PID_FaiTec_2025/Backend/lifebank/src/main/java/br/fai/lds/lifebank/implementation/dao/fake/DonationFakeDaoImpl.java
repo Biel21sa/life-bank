@@ -15,7 +15,7 @@ public class DonationFakeDaoImpl implements DonationDao {
     private static int ID = 0;
 
     public DonationFakeDaoImpl() {
-        DonationModel entity1 = new DonationModel(getNextId(), BloodType.A_NEGATIVE, 200, LocalDate.of(2025, 7, 15), LocalDate.of(2025, 8, 29), "123", 1);
+        DonationModel entity1 = new DonationModel(getNextId(), 200.00, "O-", LocalDate.of(2025, 7, 15), LocalDate.of(2025, 8, 29), 123, 1);
 
         entities.add(entity1);
     }
@@ -83,7 +83,7 @@ public class DonationFakeDaoImpl implements DonationDao {
         List<DonationModel> foundDonations = new ArrayList<>();
 
         for (DonationModel entity : entities) {
-            if (Objects.equals(entity.getDonorCpf(), cpf)) {
+            if (Objects.equals(entity.getDonorId(), cpf)) {
                 foundDonations.add(entity);
             }
         }
