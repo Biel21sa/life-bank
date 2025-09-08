@@ -235,14 +235,17 @@
 }
 
 .feature-item mat-icon {
-  font-size: 56px;
-  width: 56px;
-  height: 56px;
-  color: #1976d2;
+  font-size: 56px !important;
+  width: 56px !important;
+  height: 56px !important;
+  color: #1976d2 !important;
   margin-bottom: 20px;
   padding: 20px;
   background: #e3f2fd;
   border-radius: 50%;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .feature-item h4 {
