@@ -25,10 +25,9 @@ public class DonationServiceImpl implements DonationService {
             return invalidResponse;
         }
 
-        if (entity.getBloodType() == null ||
-                entity.getQuantity() <= 0 ||
-                entity.getDonorCpf() == null ||
-                entity.getLocationId() <= 0) {
+        if (    entity.getQuantity() <= -1 ||
+                entity.getDonorId() <= 0 ||
+                entity.getDonationLocationId() <= 0) {
             return invalidResponse;
         }
 

@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/donation")
+@RequestMapping("/api/donations")
 public class DonationRestController {
 
     private final DonationService donationService;

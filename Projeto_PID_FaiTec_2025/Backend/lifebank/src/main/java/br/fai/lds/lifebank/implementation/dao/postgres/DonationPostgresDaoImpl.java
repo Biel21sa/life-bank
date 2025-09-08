@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,18 +29,28 @@ public class DonationPostgresDaoImpl implements DonationDao {
     public int create(DonationModel entity) {
         logger.log(Level.INFO, "Inserindo doação no banco de dados.");
 
-        String sql = "INSERT INTO donation(blood_type, quantity, collection_date, validity_date, donor_cpf, location_id) ";
-        sql += "VALUES (?, ?, ?, ?, ?, ?)";
-
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            connection.setAutoCommit(false);
 
-            preparedStatement.setString(1, entity.getBloodType().name());
-            preparedStatement.setInt(2, entity.getQuantity());
-            preparedStatement.setDate(3, java.sql.Date.valueOf(entity.getCollectionDate()));
-            preparedStatement.setDate(4, java.sql.Date.valueOf(entity.getValidityDate()));
-            preparedStatement.setString(5, entity.getDonorCpf());
-            preparedStatement.setInt(6, entity.getLocationId());
+            // 1. Criar o registro de sangue
+            int bloodId = insertBlood(entity.getBloodType(), entity.getQuantity(), entity.getExpirationDate());
+
+            // 2. Atualizar blood_stock
+            updateBloodStock(entity.getBloodType(), entity.getQuantity(), entity.getDonationLocationId());
+
+            // 3. Criar a doação
+            String sql = "INSERT INTO donation(quantity, collection_date, expiration_date, donor_id, donation_location_id, blood_id) ";
+            sql += "VALUES (?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql,
+                    PreparedStatement.RETURN_GENERATED_KEYS);
+
+            preparedStatement.setBigDecimal(1, java.math.BigDecimal.valueOf(entity.getQuantity()));
+            preparedStatement.setDate(2, java.sql.Date.valueOf(entity.getCollectionDate()));
+            preparedStatement.setDate(3, java.sql.Date.valueOf(entity.getExpirationDate()));
+            preparedStatement.setInt(4, entity.getDonorId());
+            preparedStatement.setInt(5, entity.getDonationLocationId());
+            preparedStatement.setInt(6, bloodId);
 
             preparedStatement.execute();
 
@@ -49,6 +60,13 @@ public class DonationPostgresDaoImpl implements DonationDao {
                 donationId = resultSet.getInt(1);
             }
 
+            // 4. Criar o benefício
+            insertBenefit(entity.getDonorId(), donationId);
+
+            // 5. Atualizar data da última doação do doador
+            updateDonorLastDonationDate(entity.getDonorId(), entity.getCollectionDate());
+
+            connection.commit();
             logger.log(Level.INFO, "Doação adicionada com sucesso. ID: " + donationId);
 
             resultSet.close();
@@ -57,6 +75,11 @@ public class DonationPostgresDaoImpl implements DonationDao {
             return donationId;
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Problema ao adicionar a doação no banco de dados.");
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
             throw new RuntimeException(e);
         }
     }
@@ -79,7 +102,9 @@ public class DonationPostgresDaoImpl implements DonationDao {
 
     @Override
     public DonationModel findByid(int id) {
-        final String sql = "SELECT * FROM donation WHERE id = ?";
+        final String sql = "SELECT d.*, b.blood_type FROM donation d " +
+                "JOIN blood b ON d.blood_id = b.id " +
+                "WHERE d.id = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -103,7 +128,8 @@ public class DonationPostgresDaoImpl implements DonationDao {
     @Override
     public List<DonationModel> findAll() {
         final List<DonationModel> donations = new ArrayList<>();
-        final String sql = "SELECT * FROM donation";
+        final String sql = "SELECT d.*, b.blood_type FROM donation d " +
+                "JOIN blood b ON d.blood_id = b.id";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -125,20 +151,19 @@ public class DonationPostgresDaoImpl implements DonationDao {
     @Override
     public void update(int id, DonationModel entity) {
         String sql = "UPDATE donation SET "
-                + "blood_type = ?, quantity = ?, collection_date = ?, validity_date = ?, "
-                + "donor_cpf = ?, location_id = ? "
+                + "quantity = ?, collection_date = ?, expiration_date = ?, "
+                + "donor_id = ?, donation_location_id = ? "
                 + "WHERE id = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setString(1, entity.getBloodType().name());
-            preparedStatement.setInt(2, entity.getQuantity());
-            preparedStatement.setDate(3, java.sql.Date.valueOf(entity.getCollectionDate()));
-            preparedStatement.setDate(4, java.sql.Date.valueOf(entity.getValidityDate()));
-            preparedStatement.setString(5, entity.getDonorCpf());
-            preparedStatement.setInt(6, entity.getLocationId());
-            preparedStatement.setInt(7, id);
+            preparedStatement.setBigDecimal(1, java.math.BigDecimal.valueOf(entity.getQuantity()));
+            preparedStatement.setDate(2, java.sql.Date.valueOf(entity.getCollectionDate()));
+            preparedStatement.setDate(3, java.sql.Date.valueOf(entity.getExpirationDate()));
+            preparedStatement.setInt(4, entity.getDonorId());
+            preparedStatement.setInt(5, entity.getDonationLocationId());
+            preparedStatement.setInt(6, id);
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -150,7 +175,11 @@ public class DonationPostgresDaoImpl implements DonationDao {
     @Override
     public List<DonationModel> findByDonorCpf(String cpf) {
         final List<DonationModel> donations = new ArrayList<>();
-        final String sql = "SELECT * FROM donation WHERE donor_cpf = ?";
+        final String sql = "SELECT d.*, b.blood_type FROM donation d " +
+                "JOIN blood b ON d.blood_id = b.id " +
+                "JOIN donor dr ON d.donor_id = dr.id " +
+                "JOIN user_model u ON dr.user_id = u.id " +
+                "WHERE u.cpf = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -170,16 +199,63 @@ public class DonationPostgresDaoImpl implements DonationDao {
         }
     }
 
+    private int insertBlood(String bloodType, Double quantity, LocalDate expirationDate) throws SQLException {
+        String sql = "INSERT INTO blood(blood_type, quantity, expiration_date) VALUES (?, ?, ?) RETURNING id";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, bloodType);
+            stmt.setDouble(2, quantity);
+            stmt.setDate(3, java.sql.Date.valueOf(expirationDate));
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            throw new SQLException("Falha ao criar registro de sangue");
+        }
+    }
+
+    private void updateBloodStock(String bloodType, Double quantity, int locationId) throws SQLException {
+        String sql = "UPDATE blood_stock SET current_stock = current_stock + ? " +
+                "WHERE blood_type = ? AND donation_location_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setDouble(1, quantity);
+            stmt.setString(2, bloodType);
+            stmt.setInt(3, locationId);
+            stmt.executeUpdate();
+        }
+    }
+
+    private void insertBenefit(int donorId, int donationId) throws SQLException {
+        String sql = "INSERT INTO benefit(amount, expiration_date, description, donation_id, donor_id) " +
+                "VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setBigDecimal(1, java.math.BigDecimal.valueOf(50.00)); // Valor padrão do benefício
+            stmt.setDate(2, java.sql.Date.valueOf(LocalDate.now().plusMonths(6))); // Expira em 6 meses
+            stmt.setString(3, "Benefício por doação de sangue");
+            stmt.setInt(4, donationId);
+            stmt.setInt(5, donorId);
+            stmt.executeUpdate();
+        }
+    }
+
+    private void updateDonorLastDonationDate(int donorId, LocalDate donationDate) throws SQLException {
+        String sql = "UPDATE donor SET last_donation_date = ? WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setDate(1, java.sql.Date.valueOf(donationDate));
+            stmt.setInt(2, donorId);
+            stmt.executeUpdate();
+        }
+    }
+
     private DonationModel mapResultSetToDonationModel(ResultSet rs) throws SQLException {
         DonationModel donation = new DonationModel();
 
         donation.setId(rs.getInt("id"));
-        donation.setBloodType(BloodType.valueOf(rs.getString("blood_type")));
-        donation.setQuantity(rs.getInt("quantity"));
+        donation.setBloodType(rs.getString("blood_type"));
+        donation.setQuantity(rs.getDouble("quantity"));
         donation.setCollectionDate(rs.getDate("collection_date").toLocalDate());
-        donation.setValidityDate(rs.getDate("validity_date").toLocalDate());
-        donation.setDonorCpf(rs.getString("donor_cpf"));
-        donation.setLocationId(rs.getInt("location_id"));
+        donation.setExpirationDate(rs.getDate("expiration_date").toLocalDate());
+        donation.setDonorId(rs.getInt("donor_id"));
+        donation.setDonationLocationId(rs.getInt("donation_location_id"));
 
         return donation;
     }
