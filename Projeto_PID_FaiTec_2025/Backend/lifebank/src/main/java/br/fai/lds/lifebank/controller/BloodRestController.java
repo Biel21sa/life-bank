@@ -1,6 +1,8 @@
 package br.fai.lds.lifebank.controller;
 
 import br.fai.lds.lifebank.domain.BloodModel;
+import br.fai.lds.lifebank.domain.DonationModel;
+import br.fai.lds.lifebank.domain.dto.UpdateBloodsDto;
 import br.fai.lds.lifebank.domain.enuns.BloodType;
 import br.fai.lds.lifebank.port.service.blood.BloodService;
 import org.springframework.http.ResponseEntity;
@@ -64,6 +66,26 @@ public class BloodRestController {
 
         BloodModel entity = data;
         bloodService.update(id, entity);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/location/{id}")
+    public ResponseEntity<List<BloodModel>> getEntityByDonationLocationId(@PathVariable final int id) {
+        if (id == 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<BloodModel> entities = bloodService.findByDonationLocationId(id);
+
+        return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
+    }
+
+    @PutMapping("/withdraw")
+    public ResponseEntity<BloodModel> updateBloods(@RequestBody final UpdateBloodsDto data) {
+
+        UpdateBloodsDto entity = data;
+        bloodService.updateBloods(entity);
 
         return ResponseEntity.noContent().build();
     }
