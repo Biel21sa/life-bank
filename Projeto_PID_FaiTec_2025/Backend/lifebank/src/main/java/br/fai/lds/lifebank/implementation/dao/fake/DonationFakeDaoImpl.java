@@ -1,19 +1,19 @@
 package br.fai.lds.lifebank.implementation.dao.fake;
 
 import br.fai.lds.lifebank.domain.DonationModel;
-import br.fai.lds.lifebank.port.dao.donation.DonationDaoDao;
+import br.fai.lds.lifebank.port.dao.donation.DonationDao;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class DonationFakeDaoImplDao implements DonationDaoDao {
+public class DonationFakeDaoImpl implements DonationDao {
 
     private final List<DonationModel> entities = new ArrayList<>();
     private static int ID = 0;
 
-    public DonationFakeDaoImplDao() {
+    public DonationFakeDaoImpl() {
         DonationModel entity1 = new DonationModel(getNextId(), 200.00, "O-", LocalDate.of(2025, 7, 15), LocalDate.of(2025, 8, 29), 123, 1);
 
         entities.add(entity1);

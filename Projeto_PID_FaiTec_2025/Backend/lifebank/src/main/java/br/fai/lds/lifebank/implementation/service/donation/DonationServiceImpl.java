@@ -1,19 +1,19 @@
 package br.fai.lds.lifebank.implementation.service.donation;
 
 import br.fai.lds.lifebank.domain.DonationModel;
-import br.fai.lds.lifebank.port.dao.donation.DonationDaoDao;
-import br.fai.lds.lifebank.port.service.donation.DonationServiceService;
+import br.fai.lds.lifebank.port.dao.donation.DonationDao;
+import br.fai.lds.lifebank.port.service.donation.DonationService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DonationServiceImplService implements DonationServiceService {
+public class DonationServiceImpl implements DonationService {
 
-    private final DonationDaoDao donationDao;
+    private final DonationDao donationDao;
 
-    public DonationServiceImplService(DonationDaoDao donationDao) {
+    public DonationServiceImpl(DonationDao donationDao) {
         this.donationDao = donationDao;
     }
 

@@ -4,7 +4,7 @@ import br.fai.lds.lifebank.domain.DonationLocationModel;
 import br.fai.lds.lifebank.domain.DonationModel;
 import br.fai.lds.lifebank.domain.DonorModel;
 import br.fai.lds.lifebank.domain.UserModel;
-import br.fai.lds.lifebank.port.dao.donation.DonationDaoDao;
+import br.fai.lds.lifebank.port.dao.donation.DonationDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DonationPostgresDaoImplDao implements DonationDaoDao {
+public class DonationPostgresDaoImpl implements DonationDao {
 
-    private static final Logger logger = Logger.getLogger(DonationPostgresDaoImplDao.class.getName());
+    private static final Logger logger = Logger.getLogger(DonationPostgresDaoImpl.class.getName());
 
     private final Connection connection;
 
-    public DonationPostgresDaoImplDao(Connection connection) {
+    public DonationPostgresDaoImpl(Connection connection) {
         this.connection = connection;
     }
 
@@ -34,7 +34,7 @@ public class DonationPostgresDaoImplDao implements DonationDaoDao {
             connection.setAutoCommit(false);
 
             // 1. Criar o registro de sangue
-            int bloodId = insertBlood(entity.getBloodType(), entity.getQuantity(), entity.getExpirationDate(), entity.getDonorId());
+            int bloodId = insertBlood(entity.getBloodType(), entity.getQuantity(), entity.getExpirationDate(), entity.getDonorId(), entity.getDonationLocationId());
 
             // 2. Atualizar blood_stock
             updateBloodStock(entity.getBloodType(), entity.getQuantity(), entity.getDonationLocationId());
@@ -234,13 +234,14 @@ public class DonationPostgresDaoImplDao implements DonationDaoDao {
         }
     }
 
-    private int insertBlood(String bloodType, Double quantity, LocalDate expirationDate, int donorId) throws SQLException {
-        String sql = "INSERT INTO blood(blood_type, quantity, expiration_date, used, donor_id) VALUES (?, ?, ?, FALSE, ?) RETURNING id";
+    private int insertBlood(String bloodType, Double quantity, LocalDate expirationDate, int donorId, int donationLocationId) throws SQLException {
+        String sql = "INSERT INTO blood(blood_type, quantity, expiration_date, used, donor_id, donation_location_id) VALUES (?, ?, ?, FALSE, ?, ?) RETURNING id";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, bloodType);
             stmt.setDouble(2, quantity);
             stmt.setDate(3, java.sql.Date.valueOf(expirationDate));
             stmt.setInt(4, donorId);
+            stmt.setInt(5, donationLocationId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);

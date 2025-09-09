@@ -1,7 +1,7 @@
 package br.fai.lds.lifebank.controller;
 
 import br.fai.lds.lifebank.domain.DonationModel;
-import br.fai.lds.lifebank.port.service.donation.DonationServiceService;
+import br.fai.lds.lifebank.port.service.donation.DonationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -13,9 +13,9 @@ import java.util.List;
 @RequestMapping("/api/donations")
 public class DonationRestController {
 
-    private final DonationServiceService donationService;
+    private final DonationService donationService;
 
-    public DonationRestController(DonationServiceService donationService) {
+    public DonationRestController(DonationService donationService) {
         this.donationService = donationService;
     }
 
@@ -72,7 +72,7 @@ public class DonationRestController {
     }
 
     @GetMapping("/location/{id}")
-    public ResponseEntity<List<DonationModel>> getEntityByDonorCpf(@PathVariable final int id) {
+    public ResponseEntity<List<DonationModel>> getEntityByDonationLocationId(@PathVariable final int id) {
         if (id == 0) {
             return ResponseEntity.badRequest().build();
         }
