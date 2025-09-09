@@ -30,6 +30,7 @@ import { ClinicDetailComponent } from './views/app/clinic/clinic-detail/clinic-d
 import { DonationCreateComponent } from './views/app/donation-create/donation-create.component';
 import { DonationHistoryComponent } from './views/app/donation-history/donation-history.component';
 import { DonationDetailComponent } from './views/app/donation-detail/donation-detail.component';
+import { BloodWithdrawalComponent } from './views/app/blood-withdrawal/blood-withdrawal.component';
 
 export const routes: Routes = [
     {
@@ -150,6 +151,11 @@ export const routes: Routes = [
             {
                 path: 'donation-detail/:id',
                 component: DonationDetailComponent,
+                canActivate: [AdministratorGuard]
+            },
+            {
+                path: 'blood-withdrawal/:locationId',
+                component: BloodWithdrawalComponent,
                 canActivate: [AdministratorGuard]
             },
             {
