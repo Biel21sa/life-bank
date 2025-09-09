@@ -1,1 +1,34 @@
-<p>profile works!</p>
+<div class="profileImage">
+    <img src="https://marketplace.canva.com/gJly0/MAGDkMgJly0/1/tl/canva-user-profile-icon-vector.-avatar-or-person-icon.-profile-picture%2C-portrait-symbol.-MAGDkMgJly0.png">
+</div>
+<div class="nameAndRole">
+    <h1>John Doe</h1>
+    <h2>Clínica</h2>
+</div>
+
+<div class="settings">
+    <h1>Credenciais</h1>
+    <button><fa-icon [icon]="fontawesome.faEdit" size="2x"></fa-icon></button>
+</div>
+<main>
+    <form id="column">     
+        <label for="email">Email</label>
+        <input type="email" value="email@gmail.com" id="email" disabled>
+       
+        <label for="password">Senha</label>
+        <input type="password" value="sugmadeeznutz" id="password" disabled>
+    </form>
+
+    <h2>Localidade</h2>
+
+    <form id="row"> 
+        <label for="city">Cidade</label>    
+        <input type="city" value="cidade" id="city" disabled>
+
+        <label for="state" style="padding: 0% 5%;">Estado</label>
+        <select name="state" id="state" disabled>
+            <option value="MG">valor1</option> <!--iterar com @for depois-->
+        </select>
+        
+    </form>
+</main>
