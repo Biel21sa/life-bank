@@ -2,11 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-
-export interface BloodWithdrawalRequest {
-  bloodIds: string[];
-  reason: string;
-}
+import { BloodWithdrawalRequest } from '../../domain/dto/blood-withdraw-dto';
 
 @Injectable({
   providedIn: 'root'
