@@ -75,7 +75,10 @@ CREATE TABLE blood (
     ),
     quantity DECIMAL(10,2) NOT NULL,
     expiration_date DATE NOT NULL,
-    UNIQUE(blood_type, expiration_date)
+    reason VARCHAR(1000),
+    used BOOLEAN NOT NULL DEFAULT FALSE,
+    donor_id INTEGER NOT NULL REFERENCES donor(id) ON DELETE CASCADE,
+    UNIQUE(blood_type, donor_id, expiration_date)
 );
 
 CREATE TABLE blood_stock (
@@ -106,6 +109,7 @@ CREATE TABLE benefit (
     amount DECIMAL(10,2) NOT NULL,
     expiration_date DATE NOT NULL,
     description TEXT NOT NULL,
+    used BOOLEAN NOT NULL DEFAULT FALSE,
     donation_id INTEGER NOT NULL UNIQUE REFERENCES donation(id) ON DELETE CASCADE,
     donor_id INTEGER NOT NULL REFERENCES donor(id) ON DELETE CASCADE,
     UNIQUE(donor_id, donation_id)

@@ -32,10 +32,9 @@ INSERT INTO clinic (name, cnpj, street, number, neighborhood, postal_code, munic
 VALUES
 ('Clínica Vida', '12345678000199', 'Av. Saúde', '400', 'Centro', '20010-000', 3, 3);
 
-INSERT INTO blood (blood_type, quantity, expiration_date)
+INSERT INTO blood (blood_type, quantity, expiration_date, used, donor_id)
 VALUES
-('O+', 5.00, CURRENT_DATE + INTERVAL '30 days'),
-('A+', 3.50, CURRENT_DATE + INTERVAL '25 days');
+('O+', 0.45, CURRENT_DATE + INTERVAL '30 days', FALSE, 1);
 
 INSERT INTO blood_stock (blood_type, minimum_stock, maximum_stock, current_stock, donation_location_id)
 VALUES
@@ -53,9 +52,9 @@ INSERT INTO donation (quantity, collection_date, expiration_date, donor_id, dona
 VALUES
 (0.45, CURRENT_DATE, CURRENT_DATE + INTERVAL '30 days', 1, 1, 1);
 
-INSERT INTO benefit (amount, expiration_date, description, donor_id, donation_id)
+INSERT INTO benefit (amount, expiration_date, description, used, donor_id, donation_id)
 VALUES
-(100.00, CURRENT_DATE + INTERVAL '60 days', 'Desconto em exames', 1, 1);
+(100.00, CURRENT_DATE + INTERVAL '60 days', 'Desconto em exames', FALSE, 1, 1);
 
 INSERT INTO notification (message, donor_id)
 VALUES
