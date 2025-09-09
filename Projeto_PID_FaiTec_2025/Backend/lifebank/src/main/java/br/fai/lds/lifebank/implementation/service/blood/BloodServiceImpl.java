@@ -1,11 +1,14 @@
 package br.fai.lds.lifebank.implementation.service.blood;
 
 import br.fai.lds.lifebank.domain.BloodModel;
+import br.fai.lds.lifebank.domain.DonationModel;
+import br.fai.lds.lifebank.domain.dto.UpdateBloodsDto;
 import br.fai.lds.lifebank.domain.enuns.BloodType;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
 import br.fai.lds.lifebank.port.service.blood.BloodService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -82,5 +85,33 @@ public class BloodServiceImpl implements BloodService {
 
         BloodModel entity = bloodDao.findByType(bloodType);
         return entity;
+    }
+
+    @Override
+    public List<BloodModel> findByDonationLocationId(int id) {
+        if (id == 0) {
+            return new ArrayList<>();
+        }
+
+        List<BloodModel> donations = bloodDao.findByDonationLocationId(id);
+
+        return donations;
+    }
+
+    @Override
+    public void updateBloods(UpdateBloodsDto data) {
+        if (data == null || data.getBloodIds() == null || data.getReason() == null) {
+            return;
+        }
+
+        for (int i = 0; i < data.getBloodIds().size(); i++) {
+            int id = data.getBloodIds().get(i);
+            BloodModel bloodModel = findByid(id);
+            if (bloodModel == null) {
+                return;
+            }
+        }
+
+        bloodDao.updateBloods(data);
     }
 }
