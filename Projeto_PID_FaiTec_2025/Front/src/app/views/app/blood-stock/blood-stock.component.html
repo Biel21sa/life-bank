@@ -1,0 +1,51 @@
+<div class="stock-container">
+  <div class="header-section">
+    <h1>Estoque de Sangue</h1>
+    <p>Monitore os níveis de estoque por tipo sanguíneo</p>
+  </div>
+
+  <!-- Gráfico -->
+  <mat-card class="chart-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>bar_chart</mat-icon>
+        Níveis de Estoque
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="chart-container">
+        <canvas id="stockChart"></canvas>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Cards de Estatísticas -->
+  <div class="stats-cards">
+    <mat-card class="stat-card critical" *ngFor="let stock of bloodStockData">
+      <div class="stat-header">
+        <span class="blood-type">{{stock.bloodType}}</span>
+        <mat-icon [class]="getStockStatusClass(stock)">
+          {{getStockStatusIcon(stock)}}
+        </mat-icon>
+      </div>
+      <div class="stat-content">
+        <div class="current-stock">{{stock.currentStock}} L</div>
+        <div class="stock-limits">
+          Min: {{stock.minimumStock}} | Max: {{stock.maximumStock}}
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Botões de Ação -->
+  <div class="action-buttons">
+    <button mat-raised-button color="primary" (click)="openMinStockDialog()">
+      <mat-icon>trending_down</mat-icon>
+      Atualizar Estoque Mínimo
+    </button>
+    <button mat-raised-button color="accent" (click)="openMaxStockDialog()">
+      <mat-icon>trending_up</mat-icon>
+      Atualizar Estoque Máximo
+    </button>
+  </div>
+</div>
