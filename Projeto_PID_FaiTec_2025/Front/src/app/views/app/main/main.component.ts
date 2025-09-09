@@ -46,7 +46,7 @@ export class MainComponent {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService
-  ){}
+  ) { }
 
   isSystemAdmin(): boolean {
     return this.authenticationService.isSystemAdmin();
@@ -60,6 +60,10 @@ export class MainComponent {
     console.log('logout clicado');
     this.authenticationService.logout();
     this.router.navigate(['account/sign-in']);
+  }
+
+  getDonationLocationId(): string {
+    return this.authenticationService.getDonationLocationId()!;
   }
 
   onSidenavClosed() {
