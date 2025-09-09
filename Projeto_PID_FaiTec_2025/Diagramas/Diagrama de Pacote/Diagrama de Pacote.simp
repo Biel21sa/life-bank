@@ -1,0 +1,659 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<sim-project version="14.82" multi-file="no" uid="simpb90c3594802349d88f012b37958f2136" creation-date="08/26/2025 20:10:23">
+  <meta>
+    <name>Diagrama de Pacote</name>
+    <authors> </authors>
+    <description>Lifebank</description>
+  </meta>
+  <counters models="1">
+    <entity-names>
+      <counter>
+        <item-type type-id="package" type="Package" />
+        <value>16</value>
+      </counter>
+      <counter>
+        <item-type type-id="class" type="Class" />
+        <value>22</value>
+      </counter>
+      <counter>
+        <item-type type="Unknown" />
+        <value>1</value>
+      </counter>
+    </entity-names>
+    <entity-ids>
+      <counter>
+        <item-type type-id="package" type="Package" />
+        <value>17</value>
+      </counter>
+      <counter>
+        <item-type type-id="class" type="Class" />
+        <value>23</value>
+      </counter>
+      <counter>
+        <item-type type-id="usage" type="Usage" />
+        <value>4</value>
+      </counter>
+      <counter>
+        <item-type type-id="dependency" type="Dependency" />
+        <value>3</value>
+      </counter>
+      <counter>
+        <item-type type-id="text" type="Text" />
+        <value>2</value>
+      </counter>
+    </entity-ids>
+    <diagrams>
+      <counter>
+        <type>SoftwareIdeasModeler.Core.Diagrams.UmlDiagrams.UmlPackageDiagram</type>
+        <value>2</value>
+      </counter>
+    </diagrams>
+    <fields />
+  </counters>
+  <alias-groups />
+  <management uid="md-54da91911d4647e6b0cd4133c54800fe" name="" task-id-sequence="0">
+    <working-schedule uid="ws-e0f68bb0f7864ed3ad2cdcd1e45e3645" hours="8" monday="8" tuesday="8" wednesday="8" thursday="8" friday="8" saturday="0" sunday="0" />
+    <persons>
+      <person id="">
+        <first-name />
+        <last-name />
+        <role />
+        <e-mail />
+        <phone-number />
+        <description />
+        <color>#00000000</color>
+        <working-schedule uid="ws-8d9b5e0524ee45e89a6e6f99999f392d" hours="8" monday="8" tuesday="8" wednesday="8" thursday="8" friday="8" saturday="0" sunday="0" />
+      </person>
+    </persons>
+    <teams />
+    <sprints />
+    <projects />
+    <modules />
+    <tasks />
+    <to-dos />
+  </management>
+  <glossary id="glsr-c7204a6471ae4f8a972fa9ec4d139a6d" name="" order-index="-1" />
+  <types default="UML">
+    <type-sets>
+      <type-set file="UmlTypes.xml" />
+    </type-sets>
+    <custom-types>
+      <parameters />
+      <types />
+    </custom-types>
+  </types>
+  <items>
+    <item id="d7bdf381f9444403a42248bbd499574e" cid="C019" type="class" name="ClinicReadService" owner="9f929ba018a94779a470be51cc443258" creation-date="08/26/2025 22:25:00" visibility="undefined" />
+    <item id="01aacaae95cc482d8df1f938d7b78c40" cid="C014" type="class" name="AutheticationRestController" owner="779b70fdcedc476488153872a265e813" creation-date="08/26/2025 21:50:41" visibility="undefined" />
+    <item id="501c50e3ad024de7b195a60993cc5a42" cid="C021" type="class" name="BloodDeleteService" owner="773c85527d474e7fafbe350b5ed909c3" creation-date="08/26/2025 22:26:31" visibility="undefined" />
+    <item id="f0282afc159a4c9e9d2027b24974ea86" cid="C013" type="class" name="BenefitDaoImpl" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 21:50:05" visibility="undefined" />
+    <item id="165bebe85def432eb86b6304cbe44a90" cid="C013" type="class" name="BenefitServiceImpl" owner="925d3c5c496645f19665ced16bd2987b" creation-date="08/26/2025 21:50:05" visibility="undefined">
+      <source-codes>
+        <source-code language="ActionScript" />
+      </source-codes>
+    </item>
+    <item id="70dcfe1f27de41589a4c6657144eaaef" cid="C020" type="class" name="DonorUpdateService" owner="1485e8fc30854585bc2e17dda688d5d0" creation-date="08/26/2025 22:25:25" visibility="undefined" />
+    <item id="3a3d55a871d543c5b8a0d1f829385237" cid="C010" type="class" name="DonationServiceImpl" owner="880c14714dc74797ad7d63a69081efa7" creation-date="08/26/2025 21:49:12" visibility="undefined" />
+    <item id="1330a6525d3d4308bc640f889d5e5b4b" cid="C014" type="class" name="AutheticationServiceImpl" owner="925d3c5c496645f19665ced16bd2987b" creation-date="08/26/2025 21:50:41" visibility="undefined" />
+    <item id="cad40052279643a4ad11c4a1d3916179" cid="C021" type="class" name="BenefitDeleteService" owner="61c08cc7cc7a47bab7ac2f413cd5d2ef" creation-date="08/26/2025 22:26:31" visibility="undefined" />
+    <item id="72790eb615e94c27935ec42b17985b34" cid="C021" type="class" name="DonationDeleteService" owner="b71d3e8e8ab34144836e54d8ed4bff3f" creation-date="08/26/2025 22:26:31" visibility="undefined" />
+    <item id="315c8248151b4c618db3298c168b7a80" cid="C014" type="class" name="AutheticationServiceImpl" owner="880c14714dc74797ad7d63a69081efa7" creation-date="08/26/2025 21:50:41" visibility="undefined" />
+    <item id="cea446fb21cc450ba7e7a690263e0d95" cid="C018" type="class" name="BloodCreateService" owner="773c85527d474e7fafbe350b5ed909c3" creation-date="08/26/2025 22:24:03" visibility="undefined" />
+    <item id="eda9460c8c564cf686eebf8bed0aac2b" cid="C018" type="class" name="DonorCreateService" owner="1485e8fc30854585bc2e17dda688d5d0" creation-date="08/26/2025 22:24:03" visibility="undefined" />
+    <item id="c035be12214745b7b340ca1cd1cd6b72" cid="C018" type="class" name="ClinicCreateService" owner="9f929ba018a94779a470be51cc443258" creation-date="08/26/2025 22:24:03" visibility="undefined" />
+    <item id="8534b726ff6446359c4ece43f17d07df" cid="C010" type="class" name="DonationRestController" owner="779b70fdcedc476488153872a265e813" creation-date="08/26/2025 21:49:12" visibility="undefined" />
+    <item id="895a4d48179a4923ad1c4455940fbcf1" cid="PKG015" type="package" name="donationlocation" owner="9f929ba018a94779a470be51cc443258" creation-date="08/26/2025 22:23:20" visibility="undefined" />
+    <item id="880c14714dc74797ad7d63a69081efa7" cid="PKG011" type="package" name="service" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 21:47:29" visibility="undefined">
+      <owned-items />
+    </item>
+    <item id="ca71422f4e64437392ef4314a14f57e9" cid="C010" type="class" name="DonationRestController" owner="1c9c72d0548b43ff9446128c6f468b99" creation-date="08/26/2025 21:49:12" visibility="undefined" />
+    <item id="82c11f033eb8463f98b9d69f2718a3c8" cid="C009" type="class" name="DonorServiceImpl" owner="880c14714dc74797ad7d63a69081efa7" creation-date="08/26/2025 21:48:53" visibility="undefined" />
+    <item id="8073107a1f3549658ddf33f20ec4dbf8" cid="C011" type="class" name="DonationLocationServiceImpl" owner="925d3c5c496645f19665ced16bd2987b" creation-date="08/26/2025 21:49:33" visibility="undefined" />
+    <item id="ef3daf8774df4d06bcc81c40e9722e81" cid="C019" type="class" name="DonationLocationReadService" owner="9f929ba018a94779a470be51cc443258" creation-date="08/26/2025 22:25:00" visibility="undefined" />
+    <item id="ee44925a6592485d8a30b6d45cdebaf3" cid="C009" type="class" name="DonorDaoImpl" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 21:48:53" visibility="undefined" />
+    <item id="51ec6db9fbac4f6294b782d146435507" cid="C012" type="class" name="BloodServiceImpl" owner="880c14714dc74797ad7d63a69081efa7" creation-date="08/26/2025 21:49:40" visibility="undefined" />
+    <item id="e65c0a4589d344fe9473c97d4c9f388c" cid="C012" type="class" name="BloodRestController" owner="1c9c72d0548b43ff9446128c6f468b99" creation-date="08/26/2025 21:49:40" visibility="undefined" />
+    <item id="4678a8d7890b4413a6a260d3fdb4154f" cid="C019" type="class" name="BenefitReadService" owner="61c08cc7cc7a47bab7ac2f413cd5d2ef" creation-date="08/26/2025 22:25:00" visibility="undefined" />
+    <item id="b71d3e8e8ab34144836e54d8ed4bff3f" cid="PKG015" type="package" name="donation" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 22:23:20" visibility="undefined">
+      <owned-items />
+    </item>
+    <item id="773c85527d474e7fafbe350b5ed909c3" cid="PKG015" type="package" name="blood" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 22:23:20" visibility="undefined">
+      <owned-items />
+    </item>
+    <item id="59e461f2996d410e819606881e32b2e8" cid="C011" type="class" name="DonationLocationDaoImpl" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 21:49:33" visibility="undefined" />
+    <item id="b05118c054ec4951bba909393973e80d" cid="C011" type="class" name="DonationLocationRestController" owner="779b70fdcedc476488153872a265e813" creation-date="08/26/2025 21:49:33" visibility="undefined" />
+    <item id="a88aae4083934341b85af33719803d2d" cid="C021" type="class" name="DonationLocationDeleteService" owner="9f929ba018a94779a470be51cc443258" creation-date="08/26/2025 22:26:31" visibility="undefined" />
+    <item id="cd9e92e708b2428fb0b0964683de340a" cid="PKG013" type="package" name="service" owner="a7e6649f3d0641d7ab80b21109c729b3" creation-date="08/26/2025 22:01:22" visibility="undefined" />
+    <item id="ccbef5feddc34f22ac96cf1aa71f1ec1" cid="C018" type="class" name="BenefitCreateService" owner="a57bac4ade6549149001a3a9165dcf2e" creation-date="08/26/2025 22:24:03" visibility="undefined" />
+    <item id="a57bac4ade6549149001a3a9165dcf2e" cid="PKG015" type="package" name="benefit" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 22:23:20" visibility="undefined">
+      <owned-items />
+    </item>
+    <item id="52c49a981db94fa2b3117c739f868fd4" cid="C019" type="class" name="DonationReadService" owner="b71d3e8e8ab34144836e54d8ed4bff3f" creation-date="08/26/2025 22:25:00" visibility="undefined" />
+    <item id="45eba9de51ab4103bc3ae5a797a0e3ce" cid="C020" type="class" name="DonationUpdateService" owner="b71d3e8e8ab34144836e54d8ed4bff3f" creation-date="08/26/2025 22:25:25" visibility="undefined" />
+    <item id="b073f6a65dc4423c94d8527fbedfd6e4" cid="C020" type="class" name="BloodUpdateService" owner="773c85527d474e7fafbe350b5ed909c3" creation-date="08/26/2025 22:25:25" visibility="undefined" />
+    <item id="53cca7adb0a643b0a63ff50da5aba902" cid="C012" type="class" name="BloodServiceImpl" owner="925d3c5c496645f19665ced16bd2987b" creation-date="08/26/2025 21:49:40" visibility="undefined" />
+    <item id="8d2d96acf3c94d4db8252162acc19d43" cid="C008" type="class" name="UserServiceImpl" owner="925d3c5c496645f19665ced16bd2987b" creation-date="08/26/2025 21:48:37" visibility="undefined" />
+    <item id="7969f1ffaec34cf2bcde36637b07f69a" cid="C009" type="class" name="DonorRestController" owner="779b70fdcedc476488153872a265e813" creation-date="08/26/2025 21:48:53" visibility="undefined" />
+    <item id="f995d2e766f94f08893de50c0b8a0598" cid="C018" type="class" name="AuthenticationService" owner="61c08cc7cc7a47bab7ac2f413cd5d2ef" creation-date="08/26/2025 22:24:03" visibility="undefined" />
+    <item id="b703eb3098ba413e8c3b361f2e352499" cid="C021" type="class" name="BenefitDeleteService" owner="a57bac4ade6549149001a3a9165dcf2e" creation-date="08/26/2025 22:26:31" visibility="undefined" />
+    <item id="1926584a7b794212aa41a4f85045c967" cid="PKG010" type="package" name="dao" owner="1c9c72d0548b43ff9446128c6f468b99" creation-date="08/26/2025 21:46:58" visibility="undefined" />
+    <item id="bc2351b68f404c7eba076b17f670d9c5" cid="C016" type="class" name="ClinicServiceImpl" owner="925d3c5c496645f19665ced16bd2987b" creation-date="08/26/2025 21:51:44" visibility="undefined" />
+    <item id="49821bc35d3c4174bb10a4869d0d4285" cid="C008" type="class" name="UserRestController" owner="779b70fdcedc476488153872a265e813" creation-date="08/26/2025 21:48:37" visibility="undefined" />
+    <item id="ad3b967ab05d486bb40f2f644de1375c" cid="C020" type="class" name="DonationLocationUpdateService" owner="9f929ba018a94779a470be51cc443258" creation-date="08/26/2025 22:25:25" visibility="undefined" />
+    <item id="7bcc194ec5c54416b1c4e3cd6f517d9c" cid="C014" type="class" name="AutheticationDaoImpl" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 21:50:41" visibility="undefined" />
+    <item id="995e0529bcd24d76b8f0472f3615429a" cid="C018" type="class" name="DonationCreateService" owner="b71d3e8e8ab34144836e54d8ed4bff3f" creation-date="08/26/2025 22:24:03" visibility="undefined" />
+    <item id="b87a327f4b8c4896b2c6a46a14366cf4" cid="C016" type="class" name="ClinicServiceImpl" owner="880c14714dc74797ad7d63a69081efa7" creation-date="08/26/2025 21:51:44" visibility="undefined" />
+    <item id="779b70fdcedc476488153872a265e813" cid="PKG009" type="package" name="controller" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 21:46:33" visibility="undefined">
+      <owned-items />
+    </item>
+    <item id="61c08cc7cc7a47bab7ac2f413cd5d2ef" cid="PKG015" type="package" name="security" owner="9f929ba018a94779a470be51cc443258" creation-date="08/26/2025 22:23:20" visibility="undefined">
+      <owned-items />
+    </item>
+    <item id="18c99540fd9c402dbb15eda8532528e8" cid="C021" type="class" name="DonorDeleteService" owner="1485e8fc30854585bc2e17dda688d5d0" creation-date="08/26/2025 22:26:31" visibility="undefined" />
+    <item id="4b027a2015c24c718cf17494f5706450" cid="PKG010" type="package" name="dao" owner="a7e6649f3d0641d7ab80b21109c729b3" creation-date="08/26/2025 21:46:58" visibility="undefined" />
+    <item id="75f2526561394fecae4227a977596b38" cid="C020" type="class" name="BenefitUpdateService" owner="a57bac4ade6549149001a3a9165dcf2e" creation-date="08/26/2025 22:25:25" visibility="undefined" />
+    <item id="7f61df00feb746b89958c2ac5bdbe424" cid="C014" type="class" name="AutheticationRestController" owner="1c9c72d0548b43ff9446128c6f468b99" creation-date="08/26/2025 21:50:41" visibility="undefined" />
+    <item id="5823487b00904a309fdd9d7dffdcc0f7" cid="C008" type="class" name="UserRestController" owner="1c9c72d0548b43ff9446128c6f468b99" creation-date="08/26/2025 21:48:37" visibility="undefined" />
+    <item id="d6f41fc391644691b6b3ab0bb960655f" cid="C008" type="class" name="UserServiceImpl" owner="880c14714dc74797ad7d63a69081efa7" creation-date="08/26/2025 21:48:37" visibility="undefined" />
+    <item id="f9fe5fa40a394986b342aef042bd9411" cid="C013" type="class" name="BenefitServiceImpl" owner="880c14714dc74797ad7d63a69081efa7" creation-date="08/26/2025 21:50:05" visibility="undefined">
+      <source-codes>
+        <source-code language="ActionScript" />
+      </source-codes>
+    </item>
+    <item id="6d6289f5bdfc498f9030276693f601c2" cid="C017" type="class" name="ResourceFIleServiceImpl" owner="880c14714dc74797ad7d63a69081efa7" creation-date="08/26/2025 21:52:24" visibility="undefined" />
+    <item id="5fef5f2e023f4bd5b36669462a10b7f7" cid="C011" type="class" name="DonationLocationRestController" owner="1c9c72d0548b43ff9446128c6f468b99" creation-date="08/26/2025 21:49:33" visibility="undefined" />
+    <item id="7aefdd24e6d648f593e7162eee539aee" cid="C019" type="class" name="BloodReadService" owner="773c85527d474e7fafbe350b5ed909c3" creation-date="08/26/2025 22:25:00" visibility="undefined" />
+    <item id="fb0637b32a5a40ee8b61579a248da767" cid="C009" type="class" name="DonorServiceImpl" owner="925d3c5c496645f19665ced16bd2987b" creation-date="08/26/2025 21:48:53" visibility="undefined" />
+    <item id="91e6d1e105fa45d7a354aed96a73b690" cid="C010" type="class" name="DonationServiceImpl" owner="925d3c5c496645f19665ced16bd2987b" creation-date="08/26/2025 21:49:12" visibility="undefined" />
+    <item id="cb92e69771804b1db0168d097bdb8754" cid="C012" type="class" name="BloodDaoImpl" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 21:49:40" visibility="undefined" />
+    <item id="80f5d11a859a4762b41e685c17f27ff9" cid="C012" type="class" name="BloodRestController" owner="779b70fdcedc476488153872a265e813" creation-date="08/26/2025 21:49:40" visibility="undefined" />
+    <item id="a469ec20e454418cbc37e180cf888305" cid="C016" type="class" name="ClinicRestController" owner="779b70fdcedc476488153872a265e813" creation-date="08/26/2025 21:51:44" visibility="undefined">
+      <source-codes>
+        <source-code language="ActionScript" />
+      </source-codes>
+    </item>
+    <item id="ea1abd3950a2421eacda395fa0f150dc" cid="C019" type="class" name="BenefitReadService" owner="a57bac4ade6549149001a3a9165dcf2e" creation-date="08/26/2025 22:25:00" visibility="undefined" />
+    <item id="5b5ef27d510548699d9c63506bcfbd52" cid="C008" type="class" name="UserDaoImpl" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 21:48:37" visibility="undefined" />
+    <item id="d56e0fbed6294abfb8765711dc915d96" cid="C016" type="class" name="ClinicDaoImpl" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 21:51:44" visibility="undefined" />
+    <item id="63c12bf685e246239dd3b77b81385942" cid="C011" type="class" name="DonationLocationServiceImpl" owner="880c14714dc74797ad7d63a69081efa7" creation-date="08/26/2025 21:49:33" visibility="undefined" />
+    <item id="1c9c72d0548b43ff9446128c6f468b99" cid="PKG009" type="package" name="controller" owner="026b4b0c91da4296a36aa3cd7d3175c1" creation-date="08/26/2025 21:46:33" visibility="undefined">
+      <owned-items />
+    </item>
+    <item id="1485e8fc30854585bc2e17dda688d5d0" cid="PKG015" type="package" name="donor" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 22:23:20" visibility="undefined">
+      <owned-items />
+    </item>
+    <item id="a7e6649f3d0641d7ab80b21109c729b3" cid="PKG009" type="package" name="implementation" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 21:46:33" visibility="undefined">
+      <owned-items />
+    </item>
+    <item id="accd2a791d614dae9507eed6d3946935" cid="C021" type="class" name="ClinicDeleteService" owner="9f929ba018a94779a470be51cc443258" creation-date="08/26/2025 22:26:31" visibility="undefined" />
+    <item id="c9d74b86e5d6412eab4d350368d99c99" cid="C018" type="class" name="DonationLocationCreateService" owner="9f929ba018a94779a470be51cc443258" creation-date="08/26/2025 22:24:03" visibility="undefined" />
+    <item id="ce3439f92b604e0f95d47520834ed4a7" cid="PKG015" type="package" name="clinic" owner="9f929ba018a94779a470be51cc443258" creation-date="08/26/2025 22:23:20" visibility="undefined" />
+    <item id="d2e95e71edfe47bc8e589a6f4b92ae5c" cid="PKG004" type="package" name="br.fai.lds.lifebank" creation-date="08/26/2025 21:38:20" visibility="undefined">
+      <owned-items />
+    </item>
+    <item id="cde77ae2b7674695b51a7d23cf5bcf7a" cid="C013" type="class" name="BenefitRestController" owner="1c9c72d0548b43ff9446128c6f468b99" creation-date="08/26/2025 21:50:05" visibility="undefined" />
+    <item id="9db5302d610b483082fcb9aba1496650" cid="C020" type="class" name="BenefitUpdateService" owner="61c08cc7cc7a47bab7ac2f413cd5d2ef" creation-date="08/26/2025 22:25:25" visibility="undefined" />
+    <item id="4c8b43099c444a17be6a352a59cb48dd" cid="C020" type="class" name="ClinicUpdateService" owner="9f929ba018a94779a470be51cc443258" creation-date="08/26/2025 22:25:25" visibility="undefined" />
+    <item id="94a0dcbc90b4439bb113a70f4108088e" cid="C013" type="class" name="BenefitRestController" owner="779b70fdcedc476488153872a265e813" creation-date="08/26/2025 21:50:05" visibility="undefined" />
+    <item id="dacc11fa88eb4c2e8640af3db9e36e3c" cid="C016" type="class" name="ClinicRestController" owner="1c9c72d0548b43ff9446128c6f468b99" creation-date="08/26/2025 21:51:44" visibility="undefined">
+      <source-codes>
+        <source-code language="ActionScript" />
+      </source-codes>
+    </item>
+    <item id="3ce6b507ae9d43bcb1b22c292d2659e7" cid="C009" type="class" name="DonorRestController" owner="1c9c72d0548b43ff9446128c6f468b99" creation-date="08/26/2025 21:48:53" visibility="undefined" />
+    <item id="8147e355cf814f4cb73152f648fd08a0" cid="C010" type="class" name="DonationDaoImpl" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 21:49:12" visibility="undefined" />
+    <item id="c07bf9e33c4b41eda392af38849a9e2a" cid="C019" type="class" name="DonorReadService" owner="1485e8fc30854585bc2e17dda688d5d0" creation-date="08/26/2025 22:25:00" visibility="undefined" />
+  </items>
+  <models>
+    <model id="p1f35065fcad1435996d2c586a15b1aa1_128256188" name="Model1" namespace="" order-index="1" expanded="true">
+      <meta>
+        <authors>
+          <author> </author>
+        </authors>
+        <description />
+        <creation-date>08/26/2025 20:11:29</creation-date>
+        <change-date>01/01/0001 00:00:00</change-date>
+        <revision-count>0</revision-count>
+        <version />
+      </meta>
+      <abstract-items />
+      <sub-models />
+      <diagram type="uml-package" id="p4d186b169a514d169c312767f5abf332_259501814" name="Backend" order-index="1" expanded="true" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-322,90" zoom="0.7">
+        <style>
+          <background-color index="1" color="#FFFFFFFF" />
+          <background-color index="2" color="#FFFFFFFF" />
+          <background-type type="solid" />
+        </style>
+        <meta>
+          <authors>
+            <author> </author>
+          </authors>
+          <description />
+          <creation-date>08/26/2025 20:11:29</creation-date>
+          <change-date>08/26/2025 22:04:52</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <abstract-items>
+          <item id="a146c0beba6d4102982bba9b757e3590" cid="C005" type="class" name="BenefitModel" owner="143992d5e0d945819d228dddb52d2991" creator="" creation-date="08/26/2025 20:16:37" visibility="undefined" />
+          <item id="cba50856680c4ac795544cb809022482" cid="PKG005" type="package" name="fai" owner="026b4b0c91da4296a36aa3cd7d3175c1" creation-date="08/26/2025 21:38:35">
+            <owned-items />
+          </item>
+          <item id="2a38731a1de34d5dbce26db5989e6f77" cid="C014" type="class" name="AutheticationDaoImpl" owner="026b4b0c91da4296a36aa3cd7d3175c1" creation-date="08/26/2025 21:50:41" />
+          <item id="0acca78f554045e3b69ddf1f44223439" cid="C004" type="class" name="DonationLocationModel" owner="143992d5e0d945819d228dddb52d2991" creator="" creation-date="08/26/2025 20:16:12" visibility="undefined" />
+          <item id="b3b95772b08b45bd81845fe28b54b96c" cid="PKG013" type="package" name="service" owner="483581c4971446ee9cf61106716854a5" creation-date="08/26/2025 22:01:22" />
+          <item id="111dadfd079e4eb0a4db753e2cd39839" cid="PKG012" type="package" owner="09b32cd1ee844442aaf680d8f6b4b5d0" creation-date="08/26/2025 21:50:56" />
+          <item id="4997f45d67424147bdd937a2ff6f27ce" cid="C003" type="class" name="ClinicModel" owner="143992d5e0d945819d228dddb52d2991" creator="" creation-date="08/26/2025 20:15:20" visibility="undefined" />
+          <item id="edfad57a1c394fa3b02bfe6383644bc9" cid="C016" type="class" name="ClinicDaoImpl" owner="026b4b0c91da4296a36aa3cd7d3175c1" creation-date="08/26/2025 21:51:44" />
+          <item id="74f4c1c368e24490b611cffd886af87b" cid="C006" type="class" name="DonationModel" owner="bccd30bfacc64e96886dc18e32b9a756" creator="" creation-date="08/26/2025 20:17:27" visibility="undefined" />
+          <item id="4b437d9a931d49bb9418ee23968fca35" cid="C002" type="class" name="DonorModel" owner="3f3668bf2d4d4cdf89240df6a62806be" creator="" creation-date="08/26/2025 20:12:50" visibility="undefined" />
+          <item id="1015fd33f8604109ac42afdeccce4176" cid="C012" type="class" name="BloodDaoImpl" owner="026b4b0c91da4296a36aa3cd7d3175c1" creation-date="08/26/2025 21:49:40" />
+          <item id="efdb0ba7089c4f7e980537b6d1fcaa8d" cid="C009" type="class" name="DonorDaoImpl" owner="026b4b0c91da4296a36aa3cd7d3175c1" creation-date="08/26/2025 21:48:53" />
+          <item id="d2a4826d53584d198b94b5abba16977f" cid="C011" type="class" name="DonationLocationDaoImpl" owner="026b4b0c91da4296a36aa3cd7d3175c1" creation-date="08/26/2025 21:49:33" />
+          <item id="026b4b0c91da4296a36aa3cd7d3175c1" cid="PKG004" type="package" name="br.fai.lds.lifebank" creation-date="08/26/2025 21:38:20">
+            <owned-items />
+          </item>
+          <item id="1b96e1bcd19c44ebb6d95b48662fa511" cid="C015" type="class" name="ResourceFileDao" owner="09b32cd1ee844442aaf680d8f6b4b5d0" creation-date="08/26/2025 21:51:01" />
+          <item id="f4ba9a8c90ec418faa4f646dfd3aa9e1" cid="C007" type="class" name="BloodModel" owner="bccd30bfacc64e96886dc18e32b9a756" creator="" creation-date="08/26/2025 20:18:19" visibility="undefined" />
+          <item id="6e6da7b2cc3d4ae1b286d98c9285e597" cid="C010" type="class" name="DonationDaoImpl" owner="026b4b0c91da4296a36aa3cd7d3175c1" creation-date="08/26/2025 21:49:12" />
+          <item id="8348d32982a14ba0b52b7bb28b303a80" cid="C017" type="class" name="ResourceFIleServiceImpl" owner="925d3c5c496645f19665ced16bd2987b" creation-date="08/26/2025 21:52:24" />
+          <item id="e7615cb4dea94590b65222a3837623e7" cid="C013" type="class" name="BenefitDaoImpl" owner="026b4b0c91da4296a36aa3cd7d3175c1" creation-date="08/26/2025 21:50:05" />
+          <item id="09b32cd1ee844442aaf680d8f6b4b5d0" cid="PKG010" type="package" name="dao" owner="483581c4971446ee9cf61106716854a5" creation-date="08/26/2025 21:46:58">
+            <owned-items />
+          </item>
+          <item id="925d3c5c496645f19665ced16bd2987b" cid="PKG011" type="package" name="service" owner="026b4b0c91da4296a36aa3cd7d3175c1" creation-date="08/26/2025 21:47:29">
+            <owned-items />
+          </item>
+          <item id="a1d66b45d2ea466f941b8f22d093df95" cid="PKG007" type="package" name="lifebank" owner="f3975900ea524a489ec7706a9d2b720f" creation-date="08/26/2025 21:39:54">
+            <owned-items />
+          </item>
+          <item id="483581c4971446ee9cf61106716854a5" cid="PKG009" type="package" name="implementation" owner="026b4b0c91da4296a36aa3cd7d3175c1" creation-date="08/26/2025 21:46:33">
+            <owned-items />
+          </item>
+          <item id="6e7ee7cf29a8460ca69ca6ac0bf885cd" cid="C001" type="class" name="UserModel" owner="3f3668bf2d4d4cdf89240df6a62806be" creator="" creation-date="08/26/2025 20:12:34" visibility="undefined" />
+          <item id="f3975900ea524a489ec7706a9d2b720f" cid="PKG006" type="package" name="lds" owner="cba50856680c4ac795544cb809022482" creation-date="08/26/2025 21:39:11">
+            <owned-items />
+          </item>
+          <item id="b37fb13aa9744d32b6598099415ae12c" cid="PKG008" type="package" name="Package8" owner="a1d66b45d2ea466f941b8f22d093df95" creation-date="08/26/2025 21:43:47" />
+          <item id="0560f267b7814ffea09c3347366e8802" cid="C008" type="class" name="UserDaoImpl" owner="026b4b0c91da4296a36aa3cd7d3175c1" creation-date="08/26/2025 21:48:37" />
+        </abstract-items>
+        <layer id="fe9c573070124b37970693f7c1def703" name="Default" visible="true" enabled="true" locked="false">
+          <item id="026b4b0c91da4296a36aa3cd7d3175c1" iid="356f183316484bf8be0be105513fd4ab" creation-date="08/26/2025 21:38:20" order-index="0" type="entity">
+            <layout ax="-192" ay="158" awidth="1097" aheight="1428" x="-192" y="158" width="1097" height="1428" expanded="-192,158,1097,1428" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="483581c4971446ee9cf61106716854a5" iid="b858d61c672241c890a065d21c333e6f" container="026b4b0c91da4296a36aa3cd7d3175c1" container-iid="356f183316484bf8be0be105513fd4ab" creation-date="08/26/2025 21:46:33" order-index="1" type="entity">
+            <layout ax="-173" ay="201.41309" awidth="1050" aheight="676.1738" x="-173" y="201.41309" width="1050" height="641" expanded="-173,201.41309,1050,676.1738" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="09b32cd1ee844442aaf680d8f6b4b5d0" iid="448a6eff0edc432ba3397442b63cbe83" container="483581c4971446ee9cf61106716854a5" container-iid="b858d61c672241c890a065d21c333e6f" creation-date="08/26/2025 21:46:58" order-index="2" type="entity">
+            <layout ax="-160" ay="247.58691" awidth="505" aheight="598.4131" x="-160" y="256" width="505" height="598.4131" expanded="-160,247.58691,505,598.4131" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="efdb0ba7089c4f7e980537b6d1fcaa8d" iid="0511b9edb2424a28b332eaebf4bd8bfd" container="026b4b0c91da4296a36aa3cd7d3175c1" container-iid="356f183316484bf8be0be105513fd4ab" show-fields="true" creation-date="08/26/2025 21:48:53" order-index="5" type="entity">
+            <layout ax="12" ay="313.9131" awidth="140" aheight="160" x="12" y="313.9131" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="edfad57a1c394fa3b02bfe6383644bc9" iid="f98a41c402554f19b897f749534c6d8d" container="026b4b0c91da4296a36aa3cd7d3175c1" container-iid="356f183316484bf8be0be105513fd4ab" show-fields="true" creation-date="08/26/2025 21:51:44" order-index="11" type="entity">
+            <layout ax="12" ay="641.26074" awidth="140" aheight="160" x="12" y="641.26074" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="2a38731a1de34d5dbce26db5989e6f77" iid="5db87c89ff9a46bc8dc0cbba85f35e09" container="026b4b0c91da4296a36aa3cd7d3175c1" container-iid="356f183316484bf8be0be105513fd4ab" show-fields="true" creation-date="08/26/2025 21:50:41" order-index="10" type="entity">
+            <layout ax="-138" ay="641.26074" awidth="140" aheight="160" x="-138" y="641.26074" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="e7615cb4dea94590b65222a3837623e7" iid="b65f4f4d75964a0787c1606d21cb6138" container="026b4b0c91da4296a36aa3cd7d3175c1" container-iid="356f183316484bf8be0be105513fd4ab" show-fields="true" creation-date="08/26/2025 21:50:05" order-index="9" type="entity">
+            <layout ax="162" ay="477.5869" awidth="140" aheight="160" x="162" y="477.5869" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="1015fd33f8604109ac42afdeccce4176" iid="206bd71887ca4e3e96f29766d4c7cc1c" container="026b4b0c91da4296a36aa3cd7d3175c1" container-iid="356f183316484bf8be0be105513fd4ab" show-fields="true" creation-date="08/26/2025 21:49:40" order-index="8" type="entity">
+            <layout ax="12" ay="477.5869" awidth="140" aheight="160" x="12" y="477.5869" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="d2a4826d53584d198b94b5abba16977f" iid="197a8040d3004abcb802239c4297c43f" container="026b4b0c91da4296a36aa3cd7d3175c1" container-iid="356f183316484bf8be0be105513fd4ab" show-fields="true" creation-date="08/26/2025 21:49:33" order-index="7" type="entity">
+            <layout ax="-138" ay="477.5869" awidth="140" aheight="160" x="-138" y="477.5869" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="6e6da7b2cc3d4ae1b286d98c9285e597" iid="8ad1ebc6f36a4361914a537beaa3bd15" container="026b4b0c91da4296a36aa3cd7d3175c1" container-iid="356f183316484bf8be0be105513fd4ab" show-fields="true" creation-date="08/26/2025 21:49:12" order-index="6" type="entity">
+            <layout ax="162" ay="313.9131" awidth="140" aheight="160" x="162" y="313.9131" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="0560f267b7814ffea09c3347366e8802" iid="ae1806f6f7c2457599189ac20b2f0fa4" container="026b4b0c91da4296a36aa3cd7d3175c1" container-iid="356f183316484bf8be0be105513fd4ab" show-fields="true" creation-date="08/26/2025 21:48:37" order-index="4" type="entity">
+            <layout ax="-138" ay="313.9131" awidth="140" aheight="160" x="-138" y="313.9131" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="1c9c72d0548b43ff9446128c6f468b99" iid="a88acd271d0a4b628b58d818a4b3642f" container="026b4b0c91da4296a36aa3cd7d3175c1" container-iid="356f183316484bf8be0be105513fd4ab" creation-date="08/26/2025 21:46:33" order-index="0" type="entity">
+            <layout ax="-173" ay="909" awidth="1050" aheight="641" x="-173" y="909" width="1050" height="641" expanded="-173,909,1050,641" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="3ce6b507ae9d43bcb1b22c292d2659e7" iid="359ca6d30c204797bc247ae915ba4b2c" container="1c9c72d0548b43ff9446128c6f468b99" container-iid="a88acd271d0a4b628b58d818a4b3642f" show-fields="true" creation-date="08/26/2025 21:48:53" order-index="0" type="entity">
+            <layout ax="54" ay="975" awidth="140" aheight="160" x="54" y="975" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="dacc11fa88eb4c2e8640af3db9e36e3c" iid="a33896aa8f624dcbb8903e8c2a2dc38a" container="1c9c72d0548b43ff9446128c6f468b99" container-iid="a88acd271d0a4b628b58d818a4b3642f" show-fields="true" creation-date="08/26/2025 21:51:44" order-index="1" type="entity">
+            <layout ax="246" ay="1183" awidth="140" aheight="160" x="246" y="1183" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="7f61df00feb746b89958c2ac5bdbe424" iid="c6c1df6b579446359877d0e07f62394e" container="1c9c72d0548b43ff9446128c6f468b99" container-iid="a88acd271d0a4b628b58d818a4b3642f" show-fields="true" creation-date="08/26/2025 21:50:41" order-index="2" type="entity">
+            <layout ax="54" ay="1183" awidth="140" aheight="160" x="54" y="1183" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="cde77ae2b7674695b51a7d23cf5bcf7a" iid="ff0d1fe6eb0844c8a1895911eced35f5" container="1c9c72d0548b43ff9446128c6f468b99" container-iid="a88acd271d0a4b628b58d818a4b3642f" show-fields="true" creation-date="08/26/2025 21:50:05" order-index="3" type="entity">
+            <layout ax="630" ay="971" awidth="140" aheight="160" x="630" y="971" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="e65c0a4589d344fe9473c97d4c9f388c" iid="5c8b2e088efe424eb395966275c30774" container="1c9c72d0548b43ff9446128c6f468b99" container-iid="a88acd271d0a4b628b58d818a4b3642f" show-fields="true" creation-date="08/26/2025 21:49:40" order-index="4" type="entity">
+            <layout ax="-138" ay="1183" awidth="140" aheight="160" x="-138" y="1183" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="5fef5f2e023f4bd5b36669462a10b7f7" iid="9cb4d428efd34b4095c481594eb2aea4" container="1c9c72d0548b43ff9446128c6f468b99" container-iid="a88acd271d0a4b628b58d818a4b3642f" show-fields="true" creation-date="08/26/2025 21:49:33" order-index="5" type="entity">
+            <layout ax="438" ay="971" awidth="140" aheight="160" x="438" y="971" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="ca71422f4e64437392ef4314a14f57e9" iid="e2d85210875847e99f7e019a079b8364" container="1c9c72d0548b43ff9446128c6f468b99" container-iid="a88acd271d0a4b628b58d818a4b3642f" show-fields="true" creation-date="08/26/2025 21:49:12" order-index="6" type="entity">
+            <layout ax="246" ay="971" awidth="140" aheight="160" x="246" y="971" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="5823487b00904a309fdd9d7dffdcc0f7" iid="aa42ef4375844fea8e0c128758871567" container="1c9c72d0548b43ff9446128c6f468b99" container-iid="a88acd271d0a4b628b58d818a4b3642f" show-fields="true" creation-date="08/26/2025 21:48:37" order-index="7" type="entity">
+            <layout ax="-138" ay="971" awidth="140" aheight="160" x="-138" y="971" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="925d3c5c496645f19665ced16bd2987b" iid="0c4b0669a0014db1a9b358cc2034272c" container="026b4b0c91da4296a36aa3cd7d3175c1" container-iid="356f183316484bf8be0be105513fd4ab" creation-date="08/26/2025 21:47:29" order-index="3" type="entity">
+            <layout ax="358" ay="260" awidth="505" aheight="586" x="358" y="260" width="505" height="586" expanded="358,260,505,586" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="8d2d96acf3c94d4db8252162acc19d43" iid="a0deb36183b24e399f7d4de0ab45a195" container="925d3c5c496645f19665ced16bd2987b" container-iid="0c4b0669a0014db1a9b358cc2034272c" show-fields="true" creation-date="08/26/2025 21:48:37" order-index="0" type="entity">
+            <layout ax="375" ay="313.9131" awidth="140" aheight="160" x="375" y="313.9131" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="91e6d1e105fa45d7a354aed96a73b690" iid="fa6e3117bd27477aba86b30d3f15aee8" container="925d3c5c496645f19665ced16bd2987b" container-iid="0c4b0669a0014db1a9b358cc2034272c" show-fields="true" creation-date="08/26/2025 21:49:12" order-index="1" type="entity">
+            <layout ax="675" ay="313.9131" awidth="140" aheight="160" x="675" y="313.9131" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="8073107a1f3549658ddf33f20ec4dbf8" iid="2cad3798cbfa444988ceba35444836db" container="925d3c5c496645f19665ced16bd2987b" container-iid="0c4b0669a0014db1a9b358cc2034272c" show-fields="true" creation-date="08/26/2025 21:49:33" order-index="2" type="entity">
+            <layout ax="375" ay="477.9131" awidth="140" aheight="160" x="375" y="477.9131" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="53cca7adb0a643b0a63ff50da5aba902" iid="dcc2276dec074775beb076cef72f0d3d" container="925d3c5c496645f19665ced16bd2987b" container-iid="0c4b0669a0014db1a9b358cc2034272c" show-fields="true" creation-date="08/26/2025 21:49:40" order-index="3" type="entity">
+            <layout ax="525" ay="477.9131" awidth="140" aheight="160" x="525" y="477.9131" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="165bebe85def432eb86b6304cbe44a90" iid="eaae200019ff4d69942c6f28bb93d75a" container="925d3c5c496645f19665ced16bd2987b" container-iid="0c4b0669a0014db1a9b358cc2034272c" show-fields="true" creation-date="08/26/2025 21:50:05" order-index="4" type="entity">
+            <layout ax="675" ay="477.9131" awidth="140" aheight="160" x="675" y="477.9131" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="1330a6525d3d4308bc640f889d5e5b4b" iid="c39b0acd80dc4029ab0bf4260a51b5e2" container="925d3c5c496645f19665ced16bd2987b" container-iid="0c4b0669a0014db1a9b358cc2034272c" show-fields="true" creation-date="08/26/2025 21:50:41" order-index="5" type="entity">
+            <layout ax="375" ay="640.9131" awidth="140" aheight="160" x="375" y="640.9131" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="bc2351b68f404c7eba076b17f670d9c5" iid="b690bc46b0a6445ab3db39b67a583ca8" container="925d3c5c496645f19665ced16bd2987b" container-iid="0c4b0669a0014db1a9b358cc2034272c" show-fields="true" creation-date="08/26/2025 21:51:44" order-index="6" type="entity">
+            <layout ax="525" ay="640.9131" awidth="140" aheight="160" x="525" y="640.9131" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="fb0637b32a5a40ee8b61579a248da767" iid="7b945c4dd4e9451e80c46a644ad1dbae" container="925d3c5c496645f19665ced16bd2987b" container-iid="0c4b0669a0014db1a9b358cc2034272c" show-fields="true" creation-date="08/26/2025 21:48:53" order-index="7" type="entity">
+            <layout ax="525" ay="313.9131" awidth="140" aheight="160" x="525" y="313.9131" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="8348d32982a14ba0b52b7bb28b303a80" iid="c6ea342c968d49468fef87a6e712705a" container="925d3c5c496645f19665ced16bd2987b" container-iid="0c4b0669a0014db1a9b358cc2034272c" show-fields="true" creation-date="08/26/2025 21:52:24" order-index="12" type="entity">
+            <layout ax="675" ay="641.26074" awidth="140" aheight="160" x="675" y="641.26074" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+        </layer>
+      </diagram>
+      <diagram type="uml-package" id="pf96337ece6af4e018e870bd1a1334068_704306360" name="Frontend" order-index="2" expanded="true" overview-order-index="0" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-240,-22" zoom="0.8">
+        <style>
+          <background-color index="1" color="#FFFFFFFF" />
+          <background-color index="2" color="#FFFFFFFF" />
+          <background-type type="solid" />
+        </style>
+        <meta>
+          <authors>
+            <author> </author>
+          </authors>
+          <description />
+          <creation-date>08/26/2025 22:03:49</creation-date>
+          <change-date>08/26/2025 22:37:05</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <abstract-items>
+          <item id="22020cd7550e4ee582479e6e19d02397" cid="C019" type="class" name="UserReadService" owner="51437cb38e4344cba624ca7e7404eb5f" creation-date="08/26/2025 22:25:00" />
+          <item id="c75b7b1438b74877aa175d35bfe14e65" cid="C021" type="class" name="UserDeleteService" owner="51437cb38e4344cba624ca7e7404eb5f" creation-date="08/26/2025 22:26:31" />
+          <item id="9f929ba018a94779a470be51cc443258" cid="PKG014" type="package" name="src.app.service" owner="d2e95e71edfe47bc8e589a6f4b92ae5c" creation-date="08/26/2025 22:22:24">
+            <owned-items />
+          </item>
+          <item id="f7c5da5f82b44b97a9dfc06df94e1bc6" cid="C020" type="class" name="UserUpdateService" owner="51437cb38e4344cba624ca7e7404eb5f" creation-date="08/26/2025 22:25:25" />
+          <item id="51437cb38e4344cba624ca7e7404eb5f" cid="PKG015" type="package" name="user" owner="9f929ba018a94779a470be51cc443258" creation-date="08/26/2025 22:23:20">
+            <owned-items />
+          </item>
+          <item id="b6006b9b2d084805a2aafe1177a156f5" cid="C018" type="class" name="UserCreateService" owner="51437cb38e4344cba624ca7e7404eb5f" creation-date="08/26/2025 22:24:03" />
+          <item id="f318b47d39614d768f9a87ad07195ced" cid="C022" type="class" name="AuthenticationGuard" owner="1e1595ee6671486a81a47f90052e647b" creation-date="08/26/2025 22:37:05" />
+          <item id="1e1595ee6671486a81a47f90052e647b" cid="PKG016" type="package" name="guard" owner="61c08cc7cc7a47bab7ac2f413cd5d2ef" creation-date="08/26/2025 22:36:20">
+            <owned-items />
+          </item>
+        </abstract-items>
+        <layer id="b47639b37fe14a60a30dc7da78e28da5" name="Default" visible="true" enabled="true" locked="false">
+          <item id="d2e95e71edfe47bc8e589a6f4b92ae5c" iid="ba291a1c42ed44ad8597e100ec3e8ad1" creation-date="08/26/2025 21:38:20" order-index="0" type="entity">
+            <layout ax="-192" ay="158" awidth="1104" aheight="1435" x="-192" y="158" width="1104" height="1435" expanded="-192,158,1104,1435" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="9f929ba018a94779a470be51cc443258" iid="2ba970bf7c544783a1f304615403bc6a" container="d2e95e71edfe47bc8e589a6f4b92ae5c" container-iid="ba291a1c42ed44ad8597e100ec3e8ad1" creation-date="08/26/2025 22:22:24" order-index="1" type="entity">
+            <layout ax="-179" ay="206" awidth="1074" aheight="1369" x="-179" y="206" width="1074" height="1369" expanded="-179,206,1074,1369" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="51437cb38e4344cba624ca7e7404eb5f" iid="417038ad8cea41f9a3fb9d50d84dc11f" container="9f929ba018a94779a470be51cc443258" container-iid="2ba970bf7c544783a1f304615403bc6a" creation-date="08/26/2025 22:23:20" order-index="2" type="entity">
+            <layout ax="-163" ay="253" awidth="332" aheight="417" x="-163" y="253" width="332" height="417" expanded="-163,253,332,417" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="b6006b9b2d084805a2aafe1177a156f5" iid="f4016faa83b6464d9ba73a5fb16b43c7" container="51437cb38e4344cba624ca7e7404eb5f" container-iid="417038ad8cea41f9a3fb9d50d84dc11f" show-fields="true" creation-date="08/26/2025 22:24:03" order-index="3" type="entity">
+            <layout ax="-151" ay="300" awidth="140" aheight="160" x="-151" y="300" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="f7c5da5f82b44b97a9dfc06df94e1bc6" iid="ef251260f112476e80dbf9840b8d0ca4" container="51437cb38e4344cba624ca7e7404eb5f" container-iid="417038ad8cea41f9a3fb9d50d84dc11f" show-fields="true" creation-date="08/26/2025 22:25:25" order-index="5" type="entity">
+            <layout ax="-151" ay="481" awidth="140" aheight="160" x="-151" y="481" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="c75b7b1438b74877aa175d35bfe14e65" iid="35533b9faa6d4271a10a61b660e01c4e" container="51437cb38e4344cba624ca7e7404eb5f" container-iid="417038ad8cea41f9a3fb9d50d84dc11f" show-fields="true" creation-date="08/26/2025 22:26:31" order-index="6" type="entity">
+            <layout ax="11" ay="481" awidth="140" aheight="160" x="11" y="481" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="22020cd7550e4ee582479e6e19d02397" iid="19488242e9a64d63a4c7479a35099ca3" container="51437cb38e4344cba624ca7e7404eb5f" container-iid="417038ad8cea41f9a3fb9d50d84dc11f" show-fields="true" creation-date="08/26/2025 22:25:00" order-index="4" type="entity">
+            <layout ax="11" ay="300" awidth="140" aheight="160" x="11" y="300" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="773c85527d474e7fafbe350b5ed909c3" iid="26f8e1badeb049fd81afea8377ff326d" container="d2e95e71edfe47bc8e589a6f4b92ae5c" container-iid="ba291a1c42ed44ad8597e100ec3e8ad1" creation-date="08/26/2025 22:23:20" order-index="0" type="entity">
+            <layout ax="190" ay="256" awidth="332.5" aheight="414" x="190.5" y="256" width="332" height="414" expanded="190,256,332.5,414" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="cea446fb21cc450ba7e7a690263e0d95" iid="37556463ab054621a2bb4495f44139f5" container="773c85527d474e7fafbe350b5ed909c3" container-iid="26f8e1badeb049fd81afea8377ff326d" show-fields="true" creation-date="08/26/2025 22:24:03" order-index="1" type="entity">
+            <layout ax="202" ay="303" awidth="140" aheight="160" x="202.5" y="303" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="b073f6a65dc4423c94d8527fbedfd6e4" iid="97d5d4b0bd9a4313a9e19a461aa01e17" container="773c85527d474e7fafbe350b5ed909c3" container-iid="26f8e1badeb049fd81afea8377ff326d" show-fields="true" creation-date="08/26/2025 22:25:25" order-index="2" type="entity">
+            <layout ax="202" ay="484" awidth="140" aheight="160" x="202.5" y="484" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="501c50e3ad024de7b195a60993cc5a42" iid="0fc1e507c77945ea92ca1afeef1941f7" container="773c85527d474e7fafbe350b5ed909c3" container-iid="26f8e1badeb049fd81afea8377ff326d" show-fields="true" creation-date="08/26/2025 22:26:31" order-index="3" type="entity">
+            <layout ax="364" ay="484" awidth="140" aheight="160" x="364.5" y="484" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="7aefdd24e6d648f593e7162eee539aee" iid="9e36663967cc488faad5c9454bdcc393" container="773c85527d474e7fafbe350b5ed909c3" container-iid="26f8e1badeb049fd81afea8377ff326d" show-fields="true" creation-date="08/26/2025 22:25:00" order-index="4" type="entity">
+            <layout ax="364" ay="303" awidth="140" aheight="160" x="364.5" y="303" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="1485e8fc30854585bc2e17dda688d5d0" iid="208dd349499d4bff84595a605980682e" container="d2e95e71edfe47bc8e589a6f4b92ae5c" container-iid="ba291a1c42ed44ad8597e100ec3e8ad1" creation-date="08/26/2025 22:23:20" order-index="0" type="entity">
+            <layout ax="543.5" ay="256" awidth="332" aheight="414" x="543.5" y="256" width="332" height="414" expanded="543.5,256,332,414" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="eda9460c8c564cf686eebf8bed0aac2b" iid="a50a4dfa782c48a29d54cc68e7d523d4" container="1485e8fc30854585bc2e17dda688d5d0" container-iid="208dd349499d4bff84595a605980682e" show-fields="true" creation-date="08/26/2025 22:24:03" order-index="1" type="entity">
+            <layout ax="555.5" ay="303" awidth="140" aheight="160" x="556.5" y="303" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="70dcfe1f27de41589a4c6657144eaaef" iid="867afea5b6b64ff398f2e0c1b578306e" container="1485e8fc30854585bc2e17dda688d5d0" container-iid="208dd349499d4bff84595a605980682e" show-fields="true" creation-date="08/26/2025 22:25:25" order-index="2" type="entity">
+            <layout ax="555.5" ay="484" awidth="140" aheight="160" x="556.5" y="484" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="18c99540fd9c402dbb15eda8532528e8" iid="0439a2bb93df4d0784ad7e200b4846b8" container="1485e8fc30854585bc2e17dda688d5d0" container-iid="208dd349499d4bff84595a605980682e" show-fields="true" creation-date="08/26/2025 22:26:31" order-index="3" type="entity">
+            <layout ax="717.5" ay="484" awidth="140" aheight="160" x="718.5" y="484" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="c07bf9e33c4b41eda392af38849a9e2a" iid="b64e1c0d9812421b8d7c77575723edad" container="1485e8fc30854585bc2e17dda688d5d0" container-iid="208dd349499d4bff84595a605980682e" show-fields="true" creation-date="08/26/2025 22:25:00" order-index="4" type="entity">
+            <layout ax="717.5" ay="303" awidth="140" aheight="160" x="718.5" y="303" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="b71d3e8e8ab34144836e54d8ed4bff3f" iid="b3d2a798fd114e4e83c98b908203fc7b" container="d2e95e71edfe47bc8e589a6f4b92ae5c" container-iid="ba291a1c42ed44ad8597e100ec3e8ad1" creation-date="08/26/2025 22:23:20" order-index="0" type="entity">
+            <layout ax="-159" ay="692" awidth="332" aheight="417" x="-159" y="692" width="332" height="417" expanded="-159,692,332,417" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="995e0529bcd24d76b8f0472f3615429a" iid="ac38a673a9974427a4d03970689b9e63" container="b71d3e8e8ab34144836e54d8ed4bff3f" container-iid="b3d2a798fd114e4e83c98b908203fc7b" show-fields="true" creation-date="08/26/2025 22:24:03" order-index="1" type="entity">
+            <layout ax="-147" ay="739" awidth="140" aheight="160" x="-151" y="776" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="45eba9de51ab4103bc3ae5a797a0e3ce" iid="a8584886cd9e4f0ba4adbc14d5a12816" container="b71d3e8e8ab34144836e54d8ed4bff3f" container-iid="b3d2a798fd114e4e83c98b908203fc7b" show-fields="true" creation-date="08/26/2025 22:25:25" order-index="2" type="entity">
+            <layout ax="-147" ay="920" awidth="140" aheight="160" x="-151" y="957" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="72790eb615e94c27935ec42b17985b34" iid="916c585a7c0a41579fb451358846609d" container="b71d3e8e8ab34144836e54d8ed4bff3f" container-iid="b3d2a798fd114e4e83c98b908203fc7b" show-fields="true" creation-date="08/26/2025 22:26:31" order-index="3" type="entity">
+            <layout ax="15" ay="920" awidth="140" aheight="160" x="11" y="957" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="52c49a981db94fa2b3117c739f868fd4" iid="93ed149e84ee485da2c80b12bd419829" container="b71d3e8e8ab34144836e54d8ed4bff3f" container-iid="b3d2a798fd114e4e83c98b908203fc7b" show-fields="true" creation-date="08/26/2025 22:25:00" order-index="4" type="entity">
+            <layout ax="15" ay="739" awidth="140" aheight="160" x="11" y="776" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="895a4d48179a4923ad1c4455940fbcf1" iid="395497c999d745c8b28a18166455b9ea" container="9f929ba018a94779a470be51cc443258" container-iid="2ba970bf7c544783a1f304615403bc6a" creation-date="08/26/2025 22:23:20" order-index="0" type="entity">
+            <layout ax="193" ay="692" awidth="332" aheight="417" x="193" y="692" width="332" height="417" expanded="193,692,332,417" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="ce3439f92b604e0f95d47520834ed4a7" iid="710a1ea6ca184f6ba8d223071cfb6e5c" container="9f929ba018a94779a470be51cc443258" container-iid="2ba970bf7c544783a1f304615403bc6a" creation-date="08/26/2025 22:23:20" order-index="0" type="entity">
+            <layout ax="545" ay="692" awidth="332" aheight="417" x="545" y="692" width="332" height="417" expanded="545,692,332,417" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="c9d74b86e5d6412eab4d350368d99c99" iid="18bb6e7ba44546849dbd2a086b31c13a" container="9f929ba018a94779a470be51cc443258" container-iid="2ba970bf7c544783a1f304615403bc6a" show-fields="true" creation-date="08/26/2025 22:24:03" order-index="1" type="entity">
+            <layout ax="207" ay="739" awidth="140" aheight="160" x="207" y="739" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="ef3daf8774df4d06bcc81c40e9722e81" iid="01a4fb42dd1c46d89bfd985053527e5b" container="9f929ba018a94779a470be51cc443258" container-iid="2ba970bf7c544783a1f304615403bc6a" show-fields="true" creation-date="08/26/2025 22:25:00" order-index="4" type="entity">
+            <layout ax="369" ay="739" awidth="140" aheight="160" x="369" y="739" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="a88aae4083934341b85af33719803d2d" iid="b20bf15c39e74123bb037daa4fa75229" container="9f929ba018a94779a470be51cc443258" container-iid="2ba970bf7c544783a1f304615403bc6a" show-fields="true" creation-date="08/26/2025 22:26:31" order-index="3" type="entity">
+            <layout ax="369" ay="920" awidth="140" aheight="160" x="369" y="920" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="ad3b967ab05d486bb40f2f644de1375c" iid="c2ec74d99ec94b5488e838d1975a4988" container="9f929ba018a94779a470be51cc443258" container-iid="2ba970bf7c544783a1f304615403bc6a" show-fields="true" creation-date="08/26/2025 22:25:25" order-index="2" type="entity">
+            <layout ax="207" ay="920" awidth="140" aheight="160" x="207" y="920" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="c035be12214745b7b340ca1cd1cd6b72" iid="553274e3f43f409099b15a833ee010da" container="9f929ba018a94779a470be51cc443258" container-iid="2ba970bf7c544783a1f304615403bc6a" show-fields="true" creation-date="08/26/2025 22:24:03" order-index="1" type="entity">
+            <layout ax="560" ay="739" awidth="140" aheight="160" x="560" y="739" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="d7bdf381f9444403a42248bbd499574e" iid="bdf784352d6141c5b4ab1dea08d915d3" container="9f929ba018a94779a470be51cc443258" container-iid="2ba970bf7c544783a1f304615403bc6a" show-fields="true" creation-date="08/26/2025 22:25:00" order-index="2" type="entity">
+            <layout ax="722" ay="739" awidth="140" aheight="160" x="722" y="739" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="accd2a791d614dae9507eed6d3946935" iid="330f760e5e614cbda6dfc98ac05c4141" container="9f929ba018a94779a470be51cc443258" container-iid="2ba970bf7c544783a1f304615403bc6a" show-fields="true" creation-date="08/26/2025 22:26:31" order-index="3" type="entity">
+            <layout ax="722" ay="920" awidth="140" aheight="160" x="722" y="920" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="4c8b43099c444a17be6a352a59cb48dd" iid="80f2652b215f40d7b9a13cf34be2d7f4" container="9f929ba018a94779a470be51cc443258" container-iid="2ba970bf7c544783a1f304615403bc6a" show-fields="true" creation-date="08/26/2025 22:25:25" order-index="4" type="entity">
+            <layout ax="560" ay="920" awidth="140" aheight="160" x="560" y="920" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="a57bac4ade6549149001a3a9165dcf2e" iid="8d310f6dc9214c4484bedb4423f92314" container="d2e95e71edfe47bc8e589a6f4b92ae5c" container-iid="ba291a1c42ed44ad8597e100ec3e8ad1" creation-date="08/26/2025 22:23:20" order-index="0" type="entity">
+            <layout ax="-159" ay="1131" awidth="332" aheight="417" x="-159" y="1131" width="332" height="417" expanded="-159,1131,332,417" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="ccbef5feddc34f22ac96cf1aa71f1ec1" iid="1452beabd63e4007aec4fb4ecf57c701" container="a57bac4ade6549149001a3a9165dcf2e" container-iid="8d310f6dc9214c4484bedb4423f92314" show-fields="true" creation-date="08/26/2025 22:24:03" order-index="1" type="entity">
+            <layout ax="-147" ay="1178" awidth="140" aheight="160" x="-151" y="1250" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="75f2526561394fecae4227a977596b38" iid="d48e411c66924d9797793f53c153afca" container="a57bac4ade6549149001a3a9165dcf2e" container-iid="8d310f6dc9214c4484bedb4423f92314" show-fields="true" creation-date="08/26/2025 22:25:25" order-index="2" type="entity">
+            <layout ax="-147" ay="1359" awidth="140" aheight="160" x="-151" y="1431" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="b703eb3098ba413e8c3b361f2e352499" iid="ff312b7da2a149848aaad1cb86c9e222" container="a57bac4ade6549149001a3a9165dcf2e" container-iid="8d310f6dc9214c4484bedb4423f92314" show-fields="true" creation-date="08/26/2025 22:26:31" order-index="3" type="entity">
+            <layout ax="15" ay="1359" awidth="140" aheight="160" x="11" y="1431" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="ea1abd3950a2421eacda395fa0f150dc" iid="728830a40dce42d4aefb881ac4219c45" container="a57bac4ade6549149001a3a9165dcf2e" container-iid="8d310f6dc9214c4484bedb4423f92314" show-fields="true" creation-date="08/26/2025 22:25:00" order-index="4" type="entity">
+            <layout ax="15" ay="1178" awidth="140" aheight="160" x="11" y="1250" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="61c08cc7cc7a47bab7ac2f413cd5d2ef" iid="81ba22726e6a436c88a34b0079735dd5" container="9f929ba018a94779a470be51cc443258" container-iid="2ba970bf7c544783a1f304615403bc6a" creation-date="08/26/2025 22:23:20" order-index="0" type="entity">
+            <layout ax="193" ay="1131" awidth="332" aheight="417" x="193" y="1131" width="332" height="417" expanded="193,1131,332,417" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="1e1595ee6671486a81a47f90052e647b" iid="bba3390135bf4f68bce714f9587b1eee" container="61c08cc7cc7a47bab7ac2f413cd5d2ef" container-iid="81ba22726e6a436c88a34b0079735dd5" creation-date="08/26/2025 22:36:20" order-index="7" type="entity">
+            <layout ax="209" ay="1321" awidth="300" aheight="211" x="209" y="1321" width="300" height="211" expanded="209,1321,300,211" collapsed="0,0,0,0" />
+            <package name-in-body="false" />
+          </item>
+          <item id="f995d2e766f94f08893de50c0b8a0598" iid="26b2a9946db946a69e1b41a4fbae55bd" container="61c08cc7cc7a47bab7ac2f413cd5d2ef" container-iid="81ba22726e6a436c88a34b0079735dd5" show-fields="true" creation-date="08/26/2025 22:24:03" order-index="1" type="entity">
+            <layout ax="369" ay="1178" awidth="140" aheight="160" x="369" y="1178" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+          <item id="f318b47d39614d768f9a87ad07195ced" iid="a11175d696344c36b21ef6bc2fe33d68" container="1e1595ee6671486a81a47f90052e647b" container-iid="bba3390135bf4f68bce714f9587b1eee" show-fields="true" creation-date="08/26/2025 22:37:05" order-index="8" type="entity">
+            <layout ax="229" ay="1364.4131" awidth="140" aheight="160" x="229" y="1364.4131" width="140" height="160" />
+            <classifier />
+            <class />
+          </item>
+        </layer>
+      </diagram>
+    </model>
+  </models>
+</sim-project>

@@ -1,0 +1,136 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Detalhes do Doador</h1>
+    <p>Visualize as informações completas do doador de sangue</p>
+  </div>
+
+  <mat-card *ngIf="donor">
+    <mat-card-header>
+      <div class="user-avatar">
+        <mat-icon>volunteer_activism</mat-icon>
+      </div>
+      <div class="user-title-info">
+        <h2>{{ donor.name }}</h2>
+        <span class="blood-type-badge" [ngClass]="getBloodTypeClass(donor.bloodType)" *ngIf="donor.bloodType">
+          <mat-icon>bloodtype</mat-icon>
+          {{ donor.bloodType }}
+        </span>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Informações Pessoais -->
+      <div class="section">
+        <h3>
+          <mat-icon>person</mat-icon>
+          Informações Pessoais
+        </h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <mat-icon>person</mat-icon>
+            <div class="detail-content">
+              <strong>Nome Completo</strong>
+              <span>{{ donor.name }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>email</mat-icon>
+            <div class="detail-content">
+              <strong>Email</strong>
+              <span>{{ donor.email }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>credit_card</mat-icon>
+            <div class="detail-content">
+              <strong>CPF</strong>
+              <span>{{ donor.cpf | mask: '000.000.000-00' }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>phone</mat-icon>
+            <div class="detail-content">
+              <strong>Telefone</strong>
+              <span>{{ donor.phone | mask: '(00) 00000-0000' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Informações do Doador -->
+      <div class="section">
+        <h3>
+          <mat-icon>bloodtype</mat-icon>
+          Informações do Doador
+        </h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <mat-icon>bloodtype</mat-icon>
+            <div class="detail-content">
+              <strong>Tipo Sanguíneo</strong>
+              <span class="blood-type-display" [ngClass]="getBloodTypeClass(donor.bloodType)" *ngIf="donor.bloodType">
+                {{ donor.bloodType }}
+              </span>
+              <span *ngIf="!donor.bloodType" class="no-blood-type">Não informado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endereço -->
+      <div class="section">
+        <h3>
+          <mat-icon>home</mat-icon>
+          Endereço
+        </h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <mat-icon>home</mat-icon>
+            <div class="detail-content">
+              <strong>Rua</strong>
+              <span>{{ donor.street }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>tag</mat-icon>
+            <div class="detail-content">
+              <strong>Número</strong>
+              <span>{{ donor.number }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>location_city</mat-icon>
+            <div class="detail-content">
+              <strong>Bairro</strong>
+              <span>{{ donor.neighborhood }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>place</mat-icon>
+            <div class="detail-content">
+              <strong>CEP</strong>
+              <span>{{ donor.postalCode | mask: '00000-000' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" [routerLink]="['/donor/edit', donor.id]">
+        <mat-icon>edit</mat-icon>
+        Editar Doador
+      </button>
+      <button mat-button routerLink="/donor/list">
+        <mat-icon>arrow_back</mat-icon>
+        Voltar à Lista
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- Loading state -->
+  <div class="loading-container" *ngIf="!donor">
+    <div class="loading-spinner"></div>
+    <p>Carregando informações do doador...</p>
+  </div>
+</div>

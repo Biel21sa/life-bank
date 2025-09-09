@@ -1,0 +1,78 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "a title",
+      "views": 100
+    },
+    {
+      "id": "2",
+      "title": "another title",
+      "views": 200
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "text": "a comment about post 1",
+      "postId": "1"
+    },
+    {
+      "id": "2",
+      "text": "another comment about post 1",
+      "postId": "1"
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "user": [
+    {
+      "id": "1",
+      "name": "tiburguin",
+      "email": "tiburgus@gmail.com",
+      "password": "789"
+    },
+    {
+      "id": "2",
+      "name": "fhfhf",
+      "email": "aroldus@gmail.com",
+      "password": "123"
+    },
+    {
+      "id": "74c9",
+      "name": "cabral",
+      "email": "cabralzin@gmail.com",
+      "password": "567"
+    },
+    {
+      "id": "4",
+      "name": "rebergerg",
+      "email": "tiburgus@gmail.com",
+      "password": "789"
+    },
+    {
+      "id": "5",
+      "name": "cabral",
+      "email": "tiburgus@gmail.com",
+      "password": "789"
+    }
+  ],
+  "product": [
+    {
+      "id": "1",
+      "name": "produto 1",
+      "price": 11.11
+    },
+    {
+      "id": "2",
+      "name": "produto 2qwdqwdqwdqwd",
+      "price": 22.22
+    },
+    {
+      "id": "3",
+      "name": "produto 3",
+      "price": 33.33
+    }
+  ]
+}

@@ -1,0 +1,252 @@
+/* Layout principal */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8faff 0%, #e3f2fd 100%);
+  min-height: 100vh;
+}
+
+/* Header da página */
+.page-header {
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+  color: white;
+  padding: 40px;
+  margin: -20px -20px 30px -20px;
+  border-radius: 0 0 24px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0 0 10px 0;
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Card principal */
+.mat-mdc-card {
+  border-radius: 20px !important;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15) !important;
+  border: 1px solid rgba(25, 118, 210, 0.1) !important;
+  overflow: hidden;
+  background: white;
+}
+
+.mat-mdc-card-header {
+  background: linear-gradient(135deg, #f8faff 0%, #e3f2fd 100%) !important;
+  padding: 30px !important;
+  margin: -16px -16px 0 -16px !important;
+  border-bottom: 1px solid #e0e7ff;
+}
+
+.mat-mdc-card-title {
+  color: #1976d2 !important;
+  font-size: 1.5rem !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.mat-mdc-card-content {
+  padding: 40px !important;
+}
+
+/* Seções */
+.section {
+  margin-bottom: 40px;
+}
+
+.section h3 {
+  color: #1976d2;
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 0 0 24px 0;
+  padding: 0 0 12px 0;
+  border-bottom: 2px solid #e3f2fd;
+  position: relative;
+}
+
+.section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+}
+
+/* Grid de informações */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
+  border-radius: 12px;
+  border: 1px solid #e0e7ff;
+  transition: all 0.3s ease;
+}
+
+.info-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(25, 118, 210, 0.1);
+}
+
+.info-item mat-icon {
+  color: #1976d2;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.label {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.value.quantity {
+  color: #1976d2;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Badge de tipo sanguíneo */
+.blood-type-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid;
+}
+
+.blood-a-positive, .blood-a-negative {
+  background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+  color: #2e7d32;
+  border-color: rgba(46, 125, 50, 0.2);
+}
+
+.blood-b-positive, .blood-b-negative {
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+  color: #1976d2;
+  border-color: rgba(25, 118, 210, 0.2);
+}
+
+.blood-ab-positive, .blood-ab-negative {
+  background: linear-gradient(135deg, #fff3e0 0%, #fce4ec 100%);
+  color: #f57c00;
+  border-color: rgba(245, 124, 0, 0.2);
+}
+
+.blood-o-positive, .blood-o-negative {
+  background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
+  color: #d32f2f;
+  border-color: rgba(211, 47, 47, 0.2);
+}
+
+/* Ações do card */
+.mat-mdc-card-actions {
+  padding: 30px 40px 40px 40px !important;
+  background: #f8faff;
+  margin: 0 -40px -40px -40px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.mat-mdc-raised-button {
+  border-radius: 12px !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  padding: 0 24px !important;
+  height: 44px !important;
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.mat-mdc-raised-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(25, 118, 210, 0.4) !important;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.loading mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #1976d2;
+  margin-bottom: 16px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .page-header {
+    padding: 30px 20px;
+    margin: -10px -10px 20px -10px;
+  }
+  
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .mat-mdc-card-content {
+    padding: 24px !important;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .mat-mdc-card-actions {
+    padding: 20px 24px 24px 24px !important;
+    margin: 0 -24px -24px -24px;
+  }
+}

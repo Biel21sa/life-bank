@@ -1,0 +1,151 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="logo-section">
+        <div class="logo-icon">
+          <mat-icon>admin_panel_settings</mat-icon>
+        </div>
+        <h1>Painel Administrativo</h1>
+        <p class="hero-subtitle">Gerencie todo o sistema Life Bank</p>
+      </div>
+
+      <div class="hero-description">
+        <p>
+          Controle total sobre doadores, clínicas e doações.
+          Monitore estatísticas e mantenha o sistema funcionando perfeitamente.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <mat-icon>people</mat-icon>
+        <div class="stat-number">1,247</div>
+        <div class="stat-label">Doadores Cadastrados</div>
+      </div>
+      <div class="stat-card">
+        <mat-icon>local_hospital</mat-icon>
+        <div class="stat-number">23</div>
+        <div class="stat-label">Clínicas Ativas</div>
+      </div>
+      <div class="stat-card">
+        <mat-icon>bloodtype</mat-icon>
+        <div class="stat-number">3,892</div>
+        <div class="stat-label">Doações Registradas</div>
+      </div>
+      <div class="stat-card">
+        <mat-icon>trending_up</mat-icon>
+        <div class="stat-number">98%</div>
+        <div class="stat-label">Taxa de Sucesso</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Cards -->
+  <div class="navigation-section">
+    <h2>Gerenciamento</h2>
+    <div class="navigation-grid">
+
+      <mat-card class="nav-card" (click)="navigateToDonors()">
+        <div class="card-icon">
+          <mat-icon>people</mat-icon>
+        </div>
+        <mat-card-content>
+          <h3>Doadores</h3>
+          <p>Gerencie cadastros, histórico e status dos doadores do sistema</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary">
+            Acessar
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="nav-card" (click)="navigateToClinics()">
+        <div class="card-icon">
+          <mat-icon>local_hospital</mat-icon>
+        </div>
+        <mat-card-content>
+          <h3>Clínicas</h3>
+          <p>Administre clínicas parceiras, credenciamentos e parcerias</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary">
+            Acessar
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="nav-card" (click)="navigateToDonations()">
+        <div class="card-icon">
+          <mat-icon>bloodtype</mat-icon>
+        </div>
+        <mat-card-content>
+          <h3>Doações</h3>
+          <p>Controle histórico, estatísticas e relatórios de doações</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary">
+            Acessar
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="nav-card" (click)="navigateToBloodWithdrawal()">
+        <div class="card-icon">
+          <mat-icon>remove_circle</mat-icon>
+        </div>
+        <mat-card-content>
+          <h3>Retirada de Sangue</h3>
+          <p>Gerencie a retirada de bolsas de sangue dos locais de doação</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary">
+            Acessar
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="features-section">
+    <h2>Por que escolher o Life Bank?</h2>
+    <div class="features-grid">
+
+      <div class="feature-item">
+        <mat-icon>security</mat-icon>
+        <h4>Segurança Total</h4>
+        <p>Dados protegidos com criptografia avançada e controle de acesso rigoroso</p>
+      </div>
+
+      <div class="feature-item">
+        <mat-icon>speed</mat-icon>
+        <h4>Agilidade</h4>
+        <p>Processos otimizados para localização rápida de sangue compatível</p>
+      </div>
+
+      <div class="feature-item">
+        <mat-icon>notifications_active</mat-icon>
+        <h4>Notificações</h4>
+        <p>Alertas automáticos sobre estoque baixo e campanhas de doação</p>
+      </div>
+
+      <div class="feature-item">
+        <mat-icon>mobile_friendly</mat-icon>
+        <h4>Responsivo</h4>
+        <p>Acesse de qualquer dispositivo com interface adaptável</p>
+      </div>
+
+    </div>
+  </div>
+</div>
