@@ -32,20 +32,20 @@ INSERT INTO clinic (name, cnpj, street, number, neighborhood, postal_code, munic
 VALUES
 ('Clínica Vida', '12345678000199', 'Av. Saúde', '400', 'Centro', '20010-000', 3, 3);
 
-INSERT INTO blood (blood_type, quantity, expiration_date, used, donor_id)
+INSERT INTO blood (blood_type, quantity, expiration_date, used, donor_id, donation_location_id)
 VALUES
-('O+', 0.45, CURRENT_DATE + INTERVAL '30 days', FALSE, 1);
+('O+', 0.45, CURRENT_DATE + INTERVAL '30 days', FALSE, 1, 1);
 
 INSERT INTO blood_stock (blood_type, minimum_stock, maximum_stock, current_stock, donation_location_id)
 VALUES
-('O+', 2.00, 10.00, 5.00, 1),
-('A+', 2.00, 10.00, 3.50, 1),
-('O-', 2.00, 10.00, 5.00, 1),
-('A-', 2.00, 10.00, 3.50, 1),
-('B+', 2.00, 10.00, 5.00, 1),
-('AB+', 2.00, 10.00, 3.50, 1),
-('AB-', 2.00, 10.00, 5.00, 1),
-('B-', 2.00, 10.00, 3.50, 1);
+('O+', 2.00, 10.00, 0.45, 1),
+('A+', 2.00, 10.00, 0.00, 1),
+('O-', 2.00, 10.00, 0.00, 1),
+('A-', 2.00, 10.00, 0.00, 1),
+('B+', 2.00, 10.00, 0.00, 1),
+('AB+', 2.00, 10.00, 0.00, 1),
+('AB-', 2.00, 10.00, 0.00, 1),
+('B-', 2.00, 10.00, 0.00, 1);
 
 
 INSERT INTO donation (quantity, collection_date, expiration_date, donor_id, donation_location_id, blood_id)

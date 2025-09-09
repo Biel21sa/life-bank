@@ -78,6 +78,7 @@ CREATE TABLE blood (
     reason VARCHAR(1000),
     used BOOLEAN NOT NULL DEFAULT FALSE,
     donor_id INTEGER NOT NULL REFERENCES donor(id) ON DELETE CASCADE,
+    donation_location_id INTEGER NOT NULL REFERENCES donation_location(id) ON DELETE CASCADE,
     UNIQUE(blood_type, donor_id, expiration_date)
 );
 
