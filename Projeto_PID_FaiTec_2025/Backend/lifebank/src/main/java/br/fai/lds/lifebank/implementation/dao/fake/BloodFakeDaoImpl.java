@@ -1,6 +1,7 @@
 package br.fai.lds.lifebank.implementation.dao.fake;
 
 import br.fai.lds.lifebank.domain.BloodModel;
+import br.fai.lds.lifebank.domain.dto.UpdateBloodsDto;
 import br.fai.lds.lifebank.domain.enuns.BloodType;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
 import org.springframework.stereotype.Repository;
@@ -87,6 +88,16 @@ public class BloodFakeDaoImpl implements BloodDao {
         }
         BloodModel removeEntity = entities.remove(itemIndex);
         System.out.println("A entidade: " + removeEntity.getBloodType() + " foi removida com sucesso");
+    }
+
+    @Override
+    public List<BloodModel> findByDonationLocationId(int id) {
+        return null;
+    }
+
+    @Override
+    public void updateBloods(UpdateBloodsDto data) {
+
     }
 }
 
