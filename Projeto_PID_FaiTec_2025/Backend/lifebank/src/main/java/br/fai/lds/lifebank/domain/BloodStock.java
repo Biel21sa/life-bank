@@ -11,6 +11,9 @@ public class BloodStock {
     private Double currentStock;
     private DonationLocationModel donationLocation;
     private int donationLocationId;
+    private int donorId;
+    private DonorModel donor;
+    private boolean used;
 
     public BloodStock(int id, String bloodType, Double minimumStock, Double maximumStock, Double currentStock, DonationLocationModel donationLocation, int donationLocationId) {
         this.id = id;
@@ -79,5 +82,29 @@ public class BloodStock {
 
     public void setDonationLocationId(int donationLocationId) {
         this.donationLocationId = donationLocationId;
+    }
+
+    public int getDonorId() {
+        return donorId;
+    }
+
+    public void setDonorId(int donorId) {
+        this.donorId = donorId;
+    }
+
+    public DonorModel getDonor() {
+        return donor;
+    }
+
+    public void setDonor(DonorModel donor) {
+        this.donor = donor;
+    }
+
+    public boolean isUsed() {
+        return used;
+    }
+
+    public void setUsed(boolean used) {
+        this.used = used;
     }
 }
