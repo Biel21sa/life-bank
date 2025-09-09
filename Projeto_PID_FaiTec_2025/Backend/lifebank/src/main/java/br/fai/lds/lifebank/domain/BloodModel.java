@@ -10,6 +10,12 @@ public class BloodModel {
     private String bloodType;
     private Double quantity;
     private LocalDate expirationDate;
+    private String reason;
+    private Boolean used;
+    private int donorId;
+    private int donationLocationId;
+    private DonorModel donor;
+    private DonationLocationModel donationLocation;
 
     public BloodModel() {
     }
@@ -51,6 +57,54 @@ public class BloodModel {
 
     public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public Boolean getUsed() {
+        return used;
+    }
+
+    public void setUsed(Boolean used) {
+        this.used = used;
+    }
+
+    public int getDonorId() {
+        return donorId;
+    }
+
+    public void setDonorId(int donorId) {
+        this.donorId = donorId;
+    }
+
+    public int getDonationLocationId() {
+        return donationLocationId;
+    }
+
+    public void setDonationLocationId(int donationLocationId) {
+        this.donationLocationId = donationLocationId;
+    }
+
+    public DonorModel getDonor() {
+        return donor;
+    }
+
+    public void setDonor(DonorModel donor) {
+        this.donor = donor;
+    }
+
+    public DonationLocationModel getDonationLocation() {
+        return donationLocation;
+    }
+
+    public void setDonationLocation(DonationLocationModel donationLocation) {
+        this.donationLocation = donationLocation;
     }
 }
 
