@@ -34,7 +34,7 @@ public class DonationPostgresDaoImplDao implements DonationDaoDao {
             connection.setAutoCommit(false);
 
             // 1. Criar o registro de sangue
-            int bloodId = insertBlood(entity.getBloodType(), entity.getQuantity(), entity.getExpirationDate());
+            int bloodId = insertBlood(entity.getBloodType(), entity.getQuantity(), entity.getExpirationDate(), entity.getDonorId());
 
             // 2. Atualizar blood_stock
             updateBloodStock(entity.getBloodType(), entity.getQuantity(), entity.getDonationLocationId());
@@ -234,12 +234,13 @@ public class DonationPostgresDaoImplDao implements DonationDaoDao {
         }
     }
 
-    private int insertBlood(String bloodType, Double quantity, LocalDate expirationDate) throws SQLException {
-        String sql = "INSERT INTO blood(blood_type, quantity, expiration_date) VALUES (?, ?, ?) RETURNING id";
+    private int insertBlood(String bloodType, Double quantity, LocalDate expirationDate, int donorId) throws SQLException {
+        String sql = "INSERT INTO blood(blood_type, quantity, expiration_date, used, donor_id) VALUES (?, ?, ?, FALSE, ?) RETURNING id";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, bloodType);
             stmt.setDouble(2, quantity);
             stmt.setDate(3, java.sql.Date.valueOf(expirationDate));
+            stmt.setInt(4, donorId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -260,8 +261,8 @@ public class DonationPostgresDaoImplDao implements DonationDaoDao {
     }
 
     private void insertBenefit(int donorId, int donationId) throws SQLException {
-        String sql = "INSERT INTO benefit(amount, expiration_date, description, donation_id, donor_id) " +
-                "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO benefit(amount, expiration_date, description, used, donation_id, donor_id) " +
+                "VALUES (?, ?, ?, FALSE, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setBigDecimal(1, java.math.BigDecimal.valueOf(50.00)); // Valor padrão do benefício
             stmt.setDate(2, java.sql.Date.valueOf(LocalDate.now().plusMonths(6))); // Expira em 6 meses
