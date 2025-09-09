@@ -93,9 +93,9 @@ public class BloodServiceImpl implements BloodService {
             return new ArrayList<>();
         }
 
-        List<BloodModel> donations = bloodDao.findByDonationLocationId(id);
+        List<BloodModel> entities = bloodDao.findByDonationLocationId(id);
 
-        return donations;
+        return entities;
     }
 
     @Override
