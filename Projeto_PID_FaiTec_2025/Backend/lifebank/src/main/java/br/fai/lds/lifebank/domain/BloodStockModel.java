@@ -1,8 +1,6 @@
 package br.fai.lds.lifebank.domain;
 
-import br.fai.lds.lifebank.domain.enuns.BloodType;
-
-public class BloodStock {
+public class BloodStockModel {
 
     private int id;
     private String bloodType;
@@ -15,7 +13,7 @@ public class BloodStock {
     private DonorModel donor;
     private boolean used;
 
-    public BloodStock(int id, String bloodType, Double minimumStock, Double maximumStock, Double currentStock, DonationLocationModel donationLocation, int donationLocationId) {
+    public BloodStockModel(int id, String bloodType, Double minimumStock, Double maximumStock, Double currentStock, DonationLocationModel donationLocation, int donationLocationId) {
         this.id = id;
         this.bloodType = bloodType;
         this.minimumStock = minimumStock;
@@ -25,7 +23,7 @@ public class BloodStock {
         this.donationLocationId = donationLocationId;
     }
 
-    public BloodStock() {
+    public BloodStockModel() {
     }
 
     public int getId() {
