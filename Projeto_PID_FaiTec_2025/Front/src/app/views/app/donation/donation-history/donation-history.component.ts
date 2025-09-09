@@ -11,9 +11,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
 import { MatTableDataSource } from '@angular/material/table';
-import { DonationReadService } from '../../../services/donation/donation-read.service';
-import { UserReadService } from '../../../services/user/user-read.service';
-import { AuthenticationService } from '../../../services/security/authentication.service';
+import { DonationReadService } from '../../../../services/donation/donation-read.service';
+import { UserReadService } from '../../../../services/user/user-read.service';
+import { AuthenticationService } from '../../../../services/security/authentication.service';
 
 @Component({
   selector: 'app-donation-history',
@@ -34,7 +34,7 @@ import { AuthenticationService } from '../../../services/security/authentication
   styleUrl: './donation-history.component.css'
 })
 export class DonationHistoryComponent implements OnInit {
-  
+
   donations: any[] = [];
   dataSource = new MatTableDataSource(this.donations);
   displayedColumns: string[] = ['donor', 'bloodType', 'date', 'quantity', 'actions'];
@@ -45,7 +45,7 @@ export class DonationHistoryComponent implements OnInit {
     private userReadService: UserReadService,
     private authService: AuthenticationService,
     private toastr: ToastrService,
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.loadCurrentUser();
@@ -56,7 +56,7 @@ export class DonationHistoryComponent implements OnInit {
       const email = this.authService.getAuhenticatedUserEmail();
       const users = await this.userReadService.findAll();
       this.currentUser = users?.find((u: { email: string; }) => u.email === email) || null;
-      
+
       if (this.currentUser?.donationLocationId) {
         this.loadDonations();
       } else {
@@ -70,7 +70,7 @@ export class DonationHistoryComponent implements OnInit {
 
   loadDonations() {
     if (!this.currentUser?.donationLocationId) return;
-    
+
     this.donationReadService.findByDonationLocationId(this.currentUser.donationLocationId.toString()).subscribe({
       next: (donations) => {
         this.donations = donations || [];
@@ -88,7 +88,7 @@ export class DonationHistoryComponent implements OnInit {
       'A': 'blood-a-positive',
       'A_POSITIVE': 'blood-a-positive',
       'A_NEGATIVE': 'blood-a-negative',
-      'B_POSITIVE': 'blood-b-positive', 
+      'B_POSITIVE': 'blood-b-positive',
       'B_NEGATIVE': 'blood-b-negative',
       'AB_POSITIVE': 'blood-ab-positive',
       'AB_NEGATIVE': 'blood-ab-negative',

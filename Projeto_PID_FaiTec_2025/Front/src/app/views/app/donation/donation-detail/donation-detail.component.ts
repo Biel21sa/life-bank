@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
 import { ToastrService } from 'ngx-toastr';
-import { DonationReadService } from '../../../services/donation/donation-read.service';
+import { DonationReadService } from '../../../../services/donation/donation-read.service';
 
 @Component({
   selector: 'app-donation-detail',
@@ -30,7 +30,7 @@ export class DonationDetailComponent implements OnInit {
     private router: Router,
     private donationReadService: DonationReadService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.donationId = this.route.snapshot.paramMap.get('id') || '';

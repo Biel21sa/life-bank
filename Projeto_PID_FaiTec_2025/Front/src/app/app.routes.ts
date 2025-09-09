@@ -27,9 +27,9 @@ import { ClinicListComponent } from './views/app/clinic/clinic-list/clinic-list.
 import { ClinicCreateComponent } from './views/app/clinic/clinic-create/clinic-create.component';
 import { ClinicEditComponent } from './views/app/clinic/clinic-edit/clinic-edit.component';
 import { ClinicDetailComponent } from './views/app/clinic/clinic-detail/clinic-detail.component';
-import { DonationCreateComponent } from './views/app/donation-create/donation-create.component';
-import { DonationHistoryComponent } from './views/app/donation-history/donation-history.component';
-import { DonationDetailComponent } from './views/app/donation-detail/donation-detail.component';
+import { DonationCreateComponent } from './views/app/donation/donation-create/donation-create.component';
+import { DonationHistoryComponent } from './views/app/donation/donation-history/donation-history.component';
+import { DonationDetailComponent } from './views/app/donation/donation-detail/donation-detail.component';
 import { BloodWithdrawalComponent } from './views/app/blood-withdrawal/blood-withdrawal.component';
 
 export const routes: Routes = [
