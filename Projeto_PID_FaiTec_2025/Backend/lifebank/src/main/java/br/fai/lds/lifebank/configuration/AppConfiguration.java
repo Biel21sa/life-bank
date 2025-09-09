@@ -3,6 +3,7 @@ package br.fai.lds.lifebank.configuration;
 import br.fai.lds.lifebank.implementation.dao.postgres.*;
 import br.fai.lds.lifebank.port.dao.benefit.BenefitDao;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
+import br.fai.lds.lifebank.port.dao.bloodstock.BloodStockDao;
 import br.fai.lds.lifebank.port.dao.clinic.ClinicDao;
 import br.fai.lds.lifebank.port.dao.donation.DonationDao;
 import br.fai.lds.lifebank.port.dao.donationlocation.DonationLocationDao;
@@ -85,5 +86,10 @@ public class AppConfiguration {
     @Bean
     public MunicipalityDao getMunicipalityDao(final Connection connection) {
         return new MunicipalityPostgresDaoImpl(connection);
+    }
+
+    @Bean
+    public BloodStockDao getBloodStockDao(final Connection connection) {
+        return new BloodStockPostgresDaoImpl(connection);
     }
 }
