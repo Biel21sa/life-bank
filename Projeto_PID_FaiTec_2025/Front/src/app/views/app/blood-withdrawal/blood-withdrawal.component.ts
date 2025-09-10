@@ -91,6 +91,6 @@ export class BloodWithdrawalComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/admin-home']);
   }
 }
