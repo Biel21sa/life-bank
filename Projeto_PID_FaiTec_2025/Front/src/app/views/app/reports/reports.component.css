@@ -1,0 +1,162 @@
+.reports-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8faff 0%, #e3f2fd 100%);
+  min-height: 100vh;
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header-section h1 {
+  font-size: 2.5rem;
+  color: #1976d2;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+
+.header-section p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.controls-section {
+  margin-bottom: 2rem;
+}
+
+.controls-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.1);
+  border: 1px solid #e3f2fd;
+}
+
+.controls-grid {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.controls-grid mat-form-field {
+  min-width: 300px;
+}
+
+.year-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #1976d2;
+  font-weight: 500;
+  background: #f8faff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #e3f2fd;
+}
+
+.chart-section {
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+  border: 1px solid #e3f2fd;
+}
+
+.chart-card mat-card-header {
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+  color: white;
+  margin: -16px -16px 24px -16px;
+  padding: 1.5rem;
+}
+
+.chart-card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.chart-container {
+  height: 500px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-container canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.info-section {
+  margin-top: 2rem;
+}
+
+.info-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.info-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #1976d2;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.1);
+}
+
+.info-card mat-icon {
+  color: #1976d2;
+  font-size: 2rem;
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0.25rem;
+}
+
+.info-content h4 {
+  color: #1976d2;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.info-content p {
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .reports-container {
+    padding: 1rem;
+  }
+  
+  .header-section h1 {
+    font-size: 2rem;
+  }
+  
+  .controls-grid {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .controls-grid mat-form-field {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .chart-container {
+    height: 400px;
+  }
+  
+  .info-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
