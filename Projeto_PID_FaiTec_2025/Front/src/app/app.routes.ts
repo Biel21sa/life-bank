@@ -155,7 +155,7 @@ export const routes: Routes = [
                 canActivate: [AdministratorGuard]
             },
             {
-                path: 'blood-withdrawal/:locationId',
+                path: 'blood-withdrawal',
                 component: BloodWithdrawalComponent,
                 canActivate: [AdministratorGuard]
             },

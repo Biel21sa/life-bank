@@ -38,6 +38,6 @@ export class AdminHomeComponent {
   }
 
   navigateToBloodWithdrawal() {
-    this.router.navigate([`blood-withdrawal/${this.getDonationLocationId()}`]);
+    this.router.navigate([`blood-withdrawal`]);
   }
 }
