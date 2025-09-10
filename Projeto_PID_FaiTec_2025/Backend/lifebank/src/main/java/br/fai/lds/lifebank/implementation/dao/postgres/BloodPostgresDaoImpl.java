@@ -73,9 +73,8 @@ public class BloodPostgresDaoImpl implements BloodDao {
     public List<BloodModel> findByDonationLocationId(int donationLocationId) {
         final List<BloodModel> bloodList = new ArrayList<>();
         final String sql = "SELECT * FROM blood " +
-                          "WHERE donation_location_id = ? " +
-                          "AND used = FALSE " +
-                          "AND expiration_date > CURRENT_DATE";
+                "WHERE donation_location_id = ? " +
+                "AND used = FALSE ";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -99,18 +98,18 @@ public class BloodPostgresDaoImpl implements BloodDao {
     public void updateBloods(UpdateBloodsDto data) {
         try {
             connection.setAutoCommit(false);
-            
+
             for (int bloodId : data.getBloodIds()) {
                 // 1. Buscar informações do sangue
                 BloodModel blood = getBloodInfo(bloodId);
-                
+
                 // 2. Atualizar o sangue como usado
                 updateBloodAsUsed(bloodId, data.getReason());
-                
+
                 // 3. Atualizar o estoque
                 updateBloodStock(blood.getBloodType(), blood.getQuantity(), blood.getDonationLocationId());
             }
-            
+
             connection.commit();
         } catch (SQLException e) {
             try {
@@ -121,7 +120,7 @@ public class BloodPostgresDaoImpl implements BloodDao {
             throw new RuntimeException(e);
         }
     }
-    
+
     private BloodModel getBloodInfo(int bloodId) throws SQLException {
         String sql = "SELECT blood_type, quantity, donation_location_id FROM blood WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -137,7 +136,7 @@ public class BloodPostgresDaoImpl implements BloodDao {
             throw new SQLException("Sangue não encontrado: " + bloodId);
         }
     }
-    
+
     private void updateBloodAsUsed(int bloodId, String reason) throws SQLException {
         String sql = "UPDATE blood SET used = TRUE, reason = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -146,10 +145,10 @@ public class BloodPostgresDaoImpl implements BloodDao {
             stmt.executeUpdate();
         }
     }
-    
+
     private void updateBloodStock(String bloodType, double quantity, int locationId) throws SQLException {
         String sql = "UPDATE blood_stock SET current_stock = current_stock - ? " +
-                    "WHERE blood_type = ? AND donation_location_id = ?";
+                "WHERE blood_type = ? AND donation_location_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setDouble(1, quantity);
             stmt.setString(2, bloodType);
@@ -160,7 +159,7 @@ public class BloodPostgresDaoImpl implements BloodDao {
 
     private BloodModel mapResultSetToBloodModel(ResultSet rs) throws SQLException {
         BloodModel blood = new BloodModel();
-        
+
         blood.setId(rs.getInt("id"));
         blood.setBloodType(rs.getString("blood_type"));
         blood.setQuantity(rs.getBigDecimal("quantity").doubleValue());
@@ -169,7 +168,7 @@ public class BloodPostgresDaoImpl implements BloodDao {
         blood.setUsed(rs.getBoolean("used"));
         blood.setDonorId(rs.getInt("donor_id"));
         blood.setDonationLocationId(rs.getInt("donation_location_id"));
-        
+
         return blood;
     }
 }

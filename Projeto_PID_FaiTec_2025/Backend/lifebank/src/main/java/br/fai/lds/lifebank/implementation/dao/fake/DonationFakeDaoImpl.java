@@ -1,6 +1,9 @@
 package br.fai.lds.lifebank.implementation.dao.fake;
 
 import br.fai.lds.lifebank.domain.DonationModel;
+import br.fai.lds.lifebank.domain.dto.DonationByBloodTypeDto;
+import br.fai.lds.lifebank.domain.dto.DonationEvolutionByBloodTypeDto;
+import br.fai.lds.lifebank.domain.dto.DonationEvolutionDto;
 import br.fai.lds.lifebank.port.dao.donation.DonationDao;
 
 import java.time.LocalDate;
@@ -91,6 +94,21 @@ public class DonationFakeDaoImpl implements DonationDao {
 
     @Override
     public List<DonationModel> findByDonationLocationId(int id) {
+        return null;
+    }
+
+    @Override
+    public List<DonationEvolutionDto> getDonationEvolution(int donationLocationId, int year) {
+        return null;
+    }
+
+    @Override
+    public List<DonationByBloodTypeDto> getDonationByBloodType(int donationLocationId, int year) {
+        return null;
+    }
+
+    @Override
+    public List<DonationEvolutionByBloodTypeDto> getDonationEvolutionByBloodType(int donationLocationId, int year) {
         return null;
     }
 }
