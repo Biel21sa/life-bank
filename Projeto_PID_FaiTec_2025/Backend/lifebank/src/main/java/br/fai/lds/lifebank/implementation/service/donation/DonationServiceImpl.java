@@ -131,4 +131,15 @@ public class DonationServiceImpl implements DonationService {
 
         return donations;
     }
+
+    @Override
+    public List<DonationModel> findByUserId(int userId) {
+        if (userId == 0) {
+            return new ArrayList<>();
+        }
+
+        List<DonationModel> donations = donationDao.findByUserId(userId);
+
+        return donations;
+    }
 }
