@@ -42,6 +42,7 @@ export class AuthenticationService {
     localStorage.setItem('email', user.email);
     localStorage.setItem('password', user.password);
     localStorage.setItem('role', user.role);
+    localStorage.setItem('id', user.id);
     if (user.role === 'ADMINISTRATOR' && user.donationLocationId) {
       localStorage.setItem('donationLocationId', user.donationLocationId.toString());
     }
@@ -65,6 +66,14 @@ export class AuthenticationService {
       throw new Error('Role não encontrado');
     }
     return role;
+  }
+
+  getAuthenticatedUserId(): string {
+    let id = localStorage.getItem('id');
+    if (id == null) {
+      throw new Error('Id não encontrado');
+    }
+    return id;
   }
 
   isSystemAdmin(): boolean {
