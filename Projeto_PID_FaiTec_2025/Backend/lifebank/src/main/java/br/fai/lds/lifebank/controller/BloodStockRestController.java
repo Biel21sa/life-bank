@@ -1,12 +1,11 @@
 package br.fai.lds.lifebank.controller;
 
 import br.fai.lds.lifebank.domain.BloodStockModel;
+import br.fai.lds.lifebank.domain.UserModel;
+import br.fai.lds.lifebank.domain.dto.UpdateLimitsBloodStockDto;
 import br.fai.lds.lifebank.port.service.bloodstock.BloodStockService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +28,13 @@ public class BloodStockRestController {
         List<BloodStockModel> entities = bloodStockService.findByDonationLocationId(id);
 
         return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
+    }
+
+    @PutMapping("/{id}/limits")
+    public ResponseEntity<BloodStockModel> update(@RequestBody final UpdateLimitsBloodStockDto data) {
+
+        bloodStockService.updateLimits(data);
+
+        return ResponseEntity.noContent().build();
     }
 }
