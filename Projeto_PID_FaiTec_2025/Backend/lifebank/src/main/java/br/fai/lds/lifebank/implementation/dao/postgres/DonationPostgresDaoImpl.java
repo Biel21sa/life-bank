@@ -240,6 +240,35 @@ public class DonationPostgresDaoImpl implements DonationDao {
     }
 
     @Override
+    public List<DonationModel> findByUserId(int userId) {
+        final List<DonationModel> donations = new ArrayList<>();
+        final String sql =
+                "SELECT d.*, b.blood_type, u.name AS donor_name, u.cpf AS donor_cpf " +
+                        "FROM donation d " +
+                        "JOIN blood b ON d.blood_id = b.id " +
+                        "JOIN donor dr ON d.donor_id = dr.id " +
+                        "JOIN user_model u ON dr.user_id = u.id " +
+                        "WHERE u.id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                DonationModel donation = mapResultSetToDonationModelWithDonor(resultSet);
+                donations.add(donation);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            return donations;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<DonationEvolutionDto> getDonationEvolution(final int donationLocationId, final int year) {
         final List<DonationEvolutionDto> donations = new ArrayList<>();
         final String sql = "SELECT TO_CHAR(collection_date, 'Month') as month_name, " +
@@ -465,6 +494,4 @@ public class DonationPostgresDaoImpl implements DonationDao {
 
         return donation;
     }
-
-
 }

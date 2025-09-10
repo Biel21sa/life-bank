@@ -111,4 +111,9 @@ public class DonationFakeDaoImpl implements DonationDao {
     public List<DonationEvolutionByBloodTypeDto> getDonationEvolutionByBloodType(int donationLocationId, int year) {
         return null;
     }
+
+    @Override
+    public List<DonationModel> findByUserId(int userId) {
+        return List.of();
+    }
 }
