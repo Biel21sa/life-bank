@@ -1,6 +1,7 @@
 package br.fai.lds.lifebank.implementation.dao.postgres;
 
 import br.fai.lds.lifebank.domain.BloodStockModel;
+import br.fai.lds.lifebank.domain.dto.UpdateLimitsBloodStockDto;
 import br.fai.lds.lifebank.port.dao.bloodstock.BloodStockDao;
 
 import java.sql.Connection;
@@ -46,14 +47,30 @@ public class BloodStockPostgresDaoImpl implements BloodStockDao {
 
     private BloodStockModel mapResultSetToBloodStockModel(ResultSet rs) throws SQLException {
         BloodStockModel bloodStock = new BloodStockModel();
-        
+
         bloodStock.setId(rs.getInt("id"));
         bloodStock.setBloodType(rs.getString("blood_type"));
         bloodStock.setMinimumStock(rs.getBigDecimal("minimum_stock").doubleValue());
         bloodStock.setMaximumStock(rs.getBigDecimal("maximum_stock").doubleValue());
         bloodStock.setCurrentStock(rs.getBigDecimal("current_stock").doubleValue());
         bloodStock.setDonationLocationId(rs.getInt("donation_location_id"));
-        
+
         return bloodStock;
+    }
+
+    @Override
+    public void updateLimits(UpdateLimitsBloodStockDto data) {
+        final String sql = "UPDATE blood_stock SET minimum_stock = ?, maximum_stock = ? WHERE id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setDouble(1, data.getMinimumStock());
+            preparedStatement.setDouble(2, data.getMaximumStock());
+            preparedStatement.setInt(3, data.getId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
