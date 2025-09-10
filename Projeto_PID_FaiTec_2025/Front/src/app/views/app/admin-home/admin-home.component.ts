@@ -40,4 +40,8 @@ export class AdminHomeComponent {
   navigateToBloodWithdrawal() {
     this.router.navigate([`blood-withdrawal`]);
   }
+
+  navigateToBloodStock() {
+    this.router.navigate(['/blood-stock']);
+  }
 }
