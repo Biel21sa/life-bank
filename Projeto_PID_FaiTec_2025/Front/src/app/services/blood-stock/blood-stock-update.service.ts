@@ -2,12 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-
-export interface StockLimitsUpdate {
-  id: number;
-  minimumStock: number;
-  maximumStock: number;
-}
+import { StockLimitsUpdate } from '../../domain/dto/update-stock-limits-dto';
 
 @Injectable({
   providedIn: 'root'
