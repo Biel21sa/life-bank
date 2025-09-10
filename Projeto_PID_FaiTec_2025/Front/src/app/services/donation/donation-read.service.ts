@@ -26,6 +26,10 @@ export class DonationReadService {
     return this.http.get<Donation[]>(`${environment.api_endpoint}/donations/location/${donationLocationId}`);
   }
 
+  getDonationsByUserId(userId: string): Observable<Donation[]> {
+    return this.http.get<Donation[]>(`${environment.api_endpoint}/donations/user/${userId}`);
+  }
+
   getDonationEvolution(donationLocationId: string, year: number): Observable<DonationEvolutionData[]> {
     return this.http.get<DonationEvolutionData[]>(`${environment.api_endpoint}/donations/evolution/${donationLocationId}/${year}`);
   }
