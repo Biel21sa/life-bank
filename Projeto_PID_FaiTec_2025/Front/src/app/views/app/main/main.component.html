@@ -124,6 +124,18 @@
                         </a>
                     </mat-nav-list>
                 </mat-expansion-panel>
+                <mat-expansion-panel *ngIf="isAdministrator()" [class.mat-elevation-z0]="true">
+                    <mat-expansion-panel-header>
+                        <mat-icon>analytics</mat-icon>
+                        <span>Gráficos e Relatórios</span>
+                    </mat-expansion-panel-header>
+                    <mat-nav-list>
+                        <a mat-list-item *ngIf="isAdministrator()" routerLink="/reports" (click)="sidenav.close()">
+                            <mat-icon>analytics</mat-icon>
+                            <span>Acessar</span>
+                        </a>
+                    </mat-nav-list>
+                </mat-expansion-panel>
             </mat-nav-list>
         </mat-sidenav>
         <div class="page-wrap">
