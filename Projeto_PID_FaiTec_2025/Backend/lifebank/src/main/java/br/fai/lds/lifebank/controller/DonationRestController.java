@@ -85,6 +85,17 @@ public class DonationRestController {
         return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<DonationModel>> getEntityByUserId(@PathVariable final int id) {
+        if (id == 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<DonationModel> entities = donationService.findByUserId(id);
+
+        return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
+    }
+
     @GetMapping("/evolution/{donationLocationId}/{year}")
     public ResponseEntity<List<DonationEvolutionDto>> getDonationEvolution(@PathVariable final int donationLocationId,
                                                                            @PathVariable final int year) {
