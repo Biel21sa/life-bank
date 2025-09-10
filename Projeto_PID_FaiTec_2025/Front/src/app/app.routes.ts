@@ -33,6 +33,7 @@ import { DonationDetailComponent } from './views/app/donation/donation-detail/do
 import { BloodWithdrawalComponent } from './views/app/blood-withdrawal/blood-withdrawal.component';
 import { BloodStockComponent } from './views/app/blood-stock/blood-stock.component';
 import { ReportsComponent } from './views/app/reports/reports.component';
+import { UserDonationHistoryComponent } from './views/app/user-donation-history/user-donation-history.component';
 
 export const routes: Routes = [
     {
@@ -169,6 +170,10 @@ export const routes: Routes = [
                 path: 'reports',
                 component: ReportsComponent,
                 canActivate: [AdministratorGuard]
+            },
+            {
+                path: 'my-donations',
+                component: UserDonationHistoryComponent
             },
             {
                 path: 'donation-location',
