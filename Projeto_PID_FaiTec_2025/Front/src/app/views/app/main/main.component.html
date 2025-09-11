@@ -153,6 +153,18 @@
                         </a>
                     </mat-nav-list>
                 </mat-expansion-panel>
+                <mat-expansion-panel *ngIf="isClinic()" [class.mat-elevation-z0]="true">
+                    <mat-expansion-panel-header>
+                        <mat-icon>card_giftcard</mat-icon>
+                        <span>Benefícios</span>
+                    </mat-expansion-panel-header>
+                    <mat-nav-list>
+                        <a mat-list-item routerLink="/benefit/verification" (click)="sidenav.close()">
+                            <mat-icon>verified</mat-icon>
+                            <span>Verificar</span>
+                        </a>
+                    </mat-nav-list>
+                </mat-expansion-panel>
             </mat-nav-list>
         </mat-sidenav>
         <div class="page-wrap">

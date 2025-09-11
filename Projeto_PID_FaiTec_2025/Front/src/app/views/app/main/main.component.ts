@@ -60,6 +60,10 @@ export class MainComponent {
     return this.authenticationService.isUser();
   }
 
+  isClinic(): boolean {
+    return this.authenticationService.isClinic();
+  }
+
   public logout() {
     console.log('logout clicado');
     this.authenticationService.logout();
