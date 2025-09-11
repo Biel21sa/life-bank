@@ -1,0 +1,134 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="logo-section">
+        <div class="logo-icon">
+          <mat-icon>perm_identity</mat-icon>
+        </div>
+        <h1>Painel Do Doador</h1>
+        <p class="hero-subtitle">Visualize todo o sistema Life Bank</p>
+      </div>
+
+      <div class="hero-description">
+        <p>
+          Monitore suas doações, seus benefícios e as clínicas parceiras.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status de Doação -->
+  <div class="donation-status-section" *ngIf="donor">
+    <mat-card class="status-card">
+      <div class="status-header">
+        <div class="blood-type-badge">
+          <mat-icon>bloodtype</mat-icon>
+          <span>{{donor.bloodType}}</span>
+        </div>
+        <div class="aptitude-badge" [class]="canDonate ? 'apto' : 'nao-apto'">
+          <mat-icon>{{canDonate ? 'check_circle' : 'cancel'}}</mat-icon>
+          <span>{{canDonate ? 'Apto para Doar' : 'Não Apto'}}</span>
+        </div>
+      </div>
+      
+      <div class="status-content" *ngIf="!canDonate && nextDonationDate">
+        <div class="next-donation-info">
+          <mat-icon>schedule</mat-icon>
+          <div class="donation-details">
+            <span class="next-date">Próxima doação: {{nextDonationDate | date:'dd/MM/yyyy'}}</span>
+            <span class="days-remaining">{{getDaysUntilNextDonation()}} dias restantes</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Navigation Cards -->
+  <div class="navigation-section">
+    <h2>Gerenciamento</h2>
+    <div class="navigation-grid">
+
+      <mat-card class="nav-card" (click)="navigateToMyBenefits()">
+        <div class="card-icon">
+          <mat-icon>card_giftcard</mat-icon>
+        </div>
+        <mat-card-content>
+          <h3>Benefícios</h3>
+          <p>Visualize todos os seus benefícios</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary">
+            Acessar
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="nav-card" (click)="navigateToClinicList()">
+        <div class="card-icon">
+          <mat-icon>local_hospital</mat-icon>
+        </div>
+        <mat-card-content>
+          <h3>Clínicas</h3>
+          <p>Visualize clínicas parceiras</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary">
+            Acessar
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="nav-card" (click)="navigateToMyDonations()">
+        <div class="card-icon">
+          <mat-icon>bloodtype</mat-icon>
+        </div>
+        <mat-card-content>
+          <h3>Doações</h3>
+          <p>Visualize seu histórico de doações</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary">
+            Acessar
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="features-section">
+    <h2>Por que escolher o Life Bank?</h2>
+    <div class="features-grid">
+
+      <div class="feature-item">
+        <mat-icon>security</mat-icon>
+        <h4>Segurança Total</h4>
+        <p>Dados protegidos com criptografia avançada e controle de acesso rigoroso</p>
+      </div>
+
+      <div class="feature-item">
+        <mat-icon>speed</mat-icon>
+        <h4>Agilidade</h4>
+        <p>Processos otimizados para localização rápida de sangue compatível</p>
+      </div>
+
+      <div class="feature-item">
+        <mat-icon>notifications_active</mat-icon>
+        <h4>Notificações</h4>
+        <p>Alertas automáticos sobre estoque baixo e campanhas de doação</p>
+      </div>
+
+      <div class="feature-item">
+        <mat-icon>mobile_friendly</mat-icon>
+        <h4>Responsivo</h4>
+        <p>Acesse de qualquer dispositivo com interface adaptável</p>
+      </div>
+
+    </div>
+  </div>
+</div>
