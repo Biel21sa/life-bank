@@ -92,6 +92,14 @@ export class AuthenticationService {
     }
   }
 
+  isUser(): boolean {
+    try {
+      return this.getAuthenticatedUserRole() === 'USER';
+    } catch {
+      return false;
+    }
+  }
+
   getDonationLocationId(): string | null {
     return localStorage.getItem('donationLocationId');
   }
