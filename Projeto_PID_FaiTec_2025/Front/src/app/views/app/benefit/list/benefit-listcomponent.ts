@@ -7,9 +7,9 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
-import { Benefit } from '../../../domain/model/benefit';
-import { AuthenticationService } from '../../../services/security/authentication.service';
-import { BenefitReadService } from '../../../services/benefit/benefit-read.service';
+import { Benefit } from '../../../../domain/model/benefit';
+import { AuthenticationService } from '../../../../services/security/authentication.service';
+import { BenefitReadService } from '../../../../services/benefit/benefit-read.service';
 
 @Component({
   selector: 'app-benefit-list',
