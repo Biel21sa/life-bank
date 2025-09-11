@@ -1,6 +1,7 @@
 package br.fai.lds.lifebank.controller;
 
 import br.fai.lds.lifebank.domain.BenefitModel;
+import br.fai.lds.lifebank.domain.DonationModel;
 import br.fai.lds.lifebank.port.service.benefit.BenefitService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,5 +59,16 @@ public class BenefitRestController {
         benefitService.update(id, entity);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<BenefitModel>> getEntityByUserId(@PathVariable final int id) {
+        if (id == 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<BenefitModel> entities = benefitService.findByUserId(id);
+
+        return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
     }
 }
