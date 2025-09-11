@@ -14,4 +14,8 @@ export class BenefitReadService {
   getBenefitsByUserId(userId: string): Observable<Benefit[]> {
     return this.http.get<Benefit[]>(`${environment.api_endpoint}/benefit/user/${userId}`);
   }
+
+  getBenefitsByDonorCpf(cpf: string): Observable<Benefit[]> {
+    return this.http.get<Benefit[]>(`${environment.api_endpoint}/benefit/donor/${cpf}`);
+  }
 }
