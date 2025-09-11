@@ -226,7 +226,7 @@ public class UserPostgresDaoImpl implements UserDao {
         final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                 "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
                 "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
-                "d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
+                "d.id as donor_id, d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
                 "FROM user_model u " +
                 "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
                 "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
@@ -338,26 +338,9 @@ public class UserPostgresDaoImpl implements UserDao {
         // Mapear informações específicas por tipo de usuário
         if (user.getRole() == UserModel.UserRole.USER && rs.getObject("donor_blood_type") != null) {
             user.setBloodType(rs.getString("donor_blood_type"));
-            try {
-                if (rs.getObject("donor_id") != null) {
-                    user.setDonorId(rs.getInt("donor_id"));
-                }
-            } catch (SQLException e) { /* Coluna não existe nesta query */ }
-            try {
-                if (rs.getObject("gender") != null) {
-                    user.setGender(rs.getString("gender"));
-                }
-            } catch (SQLException e) { /* Coluna não existe nesta query */ }
-            try {
-                if (rs.getObject("last_donation_date") != null) {
-                    user.setLastDonationDate(rs.getDate("last_donation_date").toLocalDate());
-                }
-            } catch (SQLException e) { /* Coluna não existe nesta query */ }
-            try {
-                if (rs.getObject("apto") != null) {
-                    user.setApto(rs.getBoolean("apto"));
-                }
-            } catch (SQLException e) { /* Coluna não existe nesta query */ }
+            if (rs.getObject("donor_id") != null) {
+                user.setDonorId(rs.getInt("donor_id"));
+            }
         } else if (user.getRole() == UserModel.UserRole.CLINIC && rs.getObject("clinic_name") != null) {
             user.setNameClinic(rs.getString("clinic_name"));
             user.setCnpj(rs.getString("clinic_cnpj"));
