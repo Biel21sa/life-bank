@@ -4,4 +4,5 @@ export interface AuthenticatedUserDto {
     role: string;
     id: string;
     donationLocationId?: string;
+    donorId?: string;
 }

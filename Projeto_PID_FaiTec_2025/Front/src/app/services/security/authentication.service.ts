@@ -46,6 +46,9 @@ export class AuthenticationService {
     if (user.role === 'ADMINISTRATOR' && user.donationLocationId) {
       localStorage.setItem('donationLocationId', user.donationLocationId.toString());
     }
+    if (user.role === 'USER' && user.donorId) {
+      localStorage.setItem('donorId', user.donorId.toString());
+    }
   }
 
   logout() {
@@ -74,6 +77,14 @@ export class AuthenticationService {
       throw new Error('Id não encontrado');
     }
     return id;
+  }
+
+  getAuthenticatedUserDonorId(): string {
+    let donorId = localStorage.getItem('donorId');
+    if (donorId == null) {
+      throw new Error('DonorId não encontrado');
+    }
+    return donorId;
   }
 
   isSystemAdmin(): boolean {
