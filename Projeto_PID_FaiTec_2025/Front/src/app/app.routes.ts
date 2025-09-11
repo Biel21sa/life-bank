@@ -35,7 +35,9 @@ import { BloodStockComponent } from './views/app/blood-stock/blood-stock.compone
 import { ReportsComponent } from './views/app/reports/reports.component';
 import { UserDonationHistoryComponent } from './views/app/user-donation-history/user-donation-history.component';
 import { UserGuard } from './guards/user.guard';
-import { BenefitListComponent } from './views/app/benefit/benefit-listcomponent';
+import { BenefitListComponent } from './views/app/benefit/list/benefit-listcomponent';
+import { BenefitVerificationComponent } from './views/app/benefit/verification/benefit-verification.component';
+import { ClinicGuard } from './guards/clinic.guard';
 
 export const routes: Routes = [
     {
@@ -182,6 +184,11 @@ export const routes: Routes = [
                 path: 'my-benefits',
                 component: BenefitListComponent,
                 canActivate: [UserGuard]
+            },
+            {
+                path: 'benefit/verification',
+                component: BenefitVerificationComponent,
+                canActivate: [ClinicGuard]
             },
             {
                 path: 'donation-location',
