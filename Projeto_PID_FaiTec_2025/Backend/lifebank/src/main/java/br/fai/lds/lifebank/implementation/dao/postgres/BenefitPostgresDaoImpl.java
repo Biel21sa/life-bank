@@ -72,6 +72,53 @@ public class BenefitPostgresDaoImpl implements BenefitDao {
         }
     }
 
+    @Override
+    public void updateBenefitStatus(int id) {
+        final String sql = "UPDATE benefit SET used = TRUE WHERE id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+
+            if (rowsUpdated == 0) {
+                throw new RuntimeException("Nenhum benefício encontrado com o ID: " + id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar benefício com ID: " + id, e);
+        }
+    }
+
+
+    @Override
+    public List<BenefitModel> findByDonorCpf(String cpf) {
+        final List<BenefitModel> benefits = new ArrayList<>();
+        final String sql = "SELECT b.* FROM benefit b " +
+                "JOIN donor d ON b.donor_id = d.id " +
+                "JOIN user_model u ON d.user_id = u.id " +
+                "WHERE u.cpf = ? and b.used = FALSE and b.expiration_date >= CURRENT_DATE";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, cpf);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                BenefitModel benefit = mapResultSetToBenefitModel(resultSet);
+                benefits.add(benefit);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            return benefits;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private BenefitModel mapResultSetToBenefitModel(ResultSet rs) throws SQLException {
         BenefitModel benefit = new BenefitModel();
 
