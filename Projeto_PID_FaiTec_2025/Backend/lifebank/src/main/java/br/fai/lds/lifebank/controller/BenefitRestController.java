@@ -52,15 +52,6 @@ public class BenefitRestController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<BenefitModel> update(@PathVariable final int id, @RequestBody final BenefitModel data) {
-
-        BenefitModel entity = data;
-        benefitService.update(id, entity);
-
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping("/user/{id}")
     public ResponseEntity<List<BenefitModel>> getEntityByUserId(@PathVariable final int id) {
         if (id == 0) {
@@ -70,5 +61,27 @@ public class BenefitRestController {
         List<BenefitModel> entities = benefitService.findByUserId(id);
 
         return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
+    }
+
+    @GetMapping("/donor/{cpf}")
+    public ResponseEntity<List<BenefitModel>> getEntityByDonorCpf(@PathVariable final String cpf) {
+        if (cpf == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<BenefitModel> entities = benefitService.findByDonorCpf(cpf);
+
+        return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BenefitModel> updateStatus(@PathVariable final int id) {
+        if (id <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        benefitService.updateBenefitStatus(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
