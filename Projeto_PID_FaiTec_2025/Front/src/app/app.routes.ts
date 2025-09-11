@@ -34,6 +34,8 @@ import { BloodWithdrawalComponent } from './views/app/blood-withdrawal/blood-wit
 import { BloodStockComponent } from './views/app/blood-stock/blood-stock.component';
 import { ReportsComponent } from './views/app/reports/reports.component';
 import { UserDonationHistoryComponent } from './views/app/user-donation-history/user-donation-history.component';
+import { UserGuard } from './guards/user.guard';
+import { BenefitListComponent } from './views/app/benefit/benefit-listcomponent';
 
 export const routes: Routes = [
     {
@@ -121,24 +123,25 @@ export const routes: Routes = [
             },
             {
                 path: 'clinic',
-                canActivate: [AdministratorGuard],
                 children: [
                     {
                         path: 'list',
                         component: ClinicListComponent
                     },
                     {
+                        path: 'detail/:id',
+                        component: ClinicDetailComponent
+                    },
+                    {
                         path: 'create',
-                        component: ClinicCreateComponent
+                        component: ClinicCreateComponent,
+                        canActivate: [AdministratorGuard]
                     },
                     {
                         path: 'edit/:id',
-                        component: ClinicEditComponent
+                        component: ClinicEditComponent,
+                        canActivate: [AdministratorGuard]
                     },
-                    {
-                        path: 'detail/:id',
-                        component: ClinicDetailComponent
-                    }
                 ]
             },
             {
@@ -154,7 +157,6 @@ export const routes: Routes = [
             {
                 path: 'donation-detail/:id',
                 component: DonationDetailComponent,
-                canActivate: [AdministratorGuard]
             },
             {
                 path: 'blood-withdrawal',
@@ -173,7 +175,13 @@ export const routes: Routes = [
             },
             {
                 path: 'my-donations',
-                component: UserDonationHistoryComponent
+                component: UserDonationHistoryComponent,
+                canActivate: [UserGuard]
+            },
+            {
+                path: 'my-benefits',
+                component: BenefitListComponent,
+                canActivate: [UserGuard]
             },
             {
                 path: 'donation-location',
