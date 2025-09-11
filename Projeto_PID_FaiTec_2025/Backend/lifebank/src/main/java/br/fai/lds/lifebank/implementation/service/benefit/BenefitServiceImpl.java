@@ -85,4 +85,24 @@ public class BenefitServiceImpl implements BenefitService {
 
         return benefits;
     }
+
+    @Override
+    public List<BenefitModel> findByDonorCpf(String cpf) {
+        if (cpf == null) {
+            return new ArrayList<>();
+        }
+
+        List<BenefitModel> benefits = benefitDao.findByDonorCpf(cpf);
+
+        return benefits;
+    }
+
+    @Override
+    public void updateBenefitStatus(int id) {
+        if (id <= 0) {
+            return;
+        }
+
+        benefitDao.updateBenefitStatus(id);
+    }
 }
