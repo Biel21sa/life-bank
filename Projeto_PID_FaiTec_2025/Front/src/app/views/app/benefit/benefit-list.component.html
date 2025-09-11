@@ -1,0 +1,99 @@
+<div class="benefits-container">
+  <div class="header-section">
+    <h1>Meus Benefícios</h1>
+    <p>Acompanhe seus benefícios e recompensas por suas doações</p>
+  </div>
+
+  <!-- Cards de Estatísticas -->
+  <div class="stats-section">
+    <div class="stats-grid">
+      <mat-card class="stat-card">
+        <div class="stat-icon">
+          <mat-icon>card_giftcard</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number">{{getTotalBenefits()}}</div>
+          <div class="stat-label">Total de Benefícios</div>
+        </div>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <div class="stat-icon">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number">{{getAvailableBenefits()}}</div>
+          <div class="stat-label">Disponíveis</div>
+        </div>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <div class="stat-icon">
+          <mat-icon>attach_money</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number">R$ {{getTotalValue().toFixed(2)}}</div>
+          <div class="stat-label">Valor Total Disponível</div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filter-section">
+    <mat-card class="filter-card">
+      <mat-card-content>
+        <mat-form-field appearance="outline">
+          <mat-label>Filtrar por Status</mat-label>
+          <mat-select [(value)]="selectedFilter" (selectionChange)="onFilterChange()">
+            <mat-option *ngFor="let option of filterOptions" [value]="option.value">
+              {{option.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Lista de Benefícios -->
+  <div class="benefits-section">
+    <h2>Lista de Benefícios</h2>
+    
+    <div *ngIf="loading" class="loading-container">
+      <mat-icon>hourglass_empty</mat-icon>
+      <p>Carregando benefícios...</p>
+    </div>
+
+    <div *ngIf="!loading && filteredBenefits.length === 0" class="empty-state">
+      <mat-icon>inbox</mat-icon>
+      <h3>Nenhum benefício encontrado</h3>
+      <p>Não há benefícios para o filtro selecionado.</p>
+    </div>
+
+    <div class="benefits-grid" *ngIf="!loading && filteredBenefits.length > 0">
+      <mat-card class="benefit-card" *ngFor="let benefit of filteredBenefits">
+        <div class="card-header">
+          <div class="amount-section">
+            <div class="amount-value">R$ {{benefit.amount.toFixed(2)}}</div>
+            <div class="amount-label">Valor do Benefício</div>
+          </div>
+          <div class="status-badge" [class]="'status-' + getBenefitStatus(benefit)">
+            <mat-icon>{{getBenefitStatus(benefit) === 'available' ? 'check_circle' : getBenefitStatus(benefit) === 'used' ? 'done' : 'schedule'}}</mat-icon>
+            <span>{{getStatusText(getBenefitStatus(benefit))}}</span>
+          </div>
+        </div>
+        
+        <mat-card-content>
+          <div class="description-section">
+            <h4>{{benefit.description}}</h4>
+          </div>
+          
+          <div class="expiry-section">
+            <mat-icon>schedule</mat-icon>
+            <span>Válido até {{benefit.expirationDate | date:'dd/MM/yyyy'}}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
