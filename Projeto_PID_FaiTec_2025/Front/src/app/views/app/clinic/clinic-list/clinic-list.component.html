@@ -30,7 +30,7 @@
             <mat-icon matSuffix>search</mat-icon>
           </mat-form-field>
         </div>
-        <div class="action-buttons">
+        <div *ngIf="isAdministrator()" class="action-buttons">
           <button mat-raised-button color="primary" routerLink="/clinic/create">
             <mat-icon>add</mat-icon>
             Nova Clínica
@@ -87,10 +87,12 @@
                   matTooltip="Visualizar">
                   <mat-icon>visibility</mat-icon>
                 </button>
-                <button mat-icon-button color="accent" [routerLink]="['/clinic/edit', clinic.id]" matTooltip="Editar">
+                <button mat-icon-button color="accent" *ngIf="isAdministrator()"
+                  [routerLink]="['/clinic/edit', clinic.id]" matTooltip="Editar">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="warn" (click)="deleteClinic(clinic.id!)" matTooltip="Excluir">
+                <button mat-icon-button color="warn" *ngIf="isAdministrator()" (click)="deleteClinic(clinic.id!)"
+                  matTooltip="Excluir">
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>
