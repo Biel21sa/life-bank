@@ -121,68 +121,110 @@
   transition: all 0.3s ease;
 }
 
-.donation-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(25, 118, 210, 0.15);
+.donation-card {
+  cursor: pointer;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(25, 118, 210, 0.12);
+  border: none;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  background: white;
 }
 
-.donation-header {
+.donation-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(25, 118, 210, 0.2);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+  color: white;
+  padding: 1.5rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
 }
 
-.donation-date {
+.date-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.date-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.date-year {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+.quantity-badge {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #1976d2;
-  font-weight: 500;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1rem;
+  border-radius: 25px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
 }
 
-.donation-date mat-icon {
+.quantity-badge mat-icon {
   font-size: 1.2rem;
   width: 1.2rem;
   height: 1.2rem;
 }
 
-.donation-details {
+mat-card-content {
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
-.detail-item {
+.location-section {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 1rem;
 }
 
-.detail-item mat-icon {
+.location-section mat-icon {
   color: #1976d2;
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.location-section h4 {
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.action-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #1976d2;
+  font-weight: 500;
+  padding: 1rem;
+  background: #f8faff;
+  border-radius: 12px;
+  border-left: 4px solid #1976d2;
+}
+
+.action-section mat-icon {
   font-size: 1.3rem;
   width: 1.3rem;
   height: 1.3rem;
-  margin-top: 0.1rem;
-}
-
-.detail-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.detail-label {
-  font-size: 0.85rem;
-  color: #666;
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-}
-
-.detail-value {
-  color: #333;
-  font-weight: 500;
 }
 
 @media (max-width: 768px) {
@@ -206,9 +248,15 @@
     grid-template-columns: 1fr;
   }
   
-  .donation-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+  .card-header {
+    padding: 1.25rem 1.5rem;
+  }
+  
+  .date-value {
+    font-size: 1.5rem;
+  }
+  
+  mat-card-content {
+    padding: 1.5rem;
   }
 }

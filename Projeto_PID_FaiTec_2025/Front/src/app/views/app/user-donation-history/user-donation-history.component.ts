@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 import { Donation } from '../../../domain/model/donation';
 import { AuthenticationService } from '../../../services/security/authentication.service';
@@ -30,7 +31,8 @@ export class UserDonationHistoryComponent implements OnInit {
   constructor(
     private donationReadService: DonationReadService,
     private authService: AuthenticationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -61,5 +63,9 @@ export class UserDonationHistoryComponent implements OnInit {
   getTotalQuantity(): number {
     return this.donations
       .reduce((total, donation) => total + (donation.quantity || 0), 0);
+  }
+
+  viewDonationDetails(donationId: string) {
+    this.router.navigate(['/donation-detail', donationId]);
   }
 }
