@@ -78,4 +78,9 @@ public class BenefitFakeDaoImpl implements BenefitDao {
             }
         }
     }
+
+    @Override
+    public List<BenefitModel> findByUserId(int userId) {
+        return null;
+    }
 }
