@@ -16,6 +16,6 @@ export class DonorReadService {
     }
 
     findById(id: string): Observable<Donor> {
-        return this.http.get<Donor>(`${environment.api_endpoint}/donation-location/${id}`);
+        return this.http.get<Donor>(`${environment.api_endpoint}/donor/${id}`);
     }
 }
