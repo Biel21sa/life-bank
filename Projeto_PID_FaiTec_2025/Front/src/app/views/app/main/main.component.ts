@@ -56,6 +56,10 @@ export class MainComponent {
     return this.authenticationService.isAdministrator();
   }
 
+  isUser(): boolean {
+    return this.authenticationService.isUser();
+  }
+
   public logout() {
     console.log('logout clicado');
     this.authenticationService.logout();
