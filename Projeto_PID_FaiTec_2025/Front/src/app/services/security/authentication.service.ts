@@ -111,6 +111,14 @@ export class AuthenticationService {
     }
   }
 
+  isClinic(): boolean {
+    try {
+      return this.getAuthenticatedUserRole() === 'CLINIC';
+    } catch {
+      return false;
+    }
+  }
+
   getDonationLocationId(): string | null {
     return localStorage.getItem('donationLocationId');
   }
