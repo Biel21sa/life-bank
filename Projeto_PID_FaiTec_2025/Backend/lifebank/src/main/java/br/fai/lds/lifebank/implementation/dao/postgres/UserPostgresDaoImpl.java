@@ -113,7 +113,7 @@ public class UserPostgresDaoImpl implements UserDao {
         final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                 "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
                 "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
-                "d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
+                "d.id as donor_id, d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
                 "FROM user_model u " +
                 "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
                 "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
@@ -146,7 +146,7 @@ public class UserPostgresDaoImpl implements UserDao {
         final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                 "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
                 "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
-                "d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
+                "d.id as donor_id, d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
                 "FROM user_model u " +
                 "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
                 "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
@@ -284,7 +284,7 @@ public class UserPostgresDaoImpl implements UserDao {
     }
 
     private void insertClinic(int userId, String name, String cnpj, String street, String number, String neighborhood,
-            String postalCode, int municipalityId) throws SQLException {
+                              String postalCode, int municipalityId) throws SQLException {
         String sql = "INSERT INTO clinic (name, cnpj, street, number, neighborhood, postal_code, municipality_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, name);
@@ -380,29 +380,29 @@ public class UserPostgresDaoImpl implements UserDao {
     public List<UserModel> findByRole(String role) {
         final List<UserModel> users = new ArrayList<>();
         String sql;
-        
+
         if ("USER".equals(role)) {
             sql = "SELECT u.*, d.blood_type as donor_blood_type, d.id as donor_id, d.gender, d.last_donation_date, " +
-                  "CASE " +
-                  "WHEN (d.gender = 'MASCULINO' AND (d.last_donation_date IS NULL OR d.last_donation_date <= CURRENT_DATE - INTERVAL '60 days')) " +
-                  "OR (d.gender = 'FEMININO' AND (d.last_donation_date IS NULL OR d.last_donation_date <= CURRENT_DATE - INTERVAL '90 days')) " +
-                  "THEN TRUE ELSE FALSE END AS apto " +
-                  "FROM user_model u " +
-                  "INNER JOIN donor d ON u.id = d.user_id " +
-                  "WHERE u.role = ?";
+                    "CASE " +
+                    "WHEN (d.gender = 'MASCULINO' AND (d.last_donation_date IS NULL OR d.last_donation_date <= CURRENT_DATE - INTERVAL '60 days')) " +
+                    "OR (d.gender = 'FEMININO' AND (d.last_donation_date IS NULL OR d.last_donation_date <= CURRENT_DATE - INTERVAL '90 days')) " +
+                    "THEN TRUE ELSE FALSE END AS apto " +
+                    "FROM user_model u " +
+                    "INNER JOIN donor d ON u.id = d.user_id " +
+                    "WHERE u.role = ?";
         } else if ("CLINIC".equals(role)) {
             sql = "SELECT u.*, c.name as clinic_name, c.cnpj as clinic_cnpj, c.id as clinic_id " +
-                  "FROM user_model u " +
-                  "INNER JOIN clinic c ON u.id = c.user_id " +
-                  "WHERE u.role = ?";
+                    "FROM user_model u " +
+                    "INNER JOIN clinic c ON u.id = c.user_id " +
+                    "WHERE u.role = ?";
         } else {
             sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
-                  "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
-                  "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state " +
-                  "FROM user_model u " +
-                  "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
-                  "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
-                  "WHERE u.role = ?";
+                    "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
+                    "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state " +
+                    "FROM user_model u " +
+                    "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
+                    "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
+                    "WHERE u.role = ?";
         }
 
         try {
