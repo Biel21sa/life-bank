@@ -243,12 +243,15 @@ public class DonationPostgresDaoImpl implements DonationDao {
     public List<DonationModel> findByUserId(int userId) {
         final List<DonationModel> donations = new ArrayList<>();
         final String sql =
-                "SELECT d.*, b.blood_type, u.name AS donor_name, u.cpf AS donor_cpf " +
-                        "FROM donation d " +
-                        "JOIN blood b ON d.blood_id = b.id " +
-                        "JOIN donor dr ON d.donor_id = dr.id " +
-                        "JOIN user_model u ON dr.user_id = u.id " +
-                        "WHERE u.id = ?";
+                "SELECT d.*, b.blood_type, u.name AS donor_name, u.cpf AS donor_cpf, " +
+                "dl.id as location_id, dl.name as location_name, dl.street as location_street, " +
+                "dl.number as location_number, dl.neighborhood as location_neighborhood, dl.postal_code as location_postal_code " +
+                "FROM donation d " +
+                "JOIN blood b ON d.blood_id = b.id " +
+                "JOIN donor dr ON d.donor_id = dr.id " +
+                "JOIN user_model u ON dr.user_id = u.id " +
+                "JOIN donation_location dl ON d.donation_location_id = dl.id " +
+                "WHERE u.id = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -256,7 +259,7 @@ public class DonationPostgresDaoImpl implements DonationDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                DonationModel donation = mapResultSetToDonationModelWithDonor(resultSet);
+                DonationModel donation = mapResultSetToDonationModelWithDonorAndLocation(resultSet);
                 donations.add(donation);
             }
 
@@ -450,6 +453,32 @@ public class DonationPostgresDaoImpl implements DonationDao {
         donation.setDonationLocationId(rs.getInt("donation_location_id"));
         donation.setDonorName(rs.getString("donor_name"));
         donation.setDonorCpf(rs.getString("donor_cpf"));
+
+        return donation;
+    }
+
+    private DonationModel mapResultSetToDonationModelWithDonorAndLocation(ResultSet rs) throws SQLException {
+        DonationModel donation = new DonationModel();
+
+        donation.setId(rs.getInt("id"));
+        donation.setBloodType(rs.getString("blood_type"));
+        donation.setQuantity(rs.getDouble("quantity"));
+        donation.setCollectionDate(rs.getDate("collection_date").toLocalDate());
+        donation.setExpirationDate(rs.getDate("expiration_date").toLocalDate());
+        donation.setDonorId(rs.getInt("donor_id"));
+        donation.setDonationLocationId(rs.getInt("donation_location_id"));
+        donation.setDonorName(rs.getString("donor_name"));
+        donation.setDonorCpf(rs.getString("donor_cpf"));
+
+        // Criar objeto DonationLocationModel
+        DonationLocationModel location = new DonationLocationModel();
+        location.setId(rs.getInt("location_id"));
+        location.setName(rs.getString("location_name"));
+        location.setStreet(rs.getString("location_street"));
+        location.setNumber(rs.getInt("location_number"));
+        location.setNeighborhood(rs.getString("location_neighborhood"));
+        location.setPostalCode(rs.getString("location_postal_code"));
+        donation.setDonationLocation(location);
 
         return donation;
     }
