@@ -7,6 +7,9 @@ import { Home } from './components/account/home/home';
 import { Menu } from './components/account/menu/menu';
 import { Charts } from './components/account/charts/charts';
 import { Profile } from './components/account/profile/profile';
+import { MenuUser } from './components/account/menu-user/menu-user';
+import { Clinics } from './components/account/clinics/clinics';
+import { NotFound } from './components/not-found/not-found';
 
 export const routes: Routes = [
     {
@@ -40,9 +43,23 @@ export const routes: Routes = [
             {
                 path: "profile",
                 component: Profile
+            },
+            {
+                path: "user", 
+                component: MenuUser
+                /*ESTA ROTA SERA REMOVIDA. Ela apenas foi feita para desenvolvimento
+                da tela e subistituira a rota vazia quando o usuário for cliente*/
+            },
+            {
+                path: "clinics",
+                component: Clinics
             }
             
         ]
     },
+    {
+        path: '**',
+        component: NotFound        
+    }
     
 ];

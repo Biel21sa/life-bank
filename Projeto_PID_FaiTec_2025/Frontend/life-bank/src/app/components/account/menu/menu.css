@@ -19,6 +19,8 @@
         color: white;
         font-weight: 200;
         padding: 1.5%;
+        font-size: 3rem;
+        transform: translateY(60%);
 
         >b{
             font-weight: 600;
@@ -96,6 +98,6 @@ h2{
 
 body{ /*route transition*/
     animation-name: fade-in;
-	animation-duration: 250ms;
-	animation-timing-function: ease-out;
+	animation-duration: 300ms;
+	animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1);
 }

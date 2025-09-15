@@ -67,6 +67,18 @@ export class Home {
       route: "database",
       isActive: signal(false)
     },
+    {
+      name: "Menu - cliente",
+      icon: fontawesome.faHouseUser,
+      route: "user",
+      isActive: signal(false)
+    },
+    {
+      name: "Clínicas",
+      icon: fontawesome.faHospital,
+      route: "clinics",
+      isActive: signal(false)
+    },
   ]
   
   isCollapsed = signal(true);
