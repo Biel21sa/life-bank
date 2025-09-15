@@ -1,5 +1,5 @@
 import { Component, computed, signal, viewChild } from '@angular/core';
-import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
@@ -37,16 +37,16 @@ import { CommonModule } from '@angular/common';
     CommonModule,
   ],
   providers: [
-    provideIcons({phosphorHouseSimpleBold})
+    provideIcons({phosphorHouseSimpleBold}),
   ],
   templateUrl: './home.html',
-  styleUrl: './home.css'
+  styleUrl: './home.css',
 })
 
 export class Home {
   readonly FontAwesome = fontawesome
-
-  constructor(private router: Router){}
+  
+  constructor(private router: Router, protected route: ActivatedRoute){}
 
   navItems = [
     {

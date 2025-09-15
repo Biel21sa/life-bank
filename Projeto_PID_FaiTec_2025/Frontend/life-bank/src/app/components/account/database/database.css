@@ -51,3 +51,9 @@ input[type="text"]{
     cursor: pointer;
     box-shadow: 0px 2px 5px var(--shadow_blue);
 }
+
+body{ /*route transition*/
+    animation-name: fade-in;
+	animation-duration: 250ms;
+	animation-timing-function: ease-out;
+}

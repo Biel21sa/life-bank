@@ -92,3 +92,10 @@ h2{
         color: #ADC1CE;
     }
 }
+
+
+body{ /*route transition*/
+    animation-name: fade-in;
+	animation-duration: 250ms;
+	animation-timing-function: ease-out;
+}
