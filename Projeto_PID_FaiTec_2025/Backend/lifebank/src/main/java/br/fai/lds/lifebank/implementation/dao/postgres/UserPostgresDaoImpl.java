@@ -335,7 +335,6 @@ public class UserPostgresDaoImpl implements UserDao {
         user.setPostalCode(rs.getString("postal_code"));
         user.setDonationLocationId(rs.getInt("donation_location_id"));
 
-        // Mapear informações específicas por tipo de usuário
         if (user.getRole() == UserModel.UserRole.USER && rs.getObject("donor_blood_type") != null) {
             user.setBloodType(rs.getString("donor_blood_type"));
             if (rs.getObject("donor_id") != null) {
@@ -347,7 +346,6 @@ public class UserPostgresDaoImpl implements UserDao {
             user.setCnpj(rs.getString("clinic_cnpj"));
         }
 
-        // Mapear DonationLocation completo se existir (apenas para queries que incluem essas colunas)
         try {
             if (rs.getObject("dl_id") != null) {
                 DonationLocationModel donationLocation = new DonationLocationModel();
@@ -371,7 +369,7 @@ public class UserPostgresDaoImpl implements UserDao {
                 user.setDonationLocation(donationLocation);
             }
         } catch (SQLException e) {
-            // Colunas de DonationLocation não existem nesta query, ignorar
+            throw new RuntimeException(e);
         }
 
         return user;
