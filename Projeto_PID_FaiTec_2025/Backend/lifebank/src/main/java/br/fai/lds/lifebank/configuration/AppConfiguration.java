@@ -10,6 +10,8 @@ import br.fai.lds.lifebank.port.dao.donationlocation.DonationLocationDao;
 import br.fai.lds.lifebank.port.dao.donor.DonorDao;
 import br.fai.lds.lifebank.port.dao.municipality.MunicipalityDao;
 import br.fai.lds.lifebank.port.dao.user.UserDao;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -39,6 +41,12 @@ public class AppConfiguration {
                         .allowCredentials(true);
             }
         };
+    }
+
+    //    http://localhost:8080/swagger-ui/index.html
+    @Bean
+    public OpenAPI customOpenApi() {
+        return new OpenAPI().info(new Info().title("LIFE BANK").version("0.0.1").description("API - LIFE BANK"));
     }
 
     @Bean
