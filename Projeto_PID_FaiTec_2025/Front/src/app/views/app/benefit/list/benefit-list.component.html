@@ -32,8 +32,8 @@
           <mat-icon>attach_money</mat-icon>
         </div>
         <div class="stat-content">
-          <div class="stat-number">R$ {{getTotalValue().toFixed(2)}}</div>
-          <div class="stat-label">Valor Total Disponível</div>
+          <div class="stat-number"> {{getTotalValue().toFixed(2)}}%</div>
+          <div class="stat-label">Desconto Total Disponível</div>
         </div>
       </mat-card>
     </div>
@@ -58,7 +58,7 @@
   <!-- Lista de Benefícios -->
   <div class="benefits-section">
     <h2>Lista de Benefícios</h2>
-    
+
     <div *ngIf="loading" class="loading-container">
       <mat-icon>hourglass_empty</mat-icon>
       <p>Carregando benefícios...</p>
@@ -74,20 +74,21 @@
       <mat-card class="benefit-card" *ngFor="let benefit of filteredBenefits">
         <div class="card-header">
           <div class="amount-section">
-            <div class="amount-value">R$ {{benefit.amount.toFixed(2)}}</div>
-            <div class="amount-label">Valor do Benefício</div>
+            <div class="amount-value">{{benefit.amount.toFixed(2)}}%</div>
+            <div class="amount-label">Desconto do Benefício</div>
           </div>
           <div class="status-badge" [class]="'status-' + getBenefitStatus(benefit)">
-            <mat-icon>{{getBenefitStatus(benefit) === 'available' ? 'check_circle' : getBenefitStatus(benefit) === 'used' ? 'done' : 'schedule'}}</mat-icon>
+            <mat-icon>{{getBenefitStatus(benefit) === 'available' ? 'check_circle' : getBenefitStatus(benefit) ===
+              'used' ? 'done' : 'schedule'}}</mat-icon>
             <span>{{getStatusText(getBenefitStatus(benefit))}}</span>
           </div>
         </div>
-        
+
         <mat-card-content>
           <div class="description-section">
             <h4>{{benefit.description}}</h4>
           </div>
-          
+
           <div class="expiry-section">
             <mat-icon>schedule</mat-icon>
             <span>Válido até {{benefit.expirationDate | date:'dd/MM/yyyy'}}</span>
