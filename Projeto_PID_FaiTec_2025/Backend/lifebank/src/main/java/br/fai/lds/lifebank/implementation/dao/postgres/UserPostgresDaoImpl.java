@@ -341,6 +341,7 @@ public class UserPostgresDaoImpl implements UserDao {
             if (rs.getObject("donor_id") != null) {
                 user.setDonorId(rs.getInt("donor_id"));
             }
+            user.setApto(rs.getBoolean("apto"));
         } else if (user.getRole() == UserModel.UserRole.CLINIC && rs.getObject("clinic_name") != null) {
             user.setNameClinic(rs.getString("clinic_name"));
             user.setCnpj(rs.getString("clinic_cnpj"));
