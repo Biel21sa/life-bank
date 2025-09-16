@@ -54,7 +54,7 @@ VALUES
 
 INSERT INTO benefit (amount, expiration_date, description, used, donor_id, donation_id)
 VALUES
-(100.00, CURRENT_DATE + INTERVAL '60 days', 'Desconto em exames', FALSE, 1, 1);
+(30.00, CURRENT_DATE + INTERVAL '60 days', 'Desconto em exames', FALSE, 1, 1);
 
 INSERT INTO notification (message, donor_id)
 VALUES
@@ -90,10 +90,10 @@ INSERT INTO donation (quantity, collection_date, expiration_date, donor_id, dona
 (0.45, '2025-08-05', '2025-09-04', 5, 1, 5);
 
 INSERT INTO benefit (amount, expiration_date, description, used, donor_id, donation_id) VALUES
-(100.00, '2025-05-15', 'Desconto em farmácias conveniadas', FALSE, 2, 2),
-(80.00, '2025-08-10', 'Check-up gratuito', FALSE, 3, 3),
-(120.00, '2025-06-20', 'Isenção em exames laboratoriais', FALSE, 4, 4),
-(90.00, '2025-10-05', 'Cartão alimentação', FALSE, 5, 5);
+(30.00, '2025-05-15', 'Desconto em farmácias conveniadas', FALSE, 2, 2),
+(30.00, '2025-08-10', 'Desconto em exames', FALSE, 3, 3),
+(20.00, '2025-06-20', 'Desconto em exames laboratoriais', FALSE, 4, 4),
+(30.00, '2025-10-05', 'Desconto em exames', FALSE, 5, 5);
 
 INSERT INTO notification (message, donor_id) VALUES
 ('Obrigado por doar, Ana! Sua contribuição salva vidas.', 2),

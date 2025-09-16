@@ -409,7 +409,7 @@ public class DonationPostgresDaoImpl implements DonationDao {
         String sql = "INSERT INTO benefit(amount, expiration_date, description, used, donation_id, donor_id) " +
                 "VALUES (?, ?, ?, FALSE, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setBigDecimal(1, java.math.BigDecimal.valueOf(50.00)); // Valor padrão do benefício
+            stmt.setBigDecimal(1, java.math.BigDecimal.valueOf(30.00)); // Valor padrão do benefício
             stmt.setDate(2, java.sql.Date.valueOf(LocalDate.now().plusMonths(6))); // Expira em 6 meses
             stmt.setString(3, "Benefício por doação de sangue");
             stmt.setInt(4, donationId);
