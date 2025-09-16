@@ -5,10 +5,7 @@ import br.fai.lds.lifebank.domain.MunicipalityModel;
 import br.fai.lds.lifebank.domain.UserModel;
 import br.fai.lds.lifebank.port.dao.user.UserDao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -340,14 +337,16 @@ public class UserPostgresDaoImpl implements UserDao {
             if (rs.getObject("donor_id") != null) {
                 user.setDonorId(rs.getInt("donor_id"));
             }
-            user.setApto(rs.getBoolean("apto"));
+            if (hasColumn(rs, "apto")) {
+                user.setApto(rs.getBoolean("apto"));
+            }
         } else if (user.getRole() == UserModel.UserRole.CLINIC && rs.getObject("clinic_name") != null) {
             user.setNameClinic(rs.getString("clinic_name"));
             user.setCnpj(rs.getString("clinic_cnpj"));
         }
 
         try {
-            if (rs.getObject("dl_id") != null) {
+            if (hasColumn(rs, "dl_id") && rs.getObject("dl_id") != null) {
                 DonationLocationModel donationLocation = new DonationLocationModel();
                 donationLocation.setId(rs.getInt("dl_id"));
                 donationLocation.setName(rs.getString("dl_name"));
@@ -394,7 +393,7 @@ public class UserPostgresDaoImpl implements UserDao {
                     "FROM user_model u " +
                     "INNER JOIN clinic c ON u.id = c.user_id " +
                     "WHERE u.role = ?";
-        } else {
+        } else  {
             sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                     "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
                     "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state " +
@@ -421,4 +420,16 @@ public class UserPostgresDaoImpl implements UserDao {
             throw new RuntimeException(e);
         }
     }
+
+    private boolean hasColumn(ResultSet rs, String columnName) throws SQLException {
+        ResultSetMetaData metaData = rs.getMetaData();
+        int columnCount = metaData.getColumnCount();
+        for (int i = 1; i <= columnCount; i++) {
+            if (columnName.equalsIgnoreCase(metaData.getColumnLabel(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
