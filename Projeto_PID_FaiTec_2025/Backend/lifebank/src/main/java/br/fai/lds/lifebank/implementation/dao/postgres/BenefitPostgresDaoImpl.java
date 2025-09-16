@@ -23,27 +23,115 @@ public class BenefitPostgresDaoImpl implements BenefitDao {
 
     @Override
     public int create(BenefitModel entity) {
-        return 0;
+        final String sql = "INSERT INTO benefit (amount, expiration_date, description, donation_id, donor_id, used) " +
+                "VALUES (?, ?, ?, ?, ?, FALSE) RETURNING id";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setBigDecimal(1, java.math.BigDecimal.valueOf(entity.getAmount()));
+            ps.setDate(2, java.sql.Date.valueOf(entity.getExpirationDate()));
+            ps.setString(3, entity.getDescription());
+            ps.setInt(4, entity.getDonationId());
+            ps.setInt(5, entity.getDonorId());
+
+            ResultSet rs = ps.executeQuery();
+            int generatedId = 0;
+            if (rs.next()) {
+                generatedId = rs.getInt("id");
+            }
+
+            rs.close();
+            ps.close();
+            return generatedId;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao criar benefício", e);
+        }
     }
 
     @Override
     public void delete(int id) {
+        final String sql = "DELETE FROM benefit WHERE id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            int rows = ps.executeUpdate();
+            ps.close();
 
+            if (rows == 0) {
+                logger.warning("Nenhum benefício encontrado para deletar com ID: " + id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar benefício com ID: " + id, e);
+        }
     }
 
     @Override
     public BenefitModel findByid(int id) {
-        return null;
+        final String sql = "SELECT * FROM benefit WHERE id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            BenefitModel benefit = null;
+            if (rs.next()) {
+                benefit = mapResultSetToBenefitModel(rs);
+            }
+
+            rs.close();
+            ps.close();
+            return benefit;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar benefício com ID: " + id, e);
+        }
     }
 
     @Override
     public List<BenefitModel> findAll() {
-        return List.of();
+        final List<BenefitModel> benefits = new ArrayList<>();
+        final String sql = "SELECT * FROM benefit";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                BenefitModel benefit = mapResultSetToBenefitModel(rs);
+                benefits.add(benefit);
+            }
+
+            rs.close();
+            ps.close();
+            return benefits;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar todos os benefícios", e);
+        }
     }
 
     @Override
     public void update(int id, BenefitModel entity) {
+        final String sql = "UPDATE benefit SET amount = ?, expiration_date = ?, description = ?, donation_id = ?, donor_id = ?, used = ? " +
+                "WHERE id = ?";
 
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setBigDecimal(1, java.math.BigDecimal.valueOf(entity.getAmount()));
+            ps.setDate(2, java.sql.Date.valueOf(entity.getExpirationDate()));
+            ps.setString(3, entity.getDescription());
+            ps.setInt(4, entity.getDonationId());
+            ps.setInt(5, entity.getDonorId());
+            ps.setBoolean(6, entity.isUsed());
+            ps.setInt(7, id);
+
+            int rows = ps.executeUpdate();
+            ps.close();
+
+            if (rows == 0) {
+                throw new RuntimeException("Nenhum benefício encontrado para atualizar com ID: " + id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar benefício com ID: " + id, e);
+        }
     }
 
     @Override
