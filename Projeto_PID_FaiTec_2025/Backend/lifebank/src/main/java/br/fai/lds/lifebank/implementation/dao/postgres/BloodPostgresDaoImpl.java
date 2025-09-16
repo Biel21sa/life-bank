@@ -2,7 +2,6 @@ package br.fai.lds.lifebank.implementation.dao.postgres;
 
 import br.fai.lds.lifebank.domain.BloodModel;
 import br.fai.lds.lifebank.domain.dto.UpdateBloodsDto;
-import br.fai.lds.lifebank.domain.enuns.BloodType;
 import br.fai.lds.lifebank.port.dao.blood.BloodDao;
 
 import java.sql.Connection;
@@ -24,18 +23,109 @@ public class BloodPostgresDaoImpl implements BloodDao {
     }
 
     @Override
-    public BloodModel findByType(BloodType bloodType) {
-        return null;
+    public BloodModel findByType(String bloodType) {
+        final String sql = "SELECT * FROM blood WHERE blood_type = ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, bloodType);
+            ResultSet rs = ps.executeQuery();
+
+            BloodModel blood = null;
+            if (rs.next()) {
+                blood = mapResultSetToBloodModel(rs);
+            }
+
+            rs.close();
+            ps.close();
+            return blood;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar sangue do tipo: " + bloodType, e);
+        }
     }
 
     @Override
     public int create(BloodModel entity) {
-        return 0;
+        final String sql = "INSERT INTO blood (blood_type, quantity) VALUES (?, ?) RETURNING id";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, entity.getBloodType());
+            ps.setBigDecimal(2, java.math.BigDecimal.valueOf(entity.getQuantity()));
+
+            ResultSet rs = ps.executeQuery();
+            int generatedId = 0;
+            if (rs.next()) {
+                generatedId = rs.getInt("id");
+            }
+
+            rs.close();
+            ps.close();
+            return generatedId;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao criar registro de sangue", e);
+        }
     }
 
     @Override
     public void delete(int id) {
+        final String sql = "DELETE FROM blood WHERE id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
 
+            int rows = ps.executeUpdate();
+            ps.close();
+
+            if (rows == 0) {
+                throw new RuntimeException("Nenhum registro de sangue encontrado com ID: " + id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar registro de sangue com ID: " + id, e);
+        }
+    }
+
+    @Override
+    public List<BloodModel> findAll() {
+        final List<BloodModel> bloodList = new ArrayList<>();
+        final String sql = "SELECT * FROM blood";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                BloodModel blood = mapResultSetToBloodModel(rs);
+                bloodList.add(blood);
+            }
+
+            rs.close();
+            ps.close();
+            return bloodList;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar todos os registros de sangue", e);
+        }
+    }
+
+    @Override
+    public void update(int id, BloodModel entity) {
+        final String sql = "UPDATE blood SET blood_type = ?, quantity = ? WHERE id = ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, entity.getBloodType());
+            ps.setBigDecimal(2, java.math.BigDecimal.valueOf(entity.getQuantity()));
+            ps.setInt(3, id);
+
+            int rows = ps.executeUpdate();
+            ps.close();
+
+            if (rows == 0) {
+                throw new RuntimeException("Nenhum registro de sangue encontrado para atualizar com ID: " + id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar registro de sangue com ID: " + id, e);
+        }
     }
 
     @Override
@@ -57,16 +147,6 @@ public class BloodPostgresDaoImpl implements BloodDao {
             throw new RuntimeException(e);
         }
         return null;
-    }
-
-    @Override
-    public List<BloodModel> findAll() {
-        return List.of();
-    }
-
-    @Override
-    public void update(int id, BloodModel entity) {
-
     }
 
     @Override

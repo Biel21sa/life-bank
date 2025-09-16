@@ -78,7 +78,7 @@ public class BloodServiceImpl implements BloodService {
     }
 
     @Override
-    public BloodModel findByType(BloodType bloodType) {
+    public BloodModel findByType(String bloodType) {
         if (bloodType == null) {
             return null;
         }
