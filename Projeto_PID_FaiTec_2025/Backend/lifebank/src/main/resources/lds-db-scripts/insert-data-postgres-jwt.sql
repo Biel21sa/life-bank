@@ -11,15 +11,15 @@ VALUES
 
 INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, donation_location_id)
 VALUES
-('João Admin', 'ADMINISTRATOR', '00000000000', 'admin@example.com', '(11) 99999-0000', crypt(crypt('aa', gen_salt('bf')), gen_salt('bf')), 'Av. Central', '100', 'Centro', '01000-000', 1);
+('João Admin', 'ADMINISTRATOR', '00000000000', 'admin@example.com', '(11) 99999-0000', crypt('aa', gen_salt('bf')), 'Av. Central', '100', 'Centro', '01000-000', 1);
 
 INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, donation_location_id)
 VALUES
-('Maria Doadora', 'USER', '11111111111', 'maria@example.com', '(11) 98888-1111', crypt(crypt('aa', gen_salt('bf')), gen_salt('bf')), 'Rua das Flores', '200', 'Jardim', '13000-000', NULL);
+('Maria Doadora', 'USER', '11111111111', 'maria@example.com', '(11) 98888-1111', crypt('aa', gen_salt('bf')), 'Rua das Flores', '200', 'Jardim', '13000-000', NULL);
 
 INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, donation_location_id)
 VALUES
-('Carlos Clínica', 'CLINIC', '22222222222', 'clinica@example.com', '(21) 97777-2222', crypt(crypt('aa', gen_salt('bf')), gen_salt('bf')), 'Rua da Saúde', '300', 'Boa Vista', '20000-000', NULL);
+('Carlos Clínica', 'CLINIC', '22222222222', 'clinica@example.com', '(21) 97777-2222', crypt('aa', gen_salt('bf')), 'Rua da Saúde', '300', 'Boa Vista', '20000-000', NULL);
 
 INSERT INTO user_model (name, role, cpf, email, phone, password, street, number, neighborhood, postal_code, donation_location_id)
 VALUES
