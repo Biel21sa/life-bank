@@ -15,7 +15,7 @@ public class ClinicFakeDaoImpl implements ClinicDao {
     private static int ID = 0;
 
     public ClinicFakeDaoImpl() {
-        ClinicModel entity1 = new ClinicModel(getNextId(), "1000.200/01", "Clínica Saúde", "Rua da perdição", "Bairro Ipiranga", 7);
+        ClinicModel entity1 = new ClinicModel(getNextId(), "1000.200/01", "Clínica Saúde", "Rua da perdição", "Bairro Ipiranga", "7");
 
         entities.add(entity1);
     }

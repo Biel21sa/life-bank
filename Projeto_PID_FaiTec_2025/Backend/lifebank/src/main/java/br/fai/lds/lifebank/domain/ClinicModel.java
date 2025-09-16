@@ -4,18 +4,21 @@ public class ClinicModel {
     private int id;
     private String cnpj;
     private String name;
-    private String address;
+    private String street;
     private String neighborhood;
-    private int number;
+    private String number;
+    private String postalCode;
+    private int municipalityId;
+    private int userId;
 
     public ClinicModel() {
     }
 
-    public ClinicModel(int id, String cnpj, String name, String address, String neighborhood, int number) {
+    public ClinicModel(int id, String cnpj, String name, String address, String neighborhood, String number) {
         this.id = id;
         this.cnpj = cnpj;
         this.name = name;
-        this.address = address;
+        this.street = address;
         this.neighborhood = neighborhood;
         this.number = number;
     }
@@ -44,12 +47,12 @@ public class ClinicModel {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getNeighborhood() {
@@ -60,11 +63,35 @@ public class ClinicModel {
         this.neighborhood = neighborhood;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public int getMunicipalityId() {
+        return municipalityId;
+    }
+
+    public void setMunicipalityId(int municipalityId) {
+        this.municipalityId = municipalityId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }
