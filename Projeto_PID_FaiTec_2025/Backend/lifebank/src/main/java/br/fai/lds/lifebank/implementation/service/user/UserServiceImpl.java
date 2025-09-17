@@ -1,22 +1,23 @@
 package br.fai.lds.lifebank.implementation.service.user;
 
-import br.fai.lds.lifebank.domain.DonationModel;
 import br.fai.lds.lifebank.domain.UserModel;
 import br.fai.lds.lifebank.port.dao.user.UserDao;
 import br.fai.lds.lifebank.port.service.user.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -105,7 +106,7 @@ public class UserServiceImpl implements UserService {
 
         UserModel entity = userDao.findByid(id);
 
-        if (!Objects.equals(entity.getPassword(), oldPassword) || !isPassWordInvalid(newPassword)) {
+        if (!passwordEncoder.matches(oldPassword, entity.getPassword()) || isPassWordInvalid(newPassword)) {
             return false;
         }
 

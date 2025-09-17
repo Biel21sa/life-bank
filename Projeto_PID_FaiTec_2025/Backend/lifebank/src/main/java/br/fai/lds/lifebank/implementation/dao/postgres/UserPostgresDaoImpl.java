@@ -252,7 +252,7 @@ public class UserPostgresDaoImpl implements UserDao {
 
     @Override
     public boolean updatePassword(int id, String newPassword) {
-        String sql = "UPDATE user_model SET password = crypt(?, gen_salt('bf')) ; ";
+        String sql = "UPDATE user_model SET password = crypt(?, gen_salt('bf')) ";
         sql += "WHERE id = ? ; ";
 
         try {
@@ -393,7 +393,7 @@ public class UserPostgresDaoImpl implements UserDao {
                     "FROM user_model u " +
                     "INNER JOIN clinic c ON u.id = c.user_id " +
                     "WHERE u.role = ?";
-        } else  {
+        } else {
             sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                     "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
                     "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state " +

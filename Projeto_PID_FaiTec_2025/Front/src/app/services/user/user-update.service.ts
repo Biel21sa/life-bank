@@ -22,14 +22,6 @@ export class UserUpdateService {
   async updatePassword(id: string,
     oldPassword: string,
     newPassword: string): Promise<any> {
-    let userToUpdate: User = await this.userReadService.findById(id);
-    if (userToUpdate == null) {
-      throw new Error('Usuario nao encontrado');
-    }
-
-    if (oldPassword !== userToUpdate.password) {
-      throw new Error('Senha antiga invalida');
-    }
 
     let data = {
       id: id,

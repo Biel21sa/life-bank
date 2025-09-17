@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserReadService } from '../../../services/user/user-read.service';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../../services/security/authentication.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
 import { User } from '../../../domain/model/user';
@@ -52,7 +52,6 @@ export class MyProfileComponent implements OnInit {
 
   constructor(
     private userReadService: UserReadService,
-    private router: Router,
     private authenticationService: AuthenticationService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
