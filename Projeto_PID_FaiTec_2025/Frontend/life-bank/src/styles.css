@@ -8,6 +8,8 @@
     --secondary-gray: #626264;
 	--shadow_blue: rgba(40,90,185,0.3);
     --shadow_gray: rgba(105,105,105,0.4);
+
+	background-color: var(--secondary);
 }
 
 * {

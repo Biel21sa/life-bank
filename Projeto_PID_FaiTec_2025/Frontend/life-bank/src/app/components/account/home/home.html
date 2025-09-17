@@ -2,7 +2,7 @@
 
     <div class="sidebar" (mouseenter)="isCollapsed.set(false)" (mouseleave)="isCollapsed.set(true)" [ngStyle]="{'width': isCollapsed() ? '50px' : '200px'}">
         <div id="profileborder" (click)="activate('profile')" (click)="routToProfile()"
-        [ngStyle]="{'padding-right': isCollapsed() ? '5px' : '10%', 'padding-left': isCollapsed() ? '5px' : '4%'}" >
+        [ngStyle]="{'padding-right': isCollapsed() ? '5px' : '80%', 'padding-left': isCollapsed() ? '5px' : '4%'}" >
         <img src="https://marketplace.canva.com/gJly0/MAGDkMgJly0/1/tl/canva-user-profile-icon-vector.-avatar-or-person-icon.-profile-picture%2C-portrait-symbol.-MAGDkMgJly0.png">
             <span>
                 @if (!isCollapsed()) {
