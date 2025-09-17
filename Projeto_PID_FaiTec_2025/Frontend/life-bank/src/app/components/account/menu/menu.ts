@@ -8,7 +8,7 @@ import { phosphorDropSlashBold, phosphorHouseSimpleBold } from '@ng-icons/phosph
   selector: 'app-menu',
   imports: [
     FontAwesomeModule,
-    NgIcon
+    NgIcon,
   ],
   providers:[
     provideIcons({phosphorDropSlashBold})

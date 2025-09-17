@@ -1,0 +1,6 @@
+Melhorias que devem compor a entrega 6 do PIR: 
+- Diagrama de Sequencia:
+    - Corrigir o evento que está ligado a entidade "Sangue" 
+    - O que seria a Entidade Sangue?
+- Não estava com 60% do frontend implementado
+- Preencher o capítulo 5 do relatório.

@@ -63,6 +63,7 @@ main{
     place-self: center;
     width: 50%;
     height: 55%;
+    padding: 3% 0%;
     border-radius: 8px;
     box-shadow: 0px 6px 5px var(--shadow_gray);
 
@@ -116,4 +117,10 @@ select{
     >label{
         padding-right: 10%;
     }
+}
+
+body{ /*route transition*/
+    animation-name: fade-in;
+	animation-duration: 300ms;
+	animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1);
 }

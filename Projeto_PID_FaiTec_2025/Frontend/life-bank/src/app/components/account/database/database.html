@@ -1,17 +1,41 @@
-<div style="margin-top: 15%; margin-bottom: 1.5%;">
-    <button id="type"><fa-icon [icon]="FontAwesome.faUserFriends" size="2x"></fa-icon>Doadores</button>
-    <button id="type"><fa-icon [icon]="FontAwesome.faHandHoldingDroplet" size="2x"></fa-icon>Doações</button>
-</div>
-
-<input type="text" placeholder="Pesquise nome, CNPJ, ou telefone">
-
-@if (true) {
-    <div style="flex-direction: column; align-items: center;">
-        <h4>Ou</h4>
-        <button class="whitebutton"><fa-icon [icon]="FontAwesome.faPlus" size="3x"></fa-icon> Cadastrar doação manualmente</button>
+<body>
+    <div style="margin-top: 15%; margin-bottom: 1.5%;">
+        <button id="type" 
+        [ngStyle]="{'background-color': categoryQuery == 'donators' ? 'var(--primary)' : 'var(--tertiary)',
+                'color': categoryQuery == 'donators' ? 'white' : 'var(--primary)'}"
+        (click)="updateCategory('donators')"><fa-icon [icon]="FontAwesome.faUserFriends" size="2x"></fa-icon>Doadores</button>
+        
+        <button id="type" 
+        [ngStyle]="{'background-color': categoryQuery == 'donations' ? 'var(--primary)' : 'var(--tertiary)',
+                'color': categoryQuery == 'donations' ? 'white' : 'var(--primary)'}"
+        (click)="updateCategory('donations')"><fa-icon [icon]="FontAwesome.faHandHoldingDroplet" size="2x"></fa-icon>Doações</button>
     </div>
-}
-
-<div>
-
-</div>
+    
+    <input type="text" #searchBar placeholder="Pesquise nome, CNPJ, ou telefone" (keydown.enter)="updateSearch(searchBar.value)">
+    
+    @if (true) {
+        <div style="flex-direction: column; align-items: center;">
+            <h4>Ou</h4>
+            <button class="whitebutton"><fa-icon [icon]="FontAwesome.faPlus" size="3x"></fa-icon> Cadastrar doação manualmente</button>
+        </div>
+    }
+    
+    <div id="cardholder">
+        <!--@for (item of items; track $index) {}-->
+        <span class="donation card">
+            <div>
+                <h3>NOME DO DOADOR_EX...</h3>
+                <h4>AB+</h4>
+            </div>
+            <p>Última doação feita a 199 dias em NOME_CLINICA.</p>
+        </span>
+        <span class="donator card">
+            <div>
+                <h3>NOME DO DOADOR_EX...</h3>
+                <img src="checkmark_green.svg">
+            </div>
+            <p>Última atualização: 01/01/26</p>
+            <i>Anotação</i>
+        </span>
+    </div>
+</body>
