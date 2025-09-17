@@ -1,0 +1,151 @@
+.verification-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    background: linear-gradient(135deg, #f8faff 0%, #e3f2fd 100%);
+    min-height: 100vh;
+}
+
+.verification-card {
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+    border: 1px solid #e3f2fd;
+    background: white;
+    overflow: hidden;
+}
+
+.verification-card mat-card-header {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+    color: white;
+    padding: 2rem;
+    margin: -16px -16px 24px -16px;
+}
+
+.verification-card mat-card-title {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.verification-card mat-card-subtitle {
+    opacity: 0.9;
+    font-size: 1rem;
+}
+
+.cpf-form {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+.full-width {
+    flex: 1;
+}
+
+.table-container {
+    margin: 2rem 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e3f2fd;
+    box-shadow: 0 4px 16px rgba(25, 118, 210, 0.1);
+}
+
+.benefit-table {
+    width: 100%;
+}
+
+.benefit-table th {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.benefit-table td {
+    border-bottom: 1px solid #e3f2fd;
+}
+
+.benefit-table td,
+.benefit-table th {
+    padding: 16px 20px;
+}
+
+.benefit-table tr:hover {
+    background-color: #f8faff;
+}
+
+.used {
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+.available {
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    background: #f8faff;
+    border-top: 1px solid #e3f2fd;
+}
+
+.card-actions button {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 12px 24px;
+    text-transform: none;
+}
+
+.card-actions button[mat-button] {
+    color: #1976d2;
+}
+
+.card-actions button[mat-raised-button] {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+.card-actions button[mat-raised-button]:hover {
+    box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .verification-container {
+        margin: 1rem;
+        padding: 0;
+    }
+
+    .verification-card mat-card-header {
+        padding: 1.5rem;
+    }
+
+    .verification-card mat-card-title {
+        font-size: 1.5rem;
+    }
+
+    .cpf-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .card-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .card-actions button {
+        width: 100%;
+    }
+
+    .benefit-table td,
+    .benefit-table th {
+        padding: 12px 16px;
+        font-size: 0.9rem;
+    }
+}

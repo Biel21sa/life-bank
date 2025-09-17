@@ -51,7 +51,7 @@ public class BloodFakeDaoImpl implements BloodDao {
     }
 
     @Override
-    public BloodModel findByType(BloodType bloodType) {
+    public BloodModel findByType(String bloodType) {
         for (BloodModel entity : entities) {
             if (Objects.equals(entity.getBloodType(), bloodType)) {
                 return entity;

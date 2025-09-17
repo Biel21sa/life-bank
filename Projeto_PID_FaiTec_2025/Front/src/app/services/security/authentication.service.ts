@@ -42,8 +42,12 @@ export class AuthenticationService {
     localStorage.setItem('email', user.email);
     localStorage.setItem('password', user.password);
     localStorage.setItem('role', user.role);
+    localStorage.setItem('id', user.id);
     if (user.role === 'ADMINISTRATOR' && user.donationLocationId) {
       localStorage.setItem('donationLocationId', user.donationLocationId.toString());
+    }
+    if (user.role === 'USER' && user.donorId) {
+      localStorage.setItem('donorId', user.donorId.toString());
     }
   }
 
@@ -67,6 +71,22 @@ export class AuthenticationService {
     return role;
   }
 
+  getAuthenticatedUserId(): string {
+    let id = localStorage.getItem('id');
+    if (id == null) {
+      throw new Error('Id não encontrado');
+    }
+    return id;
+  }
+
+  getAuthenticatedUserDonorId(): string {
+    let donorId = localStorage.getItem('donorId');
+    if (donorId == null) {
+      throw new Error('DonorId não encontrado');
+    }
+    return donorId;
+  }
+
   isSystemAdmin(): boolean {
     try {
       return this.getAuthenticatedUserRole() === 'SYSTEM';
@@ -78,6 +98,22 @@ export class AuthenticationService {
   isAdministrator(): boolean {
     try {
       return this.getAuthenticatedUserRole() === 'ADMINISTRATOR';
+    } catch {
+      return false;
+    }
+  }
+
+  isUser(): boolean {
+    try {
+      return this.getAuthenticatedUserRole() === 'USER';
+    } catch {
+      return false;
+    }
+  }
+
+  isClinic(): boolean {
+    try {
+      return this.getAuthenticatedUserRole() === 'CLINIC';
     } catch {
       return false;
     }

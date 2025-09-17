@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
 import { ToastrService } from 'ngx-toastr';
 import { DonationReadService } from '../../../../services/donation/donation-read.service';
+import { AuthenticationService } from '../../../../services/security/authentication.service';
 
 @Component({
   selector: 'app-donation-detail',
@@ -29,6 +30,7 @@ export class DonationDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private donationReadService: DonationReadService,
+    private authenticationService: AuthenticationService,
     private toastr: ToastrService
   ) { }
 
@@ -67,7 +69,14 @@ export class DonationDetailComponent implements OnInit {
     return classes[bloodType] || '';
   }
 
+  getRole(): string {
+    return this.authenticationService.getAuthenticatedUserRole() || '';
+  }
+
   goBack() {
-    this.router.navigate(['/donation-history']);
+    if (this.getRole() === 'ADMINISTRATOR') {
+      this.router.navigate(['/donation-history']);
+    }
+    this.router.navigate(['/my-donations']);
   }
 }

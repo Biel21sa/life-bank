@@ -7,6 +7,7 @@ public class BenefitModel {
     private String description;
     private Double amount;
     private LocalDate expirationDate;
+    private boolean used;
     private int donationId;
     private int donorId;
     private DonationModel donation;
@@ -86,6 +87,14 @@ public class BenefitModel {
 
     public void setDonor(DonorModel donor) {
         this.donor = donor;
+    }
+
+    public boolean isUsed() {
+        return used;
+    }
+
+    public void setUsed(boolean used) {
+        this.used = used;
     }
 }
 

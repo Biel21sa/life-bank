@@ -14,6 +14,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Blood } from '../../../domain/model/blood';
 import { BloodReadService } from '../../../services/blood/blood-read.service';
 import { BloodUpdateService } from '../../../services/blood/blood-update.service';
+import { AuthenticationService } from '../../../services/security/authentication.service';
 
 @Component({
   selector: 'app-blood-withdrawal',
@@ -44,6 +45,7 @@ export class BloodWithdrawalComponent implements OnInit {
     private fb: FormBuilder,
     private bloodReadService: BloodReadService,
     private bloodUpdateService: BloodUpdateService,
+    private authenticationService: AuthenticationService,
     private toastr: ToastrService
   ) {
     this.withdrawalForm = this.fb.group({
@@ -52,7 +54,7 @@ export class BloodWithdrawalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.locationId = this.route.snapshot.paramMap.get('locationId') || '';
+    this.locationId = this.authenticationService.getDonationLocationId()!;
     this.loadBloodList();
   }
 
@@ -81,7 +83,7 @@ export class BloodWithdrawalComponent implements OnInit {
       this.bloodUpdateService.withdrawBlood(request).subscribe({
         next: () => {
           this.toastr.success('Retirada realizada com sucesso');
-          this.router.navigate(['/admin/blood-stock']);
+          this.router.navigate(['/blood-stock']);
         },
         error: () => this.toastr.error('Erro ao realizar retirada')
       });
@@ -89,6 +91,6 @@ export class BloodWithdrawalComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/admin-home']);
   }
 }

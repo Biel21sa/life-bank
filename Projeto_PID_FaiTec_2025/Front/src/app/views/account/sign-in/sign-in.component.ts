@@ -106,7 +106,9 @@ export class SignInComponent {
             email: value.email,
             password: credentials.password,
             role: value.role,
-            donationLocationId: String(value.donationLocationId)
+            id: String(value.id),
+            donationLocationId: String(value.donationLocationId),
+            donorId: String(value.donorId)
           };
 
           this.authenticationService.addDataToLocalStorage(user);

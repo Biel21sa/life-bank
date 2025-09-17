@@ -39,13 +39,17 @@
 
   <!-- Botões de Ação -->
   <div class="action-buttons">
-    <button mat-raised-button color="primary" (click)="openMinStockDialog()">
-      <mat-icon>trending_down</mat-icon>
-      Atualizar Estoque Mínimo
+    <button mat-raised-button color="primary" (click)="openStockLimitsDialog()">
+      <mat-icon>tune</mat-icon>
+      Atualizar Limites de Estoque
     </button>
-    <button mat-raised-button color="accent" (click)="openMaxStockDialog()">
-      <mat-icon>trending_up</mat-icon>
-      Atualizar Estoque Máximo
+    <button mat-raised-button color="warn" (click)="navigateToBloodWithdrawal()">
+      <mat-icon>remove_circle</mat-icon>
+      Retirar Sangue
+    </button>
+    <button mat-raised-button color="primary" (click)="navigateToDonationCreate()">
+      <mat-icon>add</mat-icon>
+      Registrar Doação
     </button>
   </div>
 </div>

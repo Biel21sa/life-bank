@@ -37,7 +37,7 @@ public class BloodRestController {
     }
 
     @GetMapping("/find-by-blood-type")
-    public ResponseEntity<BloodModel> getEntityByBloodType(@RequestBody final BloodType bloodType) {
+    public ResponseEntity<BloodModel> getEntityByBloodType(@RequestBody final String bloodType) {
         BloodModel entity = bloodService.findByType(bloodType);
 
         return entity == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(entity);

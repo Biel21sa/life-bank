@@ -9,10 +9,12 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.*;
+import java.util.Arrays;
 
 @Configuration
 public class PostgresConnectionManagerConfiguration {
@@ -34,6 +36,12 @@ public class PostgresConnectionManagerConfiguration {
 
     @Autowired
     private ResourceFileService resourceFileService;
+
+    private final Environment environment;
+
+    public PostgresConnectionManagerConfiguration(Environment environment) {
+        this.environment = environment;
+    }
 
     @Bean
     public DataSource dataSource() throws SQLException {
@@ -91,12 +99,20 @@ public class PostgresConnectionManagerConfiguration {
         createStatement.executeUpdate();
         createStatement.close();
 
-        final String insertDataSql = resourceFileService.read(basePath + "/insert-data-postgres.sql");
+        final String insertDataSql = resourceFileService.read(basePath + getInsertScript());
 
-        final  PreparedStatement insertStatement = connection.prepareStatement(insertDataSql);
+        final PreparedStatement insertStatement = connection.prepareStatement(insertDataSql);
         insertStatement.execute();
         insertStatement.close();
 
         return true;
+    }
+
+    public String getInsertScript() {
+        boolean isBasicProfile = Arrays.asList(environment.getActiveProfiles()).contains("basic");
+        if (isBasicProfile) {
+            return "/insert-data-postgres-basic.sql";
+        }
+        return "/insert-data-postgres-jwt.sql";
     }
 }

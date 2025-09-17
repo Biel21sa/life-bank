@@ -1,6 +1,9 @@
 package br.fai.lds.lifebank.controller;
 
 import br.fai.lds.lifebank.domain.DonationModel;
+import br.fai.lds.lifebank.domain.dto.DonationByBloodTypeDto;
+import br.fai.lds.lifebank.domain.dto.DonationEvolutionByBloodTypeDto;
+import br.fai.lds.lifebank.domain.dto.DonationEvolutionDto;
 import br.fai.lds.lifebank.port.service.donation.DonationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -78,6 +81,55 @@ public class DonationRestController {
         }
 
         List<DonationModel> entities = donationService.findByDonationLocationId(id);
+
+        return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<DonationModel>> getEntityByUserId(@PathVariable final int id) {
+        if (id == 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<DonationModel> entities = donationService.findByUserId(id);
+
+        return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
+    }
+
+    @GetMapping("/evolution/{donationLocationId}/{year}")
+    public ResponseEntity<List<DonationEvolutionDto>> getDonationEvolution(@PathVariable final int donationLocationId,
+                                                                           @PathVariable final int year) {
+        if (donationLocationId == 0 || year == 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<DonationEvolutionDto> entities = donationService.getDonationEvolution(donationLocationId, year);
+
+        return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
+    }
+
+    @GetMapping("/donations-by-blood-type/{donationLocationId}/{year}")
+    public ResponseEntity<List<DonationByBloodTypeDto>> getDonationByBloodType(@PathVariable final int donationLocationId,
+                                                                               @PathVariable final int year) {
+
+        if (donationLocationId == 0 || year == 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<DonationByBloodTypeDto> entities = donationService.getDonationByBloodType(donationLocationId, year);
+
+        return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
+    }
+
+    @GetMapping("/donation-evolution-by-type/{donationLocationId}/{year}")
+    public ResponseEntity<List<DonationEvolutionByBloodTypeDto>> getDonationEvolutionByBloodType(@PathVariable final int donationLocationId,
+                                                                                                 @PathVariable final int year) {
+
+        if (donationLocationId == 0 || year == 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<DonationEvolutionByBloodTypeDto> entities = donationService.getDonationEvolutionByBloodType(donationLocationId, year);
 
         return entities.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(entities);
     }

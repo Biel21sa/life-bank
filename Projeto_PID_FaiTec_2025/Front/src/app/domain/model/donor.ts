@@ -5,5 +5,6 @@ export interface Donor {
     bloodType: string;
     apto: boolean;
     userId: string;
+    gender: string;
     user?: User;
 }

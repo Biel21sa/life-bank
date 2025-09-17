@@ -10,7 +10,7 @@
         <mat-icon>local_hospital</mat-icon>
       </div>
       <div class="user-title-info">
-        <h2>{{ clinic.name }}</h2>
+        <h2 *ngIf="isAdministrator()">{{ clinic.name }}</h2>
         <span class="clinic-badge">
           <mat-icon>local_hospital</mat-icon>
           {{ clinic.nameClinic }}
@@ -26,7 +26,7 @@
           Informações Pessoais
         </h3>
         <div class="detail-grid">
-          <div class="detail-item">
+          <div *ngIf="isAdministrator()" class="detail-item">
             <mat-icon>person</mat-icon>
             <div class="detail-content">
               <strong>Nome Completo</strong>
@@ -40,7 +40,7 @@
               <span>{{ clinic.email }}</span>
             </div>
           </div>
-          <div class="detail-item">
+          <div *ngIf="isAdministrator()" class="detail-item">
             <mat-icon>credit_card</mat-icon>
             <div class="detail-content">
               <strong>CPF</strong>
@@ -121,7 +121,7 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-raised-button color="primary" [routerLink]="['/clinic/edit', clinic.id]">
+      <button mat-raised-button color="primary" *ngIf="isAdministrator()" [routerLink]="['/clinic/edit', clinic.id]">
         <mat-icon>edit</mat-icon>
         Editar Clínica
       </button>

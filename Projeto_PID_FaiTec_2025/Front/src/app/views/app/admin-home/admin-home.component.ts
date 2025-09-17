@@ -4,7 +4,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { AuthenticationService } from '../../../services/security/authentication.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -19,7 +18,7 @@ import { AuthenticationService } from '../../../services/security/authentication
 })
 export class AdminHomeComponent {
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) { }
+  constructor(private router: Router) { }
 
   navigateToDonors() {
     this.router.navigate(['/donor/list']);
@@ -33,11 +32,15 @@ export class AdminHomeComponent {
     this.router.navigate(['/donation-history']);
   }
 
-  getDonationLocationId(): string {
-    return this.authenticationService.getDonationLocationId()!;
+  navigateToBloodWithdrawal() {
+    this.router.navigate([`blood-withdrawal`]);
   }
 
-  navigateToBloodWithdrawal() {
-    this.router.navigate([`blood-withdrawal/${this.getDonationLocationId()}`]);
+  navigateToBloodStock() {
+    this.router.navigate(['/blood-stock']);
+  }
+
+  navigateToReports() {
+    this.router.navigate(['/reports']);
   }
 }

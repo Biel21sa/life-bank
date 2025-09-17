@@ -88,7 +88,7 @@ CREATE TABLE blood_stock (
         blood_type IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')
     ),
     minimum_stock DECIMAL(10,2) NOT NULL DEFAULT 0,
-    maximum_stock DECIMAL(10,2) NOT NULL DEFAULT 1000,
+    maximum_stock DECIMAL(10,2) NOT NULL DEFAULT 10,
     current_stock DECIMAL(10,2) NOT NULL DEFAULT 0,
     donation_location_id INTEGER NOT NULL REFERENCES donation_location(id) ON DELETE CASCADE,
     UNIQUE(blood_type, donation_location_id)

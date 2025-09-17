@@ -32,6 +32,12 @@ import { DonationHistoryComponent } from './views/app/donation/donation-history/
 import { DonationDetailComponent } from './views/app/donation/donation-detail/donation-detail.component';
 import { BloodWithdrawalComponent } from './views/app/blood-withdrawal/blood-withdrawal.component';
 import { BloodStockComponent } from './views/app/blood-stock/blood-stock.component';
+import { ReportsComponent } from './views/app/reports/reports.component';
+import { UserDonationHistoryComponent } from './views/app/user-donation-history/user-donation-history.component';
+import { UserGuard } from './guards/user.guard';
+import { BenefitListComponent } from './views/app/benefit/list/benefit-listcomponent';
+import { BenefitVerificationComponent } from './views/app/benefit/verification/benefit-verification.component';
+import { ClinicGuard } from './guards/clinic.guard';
 
 export const routes: Routes = [
     {
@@ -119,24 +125,25 @@ export const routes: Routes = [
             },
             {
                 path: 'clinic',
-                canActivate: [AdministratorGuard],
                 children: [
                     {
                         path: 'list',
                         component: ClinicListComponent
                     },
                     {
+                        path: 'detail/:id',
+                        component: ClinicDetailComponent
+                    },
+                    {
                         path: 'create',
-                        component: ClinicCreateComponent
+                        component: ClinicCreateComponent,
+                        canActivate: [AdministratorGuard]
                     },
                     {
                         path: 'edit/:id',
-                        component: ClinicEditComponent
+                        component: ClinicEditComponent,
+                        canActivate: [AdministratorGuard]
                     },
-                    {
-                        path: 'detail/:id',
-                        component: ClinicDetailComponent
-                    }
                 ]
             },
             {
@@ -152,10 +159,9 @@ export const routes: Routes = [
             {
                 path: 'donation-detail/:id',
                 component: DonationDetailComponent,
-                canActivate: [AdministratorGuard]
             },
             {
-                path: 'blood-withdrawal/:locationId',
+                path: 'blood-withdrawal',
                 component: BloodWithdrawalComponent,
                 canActivate: [AdministratorGuard]
             },
@@ -163,6 +169,26 @@ export const routes: Routes = [
                 path: 'blood-stock',
                 component: BloodStockComponent,
                 canActivate: [AdministratorGuard]
+            },
+            {
+                path: 'reports',
+                component: ReportsComponent,
+                canActivate: [AdministratorGuard]
+            },
+            {
+                path: 'my-donations',
+                component: UserDonationHistoryComponent,
+                canActivate: [UserGuard]
+            },
+            {
+                path: 'my-benefits',
+                component: BenefitListComponent,
+                canActivate: [UserGuard]
+            },
+            {
+                path: 'benefit/verification',
+                component: BenefitVerificationComponent,
+                canActivate: [ClinicGuard]
             },
             {
                 path: 'donation-location',

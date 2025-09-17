@@ -1,6 +1,9 @@
 package br.fai.lds.lifebank.implementation.service.donation;
 
 import br.fai.lds.lifebank.domain.DonationModel;
+import br.fai.lds.lifebank.domain.dto.DonationByBloodTypeDto;
+import br.fai.lds.lifebank.domain.dto.DonationEvolutionByBloodTypeDto;
+import br.fai.lds.lifebank.domain.dto.DonationEvolutionDto;
 import br.fai.lds.lifebank.port.dao.donation.DonationDao;
 import br.fai.lds.lifebank.port.service.donation.DonationService;
 import org.springframework.stereotype.Service;
@@ -92,6 +95,50 @@ public class DonationServiceImpl implements DonationService {
         }
 
         List<DonationModel> donations = donationDao.findByDonationLocationId(id);
+
+        return donations;
+    }
+
+    @Override
+    public List<DonationEvolutionDto> getDonationEvolution(int donationLocationId, int year) {
+        if (year == 0 || donationLocationId <= 0) {
+            return new ArrayList<>();
+        }
+
+        List<DonationEvolutionDto> donations = donationDao.getDonationEvolution(donationLocationId, year);
+
+        return donations;
+    }
+
+    @Override
+    public List<DonationByBloodTypeDto> getDonationByBloodType(int donationLocationId, int year) {
+        if (year == 0 || donationLocationId <= 0) {
+            return new ArrayList<>();
+        }
+
+        List<DonationByBloodTypeDto> donations = donationDao.getDonationByBloodType(donationLocationId, year);
+
+        return donations;
+    }
+
+    @Override
+    public List<DonationEvolutionByBloodTypeDto> getDonationEvolutionByBloodType(int donationLocationId, int year) {
+        if (year == 0 || donationLocationId <= 0) {
+            return new ArrayList<>();
+        }
+
+        List<DonationEvolutionByBloodTypeDto> donations = donationDao.getDonationEvolutionByBloodType(donationLocationId, year);
+
+        return donations;
+    }
+
+    @Override
+    public List<DonationModel> findByUserId(int userId) {
+        if (userId == 0) {
+            return new ArrayList<>();
+        }
+
+        List<DonationModel> donations = donationDao.findByUserId(userId);
 
         return donations;
     }

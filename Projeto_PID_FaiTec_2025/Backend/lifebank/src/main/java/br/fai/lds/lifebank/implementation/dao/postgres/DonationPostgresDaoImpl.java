@@ -4,6 +4,9 @@ import br.fai.lds.lifebank.domain.DonationLocationModel;
 import br.fai.lds.lifebank.domain.DonationModel;
 import br.fai.lds.lifebank.domain.DonorModel;
 import br.fai.lds.lifebank.domain.UserModel;
+import br.fai.lds.lifebank.domain.dto.DonationByBloodTypeDto;
+import br.fai.lds.lifebank.domain.dto.DonationEvolutionByBloodTypeDto;
+import br.fai.lds.lifebank.domain.dto.DonationEvolutionDto;
 import br.fai.lds.lifebank.port.dao.donation.DonationDao;
 
 import java.sql.Connection;
@@ -12,7 +15,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -234,6 +239,145 @@ public class DonationPostgresDaoImpl implements DonationDao {
         }
     }
 
+    @Override
+    public List<DonationModel> findByUserId(int userId) {
+        final List<DonationModel> donations = new ArrayList<>();
+        final String sql =
+                "SELECT d.*, b.blood_type, u.name AS donor_name, u.cpf AS donor_cpf, " +
+                "dl.id as location_id, dl.name as location_name, dl.street as location_street, " +
+                "dl.number as location_number, dl.neighborhood as location_neighborhood, dl.postal_code as location_postal_code " +
+                "FROM donation d " +
+                "JOIN blood b ON d.blood_id = b.id " +
+                "JOIN donor dr ON d.donor_id = dr.id " +
+                "JOIN user_model u ON dr.user_id = u.id " +
+                "JOIN donation_location dl ON d.donation_location_id = dl.id " +
+                "WHERE u.id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                DonationModel donation = mapResultSetToDonationModelWithDonorAndLocation(resultSet);
+                donations.add(donation);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            return donations;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<DonationEvolutionDto> getDonationEvolution(final int donationLocationId, final int year) {
+        final List<DonationEvolutionDto> donations = new ArrayList<>();
+        final String sql = "SELECT TO_CHAR(collection_date, 'Month') as month_name, " +
+                "SUM(quantity) as total_quantity " +
+                "FROM donation " +
+                "WHERE EXTRACT(YEAR FROM collection_date) = ? " +
+                "AND donation_location_id = ? " +
+                "GROUP BY EXTRACT(MONTH FROM collection_date), TO_CHAR(collection_date, 'Month') " +
+                "ORDER BY EXTRACT(MONTH FROM collection_date)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, year);
+            preparedStatement.setInt(2, donationLocationId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    DonationEvolutionDto evolution = new DonationEvolutionDto();
+                    evolution.setMonth(resultSet.getString("month_name").trim());
+                    evolution.setTotalLiters(resultSet.getDouble("total_quantity"));
+                    donations.add(evolution);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return donations;
+    }
+
+    @Override
+    public List<DonationByBloodTypeDto> getDonationByBloodType(int donationLocationId, int year) {
+        final List<DonationByBloodTypeDto> donations = new ArrayList<>();
+        final String sql = "SELECT b.blood_type, SUM(d.quantity) as total_quantity " +
+                "FROM donation d " +
+                "JOIN blood b ON d.blood_id = b.id " +
+                "WHERE d.donation_location_id = ? AND EXTRACT(YEAR FROM d.collection_date) = ? " +
+                "GROUP BY b.blood_type " +
+                "ORDER BY b.blood_type";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, donationLocationId);
+            preparedStatement.setInt(2, year);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                DonationByBloodTypeDto donation = new DonationByBloodTypeDto();
+                donation.setBloodType(resultSet.getString("blood_type"));
+                donation.setTotalLiters(resultSet.getDouble("total_quantity"));
+                donations.add(donation);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            return donations;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<DonationEvolutionByBloodTypeDto> getDonationEvolutionByBloodType(final int donationLocationId, final int year) {
+        final Map<String, DonationEvolutionByBloodTypeDto> monthMap = new LinkedHashMap<>();
+        final String sql = "SELECT TO_CHAR(d.collection_date, 'Month') AS month_name, " +
+                "b.blood_type, " +
+                "SUM(d.quantity) AS total_quantity " +
+                "FROM donation d " +
+                "JOIN blood b ON d.blood_id = b.id " +
+                "WHERE EXTRACT(YEAR FROM d.collection_date) = ? " +
+                "AND d.donation_location_id = ? " +
+                "GROUP BY EXTRACT(MONTH FROM d.collection_date), TO_CHAR(d.collection_date, 'Month'), b.blood_type " +
+                "ORDER BY EXTRACT(MONTH FROM d.collection_date)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, year);
+            preparedStatement.setInt(2, donationLocationId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String month = resultSet.getString("month_name").trim();
+                    String bloodType = resultSet.getString("blood_type");
+                    double totalLiters = resultSet.getDouble("total_quantity");
+
+                    // Se o mês ainda não existe, cria
+                    monthMap.computeIfAbsent(month, m -> {
+                        DonationEvolutionByBloodTypeDto dto = new DonationEvolutionByBloodTypeDto();
+                        dto.setMonth(m);
+                        dto.setData(new ArrayList<>());
+                        return dto;
+                    });
+
+                    // Adiciona os dados de tipo sanguíneo
+                    DonationByBloodTypeDto bloodDto = new DonationByBloodTypeDto();
+                    bloodDto.setBloodType(bloodType);
+                    bloodDto.setTotalLiters(totalLiters);
+
+                    monthMap.get(month).getData().add(bloodDto);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new ArrayList<>(monthMap.values());
+    }
+
+
     private int insertBlood(String bloodType, Double quantity, LocalDate expirationDate, int donorId, int donationLocationId) throws SQLException {
         String sql = "INSERT INTO blood(blood_type, quantity, expiration_date, used, donor_id, donation_location_id) VALUES (?, ?, ?, FALSE, ?, ?) RETURNING id";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -265,7 +409,7 @@ public class DonationPostgresDaoImpl implements DonationDao {
         String sql = "INSERT INTO benefit(amount, expiration_date, description, used, donation_id, donor_id) " +
                 "VALUES (?, ?, ?, FALSE, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setBigDecimal(1, java.math.BigDecimal.valueOf(50.00)); // Valor padrão do benefício
+            stmt.setBigDecimal(1, java.math.BigDecimal.valueOf(30.00)); // Valor padrão do benefício
             stmt.setDate(2, java.sql.Date.valueOf(LocalDate.now().plusMonths(6))); // Expira em 6 meses
             stmt.setString(3, "Benefício por doação de sangue");
             stmt.setInt(4, donationId);
@@ -313,6 +457,32 @@ public class DonationPostgresDaoImpl implements DonationDao {
         return donation;
     }
 
+    private DonationModel mapResultSetToDonationModelWithDonorAndLocation(ResultSet rs) throws SQLException {
+        DonationModel donation = new DonationModel();
+
+        donation.setId(rs.getInt("id"));
+        donation.setBloodType(rs.getString("blood_type"));
+        donation.setQuantity(rs.getDouble("quantity"));
+        donation.setCollectionDate(rs.getDate("collection_date").toLocalDate());
+        donation.setExpirationDate(rs.getDate("expiration_date").toLocalDate());
+        donation.setDonorId(rs.getInt("donor_id"));
+        donation.setDonationLocationId(rs.getInt("donation_location_id"));
+        donation.setDonorName(rs.getString("donor_name"));
+        donation.setDonorCpf(rs.getString("donor_cpf"));
+
+        // Criar objeto DonationLocationModel
+        DonationLocationModel location = new DonationLocationModel();
+        location.setId(rs.getInt("location_id"));
+        location.setName(rs.getString("location_name"));
+        location.setStreet(rs.getString("location_street"));
+        location.setNumber(rs.getInt("location_number"));
+        location.setNeighborhood(rs.getString("location_neighborhood"));
+        location.setPostalCode(rs.getString("location_postal_code"));
+        donation.setDonationLocation(location);
+
+        return donation;
+    }
+
     private DonationModel mapResultSetToDonationModelComplete(ResultSet rs) throws SQLException {
         DonationModel donation = new DonationModel();
 
@@ -332,7 +502,7 @@ public class DonationPostgresDaoImpl implements DonationDao {
         if (rs.getDate("last_donation_date") != null) {
             donor.setLastDonationDate(rs.getDate("last_donation_date").toLocalDate());
         }
-        
+
         UserModel user = new UserModel();
         user.setName(rs.getString("donor_name"));
         user.setEmail(rs.getString("donor_email"));
@@ -353,6 +523,4 @@ public class DonationPostgresDaoImpl implements DonationDao {
 
         return donation;
     }
-
-
 }

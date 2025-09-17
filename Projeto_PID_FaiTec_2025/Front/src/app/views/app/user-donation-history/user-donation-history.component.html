@@ -1,0 +1,84 @@
+<div class="history-container">
+  <div class="header-section">
+    <h1>Meu Histórico de Doações</h1>
+    <p>Acompanhe todas as suas contribuições para salvar vidas</p>
+  </div>
+
+  <!-- Cards de Estatísticas -->
+  <div class="stats-section">
+    <div class="stats-grid">
+      <mat-card class="stat-card">
+        <div class="stat-icon">
+          <mat-icon>favorite</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number">{{getTotalDonations()}}</div>
+          <div class="stat-label">Doações Realizadas</div>
+        </div>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <div class="stat-icon">
+          <mat-icon>bloodtype</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number">{{getTotalQuantity()}} ml</div>
+          <div class="stat-label">Volume Total Doado</div>
+        </div>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <div class="stat-icon">
+          <mat-icon>people</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number">{{getTotalDonations() * 3}}</div>
+          <div class="stat-label">Vidas Impactadas</div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Lista de Doações -->
+  <div class="donations-section">
+    <h2>Histórico</h2>
+
+    <div *ngIf="loading" class="loading-container">
+      <mat-icon>hourglass_empty</mat-icon>
+      <p>Carregando histórico...</p>
+    </div>
+
+    <div *ngIf="!loading && donations.length === 0" class="empty-state">
+      <mat-icon>inbox</mat-icon>
+      <h3>Nenhuma doação encontrada</h3>
+      <p>Você ainda não realizou nenhuma doação. Que tal começar hoje?</p>
+    </div>
+
+    <div class="donations-grid" *ngIf="!loading && donations.length > 0">
+      <mat-card class="donation-card" *ngFor="let donation of donations" (click)="viewDonationDetails(donation.id!)">
+        <div class="card-header">
+          <div class="date-section">
+            <div class="date-value">{{donation.collectionDate | date:'dd/MM'}}</div>
+            <div class="date-year">{{donation.collectionDate | date:'yyyy'}}</div>
+          </div>
+          <div class="quantity-badge">
+            <mat-icon>bloodtype</mat-icon>
+            <span>{{donation.quantity}} ml</span>
+          </div>
+        </div>
+
+        <mat-card-content>
+          <div class="location-section">
+            <mat-icon>location_on</mat-icon>
+            <h4>{{donation.donationLocation?.name || 'Local não informado'}}</h4>
+          </div>
+
+          <div class="action-section">
+            <span>Ver detalhes</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

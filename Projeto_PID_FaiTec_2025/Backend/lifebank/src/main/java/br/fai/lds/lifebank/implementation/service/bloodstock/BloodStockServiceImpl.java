@@ -2,6 +2,8 @@ package br.fai.lds.lifebank.implementation.service.bloodstock;
 
 import br.fai.lds.lifebank.domain.BloodModel;
 import br.fai.lds.lifebank.domain.BloodStockModel;
+import br.fai.lds.lifebank.domain.UserModel;
+import br.fai.lds.lifebank.domain.dto.UpdateLimitsBloodStockDto;
 import br.fai.lds.lifebank.port.dao.bloodstock.BloodStockDao;
 import br.fai.lds.lifebank.port.service.bloodstock.BloodStockService;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,14 @@ public class BloodStockServiceImpl implements BloodStockService {
         List<BloodStockModel> entities = bloodStockDao.findByDonationLocationId(id);
 
         return entities;
+    }
+
+    @Override
+    public void updateLimits(UpdateLimitsBloodStockDto data) {
+        if (data.getId() <= 0) {
+            return;
+        }
+
+        bloodStockDao.updateLimits(data);
     }
 }

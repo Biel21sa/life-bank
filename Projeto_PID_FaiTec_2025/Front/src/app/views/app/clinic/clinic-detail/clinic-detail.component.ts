@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
+import { AuthenticationService } from '../../../../services/security/authentication.service';
 
 @Component({
   selector: 'app-clinic-detail',
@@ -28,6 +29,7 @@ export class ClinicDetailComponent implements OnInit {
   constructor(
     private userReadService: UserReadService,
     private route: ActivatedRoute,
+    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
@@ -37,5 +39,9 @@ export class ClinicDetailComponent implements OnInit {
 
   async loadClinicById(clinicId: string) {
     this.clinic = await this.userReadService.findById(clinicId);
+  }
+
+  isAdministrator(): boolean {
+    return this.authenticationService.isAdministrator();
   }
 }

@@ -5,10 +5,7 @@ import br.fai.lds.lifebank.domain.MunicipalityModel;
 import br.fai.lds.lifebank.domain.UserModel;
 import br.fai.lds.lifebank.port.dao.user.UserDao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,7 +26,7 @@ public class UserPostgresDaoImpl implements UserDao {
         logger.log(Level.INFO, "Inserindo usuário no banco de dados.");
 
         String sql = "INSERT INTO user_model(password, name, email, role, cpf, phone, street, number, neighborhood, postal_code, donation_location_id) ";
-        sql += "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        sql += "VALUES (crypt(?, gen_salt('bf')), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement;
         ResultSet resultSet;
@@ -113,7 +110,7 @@ public class UserPostgresDaoImpl implements UserDao {
         final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                 "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
                 "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
-                "d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
+                "d.id as donor_id, d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
                 "FROM user_model u " +
                 "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
                 "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
@@ -146,7 +143,7 @@ public class UserPostgresDaoImpl implements UserDao {
         final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                 "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
                 "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
-                "d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
+                "d.id as donor_id, d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
                 "FROM user_model u " +
                 "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
                 "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
@@ -226,7 +223,7 @@ public class UserPostgresDaoImpl implements UserDao {
         final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                 "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
                 "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
-                "d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
+                "d.id as donor_id, d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
                 "FROM user_model u " +
                 "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
                 "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
@@ -255,7 +252,7 @@ public class UserPostgresDaoImpl implements UserDao {
 
     @Override
     public boolean updatePassword(int id, String newPassword) {
-        String sql = "UPDATE user_model SET password = ? ; ";
+        String sql = "UPDATE user_model SET password = crypt(?, gen_salt('bf')) ; ";
         sql += "WHERE id = ? ; ";
 
         try {
@@ -284,7 +281,7 @@ public class UserPostgresDaoImpl implements UserDao {
     }
 
     private void insertClinic(int userId, String name, String cnpj, String street, String number, String neighborhood,
-            String postalCode, int municipalityId) throws SQLException {
+                              String postalCode, int municipalityId) throws SQLException {
         String sql = "INSERT INTO clinic (name, cnpj, street, number, neighborhood, postal_code, municipality_id, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, name);
@@ -335,37 +332,21 @@ public class UserPostgresDaoImpl implements UserDao {
         user.setPostalCode(rs.getString("postal_code"));
         user.setDonationLocationId(rs.getInt("donation_location_id"));
 
-        // Mapear informações específicas por tipo de usuário
         if (user.getRole() == UserModel.UserRole.USER && rs.getObject("donor_blood_type") != null) {
             user.setBloodType(rs.getString("donor_blood_type"));
-            try {
-                if (rs.getObject("donor_id") != null) {
-                    user.setDonorId(rs.getInt("donor_id"));
-                }
-            } catch (SQLException e) { /* Coluna não existe nesta query */ }
-            try {
-                if (rs.getObject("gender") != null) {
-                    user.setGender(rs.getString("gender"));
-                }
-            } catch (SQLException e) { /* Coluna não existe nesta query */ }
-            try {
-                if (rs.getObject("last_donation_date") != null) {
-                    user.setLastDonationDate(rs.getDate("last_donation_date").toLocalDate());
-                }
-            } catch (SQLException e) { /* Coluna não existe nesta query */ }
-            try {
-                if (rs.getObject("apto") != null) {
-                    user.setApto(rs.getBoolean("apto"));
-                }
-            } catch (SQLException e) { /* Coluna não existe nesta query */ }
+            if (rs.getObject("donor_id") != null) {
+                user.setDonorId(rs.getInt("donor_id"));
+            }
+            if (hasColumn(rs, "apto")) {
+                user.setApto(rs.getBoolean("apto"));
+            }
         } else if (user.getRole() == UserModel.UserRole.CLINIC && rs.getObject("clinic_name") != null) {
             user.setNameClinic(rs.getString("clinic_name"));
             user.setCnpj(rs.getString("clinic_cnpj"));
         }
 
-        // Mapear DonationLocation completo se existir (apenas para queries que incluem essas colunas)
         try {
-            if (rs.getObject("dl_id") != null) {
+            if (hasColumn(rs, "dl_id") && rs.getObject("dl_id") != null) {
                 DonationLocationModel donationLocation = new DonationLocationModel();
                 donationLocation.setId(rs.getInt("dl_id"));
                 donationLocation.setName(rs.getString("dl_name"));
@@ -387,7 +368,7 @@ public class UserPostgresDaoImpl implements UserDao {
                 user.setDonationLocation(donationLocation);
             }
         } catch (SQLException e) {
-            // Colunas de DonationLocation não existem nesta query, ignorar
+            throw new RuntimeException(e);
         }
 
         return user;
@@ -397,29 +378,29 @@ public class UserPostgresDaoImpl implements UserDao {
     public List<UserModel> findByRole(String role) {
         final List<UserModel> users = new ArrayList<>();
         String sql;
-        
+
         if ("USER".equals(role)) {
             sql = "SELECT u.*, d.blood_type as donor_blood_type, d.id as donor_id, d.gender, d.last_donation_date, " +
-                  "CASE " +
-                  "WHEN (d.gender = 'MASCULINO' AND (d.last_donation_date IS NULL OR d.last_donation_date <= CURRENT_DATE - INTERVAL '60 days')) " +
-                  "OR (d.gender = 'FEMININO' AND (d.last_donation_date IS NULL OR d.last_donation_date <= CURRENT_DATE - INTERVAL '90 days')) " +
-                  "THEN TRUE ELSE FALSE END AS apto " +
-                  "FROM user_model u " +
-                  "INNER JOIN donor d ON u.id = d.user_id " +
-                  "WHERE u.role = ?";
+                    "CASE " +
+                    "WHEN (d.gender = 'MASCULINO' AND (d.last_donation_date IS NULL OR d.last_donation_date <= CURRENT_DATE - INTERVAL '60 days')) " +
+                    "OR (d.gender = 'FEMININO' AND (d.last_donation_date IS NULL OR d.last_donation_date <= CURRENT_DATE - INTERVAL '90 days')) " +
+                    "THEN TRUE ELSE FALSE END AS apto " +
+                    "FROM user_model u " +
+                    "INNER JOIN donor d ON u.id = d.user_id " +
+                    "WHERE u.role = ?";
         } else if ("CLINIC".equals(role)) {
             sql = "SELECT u.*, c.name as clinic_name, c.cnpj as clinic_cnpj, c.id as clinic_id " +
-                  "FROM user_model u " +
-                  "INNER JOIN clinic c ON u.id = c.user_id " +
-                  "WHERE u.role = ?";
-        } else {
+                    "FROM user_model u " +
+                    "INNER JOIN clinic c ON u.id = c.user_id " +
+                    "WHERE u.role = ?";
+        } else  {
             sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
-                  "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
-                  "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state " +
-                  "FROM user_model u " +
-                  "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
-                  "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
-                  "WHERE u.role = ?";
+                    "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
+                    "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state " +
+                    "FROM user_model u " +
+                    "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
+                    "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
+                    "WHERE u.role = ?";
         }
 
         try {
@@ -439,4 +420,16 @@ public class UserPostgresDaoImpl implements UserDao {
             throw new RuntimeException(e);
         }
     }
+
+    private boolean hasColumn(ResultSet rs, String columnName) throws SQLException {
+        ResultSetMetaData metaData = rs.getMetaData();
+        int columnCount = metaData.getColumnCount();
+        for (int i = 1; i <= columnCount; i++) {
+            if (columnName.equalsIgnoreCase(metaData.getColumnLabel(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

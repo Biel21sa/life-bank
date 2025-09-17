@@ -78,4 +78,19 @@ public class BenefitFakeDaoImpl implements BenefitDao {
             }
         }
     }
+
+    @Override
+    public List<BenefitModel> findByUserId(int userId) {
+        return null;
+    }
+
+    @Override
+    public List<BenefitModel> findByDonorCpf(String cpf) {
+        return null;
+    }
+
+    @Override
+    public void updateBenefitStatus(int id) {
+
+    }
 }

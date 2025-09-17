@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,7 +9,10 @@ import { ToastrService } from 'ngx-toastr';
 
 import { BloodStock } from '../../../domain/model/blood-stock';
 import { BloodStockReadService } from '../../../services/blood-stock/blood-stock-read.service';
+import { BloodStockUpdateService } from '../../../services/blood-stock/blood-stock-update.service';
 import { AuthenticationService } from '../../../services/security/authentication.service';
+import { StockLimitsDialogComponent, StockLimitsResult } from './stock-limits-dialog.component';
+import { Router } from '@angular/router';
 
 Chart.register(...registerables);
 
@@ -25,16 +28,18 @@ Chart.register(...registerables);
   templateUrl: './blood-stock.component.html',
   styleUrls: ['./blood-stock.component.css']
 })
-export class BloodStockComponent implements OnInit {
+export class BloodStockComponent implements OnInit, OnDestroy {
   bloodStockData: BloodStock[] = [];
   chart: Chart | null = null;
   locationId: string = '';
 
   constructor(
     private bloodStockService: BloodStockReadService,
+    private bloodStockUpdateService: BloodStockUpdateService,
     private dialog: MatDialog,
     private toastr: ToastrService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -135,14 +140,30 @@ export class BloodStockComponent implements OnInit {
     });
   }
 
-  openMinStockDialog() {
-    // TODO: Implementar dialog para atualizar estoque mínimo
-    this.toastr.info('Funcionalidade em desenvolvimento');
+  openStockLimitsDialog() {
+    const dialogRef = this.dialog.open(StockLimitsDialogComponent, {
+      width: '600px',
+      data: { bloodStockList: this.bloodStockData }
+    });
+
+    dialogRef.afterClosed().subscribe((result: StockLimitsResult) => {
+      if (result && result.updates.length > 0) {
+        this.updateStockLimits(result.updates);
+      }
+    });
   }
 
-  openMaxStockDialog() {
-    // TODO: Implementar dialog para atualizar estoque máximo
-    this.toastr.info('Funcionalidade em desenvolvimento');
+  updateStockLimits(updates: any[]) {
+    const updatePromises = updates.map(update =>
+      this.bloodStockUpdateService.updateStockLimits(update).toPromise()
+    );
+
+    Promise.all(updatePromises).then(() => {
+      this.toastr.success('Limites de estoque atualizados com sucesso');
+      this.loadBloodStock();
+    }).catch(() => {
+      this.toastr.error('Erro ao atualizar limites de estoque');
+    });
   }
 
   getStockStatusClass(stock: BloodStock): string {
@@ -155,6 +176,14 @@ export class BloodStockComponent implements OnInit {
     if (stock.currentStock <= stock.minimumStock) return 'warning';
     if (stock.currentStock <= stock.minimumStock * 1.5) return 'info';
     return 'check_circle';
+  }
+
+  navigateToBloodWithdrawal() {
+    this.router.navigate(['/blood-withdrawal']);
+  }
+
+  navigateToDonationCreate() {
+    this.router.navigate(['/donation-create']);
   }
 
   ngOnDestroy() {

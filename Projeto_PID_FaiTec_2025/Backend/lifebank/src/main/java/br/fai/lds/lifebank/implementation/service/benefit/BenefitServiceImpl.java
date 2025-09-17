@@ -1,6 +1,7 @@
 package br.fai.lds.lifebank.implementation.service.benefit;
 
 import br.fai.lds.lifebank.domain.BenefitModel;
+import br.fai.lds.lifebank.domain.DonationModel;
 import br.fai.lds.lifebank.port.dao.benefit.BenefitDao;
 import br.fai.lds.lifebank.port.service.benefit.BenefitService;
 import org.springframework.stereotype.Service;
@@ -72,5 +73,36 @@ public class BenefitServiceImpl implements BenefitService {
         }
 
         benefitDao.update(id, entity);
+    }
+
+    @Override
+    public List<BenefitModel> findByUserId(int userId) {
+        if (userId == 0) {
+            return new ArrayList<>();
+        }
+
+        List<BenefitModel> benefits = benefitDao.findByUserId(userId);
+
+        return benefits;
+    }
+
+    @Override
+    public List<BenefitModel> findByDonorCpf(String cpf) {
+        if (cpf == null) {
+            return new ArrayList<>();
+        }
+
+        List<BenefitModel> benefits = benefitDao.findByDonorCpf(cpf);
+
+        return benefits;
+    }
+
+    @Override
+    public void updateBenefitStatus(int id) {
+        if (id <= 0) {
+            return;
+        }
+
+        benefitDao.updateBenefitStatus(id);
     }
 }
