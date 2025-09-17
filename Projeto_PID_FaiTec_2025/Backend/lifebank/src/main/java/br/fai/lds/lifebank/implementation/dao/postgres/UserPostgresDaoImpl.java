@@ -26,7 +26,7 @@ public class UserPostgresDaoImpl implements UserDao {
         logger.log(Level.INFO, "Inserindo usuário no banco de dados.");
 
         String sql = "INSERT INTO user_model(password, name, email, role, cpf, phone, street, number, neighborhood, postal_code, donation_location_id) ";
-        sql += "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        sql += "VALUES (crypt(?, gen_salt('bf')), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement;
         ResultSet resultSet;
@@ -252,7 +252,7 @@ public class UserPostgresDaoImpl implements UserDao {
 
     @Override
     public boolean updatePassword(int id, String newPassword) {
-        String sql = "UPDATE user_model SET password = ? ; ";
+        String sql = "UPDATE user_model SET password = crypt(?, gen_salt('bf')) ; ";
         sql += "WHERE id = ? ; ";
 
         try {

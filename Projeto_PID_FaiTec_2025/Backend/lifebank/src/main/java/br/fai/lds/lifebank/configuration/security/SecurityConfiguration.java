@@ -41,7 +41,7 @@ public class SecurityConfiguration {
                                 "/v3/api-docs/**",
                                 "/authenticate",
                                 "/api/user/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
 
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
