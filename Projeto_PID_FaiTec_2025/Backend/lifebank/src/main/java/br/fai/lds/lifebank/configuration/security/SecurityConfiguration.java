@@ -1,5 +1,6 @@
 package br.fai.lds.lifebank.configuration.security;
 
+import br.fai.lds.lifebank.domain.UserModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,8 +40,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
-                                "/authenticate",
-                                "/api/user/**").permitAll()
+                                "/authenticate").permitAll()
                         .anyRequest().permitAll()
 
                 )
