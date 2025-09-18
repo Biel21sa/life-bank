@@ -1,11 +1,11 @@
 ﻿<user-preferences>
   <open-windows>
-    <window type="FolderOverview" resource="p7a9ee408e606418d965c35cfa4893d50_117615031" active="false" />
     <window type="Diagram" resource="p8b16544448f94244be81cc67b708a01e_779388142" active="true" />
     <window type="Diagram" resource="pb217593c7dee4c039673bdab416857d6_100870555" active="false" />
     <window type="Diagram" resource="p9c52e03a8945481eb5f753116d685731_175808150" active="false" />
     <window type="Diagram" resource="pf0cbc0ab8dac48f98b7d23fe40fad335_193662224" active="false" />
     <window type="Diagram" resource="pca0ded55d53b4d3da499ec23887a42ea_202489154" active="false" />
     <window type="Diagram" resource="p838b9e49d31e4a81bf27c02b42dc2d66_496794265" active="false" />
+    <window type="FolderOverview" resource="p7a9ee408e606418d965c35cfa4893d50_117615031" active="false" />
   </open-windows>
 </user-preferences>
