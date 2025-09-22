@@ -108,6 +108,16 @@
           </mat-form-field>
         </div>
 
+        <div>
+          <mat-checkbox formControlName="acceptTerms">
+            Eu aceito os <a href="/politicas-de-privacidade" target="_blank">Termos de Uso e Política de Privacidade</a>
+            da empresa.
+          </mat-checkbox>
+          <mat-error
+            *ngIf="clinicForm.get('acceptTerms')?.touched && clinicForm.get('acceptTerms')?.hasError('required')">
+            Você deve aceitar os termos para continuar.
+          </mat-error>
+        </div>
       </form>
     </mat-card-content>
 

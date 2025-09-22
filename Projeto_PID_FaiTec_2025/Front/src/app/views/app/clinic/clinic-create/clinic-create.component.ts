@@ -15,6 +15,7 @@ import { UserCreateService } from '../../../../services/user/user-create.service
 import { ToastrService } from 'ngx-toastr';
 import { Municipality } from '../../../../domain/model/municipality';
 import { MunicipalityReadService } from '../../../../services/municipality/municipality-read.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-clinic-create',
@@ -28,6 +29,8 @@ import { MunicipalityReadService } from '../../../../services/municipality/munic
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatIconModule,
+    MatCheckboxModule,
     NgxMaskDirective
   ],
   templateUrl: './clinic-create.component.html',
@@ -57,7 +60,8 @@ export class ClinicCreateComponent implements OnInit {
       number: ['', Validators.required],
       neighborhood: ['', Validators.required],
       postalCode: ['', Validators.required],
-      municipalityId: ['', Validators.required]
+      municipalityId: ['', Validators.required],
+      acceptTerms: [false, Validators.requiredTrue]
     });
   }
 

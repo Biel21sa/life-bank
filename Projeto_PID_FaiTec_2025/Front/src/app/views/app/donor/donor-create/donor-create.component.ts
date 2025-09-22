@@ -13,6 +13,7 @@ import { User } from '../../../../domain/model/user';
 import { UserRole } from '../../../../domain/model/user-role';
 import { UserCreateService } from '../../../../services/user/user-create.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-donor-create',
@@ -26,6 +27,8 @@ import { ToastrService } from 'ngx-toastr';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatIconModule,
+    MatCheckboxModule,
     NgxMaskDirective
   ],
   templateUrl: './donor-create.component.html',
@@ -51,7 +54,8 @@ export class DonorCreateComponent {
       street: ['', Validators.required],
       number: ['', Validators.required],
       neighborhood: ['', Validators.required],
-      postalCode: ['', Validators.required]
+      postalCode: ['', Validators.required],
+      acceptTerms: [false, Validators.requiredTrue]
     });
   }
 

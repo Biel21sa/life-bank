@@ -63,7 +63,6 @@
   background-color: #f8faff;
 }
 
-/* NOVO: Estilos para o contêiner dos checkboxes */
 .reason-checkbox-container {
   margin-top: 2rem;
   padding: 1.5rem;
@@ -80,7 +79,7 @@
 }
 
 .reason-checkbox-container mat-checkbox {
-  margin-right: 1.5rem; /* Adiciona espaçamento entre os checkboxes */
+  margin-right: 1.5rem; 
 }
 
 .card-actions {
@@ -148,7 +147,7 @@
 }
 
 .expired-date {
-  color: #d32f2f; /* Vermelho forte */
+  color: #d32f2f;
   font-weight: 500;
 }
 

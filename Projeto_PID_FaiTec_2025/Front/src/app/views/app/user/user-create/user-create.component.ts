@@ -7,7 +7,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
+
 import { User } from '../../../../domain/model/user';
 import { UserRole } from '../../../../domain/model/user-role';
 import { UserCreateService } from '../../../../services/user/user-create.service';
@@ -26,7 +28,8 @@ import { MunicipalityReadService } from '../../../../services/municipality/munic
     MatSelectModule,
     MatButtonModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatCheckboxModule
   ],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.css'
@@ -67,7 +70,8 @@ export class UserCreateComponent implements OnInit {
       gender: [''],
       nameClinic: [''],
       cnpj: [''],
-      municipalityId: ['']
+      municipalityId: [''],
+      acceptTerms: [false, Validators.requiredTrue]
     });
 
     this.userForm.get('role')?.valueChanges.subscribe(() => {
@@ -95,7 +99,6 @@ export class UserCreateComponent implements OnInit {
   updateValidators() {
     const role = this.selectedRole;
 
-    // Reset validators
     this.userForm.get('donationLocationId')?.clearValidators();
     this.userForm.get('bloodType')?.clearValidators();
     this.userForm.get('gender')?.clearValidators();
@@ -103,7 +106,6 @@ export class UserCreateComponent implements OnInit {
     this.userForm.get('cnpj')?.clearValidators();
     this.userForm.get('municipalityId')?.clearValidators();
 
-    // Add validators based on role
     if (role === UserRole.ADMINISTRATOR) {
       this.userForm.get('donationLocationId')?.setValidators([Validators.required]);
     } else if (role === UserRole.USER) {
@@ -115,7 +117,6 @@ export class UserCreateComponent implements OnInit {
       this.userForm.get('municipalityId')?.setValidators([Validators.required]);
     }
 
-    // Update form validation
     this.userForm.get('donationLocationId')?.updateValueAndValidity();
     this.userForm.get('bloodType')?.updateValueAndValidity();
     this.userForm.get('gender')?.updateValueAndValidity();
