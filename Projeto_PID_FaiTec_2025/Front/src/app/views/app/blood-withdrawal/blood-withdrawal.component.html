@@ -6,58 +6,67 @@
     </mat-card-header>
 
     <mat-card-content>
-      <!-- Tabela de Bolsas -->
-      <div class="table-container">
-        <table mat-table [dataSource]="bloodList" class="blood-table">
+      <mat-form-field appearance="outline" class="blood-type-select">
+        <mat-label>Filtrar por Tipo Sanguíneo</mat-label>
+        <mat-select [ngModel]="selectedBloodType" (selectionChange)="onBloodTypeChange($event.value)"
+          [ngModelOptions]="{standalone: true}">
+          <mat-option value="Todos">Todos</mat-option>
+          <mat-option *ngFor="let type of bloodTypes" [value]="type">{{ type }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-          <!-- Checkbox Column -->
+      <div class="table-container">
+        <table mat-table [dataSource]="filteredBloodList" class="blood-table">
           <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>Selecionar</th>
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                [aria-label]="'Selecione todas as linhas'">
+              </mat-checkbox>
+            </th>
             <td mat-cell *matCellDef="let row">
               <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                [checked]="selection.isSelected(row)">
+                [checked]="selection.isSelected(row)" [aria-label]="'Selecione a linha'">
               </mat-checkbox>
             </td>
           </ng-container>
 
-          <!-- Blood Type Column -->
           <ng-container matColumnDef="bloodType">
             <th mat-header-cell *matHeaderCellDef>Tipo Sanguíneo</th>
             <td mat-cell *matCellDef="let blood">{{blood.bloodType}}</td>
           </ng-container>
 
-          <!-- Quantity Column -->
           <ng-container matColumnDef="quantity">
             <th mat-header-cell *matHeaderCellDef>Quantidade (ml)</th>
             <td mat-cell *matCellDef="let blood">{{blood.quantity}}</td>
           </ng-container>
 
-          <!-- Expiration Date Column -->
           <ng-container matColumnDef="expirationDate">
             <th mat-header-cell *matHeaderCellDef>Data de Validade</th>
-            <td mat-cell *matCellDef="let blood">{{blood.expirationDate | date:'dd/MM/yyyy'}}</td>
+            <td mat-cell *matCellDef="let blood" [class.expired-date]="isExpired(blood.expirationDate)">
+              {{blood.expirationDate | date:'dd/MM/yyyy'}}
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <div *ngIf="filteredBloodList.length === 0" class="no-results">
+            Não há bolsas de sangue disponíveis para retirada com os critérios selecionados.
+        </div>
       </div>
 
-      <!-- Formulário de Motivo -->
-      <form [formGroup]="withdrawalForm" (ngSubmit)="onSubmit()" class="withdrawal-form">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Motivo da Retirada</mat-label>
-          <textarea matInput formControlName="reason" rows="4"
-            placeholder="Descreva o motivo da retirada das bolsas de sangue...">
-          </textarea>
-          <mat-error *ngIf="withdrawalForm.get('reason')?.hasError('required')">
-            Motivo é obrigatório
-          </mat-error>
-          <mat-error *ngIf="withdrawalForm.get('reason')?.hasError('minlength')">
-            Motivo deve ter pelo menos 10 caracteres
-          </mat-error>
-        </mat-form-field>
-      </form>
+      <div class="reason-checkbox-container">
+        <h4>Motivo da Retirada:</h4>
+        <mat-checkbox (change)="onReasonChange('Descarte')" [checked]="selectedReason === 'Descarte'">
+          Descarte
+        </mat-checkbox>
+        <mat-checkbox (change)="onReasonChange('Uso')" [checked]="selectedReason === 'Uso'">
+          Uso
+        </mat-checkbox>
+      </div>
+
     </mat-card-content>
 
     <mat-card-actions class="card-actions">
@@ -65,7 +74,7 @@
         Cancelar
       </button>
       <button mat-raised-button color="primary" (click)="onSubmit()"
-        [disabled]="!withdrawalForm.valid || selection.selected.length === 0">
+        [disabled]="selection.selected.length === 0 || selectedReason === ''">
         Confirmar Retirada ({{selection.selected.length}} selecionadas)
       </button>
     </mat-card-actions>

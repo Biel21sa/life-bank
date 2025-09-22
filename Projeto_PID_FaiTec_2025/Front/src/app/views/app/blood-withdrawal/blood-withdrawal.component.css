@@ -63,7 +63,8 @@
   background-color: #f8faff;
 }
 
-.withdrawal-form {
+/* NOVO: Estilos para o contêiner dos checkboxes */
+.reason-checkbox-container {
   margin-top: 2rem;
   padding: 1.5rem;
   background: #f8faff;
@@ -71,13 +72,15 @@
   border: 1px solid #e3f2fd;
 }
 
-.full-width {
-  width: 100%;
+.reason-checkbox-container h4 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #1976d2;
+  font-size: 1.1rem;
 }
 
-.full-width .mat-mdc-form-field {
-  background: white;
-  border-radius: 8px;
+.reason-checkbox-container mat-checkbox {
+  margin-right: 1.5rem; /* Adiciona espaçamento entre os checkboxes */
 }
 
 .card-actions {
@@ -94,6 +97,7 @@
   font-weight: 500;
   padding: 12px 24px;
   text-transform: none;
+  transition: all 0.3s ease;
 }
 
 .card-actions button[mat-button] {
@@ -137,4 +141,17 @@
     padding: 12px 16px;
     font-size: 0.9rem;
   }
+  
+  .reason-checkbox-container {
+      padding: 1rem;
+  }
+}
+
+.expired-date {
+  color: #d32f2f; /* Vermelho forte */
+  font-weight: 500;
+}
+
+.blood-type-select {
+  width: 30%;
 }
