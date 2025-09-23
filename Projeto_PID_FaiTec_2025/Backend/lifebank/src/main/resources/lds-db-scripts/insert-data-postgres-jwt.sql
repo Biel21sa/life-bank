@@ -38,15 +38,14 @@ VALUES
 
 INSERT INTO blood_stock (blood_type, minimum_stock, maximum_stock, current_stock, donation_location_id)
 VALUES
-('O+', 2.00, 10.00, 0.45, 1),
-('A+', 2.00, 10.00, 0.00, 1),
-('O-', 2.00, 10.00, 0.00, 1),
-('A-', 2.00, 10.00, 0.00, 1),
-('B+', 2.00, 10.00, 0.00, 1),
-('AB+', 2.00, 10.00, 0.00, 1),
-('AB-', 2.00, 10.00, 0.00, 1),
-('B-', 2.00, 10.00, 0.00, 1);
-
+('O+', 1.00, 6.00, 0.45, 1),
+('A+', 1.00, 6.00, 0.00, 1),
+('O-', 1.00, 6.00, 0.00, 1),
+('A-', 1.00, 6.00, 0.00, 1),
+('B+', 1.00, 6.00, 0.00, 1),
+('AB+', 1.00, 6.00, 0.00, 1),
+('AB-', 1.00, 6.00, 0.00, 1),
+('B-', 1.00, 6.00, 0.00, 1);
 
 INSERT INTO donation (quantity, collection_date, expiration_date, donor_id, donation_location_id, blood_id)
 VALUES
