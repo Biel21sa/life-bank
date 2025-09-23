@@ -16,6 +16,7 @@ import { Blood } from '../../../domain/model/blood';
 import { BloodReadService } from '../../../services/blood/blood-read.service';
 import { BloodUpdateService } from '../../../services/blood/blood-update.service';
 import { AuthenticationService } from '../../../services/security/authentication.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-blood-withdrawal',
@@ -31,6 +32,7 @@ import { AuthenticationService } from '../../../services/security/authentication
     MatTableModule,
     MatSelectModule,
     FormsModule,
+    MatIconModule,
     ReactiveFormsModule
   ],
   templateUrl: './blood-withdrawal.component.html',
@@ -136,4 +138,72 @@ export class BloodWithdrawalComponent implements OnInit {
     expirationDate.setHours(23, 59, 59, 999);
     return expirationDate.getTime() < now.getTime();
   }
+
+  clearSelection() {
+    this.selection.clear();
+  }
+
+  getTotalVolume(): number {
+    return this.selection.selected.reduce((sum, blood) => sum + blood.quantity, 0);
+  }
+
+  getExpiredCount(): number {
+    const now = new Date();
+    return this.filteredBloodList.filter(blood => {
+      const expiration = new Date(blood.expirationDate);
+      expiration.setHours(23, 59, 59, 999);
+      const diffDays = (expiration.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+      return diffDays <= 5; // Define "próximo do vencimento" como 5 dias ou menos
+    }).length;
+  }
+    
+  getExpirationStatus(date: string): string {
+    const expiration = new Date(date);
+    const now = new Date();
+    expiration.setHours(23, 59, 59, 999);
+    const diffDays = (expiration.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+  
+    if (diffDays < 0) return 'expired';
+    if (diffDays <= 5) return 'near-expiration';
+    return 'valid';
+  }
+
+  getStatusText(date: string): string {
+    const status = this.getExpirationStatus(date);
+    if (status === 'expired') return 'Vencido';
+    if (status === 'near-expiration') return 'Próx. do vencimento';
+    return 'Válido';
+  }
+
+  toggleRowSelection(row: Blood) {
+    this.selection.toggle(row);
+  }
+
+  clearFilters() {
+    this.selectedBloodType = 'Todos';
+    this.filteredBloodList = [...this.bloodList];
+    this.selection.clear();
+  }
+
+  canSubmit(): boolean {
+    return this.selection.selected.length > 0 && !!this.selectedReason;
+  }
+
+  getExpirationIcon(date: string): string {
+    const expiration = new Date(date);
+    const now = new Date();
+  
+    expiration.setHours(23, 59, 59, 999); // Garante que o dia todo seja considerado
+  
+    const diffDays = (expiration.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+  
+    if (diffDays < 0) {
+      return 'error'; // Vencido
+    } else if (diffDays <= 5) {
+      return 'warning'; // Próximo do vencimento
+    } else {
+      return 'check_circle'; // Válido
+    }
+  }  
+  
 }
