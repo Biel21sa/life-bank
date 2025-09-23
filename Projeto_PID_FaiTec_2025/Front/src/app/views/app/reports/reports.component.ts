@@ -36,14 +36,14 @@ export class ReportsComponent implements OnInit, OnDestroy {
   availableYears: number[] = [];
 
   palette = [
-    '#1976d2', // azul médio
-    '#42a5f5', // azul claro
-    '#66bb6a', // verde suave
-    '#26a69a', // verde água
-    '#ab47bc', // roxo suave
-    '#7e57c2', // roxo médio
+    '#1976d2',
+    '#42a5f5',
+    '#66bb6a',
+    '#26a69a',
+    '#ab47bc',
+    '#7e57c2',
     '#4dd0e1',
-    '#90a4ae'  // laranja suave
+    '#90a4ae'
   ];
 
   chartOptions = [

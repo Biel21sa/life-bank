@@ -6,7 +6,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { Chart, registerables } from 'chart.js';
 import { ToastrService } from 'ngx-toastr';
-
 import { BloodStock } from '../../../domain/model/blood-stock';
 import { BloodStockReadService } from '../../../services/blood-stock/blood-stock-read.service';
 import { BloodStockUpdateService } from '../../../services/blood-stock/blood-stock-update.service';
@@ -74,9 +73,9 @@ export class BloodStockComponent implements OnInit, OnDestroy {
     const maxStock = this.bloodStockData.map(stock => stock.maximumStock);
 
     const backgroundColors = this.bloodStockData.map(stock => {
-      if (stock.currentStock <= stock.minimumStock) return '#f44336'; // Crítico - Vermelho
-      if (stock.currentStock <= stock.minimumStock * 1.5) return '#ff9800'; // Alerta - Laranja
-      return '#4caf50'; // Normal - Verde
+      if (stock.currentStock <= stock.minimumStock) return '#e53935';
+      if (stock.currentStock <= stock.minimumStock * 1.5) return '#fb8c00';
+      return '#43a047';
     });
 
     this.chart = new Chart(ctx, {
@@ -89,23 +88,28 @@ export class BloodStockComponent implements OnInit, OnDestroy {
             data: currentStock,
             backgroundColor: backgroundColors,
             borderColor: backgroundColors,
-            borderWidth: 1
+            borderWidth: 1,
+            borderRadius: 6
           },
           {
             label: 'Estoque Mínimo',
             data: minStock,
-            backgroundColor: 'rgba(255, 193, 7, 0.3)',
-            borderColor: '#ffc107',
+            borderColor: '#fbc02d',
+            backgroundColor: 'transparent',
             borderWidth: 2,
-            type: 'line'
+            borderDash: [6, 6],
+            type: 'line',
+            pointRadius: 0
           },
           {
             label: 'Estoque Máximo',
             data: maxStock,
-            backgroundColor: 'rgba(33, 150, 243, 0.3)',
-            borderColor: '#2196f3',
+            borderColor: '#1e88e5',
+            backgroundColor: 'transparent',
             borderWidth: 2,
-            type: 'line'
+            borderDash: [6, 6],
+            type: 'line',
+            pointRadius: 0
           }
         ]
       },
@@ -114,11 +118,22 @@ export class BloodStockComponent implements OnInit, OnDestroy {
         plugins: {
           title: {
             display: true,
-            text: 'Estoque de Sangue por Tipo Sanguíneo'
+            text: 'Estoque de Sangue por Tipo Sanguíneo',
+            font: {
+              size: 18,
+              weight: 'bold'
+            }
           },
           legend: {
             display: true,
             position: 'top'
+          },
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                return `${context.dataset.label}: ${context.formattedValue} ml`;
+              }
+            }
           }
         },
         scales: {
@@ -142,7 +157,7 @@ export class BloodStockComponent implements OnInit, OnDestroy {
 
   openStockLimitsDialog() {
     const dialogRef = this.dialog.open(StockLimitsDialogComponent, {
-      width: '600px',
+      width: '800px',
       data: { bloodStockList: this.bloodStockData }
     });
 
@@ -186,9 +201,93 @@ export class BloodStockComponent implements OnInit, OnDestroy {
     this.router.navigate(['/donation-create']);
   }
 
+  navigateToReports() {
+    this.router.navigate(['/reports']);
+  }
+
   ngOnDestroy() {
     if (this.chart) {
       this.chart.destroy();
     }
   }
+  hasAlerts(): boolean {
+    return this.bloodStockData.some(stock => stock.currentStock <= stock.minimumStock);
+  }
+
+  getCriticalStock(): BloodStock[] {
+    return this.bloodStockData.filter(stock => stock.currentStock <= stock.minimumStock);
+  }
+
+  getTotalStock(): number {
+    return this.bloodStockData.reduce((sum, stock) => sum + stock.currentStock, 0);
+  }
+
+  getTotalStockTrend(): string {
+    const total = this.getTotalStock();
+    const maxTotal = this.bloodStockData.reduce((sum, stock) => sum + stock.maximumStock, 0);
+
+    if (total >= maxTotal * 0.7) return 'positive';
+    if (total <= maxTotal * 0.3) return 'negative';
+    return 'stable';
+  }
+
+  getTotalStockIcon(): string {
+    const trend = this.getTotalStockTrend();
+    if (trend === 'positive') return 'trending_up';
+    if (trend === 'negative') return 'trending_down';
+    return 'trending_flat';
+  }
+
+  getTotalStockText(): string {
+    const trend = this.getTotalStockTrend();
+    if (trend === 'positive') return 'Estoque saudável';
+    if (trend === 'negative') return 'Estoque baixo';
+    return 'Estável';
+  }
+
+  getCriticalCount(): number {
+    return this.getCriticalStock().length;
+  }
+
+  getCriticalTrend(): string {
+    const count = this.getCriticalCount();
+    if (count === 0) return 'positive';
+    if (count <= 2) return 'stable';
+    return 'negative';
+  }
+
+  getCriticalIcon(): string {
+    const trend = this.getCriticalTrend();
+    if (trend === 'positive') return 'check_circle';
+    if (trend === 'stable') return 'info';
+    return 'warning';
+  }
+
+  getCriticalText(): string {
+    const trend = this.getCriticalTrend();
+    if (trend === 'positive') return 'Nenhum crítico';
+    if (trend === 'stable') return 'Alguns críticos';
+    return 'Muitos críticos';
+  }
+
+  getAvailableTypes(): number {
+    return this.bloodStockData.filter(stock => stock.currentStock > stock.minimumStock).length;
+  }
+
+  getLastUpdateTime(): string {
+    const now = new Date();
+    return now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  getStockPercentage(stock: BloodStock): number {
+    if (!stock.maximumStock || stock.maximumStock === 0) return 0;
+    return Math.min(100, Math.round((stock.currentStock / stock.maximumStock) * 100));
+  }
+
+  getStockStatusText(stock: BloodStock): string {
+    if (stock.currentStock <= stock.minimumStock) return 'Crítico';
+    if (stock.currentStock <= stock.minimumStock * 1.5) return 'Atenção';
+    return 'Normal';
+  }
+
 }
