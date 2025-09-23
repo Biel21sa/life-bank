@@ -1,183 +1,355 @@
 <div class="home-container">
-  <!-- Hero Section -->
+  <!-- Hero Section Aprimorada -->
   <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+
     <div class="hero-content">
       <div class="logo-section">
         <div class="logo-icon">
           <mat-icon>admin_panel_settings</mat-icon>
         </div>
         <h1>Painel Administrativo</h1>
-        <p class="hero-subtitle">Gerencie todo o sistema Life Bank</p>
+        <p class="hero-subtitle">Gerencie todo o sistema Life Bank com eficiência</p>
       </div>
 
       <div class="hero-description">
         <p>
           Controle total sobre doadores, clínicas e doações.
-          Monitore estatísticas e mantenha o sistema funcionando perfeitamente.
+          Monitore estatísticas em tempo real e mantenha o sistema funcionando perfeitamente.
         </p>
+
+        <div class="hero-actions">
+          <button mat-raised-button color="accent" class="hero-button" (click)="navigateToBloodStock()">
+            <mat-icon>dashboard</mat-icon>
+            <span>Ver Dashboard</span>
+          </button>
+          <button mat-stroked-button class="hero-button-secondary" (click)="navigateToReports()">
+            <mat-icon>analytics</mat-icon>
+            <span>Relatórios</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Stats Section -->
+  <!-- Stats Section Aprimorada -->
   <div class="stats-section">
-    <div class="stats-grid">
-      <div class="stat-card">
-        <mat-icon>people</mat-icon>
-        <div class="stat-number">1,247</div>
-        <div class="stat-label">Doadores Cadastrados</div>
+    <div class="stats-container">
+      <div class="stats-header">
+        <h2>Estatísticas do Sistema</h2>
+        <p>Dados atualizados em tempo real</p>
       </div>
-      <div class="stat-card">
-        <mat-icon>local_hospital</mat-icon>
-        <div class="stat-number">23</div>
-        <div class="stat-label">Clínicas Ativas</div>
-      </div>
-      <div class="stat-card">
-        <mat-icon>bloodtype</mat-icon>
-        <div class="stat-number">3,892</div>
-        <div class="stat-label">Doações Registradas</div>
-      </div>
-      <div class="stat-card">
-        <mat-icon>trending_up</mat-icon>
-        <div class="stat-number">98%</div>
-        <div class="stat-label">Taxa de Sucesso</div>
+
+      <div class="stats-grid">
+        <div class="stat-card primary">
+          <div class="stat-icon">
+            <mat-icon>people</mat-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">1,247</div>
+            <div class="stat-label">Doadores Cadastrados</div>
+            <div class="stat-trend positive">
+              <mat-icon>trending_up</mat-icon>
+              <span>+12% este mês</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card secondary">
+          <div class="stat-icon">
+            <mat-icon>local_hospital</mat-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">23</div>
+            <div class="stat-label">Clínicas Ativas</div>
+            <div class="stat-trend positive">
+              <mat-icon>trending_up</mat-icon>
+              <span>+2 novas</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card accent">
+          <div class="stat-icon">
+            <mat-icon>bloodtype</mat-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">3,892</div>
+            <div class="stat-label">Doações Registradas</div>
+            <div class="stat-trend positive">
+              <mat-icon>trending_up</mat-icon>
+              <span>+8% esta semana</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card success">
+          <div class="stat-icon">
+            <mat-icon>verified</mat-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Taxa de Sucesso</div>
+            <div class="stat-trend stable">
+              <mat-icon>trending_flat</mat-icon>
+              <span>Estável</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Navigation Cards -->
+  <!-- Navigation Cards Aprimoradas -->
   <div class="navigation-section">
-    <h2>Gerenciamento</h2>
-    <div class="navigation-grid">
+    <div class="navigation-container">
+      <div class="section-header">
+        <h2>Gerenciamento do Sistema</h2>
+        <p>Acesse rapidamente as principais funcionalidades administrativas</p>
+      </div>
 
-      <mat-card class="nav-card" (click)="navigateToDonors()">
-        <div class="card-icon">
-          <mat-icon>people</mat-icon>
-        </div>
-        <mat-card-content>
-          <h3>Doadores</h3>
-          <p>Gerencie cadastros, histórico e status dos doadores do sistema</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="primary">
-            Acessar
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
+      <div class="navigation-grid">
+        <mat-card class="nav-card primary-card" (click)="navigateToDonors()">
+          <div class="card-header">
+            <div class="card-icon">
+              <mat-icon>people</mat-icon>
+            </div>
+            <div class="card-badge">Essencial</div>
+          </div>
+          <mat-card-content>
+            <h3>Doadores</h3>
+            <p>Gerencie cadastros, histórico e status dos doadores do sistema</p>
+            <div class="card-stats">
+              <span class="stat-item">
+                <mat-icon>person_add</mat-icon>
+                <span>1,247 ativos</span>
+              </span>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" class="action-button">
+              <span>Acessar</span>
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
 
-      <mat-card class="nav-card" (click)="navigateToClinics()">
-        <div class="card-icon">
-          <mat-icon>local_hospital</mat-icon>
-        </div>
-        <mat-card-content>
-          <h3>Clínicas</h3>
-          <p>Administre clínicas parceiras, credenciamentos e parcerias</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="primary">
-            Acessar
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
+        <mat-card class="nav-card secondary-card" (click)="navigateToClinics()">
+          <div class="card-header">
+            <div class="card-icon">
+              <mat-icon>local_hospital</mat-icon>
+            </div>
+            <div class="card-badge">Parceiros</div>
+          </div>
+          <mat-card-content>
+            <h3>Clínicas</h3>
+            <p>Administre clínicas parceiras, credenciamentos e parcerias</p>
+            <div class="card-stats">
+              <span class="stat-item">
+                <mat-icon>verified</mat-icon>
+                <span>23 credenciadas</span>
+              </span>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" class="action-button">
+              <span>Acessar</span>
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
 
-      <mat-card class="nav-card" (click)="navigateToDonations()">
-        <div class="card-icon">
-          <mat-icon>bloodtype</mat-icon>
-        </div>
-        <mat-card-content>
-          <h3>Doações</h3>
-          <p>Controle histórico, estatísticas e relatórios de doações</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="primary">
-            Acessar
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
+        <mat-card class="nav-card accent-card" (click)="navigateToDonations()">
+          <div class="card-header">
+            <div class="card-icon">
+              <mat-icon>bloodtype</mat-icon>
+            </div>
+            <div class="card-badge">Crítico</div>
+          </div>
+          <mat-card-content>
+            <h3>Doações</h3>
+            <p>Controle histórico, estatísticas e relatórios de doações</p>
+            <div class="card-stats">
+              <span class="stat-item">
+                <mat-icon>schedule</mat-icon>
+                <span>15 hoje</span>
+              </span>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" class="action-button">
+              <span>Acessar</span>
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
 
-      <mat-card class="nav-card" (click)="navigateToBloodWithdrawal()">
-        <div class="card-icon">
-          <mat-icon>remove_circle</mat-icon>
-        </div>
-        <mat-card-content>
-          <h3>Retirada de Sangue</h3>
-          <p>Gerencie a retirada de bolsas de sangue dos locais de doação</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="primary">
-            Acessar
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
+        <mat-card class="nav-card warning-card" (click)="navigateToBloodWithdrawal()">
+          <div class="card-header">
+            <div class="card-icon">
+              <mat-icon>remove_circle</mat-icon>
+            </div>
+            <div class="card-badge">Operacional</div>
+          </div>
+          <mat-card-content>
+            <h3>Retirada de Sangue</h3>
+            <p>Gerencie a retirada de bolsas de sangue dos locais de doação</p>
+            <div class="card-stats">
+              <span class="stat-item">
+                <mat-icon>local_shipping</mat-icon>
+                <span>8 pendentes</span>
+              </span>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" class="action-button">
+              <span>Acessar</span>
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
 
-      <mat-card class="nav-card" (click)="navigateToBloodStock()">
-        <div class="card-icon">
-          <mat-icon>bar_chart</mat-icon>
-        </div>
-        <mat-card-content>
-          <h3>Estoque de Sangue</h3>
-          <p>Monitore níveis de estoque e gerencie limites por tipo sanguíneo</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="primary">
-            Acessar
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
+        <mat-card class="nav-card info-card" (click)="navigateToBloodStock()">
+          <div class="card-header">
+            <div class="card-icon">
+              <mat-icon>bar_chart</mat-icon>
+            </div>
+            <div class="card-badge">Monitoramento</div>
+          </div>
+          <mat-card-content>
+            <h3>Estoque de Sangue</h3>
+            <p>Monitore níveis de estoque e gerencie limites por tipo sanguíneo</p>
+            <div class="card-stats">
+              <span class="stat-item">
+                <mat-icon>inventory</mat-icon>
+                <span>456 bolsas</span>
+              </span>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" class="action-button">
+              <span>Acessar</span>
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
 
-      <mat-card class="nav-card" (click)="navigateToReports()">
-        <div class="card-icon">
-          <mat-icon>analytics</mat-icon>
-        </div>
-        <mat-card-content>
-          <h3>Gráficos e Relatórios</h3>
-          <p>Analise dados e tendências das doações com gráficos interativos</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="primary">
-            Acessar
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-
+        <mat-card class="nav-card success-card" (click)="navigateToReports()">
+          <div class="card-header">
+            <div class="card-icon">
+              <mat-icon>analytics</mat-icon>
+            </div>
+            <div class="card-badge">Inteligência</div>
+          </div>
+          <mat-card-content>
+            <h3>Gráficos e Relatórios</h3>
+            <p>Analise dados e tendências das doações com gráficos interativos</p>
+            <div class="card-stats">
+              <span class="stat-item">
+                <mat-icon>insights</mat-icon>
+                <span>12 relatórios</span>
+              </span>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" class="action-button">
+              <span>Acessar</span>
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
     </div>
   </div>
 
-  <!-- Features Section -->
+  <!-- Features Section Aprimorada -->
   <div class="features-section">
-    <h2>Por que escolher o Life Bank?</h2>
-    <div class="features-grid">
-
-      <div class="feature-item">
-        <mat-icon>security</mat-icon>
-        <h4>Segurança Total</h4>
-        <p>Dados protegidos com criptografia avançada e controle de acesso rigoroso</p>
+    <div class="features-container">
+      <div class="section-header">
+        <h2>Por que escolher o Life Bank?</h2>
+        <p>Tecnologia avançada para salvar vidas</p>
       </div>
 
-      <div class="feature-item">
-        <mat-icon>speed</mat-icon>
-        <h4>Agilidade</h4>
-        <p>Processos otimizados para localização rápida de sangue compatível</p>
-      </div>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <mat-icon>security</mat-icon>
+          </div>
+          <div class="feature-content">
+            <h4>Segurança Total</h4>
+            <p>Dados protegidos com criptografia avançada e controle de acesso rigoroso</p>
+            <div class="feature-highlight">
+              <mat-icon>verified_user</mat-icon>
+              <span>Certificado ISO 27001</span>
+            </div>
+          </div>
+        </div>
 
-      <div class="feature-item">
-        <mat-icon>notifications_active</mat-icon>
-        <h4>Notificações</h4>
-        <p>Alertas automáticos sobre estoque baixo e campanhas de doação</p>
-      </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <mat-icon>speed</mat-icon>
+          </div>
+          <div class="feature-content">
+            <h4>Agilidade</h4>
+            <p>Processos otimizados para localização rápida de sangue compatível</p>
+            <div class="feature-highlight">
+              <mat-icon>flash_on</mat-icon>
+              <span>Resposta em < 2 segundos</span>
+            </div>
+          </div>
+        </div>
 
-      <div class="feature-item">
-        <mat-icon>mobile_friendly</mat-icon>
-        <h4>Responsivo</h4>
-        <p>Acesse de qualquer dispositivo com interface adaptável</p>
-      </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <mat-icon>notifications_active</mat-icon>
+          </div>
+          <div class="feature-content">
+            <h4>Notificações Inteligentes</h4>
+            <p>Alertas automáticos sobre estoque baixo e campanhas de doação</p>
+            <div class="feature-highlight">
+              <mat-icon>smart_toy</mat-icon>
+              <span>IA Integrada</span>
+            </div>
+          </div>
+        </div>
 
+        <div class="feature-item">
+          <div class="feature-icon">
+            <mat-icon>mobile_friendly</mat-icon>
+          </div>
+          <div class="feature-content">
+            <h4>Totalmente Responsivo</h4>
+            <p>Acesse de qualquer dispositivo com interface adaptável</p>
+            <div class="feature-highlight">
+              <mat-icon>devices</mat-icon>
+              <span>Multi-plataforma</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action Section -->
+  <div class="cta-section">
+    <div class="cta-content">
+      <h2>Pronto para começar?</h2>
+      <p>Explore todas as funcionalidades do sistema e otimize a gestão de doações</p>
+      <div class="cta-actions">
+        <button mat-raised-button color="primary" class="cta-button">
+          <mat-icon>explore</mat-icon>
+          <span>Explorar Sistema</span>
+        </button>
+        <button mat-stroked-button class="cta-button-secondary">
+          <mat-icon>help</mat-icon>
+          <span>Documentação</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
