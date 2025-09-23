@@ -87,6 +87,10 @@ export class AuthenticationService {
     return donorId;
   }
 
+  getUserId(): string | null {
+    return localStorage.getItem('id');
+  }
+
   isSystemAdmin(): boolean {
     try {
       return this.getAuthenticatedUserRole() === 'SYSTEM';
