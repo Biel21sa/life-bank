@@ -1,50 +1,88 @@
 <div class="login-container">
-  <div class="login-card">
+  <div class="login-wrapper">
+    <!-- Seção de Boas-vindas -->
+    <div class="welcome-section">
+      <div class="welcome-content">
+        <div class="logo-section">
+          <div class="logo-icon">
+            <mat-icon>favorite</mat-icon>
+          </div>
+          <h1>Life Bank</h1>
+          <p class="subtitle">Sistema de Gestão de Estoque de Sangue</p>
+        </div>
 
-    <div class="login-header">
-      <div class="logo-icon">
-        <mat-icon>favorite</mat-icon>
+        <div class="welcome-message">
+          <h2>Bem-vindo de volta!</h2>
+          <p>Acesse sua conta para gerenciar o estoque de sangue e salvar vidas. Sua dedicação faz a diferença na
+            comunidade.</p>
+
+          <div class="features-list">
+            <div class="feature-item">
+              <mat-icon>security</mat-icon>
+              <span>Acesso seguro e protegido</span>
+            </div>
+            <div class="feature-item">
+              <mat-icon>analytics</mat-icon>
+              <span>Relatórios em tempo real</span>
+            </div>
+            <div class="feature-item">
+              <mat-icon>people</mat-icon>
+              <span>Gestão completa de doadores</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="decorative-elements">
+          <div class="floating-element element-1"></div>
+          <div class="floating-element element-2"></div>
+          <div class="floating-element element-3"></div>
+        </div>
       </div>
-      <h1>Life Bank</h1>
-      <p>Gestão de Estoque de Sangue</p>
     </div>
 
-    <form class="login-form">
-      <div class="form-title">
-        <h2>Bem-vindo de volta!</h2>
-        <p>Faça login para acessar o sistema.</p>
+    <!-- Seção do Formulário de Login -->
+    <div class="login-section">
+      <div class="login-card">
+        <div class="login-header">
+          <h2>Fazer Login</h2>
+          <p>Digite suas credenciais para acessar o sistema</p>
+        </div>
+
+        <form class="login-form">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Digite seu email" [formControl]="email" type="email">
+            <mat-icon matSuffix>email</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Digite sua senha" maxlength="10"
+              [formControl]="password">
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          @if(isLoginIncorrect) {
+          <div class="error-message">
+            <mat-icon>error</mat-icon>
+            <span>Email e/ou senha incorretos.</span>
+          </div>
+          }
+
+          <button mat-raised-button color="primary" class="login-button" (click)="login()"
+            [disabled]="!validateFields()">
+            <span>Entrar</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+
+          <div class="help-section">
+            <p>Não possui uma conta?</p>
+            <p class="help-text">Entre em contato com o administrador do sistema para solicitar acesso.</p>
+          </div>
+        </form>
       </div>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="seu.email@exemplo.com" [formControl]="email" type="email">
-        <mat-icon matSuffix>alternate_email</mat-icon>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Senha</mat-label>
-        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Digite sua senha"
-          [formControl]="password">
-        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button"
-          aria-label="Toggle password visibility">
-          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field>
-
-      @if(isLoginIncorrect) {
-      <div class="error-message">
-        <mat-icon>warning_amber</mat-icon>
-        <span>Email ou senha inválidos. Tente novamente.</span>
-      </div>
-      }
-
-      <button mat-raised-button color="primary" class="login-button" (click)="login()" [disabled]="!validateFields()">
-        <span class="button-text">Entrar</span>
-      </button>
-
-      <div class="help-section">
-        <p>Não consegue acessar? <a href="#">Fale com o administrador</a>.</p>
-      </div>
-    </form>
+    </div>
   </div>
 </div>
