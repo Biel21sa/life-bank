@@ -4,6 +4,8 @@ import { AuthenticatedUserDto } from '../../domain/dto/authenticated-user-dto';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { User } from '../../domain/model/user';
+import { UserRole } from '../../domain/model/user-role';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +55,35 @@ export class AuthenticationService {
 
   logout() {
     localStorage.clear();
+  }
+
+  getAuthenticatedUser(): User {
+    let email = localStorage.getItem('email');
+    let password = localStorage.getItem('password');
+    let role = localStorage.getItem('role');
+    let id = localStorage.getItem('id');
+    let donationLocationId = localStorage.getItem('donationLocationId');
+    let donorId = localStorage.getItem('donorId');
+
+    if (email == null || password == null || role == null || id == null) {
+      throw new Error('Dados inválidos');
+    }
+
+    return {
+      email: email,
+      password: password,
+      role: role as UserRole,
+      id: id,
+      donationLocationId: donationLocationId ?? undefined,
+      donorId: donorId ?? undefined,
+      name: '',
+      cpf: '',
+      phone: '',
+      street: '',
+      number: '',
+      neighborhood: '',
+      postalCode: ''
+    };
   }
 
   getAuhenticatedUserEmail() {
