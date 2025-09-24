@@ -771,6 +771,11 @@
   color: white;
 }
 
+.success-card .card-icon {
+  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+  color: white;
+}
+
 .card-icon mat-icon {
   font-size: 36px;
   width: 36px;

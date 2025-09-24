@@ -257,6 +257,31 @@
           </mat-card-actions>
         </mat-card>
 
+        <mat-card class="nav-card success-card" (click)="navigateToChat()">
+          <div class="card-header">
+            <div class="card-icon">
+              <mat-icon>chat</mat-icon>
+            </div>
+            <div class="card-badge">Comunicação</div>
+          </div>
+          <mat-card-content>
+            <h3>Chat com Clínicas</h3>
+            <p>Converse diretamente com as clínicas para esclarecimentos e suporte</p>
+            <div class="card-stats">
+              <span class="stat-item">
+                <mat-icon>message</mat-icon>
+                <span>Mensagens em tempo real</span>
+              </span>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" class="action-button">
+              <span>Acessar Chat</span>
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+
         <mat-card class="nav-card info-card" (click)="navigateToMyProfile()">
           <div class="card-header">
             <div class="card-icon">

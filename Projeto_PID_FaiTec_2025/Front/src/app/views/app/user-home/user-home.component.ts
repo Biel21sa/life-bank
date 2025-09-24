@@ -101,4 +101,8 @@ export class UserHomeComponent implements OnInit {
   navigateToMyProfile() {
     this.router.navigate(['/account/my-profile']);
   }
+
+  navigateToChat() {
+    this.router.navigate(['/donor-chat']);
+  }
 }
