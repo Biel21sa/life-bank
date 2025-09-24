@@ -222,9 +222,6 @@ export interface StockLimitsResult {
     </div>
   `,
   styles: [`
-    /* Importar fonte moderna */
-    
-    
     .dialog-container {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       max-width: 800px;
