@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
 import { AuthenticationService } from '../../../../services/security/authentication.service';
-import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-clinic-detail',
@@ -20,7 +20,6 @@ import { MatMenu, MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     CommonModule,
     NgxMaskPipe,
-    MatMenu,
     MatMenuModule
   ],
   templateUrl: './clinic-detail.component.html',
@@ -58,21 +57,18 @@ export class ClinicDetailComponent implements OnInit {
     return this.authenticationService.isAdministrator();
   }
 
-  /** Retorna o endereço completo */
   getFullAddress(): string {
     if (!this.clinic) return '';
     const { street, number, neighborhood, postalCode } = this.clinic;
     return `${street || ''}, ${number || ''} - ${neighborhood || ''}, CEP: ${postalCode || ''}`;
   }
 
-  /** Abre o mapa no Google Maps */
   openMap(): void {
     if (!this.clinic) return;
     const query = encodeURIComponent(this.getFullAddress());
     window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
   }
 
-  /** Ações rápidas */
   contactClinic(): void {
     if (!this.clinic) return;
     const phone = this.clinic.phone ? `tel:${this.clinic.phone}` : null;
@@ -88,24 +84,14 @@ export class ClinicDetailComponent implements OnInit {
   }
 
   viewReports(): void {
-    // Aqui você pode redirecionar para uma rota de relatórios
     if (this.clinic) {
       this.router.navigate(['/clinic/reports', this.clinic.id]);
     }
   }
 
   viewHistory(): void {
-    // Aqui você pode redirecionar para uma rota de histórico
     if (this.clinic) {
       this.router.navigate(['/clinic/history', this.clinic.id]);
-    }
-  }
-
-  /** Recarregar em caso de erro */
-  retryLoad(): void {
-    let clinicId = this.route.snapshot.paramMap.get('id');
-    if (clinicId) {
-      this.loadClinicById(clinicId);
     }
   }
 }
