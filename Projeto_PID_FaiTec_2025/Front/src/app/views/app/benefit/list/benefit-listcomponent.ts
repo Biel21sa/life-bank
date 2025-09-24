@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Benefit } from '../../../../domain/model/benefit';
 import { AuthenticationService } from '../../../../services/security/authentication.service';
 import { BenefitReadService } from '../../../../services/benefit/benefit-read.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-benefit-list',
@@ -42,7 +43,8 @@ export class BenefitListComponent implements OnInit {
   constructor(
     private benefitReadService: BenefitReadService,
     private authService: AuthenticationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -87,6 +89,20 @@ export class BenefitListComponent implements OnInit {
     }
   }
 
+  clearFilters() {
+    this.selectedFilter = 'all';
+    this.applyFilter();
+  }
+
+  getFilterIcon(value: string): string {
+    switch (value) {
+      case 'available': return 'check_circle';
+      case 'used': return 'done';
+      case 'expired': return 'block';
+      default: return 'list';
+    }
+  }
+
   isExpired(benefit: Benefit): boolean {
     return new Date(benefit.expirationDate) < new Date();
   }
@@ -106,12 +122,12 @@ export class BenefitListComponent implements OnInit {
     }
   }
 
-  getStatusColor(status: string): string {
+  getStatusIcon(status: string): string {
     switch (status) {
-      case 'used': return 'primary';
-      case 'expired': return 'warn';
-      case 'available': return 'accent';
-      default: return 'primary';
+      case 'used': return 'done';
+      case 'expired': return 'block';
+      case 'available': return 'check_circle';
+      default: return 'help';
     }
   }
 
@@ -127,5 +143,99 @@ export class BenefitListComponent implements OnInit {
     return this.benefits
       .filter(b => !b.used && !this.isExpired(b))
       .reduce((total, benefit) => total + benefit.amount, 0);
+  }
+
+  getSelectedFilterLabel(): string {
+    const option = this.filterOptions.find(opt => opt.value === this.selectedFilter);
+    return option?.label || 'Filtro';
+  }
+
+  getUsagePercentage(): number {
+    if (this.benefits.length === 0) return 0;
+    const usedCount = this.benefits.filter(b => b.used).length;
+    return Math.round((usedCount / this.benefits.length) * 100);
+  }
+
+  getEmptyStateTitle(): string {
+    switch (this.selectedFilter) {
+      case 'available': return 'Nenhum benefício disponível';
+      case 'used': return 'Nenhum benefício utilizado';
+      case 'expired': return 'Nenhum benefício expirado';
+      default: return 'Nenhum benefício encontrado';
+    }
+  }
+
+  getEmptyStateMessage(): string {
+    switch (this.selectedFilter) {
+      case 'available': return 'Faça mais doações para desbloquear novos descontos.';
+      case 'used': return 'Você ainda não utilizou nenhum benefício.';
+      case 'expired': return 'Não há benefícios expirados no momento.';
+      default: return 'Ainda não há benefícios cadastrados.';
+    }
+  }
+
+  getDaysUntilExpiration(expirationDate: Date): number {
+    const now = new Date();
+    const diff = expirationDate.getTime() - now.getTime();
+    return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+  }
+
+  getExpirationClass(expirationDate: Date): string {
+    const now = new Date();
+    const diff = expirationDate.getTime() - now.getTime();
+    const days = diff / (1000 * 60 * 60 * 24);
+
+    if (days <= 0) return 'expired';
+    if (days <= 7) return 'near-expiration';
+    return 'valid';
+  }
+
+  getUrgencyClass(expirationDate: Date): string {
+    const now = new Date();
+    const diff = expirationDate.getTime() - now.getTime();
+    const days = diff / (1000 * 60 * 60 * 24);
+
+    if (days <= 0) return 'expired';
+    if (days <= 7) return 'urgent';
+    return 'normal';
+  }
+
+  getUrgencyIcon(expirationDate: Date): string {
+    const now = new Date();
+    const diff = expirationDate.getTime() - now.getTime();
+    const days = diff / (1000 * 60 * 60 * 24);
+
+    if (days <= 0) return 'event_busy';
+    if (days <= 7) return 'warning';
+    return 'event_available';
+  }
+
+  getUrgencyText(expirationDate: Date): string {
+    const now = new Date();
+    const diff = expirationDate.getTime() - now.getTime();
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    if (days <= 0) return 'Expirado';
+    if (days <= 7) return `Expira em ${days} dia(s)`;
+    return `Expira em ${days} dias`;
+  }
+
+
+  viewDetails(benefit: Benefit) {
+    this.toastr.info(`Detalhes do benefício: ${benefit.description}`, 'Informação');
+  }
+
+  useBenefit(benefit: Benefit) {
+    if (this.getBenefitStatus(benefit) !== 'available') {
+      this.toastr.warning('Este benefício não está disponível para uso.');
+      return;
+    }
+    this.toastr.success(`Benefício utilizado: ${benefit.description}`, 'Sucesso');
+    benefit.used = true;
+    this.applyFilter();
+  }
+
+  goToDonation() {
+    this.router.navigate(['/donations/schedule']);
   }
 }
