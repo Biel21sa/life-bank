@@ -32,6 +32,9 @@ import { ToastrService } from 'ngx-toastr';
 export class ClinicEditComponent implements OnInit {
   clinicForm!: FormGroup;
   clinicId!: string;
+  originalValues: any = {};
+  isSubmitting = false;
+  showChangesPreview = false;
 
   constructor(
     private fb: FormBuilder,
@@ -79,6 +82,7 @@ export class ClinicEditComponent implements OnInit {
           neighborhood: clinic.neighborhood,
           postalCode: clinic.postalCode
         });
+        this.originalValues = this.clinicForm.getRawValue();
       }
     } catch (error) {
       this.toastr.error('Erro ao carregar dados da clínica');
@@ -86,8 +90,81 @@ export class ClinicEditComponent implements OnInit {
     }
   }
 
+  isFieldModified(field: string): boolean {
+    return this.clinicForm.get(field)?.value !== this.originalValues[field];
+  }
+
+  hasPersonalChanges(): boolean {
+    return ['name', 'cpf', 'email', 'phone'].some(f => this.isFieldModified(f));
+  }
+
+  hasClinicChanges(): boolean {
+    return ['nameClinic', 'cnpj'].some(f => this.isFieldModified(f));
+  }
+
+  hasAddressChanges(): boolean {
+    return ['street', 'number', 'neighborhood', 'postalCode'].some(f => this.isFieldModified(f));
+  }
+
+  hasAnyChanges(): boolean {
+    return this.hasPersonalChanges() || this.hasClinicChanges() || this.hasAddressChanges();
+  }
+
+  isPersonalInfoValid(): boolean {
+    return ['name', 'cpf', 'email', 'phone'].every(f => this.clinicForm.get(f)?.valid);
+  }
+
+  isClinicInfoValid(): boolean {
+    return ['nameClinic', 'cnpj'].every(f => this.clinicForm.get(f)?.valid);
+  }
+
+  isAddressInfoValid(): boolean {
+    return ['street', 'number', 'neighborhood', 'postalCode'].every(f => this.clinicForm.get(f)?.valid);
+  }
+
+  hasPersonalInfoErrors(): boolean {
+    return ['name', 'cpf', 'email', 'phone'].some(f => this.clinicForm.get(f)?.invalid);
+  }
+
+  hasClinicInfoErrors(): boolean {
+    return ['nameClinic', 'cnpj'].some(f => this.clinicForm.get(f)?.invalid);
+  }
+
+  hasAddressInfoErrors(): boolean {
+    return ['street', 'number', 'neighborhood', 'postalCode'].some(f => this.clinicForm.get(f)?.invalid);
+  }
+
+  resetForm() {
+    this.clinicForm.reset(this.originalValues);
+  }
+
+  getChangesCount(): number {
+    return Object.keys(this.clinicForm.controls).filter(f => this.isFieldModified(f)).length;
+  }
+
+  getChangedFields() {
+    return Object.keys(this.clinicForm.controls)
+      .filter(f => this.isFieldModified(f))
+      .map(f => ({
+        label: f,
+        oldValue: this.originalValues[f],
+        newValue: this.clinicForm.get(f)?.value,
+        icon: 'edit'
+      }));
+  }
+
+  closeChangesPreview() {
+    this.showChangesPreview = false;
+  }
+
+  confirmSave() {
+    this.showChangesPreview = false;
+    this.onSubmit();
+  }
+
   async onSubmit() {
-    if (this.clinicForm.valid) {
+    if (this.clinicForm.valid && this.hasAnyChanges()) {
+      this.isSubmitting = true;
       try {
         const updatedClinic: User = {
           ...this.clinicForm.value,
@@ -100,6 +177,8 @@ export class ClinicEditComponent implements OnInit {
       } catch (error) {
         this.toastr.error('Erro ao atualizar clínica');
         console.error(error);
+      } finally {
+        this.isSubmitting = false;
       }
     }
   }
