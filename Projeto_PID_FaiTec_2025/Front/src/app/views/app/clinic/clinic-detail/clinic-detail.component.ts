@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { User } from '../../../../domain/model/user';
 import { UserReadService } from '../../../../services/user/user-read.service';
 import { MatCardModule } from '@angular/material/card';
@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
 import { AuthenticationService } from '../../../../services/security/authentication.service';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-clinic-detail',
@@ -19,29 +20,92 @@ import { AuthenticationService } from '../../../../services/security/authenticat
     MatIconModule,
     CommonModule,
     NgxMaskPipe,
+    MatMenu,
+    MatMenuModule
   ],
   templateUrl: './clinic-detail.component.html',
-  styleUrl: './clinic-detail.component.css'
+  styleUrl: './clinic-detail.component.css',
 })
 export class ClinicDetailComponent implements OnInit {
   clinic?: User;
+  hasError = false;
 
   constructor(
     private userReadService: UserReadService,
     private route: ActivatedRoute,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     let clinicId = this.route.snapshot.paramMap.get('id');
-    this.loadClinicById(clinicId!);
+    if (clinicId) {
+      this.loadClinicById(clinicId);
+    }
   }
 
   async loadClinicById(clinicId: string) {
-    this.clinic = await this.userReadService.findById(clinicId);
+    try {
+      this.hasError = false;
+      this.clinic = await this.userReadService.findById(clinicId);
+    } catch (err) {
+      console.error('Erro ao carregar clínica:', err);
+      this.hasError = true;
+    }
   }
 
   isAdministrator(): boolean {
     return this.authenticationService.isAdministrator();
+  }
+
+  /** Retorna o endereço completo */
+  getFullAddress(): string {
+    if (!this.clinic) return '';
+    const { street, number, neighborhood, postalCode } = this.clinic;
+    return `${street || ''}, ${number || ''} - ${neighborhood || ''}, CEP: ${postalCode || ''}`;
+  }
+
+  /** Abre o mapa no Google Maps */
+  openMap(): void {
+    if (!this.clinic) return;
+    const query = encodeURIComponent(this.getFullAddress());
+    window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
+  }
+
+  /** Ações rápidas */
+  contactClinic(): void {
+    if (!this.clinic) return;
+    const phone = this.clinic.phone ? `tel:${this.clinic.phone}` : null;
+    const email = this.clinic.email ? `mailto:${this.clinic.email}` : null;
+
+    if (phone) {
+      window.open(phone, '_self');
+    } else if (email) {
+      window.open(email, '_self');
+    } else {
+      alert('Nenhum contato disponível para esta clínica.');
+    }
+  }
+
+  viewReports(): void {
+    // Aqui você pode redirecionar para uma rota de relatórios
+    if (this.clinic) {
+      this.router.navigate(['/clinic/reports', this.clinic.id]);
+    }
+  }
+
+  viewHistory(): void {
+    // Aqui você pode redirecionar para uma rota de histórico
+    if (this.clinic) {
+      this.router.navigate(['/clinic/history', this.clinic.id]);
+    }
+  }
+
+  /** Recarregar em caso de erro */
+  retryLoad(): void {
+    let clinicId = this.route.snapshot.paramMap.get('id');
+    if (clinicId) {
+      this.loadClinicById(clinicId);
+    }
   }
 }
