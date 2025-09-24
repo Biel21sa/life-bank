@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS notification;
+DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS benefit;
 DROP TABLE IF EXISTS donation;
 DROP TABLE IF EXISTS blood_stock;
@@ -122,4 +123,13 @@ CREATE TABLE notification (
     timestamp DATE NOT NULL DEFAULT NOW(),
     donor_id INTEGER NOT NULL REFERENCES donor(id) ON DELETE CASCADE,
     UNIQUE(donor_id, timestamp)
+);
+
+CREATE TABLE messages (
+    id SERIAL PRIMARY KEY,
+    sender_id INTEGER NOT NULL REFERENCES user_model(id) ON DELETE CASCADE,
+    receiver_id INTEGER NOT NULL REFERENCES user_model(id) ON DELETE CASCADE,
+    message TEXT NOT NULL,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(sender_id, receiver_id, sent_at)
 );
