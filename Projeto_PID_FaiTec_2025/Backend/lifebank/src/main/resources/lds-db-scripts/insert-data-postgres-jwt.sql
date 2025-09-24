@@ -161,3 +161,9 @@ UPDATE blood_stock SET current_stock = current_stock + 0.45 WHERE blood_type = '
 INSERT INTO donation (quantity, collection_date, expiration_date, donor_id, donation_location_id, blood_id) VALUES
 (0.45, '2025-04-15', '2025-05-15', 1, 1, 14),
 (0.45, '2025-04-20', '2025-05-20', 2, 1, 15);
+
+INSERT INTO mensagens (remetente_id, destinatario_id, mensagem)
+VALUES (1, 2, 'Oi Maria, tudo bem?');
+
+INSERT INTO mensagens (remetente_id, destinatario_id, mensagem)
+VALUES (2, 1, 'Oi João! Estou bem e você?');
