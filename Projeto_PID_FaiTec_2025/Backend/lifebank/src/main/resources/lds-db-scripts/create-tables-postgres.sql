@@ -123,3 +123,11 @@ CREATE TABLE notification (
     donor_id INTEGER NOT NULL REFERENCES donor(id) ON DELETE CASCADE,
     UNIQUE(donor_id, timestamp)
 );
+
+CREATE TABLE mensagens (
+    id SERIAL PRIMARY KEY,
+    remetente_id INT NOT NULL,
+    destinatario_id INT NOT NULL,
+    mensagem TEXT NOT NULL,
+    data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
