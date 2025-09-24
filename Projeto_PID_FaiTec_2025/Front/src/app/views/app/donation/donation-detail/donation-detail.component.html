@@ -1,108 +1,345 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Detalhes da Doação</h1>
-    <p>Visualize informações completas da doação</p>
+<div class="donation-detail-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="donation-icon">
+        <mat-icon>volunteer_activism</mat-icon>
+      </div>
+      <h1>Detalhes da Doação</h1>
+      <p class="hero-subtitle">Informações completas sobre esta doação de sangue</p>
+    </div>
   </div>
 
-  <mat-card *ngIf="donation">
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>volunteer_activism</mat-icon>
-        Informações da Doação
-      </mat-card-title>
-    </mat-card-header>
+  <!-- Content Section -->
+  <div class="content-section" *ngIf="donation">
+    <div class="content-container">
 
-    <mat-card-content>
-      <!-- Informações do Doador -->
-      <div class="section">
-        <h3>Informações do Doador</h3>
-        <div class="info-grid">
-          <div class="info-item">
-            <mat-icon>person</mat-icon>
-            <div class="info-content">
-              <span class="label">Nome</span>
-              <span class="value">{{ donation.donor?.user.name || 'N/A' }}</span>
+      <div class="actions-section">
+        <button mat-raised-button color="primary" class="back-button" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          <span>Voltar</span>
+        </button>
+      </div>
+
+      <!-- Impact Summary -->
+      <div class="impact-summary">
+        <div class="impact-card">
+          <div class="impact-header">
+            <div class="impact-icon">
+              <mat-icon>favorite</mat-icon>
+            </div>
+            <div class="impact-content">
+              <h3>Impacto desta Doação</h3>
+              <p>Esta doação pode salvar até <strong>3 vidas</strong></p>
             </div>
           </div>
-          <div class="info-item">
-            <mat-icon>credit_card</mat-icon>
-            <div class="info-content">
-              <span class="label">CPF</span>
-              <span class="value">{{ (donation.donor?.user.cpf || '') | mask: '000.000.000-00' }}</span>
+
+          <div class="impact-stats">
+            <div class="stat-item">
+              <div class="stat-icon">
+                <mat-icon>local_drink</mat-icon>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">{{ (donation.quantity * 1000) }}ml</div>
+                <div class="stat-label">Volume Coletado</div>
+              </div>
             </div>
-          </div>
-          <div class="info-item">
-            <mat-icon>bloodtype</mat-icon>
-            <div class="info-content">
-              <span class="label">Tipo Sanguíneo</span>
-              <span class="value">{{ donation.donor?.bloodType || 'N/A' }}</span>
+
+            <div class="stat-item">
+              <div class="stat-icon">
+                <mat-icon>schedule</mat-icon>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">{{ getDaysUntilExpiration() }}</div>
+                <div class="stat-label">Dias de Validade</div>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-icon">
+                <mat-icon>people</mat-icon>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Vidas Salvas</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Informações da Doação -->
-      <div class="section">
-        <h3>Dados da Doação</h3>
-        <div class="info-grid">
-          <div class="info-item">
-            <mat-icon>calendar_today</mat-icon>
-            <div class="info-content">
-              <span class="label">Data da Coleta</span>
-              <span class="value">{{ donation.collectionDate | date: 'dd/MM/yyyy' }}</span>
+      <!-- Main Information Cards -->
+      <div class="info-sections">
+
+        <!-- Donor Information -->
+        <div class="info-card donor-card">
+          <div class="card-header">
+            <div class="header-icon">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Informações do Doador</h3>
+              <p>Dados pessoais e tipo sanguíneo</p>
+            </div>
+            <div class="header-badge">
+              <span class="blood-type-badge" [ngClass]="getBloodTypeClass(donation.donor?.bloodType)">
+                {{ donation.donor?.bloodType || 'N/A' }}
+              </span>
             </div>
           </div>
-          <div class="info-item">
-            <mat-icon>schedule</mat-icon>
-            <div class="info-content">
-              <span class="label">Prazo de Validade</span>
-              <span class="value">{{ donation.expirationDate | date: 'dd/MM/yyyy' }}</span>
+
+          <div class="card-content">
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>badge</mat-icon>
+                </div>
+                <div class="item-content">
+                  <span class="item-label">Nome Completo</span>
+                  <span class="item-value">{{ donation.donor?.user.name || 'N/A' }}</span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>credit_card</mat-icon>
+                </div>
+                <div class="item-content">
+                  <span class="item-label">CPF</span>
+                  <span class="item-value">{{ (donation.donor?.user.cpf || '') | mask: '000.000.000-00' }}</span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>email</mat-icon>
+                </div>
+                <div class="item-content">
+                  <span class="item-label">E-mail</span>
+                  <span class="item-value">{{ donation.donor?.user.email || 'N/A' }}</span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>phone</mat-icon>
+                </div>
+                <div class="item-content">
+                  <span class="item-label">Telefone</span>
+                  <span class="item-value">{{ donation.donor?.user.phone || 'N/A' }}</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="info-item">
-            <mat-icon>local_drink</mat-icon>
-            <div class="info-content">
-              <span class="label">Quantidade</span>
-              <span class="value quantity">{{ (donation.quantity * 1000) }}ml</span>
+        </div>
+
+        <!-- Donation Information -->
+        <div class="info-card donation-card">
+          <div class="card-header">
+            <div class="header-icon">
+              <mat-icon>bloodtype</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Dados da Doação</h3>
+              <p>Informações sobre coleta e validade</p>
+            </div>
+            <div class="header-status">
+              <div class="status-indicator" [ngClass]="getStatusClass()">
+                <mat-icon>{{ getStatusIcon() }}</mat-icon>
+                <span>{{ getStatusText() }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>calendar_today</mat-icon>
+                </div>
+                <div class="item-content">
+                  <span class="item-label">Data da Coleta</span>
+                  <span class="item-value">{{ donation.collectionDate | date: 'dd/MM/yyyy' }}</span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>schedule</mat-icon>
+                </div>
+                <div class="item-content">
+                  <span class="item-label">Data de Validade</span>
+                  <span class="item-value" [ngClass]="getExpirationClass()">
+                    {{ donation.expirationDate | date: 'dd/MM/yyyy' }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>local_drink</mat-icon>
+                </div>
+                <div class="item-content">
+                  <span class="item-label">Volume Coletado</span>
+                  <span class="item-value quantity">{{ (donation.quantity * 1000) }}ml</span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>access_time</mat-icon>
+                </div>
+                <div class="item-content">
+                  <span class="item-label">Tempo de Armazenamento</span>
+                  <span class="item-value">{{ getStorageTime() }} dias</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Information -->
+        <div class="info-card location-card">
+          <div class="card-header">
+            <div class="header-icon">
+              <mat-icon>location_on</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Local de Doação</h3>
+              <p>Informações sobre o ponto de coleta</p>
+            </div>
+            <div class="header-action">
+              <button mat-icon-button class="map-button" (click)="openMap()" matTooltip="Ver no mapa">
+                <mat-icon>map</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="location-info">
+              <div class="location-main">
+                <div class="location-icon">
+                  <mat-icon>business</mat-icon>
+                </div>
+                <div class="location-details">
+                  <h4>{{ donation.donationLocation?.name || 'N/A' }}</h4>
+                  <p class="location-address">
+                    {{ donation.donationLocation?.street || 'N/A' }},
+                    {{ donation.donationLocation?.number || 'S/N' }} -
+                    {{ donation.donationLocation?.neighborhood || 'N/A' }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="location-contact" *ngIf="donation.donationLocation?.phone">
+                <div class="contact-item">
+                  <mat-icon>phone</mat-icon>
+                  <span>{{ donation.donationLocation.phone }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Informações do Local -->
-      <div class="section">
-        <h3>Local de Doação</h3>
-        <div class="info-grid">
-          <div class="info-item">
-            <mat-icon>location_on</mat-icon>
-            <div class="info-content">
-              <span class="label">Local</span>
-              <span class="value">{{ donation.donationLocation?.name || 'N/A' }}</span>
+      <!-- Timeline Section -->
+      <div class="timeline-section">
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <div class="timeline-icon">
+              <mat-icon>timeline</mat-icon>
             </div>
+            <h3>Linha do Tempo da Doação</h3>
           </div>
-          <div class="info-item">
-            <mat-icon>home</mat-icon>
-            <div class="info-content">
-              <span class="label">Endereço</span>
-              <span class="value">{{ donation.donationLocation?.street || 'N/A' }}, {{
-                donation.donationLocation?.neighborhood || 'N/A' }}</span>
+
+          <div class="timeline-content">
+            <div class="timeline-item completed">
+              <div class="timeline-marker">
+                <mat-icon>check_circle</mat-icon>
+              </div>
+              <div class="timeline-info">
+                <h4>Doação Realizada</h4>
+                <p>{{ donation.collectionDate | date: 'dd/MM/yyyy' }}</p>
+                <span class="timeline-description">Sangue coletado com sucesso</span>
+              </div>
+            </div>
+
+            <div class="timeline-item completed">
+              <div class="timeline-marker">
+                <mat-icon>science</mat-icon>
+              </div>
+              <div class="timeline-info">
+                <h4>Processamento</h4>
+                <p>{{ getProcessingDate() | date: 'dd/MM/yyyy' }}</p>
+                <span class="timeline-description">Testes e separação de componentes</span>
+              </div>
+            </div>
+
+            <div class="timeline-item" [ngClass]="getAvailabilityStatus()">
+              <div class="timeline-marker">
+                <mat-icon>{{ getAvailabilityIcon() }}</mat-icon>
+              </div>
+              <div class="timeline-info">
+                <h4>Disponível para Uso</h4>
+                <p>{{ getAvailabilityDate() | date: 'dd/MM/yyyy' }}</p>
+                <span class="timeline-description">{{ getAvailabilityDescription() }}</span>
+              </div>
+            </div>
+
+            <div class="timeline-item" [ngClass]="getExpirationStatus()">
+              <div class="timeline-marker">
+                <mat-icon>{{ getExpirationIcon() }}</mat-icon>
+              </div>
+              <div class="timeline-info">
+                <h4>Data de Validade</h4>
+                <p>{{ donation.expirationDate | date: 'dd/MM/yyyy' }}</p>
+                <span class="timeline-description">{{ getExpirationDescription() }}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </mat-card-content>
 
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="goBack()">
-        <mat-icon>arrow_back</mat-icon>
-        Voltar
+      <!-- Actions Section -->
+      <div class="actions-section">
+        <button mat-raised-button color="primary" class="back-button" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          <span>Voltar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-section" *ngIf="!donation">
+    <div class="loading-container">
+      <div class="loading-spinner">
+        <mat-icon>hourglass_empty</mat-icon>
+      </div>
+      <h3>Carregando Detalhes</h3>
+      <p>Buscando informações da doação...</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-section" *ngIf="hasError">
+    <div class="error-container">
+      <div class="error-icon">
+        <mat-icon>error_outline</mat-icon>
+      </div>
+      <h3>Erro ao Carregar</h3>
+      <p>Não foi possível carregar os detalhes da doação.</p>
+      <button mat-raised-button color="primary" (click)="ngOnInit()">
+        <mat-icon>refresh</mat-icon>
+        <span>Tentar Novamente</span>
       </button>
-    </mat-card-actions>
-  </mat-card>
-
-  <!-- Loading -->
-  <div class="loading" *ngIf="!donation">
-    <mat-icon>hourglass_empty</mat-icon>
-    <p>Carregando detalhes da doação...</p>
+    </div>
   </div>
 </div>
