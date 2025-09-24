@@ -34,6 +34,8 @@ import { ToastrService } from 'ngx-toastr';
 export class DonorEditComponent implements OnInit {
   donorForm!: FormGroup;
   donorId!: string;
+  initialValues: any;
+  isSubmitting = false;
 
   constructor(
     private fb: FormBuilder,
@@ -79,6 +81,7 @@ export class DonorEditComponent implements OnInit {
           neighborhood: donor.neighborhood,
           postalCode: donor.postalCode
         });
+        this.initialValues = this.donorForm.getRawValue();
       }
     } catch (error) {
       this.toastr.error('Erro ao carregar dados do doador');
@@ -88,6 +91,7 @@ export class DonorEditComponent implements OnInit {
 
   async onSubmit() {
     if (this.donorForm.valid) {
+      this.isSubmitting = true;
       try {
         const updatedDonor: User = {
           ...this.donorForm.value,
@@ -100,11 +104,74 @@ export class DonorEditComponent implements OnInit {
       } catch (error) {
         this.toastr.error('Erro ao atualizar doador');
         console.error(error);
+      } finally {
+        this.isSubmitting = false;
       }
     }
   }
 
   onCancel() {
     this.router.navigate(['/donor/list']);
+  }
+
+  hasChanges(): boolean {
+    if (!this.initialValues) return false;
+    return JSON.stringify(this.initialValues) !== JSON.stringify(this.donorForm.getRawValue());
+  }
+
+  getChangedFieldsCount(): number {
+    if (!this.initialValues) return 0;
+    const current = this.donorForm.getRawValue();
+    return Object.keys(current).filter(key => current[key] !== this.initialValues[key]).length;
+  }
+
+  isFieldModified(field: string): boolean {
+    if (!this.initialValues) return false;
+    return this.donorForm.get(field)?.value !== this.initialValues[field];
+  }
+
+  hasPersonalInfoChanges(): boolean {
+    return ['name', 'cpf', 'email', 'phone'].some(f => this.isFieldModified(f));
+  }
+
+  hasDonorInfoChanges(): boolean {
+    return this.isFieldModified('bloodType');
+  }
+
+  hasAddressChanges(): boolean {
+    return ['street', 'number', 'neighborhood', 'postalCode'].some(f => this.isFieldModified(f));
+  }
+
+  showValidationSummary(): boolean {
+    return !this.donorForm.valid && this.donorForm.touched;
+  }
+
+  getFormStatusClass(): string {
+    if (!this.hasChanges()) return 'unchanged';
+    return this.donorForm.valid ? 'modified valid' : 'modified invalid';
+  }
+
+  getFormStatusIcon(): string {
+    if (!this.hasChanges()) return 'check';
+    return this.donorForm.valid ? 'edit' : 'error_outline';
+  }
+
+  getFormStatusText(): string {
+    if (!this.hasChanges()) return 'Sem alterações';
+    return this.donorForm.valid ? 'Alterações válidas' : 'Há erros';
+  }
+
+  getBloodTypeDescription(type: string): string {
+    const descriptions: Record<string, string> = {
+      'A+': 'Pode doar para A+ e AB+; pode receber de A+, A-, O+ e O-',
+      'A-': 'Pode doar para A+, A-, AB+ e AB-; pode receber de A- e O-',
+      'B+': 'Pode doar para B+ e AB+; pode receber de B+, B-, O+ e O-',
+      'B-': 'Pode doar para B+, B-, AB+ e AB-; pode receber de B- e O-',
+      'AB+': 'Receptor universal; pode doar apenas para AB+',
+      'AB-': 'Pode doar para AB+ e AB-; pode receber de todos Rh-',
+      'O+': 'Pode doar para todos os tipos Rh+; pode receber de O+ e O-',
+      'O-': 'Doador universal; pode receber apenas de O-'
+    };
+    return descriptions[type] || 'Tipo sanguíneo não reconhecido.';
   }
 }
