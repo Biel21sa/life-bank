@@ -1,5 +1,5 @@
 /* Importar fonte moderna */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 
 /* Reset e configurações globais */
 * {
@@ -74,8 +74,15 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-30px) rotate(180deg); }
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-30px) rotate(180deg);
+  }
 }
 
 .hero-content {
@@ -92,6 +99,7 @@
     opacity: 0;
     transform: translateY(40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -113,12 +121,15 @@
 }
 
 @keyframes pulse {
-  0%, 100% { 
-    transform: scale(1); 
+
+  0%,
+  100% {
+    transform: scale(1);
     box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
   }
-  50% { 
-    transform: scale(1.05); 
+
+  50% {
+    transform: scale(1.05);
     box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
   }
 }
@@ -203,16 +214,28 @@
   gap: 20px;
 }
 
-.stat-card:nth-child(1) { animation-delay: 0.1s; }
-.stat-card:nth-child(2) { animation-delay: 0.2s; }
-.stat-card:nth-child(3) { animation-delay: 0.3s; }
-.stat-card:nth-child(4) { animation-delay: 0.4s; }
+.stat-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.stat-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.stat-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.stat-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
 
 @keyframes slideInUp {
   from {
     opacity: 0;
     transform: translateY(60px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -238,10 +261,21 @@
   box-shadow: 0 16px 48px rgba(25, 118, 210, 0.2);
 }
 
-.stat-card.total-benefits .stat-indicator { background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%); }
-.stat-card.available-benefits .stat-indicator { background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%); }
-.stat-card.total-value .stat-indicator { background: linear-gradient(135deg, #f57c00 0%, #ff9800 100%); }
-.stat-card.usage-stats .stat-indicator { background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 100%); }
+.stat-card.total-benefits .stat-indicator {
+  background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+}
+
+.stat-card.available-benefits .stat-indicator {
+  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+}
+
+.stat-card.total-value .stat-indicator {
+  background: linear-gradient(135deg, #f57c00 0%, #ff9800 100%);
+}
+
+.stat-card.usage-stats .stat-indicator {
+  background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 100%);
+}
 
 .stat-icon {
   width: 64px;
@@ -311,9 +345,17 @@
   font-weight: 600;
 }
 
-.stat-trend.positive { color: #2e7d32; }
-.stat-trend.negative { color: #d32f2f; }
-.stat-trend.neutral { color: #f57c00; }
+.stat-trend.positive {
+  color: #2e7d32;
+}
+
+.stat-trend.negative {
+  color: #d32f2f;
+}
+
+.stat-trend.neutral {
+  color: #f57c00;
+}
 
 .stat-trend mat-icon {
   font-size: 16px;
@@ -510,8 +552,13 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .loading-spinner {
@@ -527,8 +574,13 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-spinner mat-icon {
@@ -631,6 +683,7 @@
     opacity: 0;
     transform: translateY(60px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -687,7 +740,7 @@
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 8px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   letter-spacing: -0.02em;
 }
 
@@ -1015,17 +1068,17 @@
   .stats-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
-  
+
   .benefits-grid {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   }
-  
+
   .section-header {
     flex-direction: column;
     gap: 20px;
     text-align: center;
   }
-  
+
   .cta-card {
     flex-direction: column;
     text-align: center;
@@ -1037,65 +1090,65 @@
   .hero-section {
     padding: 60px 0 40px;
   }
-  
+
   .hero-content {
     padding: 0 20px;
   }
-  
+
   .hero-content h1 {
     font-size: 2.5rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.1rem;
   }
-  
+
   .stats-container,
   .filters-container,
   .benefits-container-inner {
     padding: 0 20px;
   }
-  
+
   .stats-section,
   .filters-section,
   .benefits-section {
     padding: 60px 0;
   }
-  
+
   .stats-header h2,
   .header-left h2 {
     font-size: 2rem;
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  
+
   .benefits-grid {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  
+
   .filters-header {
     padding: 20px 24px;
     flex-direction: column;
     gap: 16px;
     text-align: center;
   }
-  
+
   .filters-content {
     padding: 24px;
   }
-  
+
   .filter-summary {
     justify-content: center;
   }
-  
+
   .card-actions {
     flex-direction: column;
   }
-  
+
   .cta-card {
     padding: 32px 24px;
   }
@@ -1105,55 +1158,55 @@
   .hero-content h1 {
     font-size: 2rem;
   }
-  
+
   .benefits-icon {
     width: 80px;
     height: 80px;
   }
-  
+
   .benefits-icon mat-icon {
     font-size: 36px;
     width: 36px;
     height: 36px;
   }
-  
+
   .stat-card {
     padding: 24px;
   }
-  
+
   .stat-number {
     font-size: 2.2rem;
   }
-  
+
   .amount-value {
     font-size: 2.5rem;
   }
-  
+
   .card-header,
   .card-content {
     padding: 24px;
   }
-  
+
   .card-footer {
     padding: 16px 24px;
   }
-  
+
   .stats-header h2,
   .header-left h2 {
     font-size: 1.8rem;
   }
-  
+
   .loading-container,
   .empty-state {
     padding: 60px 20px;
   }
-  
+
   .loading-spinner,
   .empty-icon {
     width: 100px;
     height: 100px;
   }
-  
+
   .loading-spinner mat-icon,
   .empty-icon mat-icon {
     font-size: 48px;

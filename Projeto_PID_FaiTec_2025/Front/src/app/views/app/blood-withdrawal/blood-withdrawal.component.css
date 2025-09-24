@@ -1,5 +1,5 @@
 /* Importar fonte moderna */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 
 /* Reset e configurações globais */
 * {
@@ -66,8 +66,15 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-30px) rotate(180deg); }
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-30px) rotate(180deg);
+  }
 }
 
 .hero-content {
@@ -84,6 +91,7 @@
     opacity: 0;
     transform: translateY(40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -105,12 +113,15 @@
 }
 
 @keyframes pulse {
-  0%, 100% { 
-    transform: scale(1); 
+
+  0%,
+  100% {
+    transform: scale(1);
     box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
   }
-  50% { 
-    transform: scale(1.05); 
+
+  50% {
+    transform: scale(1.05);
     box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
   }
 }
@@ -154,6 +165,7 @@
     opacity: 0;
     transform: translateY(-40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -759,6 +771,7 @@
     padding-top: 0;
     padding-bottom: 0;
   }
+
   to {
     opacity: 1;
     max-height: 200px;
@@ -915,12 +928,12 @@
   .reason-options {
     grid-template-columns: 1fr;
   }
-  
+
   .actions-container {
     flex-direction: column;
     gap: 20px;
   }
-  
+
   .actions-left,
   .actions-right {
     width: 100%;
@@ -932,35 +945,35 @@
   .hero-section {
     padding: 60px 0 40px;
   }
-  
+
   .hero-content {
     padding: 0 20px;
   }
-  
+
   .hero-content h1 {
     font-size: 2.5rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.1rem;
   }
-  
+
   .content-container {
     padding: 0 20px;
   }
-  
+
   .summary-container {
     padding: 0 20px;
     flex-direction: column;
     text-align: center;
     gap: 16px;
   }
-  
+
   .summary-content {
     flex-direction: column;
     gap: 8px;
   }
-  
+
   .filters-header,
   .list-header,
   .reason-header {
@@ -969,40 +982,40 @@
     gap: 16px;
     text-align: center;
   }
-  
+
   .filters-content,
   .reason-content {
     padding: 24px;
   }
-  
+
   .header-actions {
     justify-content: center;
   }
-  
+
   .filter-stats {
     justify-content: center;
   }
-  
+
   .table-container {
     overflow-x: auto;
   }
-  
+
   .blood-table th,
   .blood-table td {
     padding: 16px 12px;
     font-size: 0.85rem;
   }
-  
+
   .reason-option {
     flex-direction: column;
     text-align: center;
     gap: 16px;
   }
-  
+
   .actions-container {
     padding: 20px 24px;
   }
-  
+
   .cancel-button,
   .confirm-button {
     width: 100%;
@@ -1014,44 +1027,44 @@
   .hero-content h1 {
     font-size: 2rem;
   }
-  
+
   .withdrawal-icon {
     width: 80px;
     height: 80px;
   }
-  
+
   .withdrawal-icon mat-icon {
     font-size: 36px;
     width: 36px;
     height: 36px;
   }
-  
+
   .filters-card,
   .list-card,
   .reason-card {
     border-radius: 16px;
   }
-  
+
   .blood-table th,
   .blood-table td {
     padding: 12px 8px;
     font-size: 0.8rem;
   }
-  
+
   .blood-type-badge {
     font-size: 0.8rem;
     padding: 4px 12px;
   }
-  
+
   .empty-state {
     padding: 60px 20px;
   }
-  
+
   .empty-icon {
     width: 100px;
     height: 100px;
   }
-  
+
   .empty-icon mat-icon {
     font-size: 48px;
     width: 48px;
@@ -1103,6 +1116,7 @@
     opacity: 0;
     transform: translateY(60px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

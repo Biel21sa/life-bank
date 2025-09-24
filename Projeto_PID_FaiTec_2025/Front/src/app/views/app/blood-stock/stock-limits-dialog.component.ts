@@ -223,7 +223,7 @@ export interface StockLimitsResult {
   `,
   styles: [`
     /* Importar fonte moderna */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
     
     .dialog-container {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
