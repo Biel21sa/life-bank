@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { NgxMaskPipe } from 'ngx-mask';
+import { ToastrService } from 'ngx-toastr';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -9,16 +12,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { CommonModule } from '@angular/common';
-import { NgxMaskPipe } from 'ngx-mask';
-import { ToastrService } from 'ngx-toastr';
 import { Donation } from '../../../../domain/model/donation';
 import { User } from '../../../../domain/model/user';
+import { Donor } from '../../../../domain/model/donor';
 import { DonationCreateService } from '../../../../services/donation/donation-create.service';
 import { UserReadService } from '../../../../services/user/user-read.service';
 import { AuthenticationService } from '../../../../services/security/authentication.service';
 import { DonorReadService } from '../../../../services/donor/donor-read-service';
-import { Donor } from '../../../../domain/model/donor';
 
 @Component({
   selector: 'app-donation-create',
@@ -34,15 +34,17 @@ import { Donor } from '../../../../domain/model/donor';
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    NgxMaskPipe,
+    NgxMaskPipe
   ],
   templateUrl: './donation-create.component.html',
-  styleUrl: './donation-create.component.css'
+  styleUrls: ['./donation-create.component.css']
 })
 export class DonationCreateComponent implements OnInit {
   donationForm: FormGroup;
   donors: Donor[] = [];
   currentUser: User | null = null;
+  isSubmitting = false;
+  isLoading = true;
 
   constructor(
     private fb: FormBuilder,
@@ -77,6 +79,8 @@ export class DonationCreateComponent implements OnInit {
     } catch (error) {
       this.toastr.error('Erro ao carregar dados do usuário');
       console.error(error);
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -92,12 +96,42 @@ export class DonationCreateComponent implements OnInit {
     });
   }
 
+  getSelectedDonorName(): string {
+    const selectedDonorId = this.donationForm.get('donorId')?.value;
+    if (selectedDonorId) {
+      const selectedDonor = this.donors.find(donor => donor.id === selectedDonorId);
+      return selectedDonor?.user?.name || '';
+    }
+    return '';
+  }
+
+  getSelectedDonor(): Donor | undefined {
+    const donorId = this.donationForm.get('donorId')?.value;
+    return this.donors.find(d => d.id === donorId);
+  }
+
+  setQuantity(value: number) {
+    this.donationForm.get('quantity')?.setValue(value);
+  }
+
+  getCurrentDate(): Date {
+    return new Date();
+  }
+
+  getExpirationDate(): Date {
+    const date = new Date();
+    date.setDate(date.getDate() + 42);
+    return date;
+  }
+
   onSubmit() {
     if (this.donationForm.valid && this.currentUser?.donationLocationId) {
-      const selectedDonor = this.donors.find(d => d.id === this.donationForm.value.donorId);
+      this.isSubmitting = true;
+
+      const selectedDonor = this.getSelectedDonor();
       const collectionDate = new Date();
       const expirationDate = new Date(collectionDate);
-      expirationDate.setDate(expirationDate.getDate() + 42); // 42 dias de validade
+      expirationDate.setDate(expirationDate.getDate() + 42);
 
       const donation: Donation = {
         donorId: selectedDonor?.id!,
@@ -115,7 +149,10 @@ export class DonationCreateComponent implements OnInit {
         },
         error: (error) => {
           this.toastr.error('Erro ao registrar doação');
-          console.error('Erro ao criar doação:', error);
+          console.error(error);
+        },
+        complete: () => {
+          this.isSubmitting = false;
         }
       });
     }
