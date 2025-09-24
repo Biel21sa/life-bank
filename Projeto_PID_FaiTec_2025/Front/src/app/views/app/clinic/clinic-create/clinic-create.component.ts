@@ -38,8 +38,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 })
 export class ClinicCreateComponent implements OnInit {
   clinicForm: FormGroup;
-
   municipalities: Municipality[] = [];
+  isSubmitting = false;
+  hidePassword = true;
 
   constructor(
     private fb: FormBuilder,
@@ -53,7 +54,7 @@ export class ClinicCreateComponent implements OnInit {
       cpf: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       nameClinic: ['', Validators.required],
       cnpj: ['', Validators.required],
       street: ['', Validators.required],
@@ -80,8 +81,74 @@ export class ClinicCreateComponent implements OnInit {
     });
   }
 
+  isPersonalInfoValid(): boolean {
+    return (
+      this.clinicForm.get('name')?.valid &&
+      this.clinicForm.get('cpf')?.valid &&
+      this.clinicForm.get('phone')?.valid &&
+      this.clinicForm.get('email')?.valid &&
+      this.clinicForm.get('password')?.valid
+    ) ?? false;
+  }
+
+  hasPersonalInfoErrors(): boolean {
+    return (
+      this.clinicForm.get('name')?.touched ||
+      this.clinicForm.get('cpf')?.touched ||
+      this.clinicForm.get('phone')?.touched ||
+      this.clinicForm.get('email')?.touched ||
+      this.clinicForm.get('password')?.touched
+    ) ?? false;
+  }
+
+  isClinicInfoValid(): boolean {
+    return (
+      this.clinicForm.get('nameClinic')?.valid &&
+      this.clinicForm.get('cnpj')?.valid
+    ) ?? false;
+  }
+
+  hasClinicInfoErrors(): boolean {
+    return (
+      this.clinicForm.get('nameClinic')?.touched ||
+      this.clinicForm.get('cnpj')?.touched
+    ) ?? false;
+  }
+
+  isAddressInfoValid(): boolean {
+    return (
+      this.clinicForm.get('street')?.valid &&
+      this.clinicForm.get('number')?.valid &&
+      this.clinicForm.get('neighborhood')?.valid &&
+      this.clinicForm.get('postalCode')?.valid &&
+      this.clinicForm.get('municipalityId')?.valid
+    ) ?? false;
+  }
+
+  hasAddressInfoErrors(): boolean {
+    return (
+      this.clinicForm.get('street')?.touched ||
+      this.clinicForm.get('number')?.touched ||
+      this.clinicForm.get('neighborhood')?.touched ||
+      this.clinicForm.get('postalCode')?.touched ||
+      this.clinicForm.get('municipalityId')?.touched
+    ) ?? false;
+  }
+
+  showValidationSummary(): boolean {
+    return (
+      !this.clinicForm.valid &&
+      (this.hasPersonalInfoErrors() ||
+        this.hasClinicInfoErrors() ||
+        this.hasAddressInfoErrors() ||
+        ((this.clinicForm.get('acceptTerms')?.touched ?? false) &&
+          !(this.clinicForm.get('acceptTerms')?.value ?? true)))
+    );
+  }
+
   onSubmit() {
     if (this.clinicForm.valid) {
+      this.isSubmitting = true;
       const clinic: User = {
         ...this.clinicForm.value,
         role: UserRole.CLINIC
@@ -95,6 +162,9 @@ export class ClinicCreateComponent implements OnInit {
         error: (error) => {
           this.toastr.error('Erro ao cadastrar clínica');
           console.error('Erro ao criar clínica:', error);
+        },
+        complete: () => {
+          this.isSubmitting = false;
         }
       });
     }

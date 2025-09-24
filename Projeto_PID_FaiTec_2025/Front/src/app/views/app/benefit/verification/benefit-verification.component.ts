@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -34,7 +34,7 @@ import { MatIconModule } from '@angular/material/icon';
     templateUrl: './benefit-verification.component.html',
     styleUrls: ['./benefit-verification.component.css']
 })
-export class BenefitVerificationComponent implements OnInit {
+export class BenefitVerificationComponent {
     cpfForm: FormGroup;
     benefits: Benefit[] = [];
     displayedColumns: string[] = ['select', 'description', 'amount', 'expirationDate', 'used'];
@@ -57,9 +57,6 @@ export class BenefitVerificationComponent implements OnInit {
         this.selectedBenefitControl = new FormControl<Benefit | null>(null);
     }
 
-    ngOnInit(): void { }
-
-    /** 🔎 Buscar benefícios pelo CPF */
     searchBenefits() {
         if (this.cpfForm.invalid) {
             this.toastr.warning('Informe um CPF válido com 11 dígitos');
@@ -86,7 +83,6 @@ export class BenefitVerificationComponent implements OnInit {
         });
     }
 
-    /** 🔄 Limpar busca e resetar estado */
     clearSearch() {
         this.benefits = [];
         this.selectedBenefitControl.setValue(null);
@@ -94,7 +90,6 @@ export class BenefitVerificationComponent implements OnInit {
         this.cpfForm.reset();
     }
 
-    /** ✅ Confirmar benefício selecionado */
     onConfirm() {
         const selected = this.selectedBenefitControl.value;
         if (!selected) {
@@ -116,34 +111,28 @@ export class BenefitVerificationComponent implements OnInit {
         });
     }
 
-    /** ⬅️ Voltar para tela inicial */
     goBack() {
         this.router.navigate(['/clinic-home']);
     }
 
-    /** 📊 Contagem de benefícios disponíveis */
     getAvailableCount(): number {
         return this.benefits.filter(b => !b.used && !this.isExpired(b)).length;
     }
 
-    /** 📊 Contagem de benefícios já usados */
     getUsedCount(): number {
         return this.benefits.filter(b => b.used).length;
     }
 
-    /** ⏳ Verificar se benefício está expirado */
     isExpired(benefit: Benefit): boolean {
         return new Date(benefit.expirationDate) < new Date();
     }
 
-    /** 🗓️ Dias restantes até expirar */
     getDaysUntilExpiration(expirationDate: Date | string): number {
         const exp = new Date(expirationDate).getTime();
         const today = new Date().getTime();
         return Math.max(Math.ceil((exp - today) / (1000 * 60 * 60 * 24)), 0);
     }
 
-    /** 🎨 Classes para status do benefício */
     getBenefitStatusClass(benefit: Benefit): string {
         if (benefit.used) return 'status-used';
         if (this.isExpired(benefit)) return 'status-expired';
@@ -162,12 +151,10 @@ export class BenefitVerificationComponent implements OnInit {
         return 'Disponível';
     }
 
-    /** 🎨 Classe de expiração */
     getExpirationClass(expirationDate: Date | string): string {
         return this.isExpired({ expirationDate } as Benefit) ? 'expired' : 'valid';
     }
 
-    /** 📌 Exibir detalhes do benefício */
     showBenefitDetails(benefit: Benefit) {
         this.toastr.info(
             `${benefit.description} - ${benefit.amount}% até ${new Date(benefit.expirationDate).toLocaleDateString()}`

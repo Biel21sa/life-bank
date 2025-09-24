@@ -1,135 +1,448 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Cadastrar Clínica</h1>
-    <p>Registre uma nova clínica no sistema</p>
+<div class="clinic-create-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="clinic-icon">
+        <mat-icon>local_hospital</mat-icon>
+      </div>
+      <h1>Cadastrar Nova Clínica</h1>
+      <p class="hero-subtitle">Registre uma nova clínica parceira no sistema de doação de sangue</p>
+    </div>
   </div>
 
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>local_hospital</mat-icon>
-        Formulário de Cadastro de Clínica
-      </mat-card-title>
-    </mat-card-header>
+  <!-- Main Content -->
+  <div class="content-section">
+    <div class="content-container">
 
-    <mat-card-content>
-      <form [formGroup]="clinicForm" (ngSubmit)="onSubmit()">
+      <!-- Progress Indicator -->
+      <div class="progress-section">
+        <div class="progress-card">
+          <div class="progress-header">
+            <h3>Progresso do Cadastro</h3>
+            <p>Complete todas as seções para finalizar o registro</p>
+          </div>
+          <div class="progress-steps">
+            <div class="step" [ngClass]="{'completed': isPersonalInfoValid(), 'active': true}">
+              <div class="step-icon">
+                <mat-icon>{{isPersonalInfoValid() ? 'check' : 'person'}}</mat-icon>
+              </div>
+              <span class="step-label">Dados Pessoais</span>
+            </div>
 
-        <!-- Informações Pessoais -->
-        <div class="section">
-          <h3>Informações Pessoais</h3>
+            <div class="step-connector" [ngClass]="{'active': isPersonalInfoValid()}"></div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Nome Completo</mat-label>
-            <input matInput formControlName="name" required>
-            <mat-icon matSuffix>person</mat-icon>
-          </mat-form-field>
+            <div class="step" [ngClass]="{'completed': isClinicInfoValid(), 'active': isPersonalInfoValid()}">
+              <div class="step-icon">
+                <mat-icon>{{isClinicInfoValid() ? 'check' : 'local_hospital'}}</mat-icon>
+              </div>
+              <span class="step-label">Dados da Clínica</span>
+            </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>CPF</mat-label>
-            <input matInput formControlName="cpf" mask="000.000.000-00" required>
-            <mat-icon matSuffix>credit_card</mat-icon>
-          </mat-form-field>
+            <div class="step-connector" [ngClass]="{'active': isClinicInfoValid()}"></div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="email" required>
-            <mat-icon matSuffix>email</mat-icon>
-          </mat-form-field>
+            <div class="step" [ngClass]="{'completed': isAddressInfoValid(), 'active': isClinicInfoValid()}">
+              <div class="step-icon">
+                <mat-icon>{{isAddressInfoValid() ? 'check' : 'location_on'}}</mat-icon>
+              </div>
+              <span class="step-label">Endereço</span>
+            </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Telefone</mat-label>
-            <input matInput formControlName="phone" mask="(00) 00000-0000" required>
-            <mat-icon matSuffix>phone</mat-icon>
-          </mat-form-field>
+            <div class="step-connector" [ngClass]="{'active': isAddressInfoValid()}"></div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Senha</mat-label>
-            <input matInput type="password" formControlName="password" required>
-            <mat-icon matSuffix>lock</mat-icon>
-          </mat-form-field>
+            <div class="step" [ngClass]="{'completed': clinicForm.valid, 'active': isAddressInfoValid()}">
+              <div class="step-icon">
+                <mat-icon>{{clinicForm.valid ? 'check' : 'gavel'}}</mat-icon>
+              </div>
+              <span class="step-label">Termos</span>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <!-- Informações da Clínica -->
-        <div class="section">
-          <h3>Informações da Clínica</h3>
+      <!-- Form Sections -->
+      <div class="form-sections">
+        <form [formGroup]="clinicForm">
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Nome da Clínica</mat-label>
-            <input matInput formControlName="nameClinic" required>
-            <mat-icon matSuffix>local_hospital</mat-icon>
-          </mat-form-field>
+          <!-- Personal Information Section -->
+          <div class="form-section personal-info">
+            <div class="section-card">
+              <div class="section-header">
+                <div class="header-icon">
+                  <mat-icon>person</mat-icon>
+                </div>
+                <div class="header-content">
+                  <h3>Informações Pessoais</h3>
+                  <p>Dados do responsável pela clínica</p>
+                </div>
+                <div class="section-status">
+                  <div class="status-indicator"
+                    [ngClass]="{'valid': isPersonalInfoValid(), 'invalid': !isPersonalInfoValid() && hasPersonalInfoErrors()}">
+                    <mat-icon>{{isPersonalInfoValid() ? 'check_circle' : hasPersonalInfoErrors() ? 'error' :
+                      'radio_button_unchecked'}}</mat-icon>
+                  </div>
+                </div>
+              </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>CNPJ</mat-label>
-            <input matInput formControlName="cnpj" mask="00.000.000/0000-00" required>
-            <mat-icon matSuffix>business_center</mat-icon>
-          </mat-form-field>
-        </div>
+              <div class="section-content">
 
-        <!-- Endereço -->
-        <div class="section">
-          <h3>Endereço</h3>
+                <div class="form-grid">
+                  <div class="form-group full-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Nome Completo</mat-label>
+                      <input matInput formControlName="name" placeholder="Digite o nome completo">
+                      <mat-icon matPrefix>person</mat-icon>
+                      <mat-hint>Nome do responsável pela clínica</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('name')?.hasError('required')">
+                        Nome é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Rua</mat-label>
-            <input matInput formControlName="street" required>
-            <mat-icon matSuffix>home</mat-icon>
-          </mat-form-field>
+                  <div class="form-group half-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>CPF</mat-label>
+                      <input matInput formControlName="cpf" mask="000.000.000-00" placeholder="000.000.000-00">
+                      <mat-icon matPrefix>credit_card</mat-icon>
+                      <mat-hint>Documento de identificação</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('cpf')?.hasError('required')">
+                        CPF é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
 
-          <div class="form-row">
-            <mat-form-field appearance="outline" class="form-field-70">
-              <mat-label>Número</mat-label>
-              <input matInput formControlName="number" required>
-              <mat-icon matSuffix>tag</mat-icon>
-            </mat-form-field>
+                  <div class="form-group half-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Telefone</mat-label>
+                      <input matInput formControlName="phone" mask="(00) 00000-0000" placeholder="(00) 00000-0000">
+                      <mat-icon matPrefix>phone</mat-icon>
+                      <mat-hint>Número para contato</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('phone')?.hasError('required')">
+                        Telefone é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
 
-            <mat-form-field appearance="outline" class="form-field-30">
-              <mat-label>CEP</mat-label>
-              <input matInput formControlName="postalCode" mask="00000-000" required>
-              <mat-icon matSuffix>place</mat-icon>
-            </mat-form-field>
+                  <div class="form-group half-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Email</mat-label>
+                      <input matInput type="email" formControlName="email" placeholder="email@exemplo.com">
+                      <mat-icon matPrefix>email</mat-icon>
+                      <mat-hint>Email para acesso ao sistema</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('email')?.hasError('required')">
+                        Email é obrigatório
+                      </mat-error>
+                      <mat-error *ngIf="clinicForm.get('email')?.hasError('email')">
+                        Email deve ter formato válido
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-group half-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Senha</mat-label>
+                      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                        placeholder="Digite uma senha segura">
+                      <mat-icon matPrefix>lock</mat-icon>
+                      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+                        <mat-icon>{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+                      </button>
+                      <mat-hint>Mínimo 6 caracteres</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('password')?.hasError('required')">
+                        Senha é obrigatória
+                      </mat-error>
+                      <mat-error *ngIf="clinicForm.get('password')?.hasError('minlength')">
+                        Senha deve ter pelo menos 6 caracteres
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+              </div>
+            </div>
           </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Bairro</mat-label>
-            <input matInput formControlName="neighborhood" required>
-            <mat-icon matSuffix>location_city</mat-icon>
-          </mat-form-field>
+          <!-- Clinic Information Section -->
+          <div class="form-section clinic-info">
+            <div class="section-card">
+              <div class="section-header">
+                <div class="header-icon">
+                  <mat-icon>local_hospital</mat-icon>
+                </div>
+                <div class="header-content">
+                  <h3>Informações da Clínica</h3>
+                  <p>Dados institucionais da clínica</p>
+                </div>
+                <div class="section-status">
+                  <div class="status-indicator"
+                    [ngClass]="{'valid': isClinicInfoValid(), 'invalid': !isClinicInfoValid() && hasClinicInfoErrors()}">
+                    <mat-icon>{{isClinicInfoValid() ? 'check_circle' : hasClinicInfoErrors() ? 'error' :
+                      'radio_button_unchecked'}}</mat-icon>
+                  </div>
+                </div>
+              </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Município</mat-label>
-            <mat-select formControlName="municipalityId" required>
-              <mat-option *ngFor="let municipality of municipalities" [value]="municipality.id">
-                {{ municipality.name }} - {{ municipality.state }}
-              </mat-option>
-            </mat-select>
-            <mat-icon matSuffix>location_on</mat-icon>
-          </mat-form-field>
+              <div class="section-content">
+                <div class="form-grid">
+                  <div class="form-group full-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Nome da Clínica</mat-label>
+                      <input matInput formControlName="nameClinic" placeholder="Digite o nome da clínica">
+                      <mat-icon matPrefix>local_hospital</mat-icon>
+                      <mat-hint>Razão social ou nome fantasia</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('nameClinic')?.hasError('required')">
+                        Nome da clínica é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-group full-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>CNPJ</mat-label>
+                      <input matInput formControlName="cnpj" mask="00.000.000/0000-00" placeholder="00.000.000/0000-00">
+                      <mat-icon matPrefix>business_center</mat-icon>
+                      <mat-hint>Cadastro Nacional de Pessoa Jurídica</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('cnpj')?.hasError('required')">
+                        CNPJ é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address Information Section -->
+          <div class="form-section address-info">
+            <div class="section-card">
+              <div class="section-header">
+                <div class="header-icon">
+                  <mat-icon>location_on</mat-icon>
+                </div>
+                <div class="header-content">
+                  <h3>Endereço da Clínica</h3>
+                  <p>Localização física da clínica</p>
+                </div>
+                <div class="section-status">
+                  <div class="status-indicator"
+                    [ngClass]="{'valid': isAddressInfoValid(), 'invalid': !isAddressInfoValid() && hasAddressInfoErrors()}">
+                    <mat-icon>{{isAddressInfoValid() ? 'check_circle' : hasAddressInfoErrors() ? 'error' :
+                      'radio_button_unchecked'}}</mat-icon>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section-content">
+                <div class="form-grid">
+                  <div class="form-group full-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Rua</mat-label>
+                      <input matInput formControlName="street" placeholder="Digite o nome da rua">
+                      <mat-icon matPrefix>home</mat-icon>
+                      <mat-hint>Nome da rua ou avenida</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('street')?.hasError('required')">
+                        Rua é obrigatória
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-group half-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Número</mat-label>
+                      <input matInput formControlName="number" placeholder="123">
+                      <mat-icon matPrefix>tag</mat-icon>
+                      <mat-hint>Número do endereço</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('number')?.hasError('required')">
+                        Número é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-group half-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>CEP</mat-label>
+                      <input matInput formControlName="postalCode" mask="00000-000" placeholder="00000-000">
+                      <mat-icon matPrefix>place</mat-icon>
+                      <mat-hint>Código de Endereçamento Postal</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('postalCode')?.hasError('required')">
+                        CEP é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-group half-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Bairro</mat-label>
+                      <input matInput formControlName="neighborhood" placeholder="Digite o bairro">
+                      <mat-icon matPrefix>location_city</mat-icon>
+                      <mat-hint>Nome do bairro</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('neighborhood')?.hasError('required')">
+                        Bairro é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-group half-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Município</mat-label>
+                      <mat-select formControlName="municipalityId">
+                        <mat-option *ngFor="let municipality of municipalities" [value]="municipality.id">
+                          {{ municipality.name }} - {{ municipality.state }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-icon matPrefix>location_on</mat-icon>
+                      <mat-hint>Selecione o município</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('municipalityId')?.hasError('required')">
+                        Município é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Terms and Conditions Section -->
+          <div class="form-section terms-section">
+            <div class="section-card">
+              <div class="section-header">
+                <div class="header-icon">
+                  <mat-icon>gavel</mat-icon>
+                </div>
+                <div class="header-content">
+                  <h3>Termos e Condições</h3>
+                  <p>Aceite os termos para finalizar o cadastro</p>
+                </div>
+                <div class="section-status">
+                  <div class="status-indicator"
+                    [ngClass]="{'valid': clinicForm.get('acceptTerms')?.value, 'invalid': clinicForm.get('acceptTerms')?.touched && !clinicForm.get('acceptTerms')?.value}">
+                    <mat-icon>{{clinicForm.get('acceptTerms')?.value ? 'check_circle' :
+                      clinicForm.get('acceptTerms')?.touched ? 'error' : 'radio_button_unchecked'}}</mat-icon>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section-content">
+                <div class="terms-content">
+                  <div class="terms-info">
+                    <div class="info-item">
+                      <mat-icon>security</mat-icon>
+                      <div class="info-text">
+                        <h4>Proteção de Dados</h4>
+                        <p>Seus dados são protegidos conforme a LGPD</p>
+                      </div>
+                    </div>
+
+                    <div class="info-item">
+                      <mat-icon>verified_user</mat-icon>
+                      <div class="info-text">
+                        <h4>Responsabilidades</h4>
+                        <p>Compromisso com a qualidade do atendimento</p>
+                      </div>
+                    </div>
+
+                    <div class="info-item">
+                      <mat-icon>support</mat-icon>
+                      <div class="info-text">
+                        <h4>Suporte Técnico</h4>
+                        <p>Assistência completa para uso da plataforma</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="terms-checkbox">
+                    <mat-checkbox formControlName="acceptTerms" class="terms-check">
+                      <span class="checkbox-text">
+                        Eu aceito os
+                        <a href="https://garrulous-baker-391.notion.site/Pol-tica-de-Privacidade-e-Tratamento-de-Dados-Pessoais-27711d0f05c380649016e02c17f7c821?pvs=143"
+                          target="_blank" class="terms-link">
+                          Termos de Uso e Política de Privacidade
+                        </a>
+                        da plataforma.
+                      </span>
+                    </mat-checkbox>
+
+                    <mat-error
+                      *ngIf="clinicForm.get('acceptTerms')?.touched && clinicForm.get('acceptTerms')?.hasError('required')"
+                      class="terms-error">
+                      <mat-icon>error</mat-icon>
+                      <span>Você deve aceitar os termos para continuar</span>
+                    </mat-error>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+
+      <!-- Actions Section -->
+      <div class="actions-section">
+        <div class="actions-container">
+          <div class="actions-left">
+            <button mat-stroked-button class="cancel-button" (click)="onCancel()">
+              <mat-icon>arrow_back</mat-icon>
+              <span>Cancelar</span>
+            </button>
+          </div>
+
+          <div class="actions-right">
+            <div class="form-summary" *ngIf="clinicForm.valid">
+              <div class="summary-icon">
+                <mat-icon>check_circle</mat-icon>
+              </div>
+              <div class="summary-text">
+                <span class="summary-title">Formulário Completo</span>
+                <span class="summary-subtitle">Pronto para cadastrar</span>
+              </div>
+            </div>
+
+            <button mat-raised-button color="primary" class="submit-button"
+              [disabled]="!clinicForm.valid || isSubmitting" (click)="onSubmit()">
+              <mat-icon *ngIf="!isSubmitting">save</mat-icon>
+              <mat-icon *ngIf="isSubmitting" class="spinning">hourglass_empty</mat-icon>
+              <span>{{isSubmitting ? 'Cadastrando...' : 'Cadastrar Clínica'}}</span>
+            </button>
+          </div>
         </div>
+      </div>
 
-        <div>
-          <mat-checkbox formControlName="acceptTerms">
-            Eu aceito os <a href="https://garrulous-baker-391.notion.site/Pol-tica-de-Privacidade-e-Tratamento-de-Dados-Pessoais-27711d0f05c380649016e02c17f7c821?pvs=143" target="_blank">Termos de Uso e Política de Privacidade</a>
-            da empresa.
-          </mat-checkbox>
-          <mat-error
-            *ngIf="clinicForm.get('acceptTerms')?.touched && clinicForm.get('acceptTerms')?.hasError('required')">
-            Você deve aceitar os termos para continuar.
-          </mat-error>
+    </div>
+  </div>
+
+  <!-- Form Validation Summary -->
+  <div class="validation-summary" *ngIf="showValidationSummary()">
+    <div class="summary-card">
+      <div class="summary-header">
+        <mat-icon>info</mat-icon>
+        <h4>Complete os campos obrigatórios</h4>
+      </div>
+      <div class="summary-content">
+        <div class="validation-item" *ngIf="!isPersonalInfoValid() && hasPersonalInfoErrors()">
+          <mat-icon>person</mat-icon>
+          <span>Informações Pessoais incompletas</span>
         </div>
-      </form>
-    </mat-card-content>
-
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!clinicForm.valid">
-        <mat-icon>save</mat-icon>
-        Cadastrar Clínica
-      </button>
-      <button mat-button (click)="onCancel()">
-        <mat-icon>cancel</mat-icon>
-        Cancelar
-      </button>
-    </mat-card-actions>
-  </mat-card>
+        <div class="validation-item" *ngIf="!isClinicInfoValid() && hasClinicInfoErrors()">
+          <mat-icon>local_hospital</mat-icon>
+          <span>Informações da Clínica incompletas</span>
+        </div>
+        <div class="validation-item" *ngIf="!isAddressInfoValid() && hasAddressInfoErrors()">
+          <mat-icon>location_on</mat-icon>
+          <span>Endereço incompleto</span>
+        </div>
+        <div class="validation-item"
+          *ngIf="clinicForm.get('acceptTerms')?.touched && !clinicForm.get('acceptTerms')?.value">
+          <mat-icon>gavel</mat-icon>
+          <span>Aceite os termos para continuar</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
