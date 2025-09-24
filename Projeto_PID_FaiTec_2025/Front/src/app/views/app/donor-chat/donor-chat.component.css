@@ -1,0 +1,137 @@
+.chat-container {
+  display: flex;
+  height: 80vh;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.clinics-list {
+  width: 300px;
+  border-right: 1px solid #ddd;
+  background: #f8f9fa;
+  overflow-y: auto;
+}
+
+.clinics-list h3 {
+  padding: 15px;
+  margin: 0;
+  background: #28a745;
+  color: white;
+}
+
+.clinic-item {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.clinic-item:hover {
+  background: #e9ecef;
+}
+
+.clinic-item.selected {
+  background: #28a745;
+  color: white;
+}
+
+.clinic-item small {
+  display: block;
+  opacity: 0.7;
+}
+
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  padding: 15px;
+  background: #28a745;
+  color: white;
+}
+
+.chat-header h3 {
+  margin: 0;
+}
+
+.messages-container {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background: white;
+}
+
+.message {
+  margin-bottom: 15px;
+  max-width: 70%;
+}
+
+.message.sent {
+  margin-left: auto;
+}
+
+.message.sent .message-content {
+  background: #28a745;
+  color: white;
+}
+
+.message.received .message-content {
+  background: #f1f3f4;
+}
+
+.message-content {
+  padding: 10px 15px;
+  border-radius: 18px;
+  word-wrap: break-word;
+}
+
+.message-time {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  text-align: right;
+}
+
+.message.received .message-time {
+  text-align: left;
+}
+
+.message-input {
+  display: flex;
+  padding: 15px;
+  border-top: 1px solid #ddd;
+  background: #f8f9fa;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.message-input button {
+  padding: 10px 20px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.message-input button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.no-selection {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
