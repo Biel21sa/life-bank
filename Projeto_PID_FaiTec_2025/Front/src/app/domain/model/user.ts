@@ -24,4 +24,5 @@ export interface User {
     cnpj?: string;
     donorId?: string;
     donor?: Donor;
+    apto?: boolean;
 }

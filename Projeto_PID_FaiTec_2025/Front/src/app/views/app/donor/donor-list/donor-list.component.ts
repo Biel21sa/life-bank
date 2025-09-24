@@ -14,6 +14,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-donor-list',
@@ -29,6 +32,9 @@ import { NgxMaskPipe } from 'ngx-mask';
     MatFormFieldModule,
     MatInputModule,
     NgxMaskPipe,
+    MatListModule,
+    MatMenuModule,
+    MatChipsModule
   ],
   templateUrl: './donor-list.component.html',
   styleUrl: './donor-list.component.css'
@@ -36,8 +42,13 @@ import { NgxMaskPipe } from 'ngx-mask';
 export class DonorListComponent implements OnInit {
 
   donors: User[] = [];
-  dataSource = new MatTableDataSource(this.donors);
-  displayedColumns: string[] = ['name', 'bloodType', 'contact', 'address', 'apto', 'actions'];
+  dataSource = new MatTableDataSource<User>(this.donors);
+  displayedColumns: string[] = ['name', 'bloodType', 'contact', 'address', 'status', 'actions'];
+
+  viewMode: 'table' | 'cards' = 'table';
+  selectedBloodTypes: string[] = [];
+  bloodTypes: string[] = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+  isLoading = false;
 
   constructor(
     private userReadService: UserReadService,
@@ -50,13 +61,109 @@ export class DonorListComponent implements OnInit {
   }
 
   async loadDonors() {
-    let donorList = await this.userReadService.findByRole(UserRole.USER);
-    if (donorList == null) {
-      return;
+    this.isLoading = true;
+    try {
+      let donorList = await this.userReadService.findByRole(UserRole.USER);
+      if (donorList) {
+        this.donors = donorList;
+        this.dataSource.data = this.donors;
+      }
+    } catch (error) {
+      this.toastr.error('Erro ao carregar doadores');
+      console.error(error);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  getAptoDonorsCount(): number {
+    return this.donors.filter(d => d.apto).length;
+  }
+
+  getAptoPercentage(): number {
+    return this.donors.length > 0
+      ? Math.round((this.getAptoDonorsCount() / this.donors.length) * 100)
+      : 0;
+  }
+
+  getBloodTypesCount(): number {
+    return new Set(this.donors.map(d => d.bloodType).filter(Boolean)).size;
+  }
+
+  /** ---- Filtros ---- **/
+  getFilteredCount(): number {
+    return this.dataSource.filteredData.length;
+  }
+
+  clearFilters() {
+    this.selectedBloodTypes = [];
+    this.dataSource.filter = '';
+  }
+
+  toggleBloodTypeFilter(type: string) {
+    if (this.selectedBloodTypes.includes(type)) {
+      this.selectedBloodTypes = this.selectedBloodTypes.filter(t => t !== type);
+    } else {
+      this.selectedBloodTypes.push(type);
     }
 
-    this.donors = donorList;
-    this.dataSource.data = this.donors;
+    this.dataSource.filterPredicate = (donor: User) => {
+      return this.selectedBloodTypes.length === 0 ||
+        this.selectedBloodTypes.includes(donor.bloodType ?? '');
+    };
+    this.dataSource.filter = Math.random().toString();
+  }
+
+  exportData() {
+    const json = JSON.stringify(this.donors, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'donors.json';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
+  refreshData() {
+    this.loadDonors();
+  }
+
+  printList() {
+    window.print();
+  }
+
+  showStatistics() {
+    this.toastr.info('Função de estatísticas em desenvolvimento.');
+  }
+
+  toggleView() {
+    this.viewMode = this.viewMode === 'table' ? 'cards' : 'table';
+  }
+
+  trackByDonorId(index: number, donor: User) {
+    return donor.id;
+  }
+
+  contactDonor(donor: User) {
+    this.toastr.info(`Contato enviado para ${donor.name}`);
+  }
+
+  viewHistory(donor: User) {
+    this.toastr.info(`Histórico doador ${donor.name}`);
+  }
+
+  async deleteDonor(donorId: string) {
+    if (confirm('Tem certeza que deseja excluir este doador?')) {
+      try {
+        await this.userDeleteService.delete(donorId);
+        this.toastr.success('Doador removido com sucesso!');
+        this.loadDonors();
+      } catch (error) {
+        this.toastr.error('Erro ao remover doador');
+        console.error(error);
+      }
+    }
   }
 
   getCountByBloodType(bloodType: string): number {
@@ -80,18 +187,5 @@ export class DonorListComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  async deleteDonor(donorId: string) {
-    if (confirm('Tem certeza que deseja excluir este doador?')) {
-      try {
-        await this.userDeleteService.delete(donorId);
-        this.toastr.success('Doador removido com sucesso!');
-        this.loadDonors();
-      } catch (error) {
-        this.toastr.error('Erro ao remover doador');
-        console.error(error);
-      }
-    }
   }
 }
