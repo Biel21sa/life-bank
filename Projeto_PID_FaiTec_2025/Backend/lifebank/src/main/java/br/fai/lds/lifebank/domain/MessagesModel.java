@@ -1,6 +1,7 @@
 package br.fai.lds.lifebank.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class MessagesModel {
 
@@ -8,12 +9,12 @@ public class MessagesModel {
     private int senderId;
     private int receiverId;
     private String message;
-    private LocalDate sentAt;
+    private LocalDateTime sentAt;
 
     public MessagesModel() {
     }
 
-    public MessagesModel(int id, int senderId, int receiverId, String message, LocalDate sentAt) {
+    public MessagesModel(int id, int senderId, int receiverId, String message, LocalDateTime sentAt) {
         this.id = id;
         this.senderId = senderId;
         this.receiverId = receiverId;
@@ -21,11 +22,11 @@ public class MessagesModel {
         this.sentAt = sentAt;
     }
 
-    public LocalDate getSentAt() {
+    public LocalDateTime getSentAt() {
         return sentAt;
     }
 
-    public void setSentAt(LocalDate sentAt) {
+    public void setSentAt(LocalDateTime sentAt) {
         this.sentAt = sentAt;
     }
 
