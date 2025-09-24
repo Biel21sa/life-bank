@@ -8,7 +8,7 @@ import { NgxMaskPipe } from 'ngx-mask';
 import { ToastrService } from 'ngx-toastr';
 import { DonationReadService } from '../../../../services/donation/donation-read.service';
 import { AuthenticationService } from '../../../../services/security/authentication.service';
-import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-donation-detail',
@@ -19,7 +19,6 @@ import { MatMenu, MatMenuModule } from '@angular/material/menu';
     MatButtonModule,
     MatIconModule,
     NgxMaskPipe,
-    MatMenu,
     MatMenuModule
   ],
   templateUrl: './donation-detail.component.html',

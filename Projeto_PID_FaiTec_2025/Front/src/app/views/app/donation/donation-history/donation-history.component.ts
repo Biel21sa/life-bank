@@ -13,7 +13,7 @@ import { NgxMaskPipe } from 'ngx-mask';
 import { DonationReadService } from '../../../../services/donation/donation-read.service';
 import { UserReadService } from '../../../../services/user/user-read.service';
 import { AuthenticationService } from '../../../../services/security/authentication.service';
-import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
@@ -30,7 +30,6 @@ import { MatChipsModule } from '@angular/material/chips';
     MatInputModule,
     MatTooltipModule,
     NgxMaskPipe,
-    MatMenu,
     MatMenuModule,
     MatChipsModule
   ],

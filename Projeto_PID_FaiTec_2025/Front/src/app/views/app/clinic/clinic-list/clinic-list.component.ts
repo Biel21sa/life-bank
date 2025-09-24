@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
 import { AuthenticationService } from '../../../../services/security/authentication.service';
-import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 
 @Component({
@@ -32,7 +32,6 @@ import { MatListModule } from '@angular/material/list';
     MatFormFieldModule,
     MatInputModule,
     NgxMaskPipe,
-    MatMenu,
     MatMenuModule,
     MatListModule
   ],
