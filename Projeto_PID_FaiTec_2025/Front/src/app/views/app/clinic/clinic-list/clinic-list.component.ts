@@ -16,7 +16,6 @@ import { CommonModule } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
 import { AuthenticationService } from '../../../../services/security/authentication.service';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
-import { MatDivider } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 
 @Component({
@@ -35,7 +34,6 @@ import { MatListModule } from '@angular/material/list';
     NgxMaskPipe,
     MatMenu,
     MatMenuModule,
-    MatDivider,
     MatListModule
   ],
   templateUrl: './clinic-list.component.html',
@@ -47,7 +45,6 @@ export class ClinicListComponent implements OnInit {
   dataSource = new MatTableDataSource(this.clinics);
   displayedColumns: string[] = ['name', 'clinic', 'contact', 'address', 'actions'];
 
-  // controles extras
   isCardView = false;
   isCompactView = false;
   selectedClinic?: User;
@@ -77,7 +74,6 @@ export class ClinicListComponent implements OnInit {
     }
   }
 
-  /** ===================== FILTROS E BUSCA ===================== */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -92,23 +88,8 @@ export class ClinicListComponent implements OnInit {
     return this.dataSource.filteredData.length;
   }
 
-  /** ===================== AÇÕES ===================== */
   isAdministrator(): boolean {
     return this.authenticationService.isAdministrator();
-  }
-
-  exportClinics() {
-    // exemplo simples em CSV
-    const csvContent = [
-      ['Nome', 'Email', 'CNPJ', 'Telefone'],
-      ...this.clinics.map(c => [c.name, c.email, c.cnpj, c.phone])
-    ].map(row => row.join(';')).join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'clinicas.csv';
-    link.click();
   }
 
   refreshData() {
@@ -140,7 +121,6 @@ export class ClinicListComponent implements OnInit {
     }
   }
 
-  /** ===================== VISUALIZAÇÃO ===================== */
   toggleCompactView() {
     this.isCompactView = !this.isCompactView;
   }
