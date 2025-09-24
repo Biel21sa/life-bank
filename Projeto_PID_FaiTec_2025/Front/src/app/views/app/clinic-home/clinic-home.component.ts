@@ -46,4 +46,8 @@ export class ClinicHomeComponent implements OnInit {
   navigateToBenefits() {
     this.router.navigate(['/benefit/verification']);
   }
+
+  navigateToChat() {
+    this.router.navigate(['/clinic-chat']);
+  }
 }
