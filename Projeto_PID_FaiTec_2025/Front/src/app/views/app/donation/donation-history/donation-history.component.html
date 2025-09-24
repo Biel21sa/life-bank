@@ -1,111 +1,379 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Histórico de Doações</h1>
-    <p>Visualize todas as doações do seu local</p>
-  </div>
+<div class="donation-history-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
 
-  <!-- Cards de estatísticas -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <mat-icon>volunteer_activism</mat-icon>
-      <div class="stat-number">{{ donations.length }}</div>
-      <div class="stat-label">Total de Doações</div>
+    <div class="hero-content">
+      <div class="history-icon">
+        <mat-icon>history</mat-icon>
+      </div>
+      <h1>Histórico de Doações</h1>
+      <p class="hero-subtitle">Acompanhe todas as doações realizadas no seu local</p>
     </div>
   </div>
 
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>history</mat-icon>
-        Registro de Doações
-      </mat-card-title>
-    </mat-card-header>
+  <!-- Content Section -->
+  <div class="content-section">
+    <div class="content-container">
 
-    <mat-card-content>
-      <div class="table-actions">
-        <div class="search-box">
-          <mat-form-field appearance="outline" class="search-field">
-            <mat-label>Buscar doações</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por doador ou tipo sanguíneo">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
+      <!-- Statistics Dashboard -->
+      <div class="stats-dashboard">
+        <div class="stats-header">
+          <div class="stats-icon">
+            <mat-icon>analytics</mat-icon>
+          </div>
+          <div class="stats-content">
+            <h3>Estatísticas do Local</h3>
+            <p>Resumo das doações realizadas</p>
+          </div>
         </div>
-        <div class="action-buttons">
-          <button mat-raised-button color="primary" routerLink="/donation-create">
-            <mat-icon>add</mat-icon>
-            Nova Doação
-          </button>
+
+        <div class="stats-grid">
+          <div class="stat-card total-donations">
+            <div class="stat-header">
+              <div class="stat-indicator"></div>
+              <span class="stat-badge">Total</span>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+              <div class="stat-icon">
+                <mat-icon>volunteer_activism</mat-icon>
+              </div>
+
+              <div class="stat-content"
+                style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                <div class="stat-number">{{ donations.length }}</div>
+                <div class="stat-label">Doações Registradas</div>
+                <div class="stat-trend">
+                  <mat-icon>trending_up</mat-icon>
+                  <span>+{{ getMonthlyGrowth() }}% este mês</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card total-volume">
+            <div class="stat-header">
+              <div class="stat-indicator"></div>
+              <span class="stat-badge">Volume</span>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+              <div class="stat-icon">
+                <mat-icon>local_drink</mat-icon>
+              </div>
+              <div class="stat-content"
+                style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                <div class="stat-number">{{ getTotalVolume() }}L</div>
+                <div class="stat-label">Volume Total Coletado</div>
+                <div class="stat-trend">
+                  <mat-icon>favorite</mat-icon>
+                  <span>{{ getLivesSaved() }} vidas salvas</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card recent-donations">
+            <div class="stat-header">
+              <div class="stat-indicator"></div>
+              <span class="stat-badge">Recentes</span>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+              <div class="stat-icon">
+                <mat-icon>schedule</mat-icon>
+              </div>
+              <div class="stat-content"
+                style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                <div class="stat-number">{{ getRecentDonations() }}</div>
+                <div class="stat-label">Últimos 30 Dias</div>
+                <div class="stat-trend">
+                  <mat-icon>calendar_today</mat-icon>
+                  <span>{{ getAverageDonationsPerDay() }}/dia em média</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card blood-types">
+            <div class="stat-header">
+              <div class="stat-indicator"></div>
+              <span class="stat-badge">Tipos</span>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+              <div class="stat-icon">
+                <mat-icon>bloodtype</mat-icon>
+              </div>
+              <div class="stat-content"
+                style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                <div class="stat-number">{{ getUniqueBloodTypes() }}</div>
+                <div class="stat-label">Tipos Sanguíneos</div>
+                <div class="stat-trend">
+                  <mat-icon>diversity_3</mat-icon>
+                  <span>{{ getMostCommonBloodType() }} mais comum</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="table-container">
-        <table mat-table [dataSource]="dataSource" class="modern-table">
-          <ng-container matColumnDef="donor">
-            <th mat-header-cell *matHeaderCellDef>Doador</th>
-            <td mat-cell *matCellDef="let donation">
-              <div class="donor-info">
-                <div class="donor-name">{{ donation.donorName || 'N/A' }}</div>
-                <div class="donor-cpf">{{ (donation.donorCpf || '') | mask: '000.000.000-00' }}</div>
+      <!-- Filters and Actions -->
+      <div class="filters-section">
+        <div class="filters-card">
+          <div class="filters-header">
+            <div class="filters-icon">
+              <mat-icon>filter_list</mat-icon>
+            </div>
+            <div class="filters-content">
+              <h3>Filtros e Busca</h3>
+              <p>Encontre doações específicas rapidamente</p>
+            </div>
+            <div class="results-counter">
+              <span class="counter-number">{{ getFilteredCount() }}</span>
+              <span class="counter-label">resultados</span>
+            </div>
+          </div>
+
+          <div class="filters-controls">
+            <div class="search-section">
+              <mat-form-field appearance="outline" class="search-field">
+                <mat-label>Buscar doações</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Nome do doador, CPF ou tipo sanguíneo"
+                  #searchInput>
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
+
+              <button mat-raised-button color="primary" class="new-donation-button" routerLink="/donation-create"
+                style="margin-left: auto; margin-bottom: 10px;">
+                <mat-icon>add</mat-icon>
+                <span>Nova Doação</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Donations Table -->
+      <div class="table-section" *ngIf="donations.length > 0">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-icon">
+              <mat-icon>table_view</mat-icon>
+            </div>
+            <div class="table-content">
+              <h3>Registro de Doações</h3>
+              <p>Lista completa das doações realizadas</p>
+            </div>
+            <div class="table-actions">
+              <button mat-icon-button class="view-toggle" (click)="toggleView()"
+                [matTooltip]="viewMode === 'table' ? 'Visualizar em cards' : 'Visualizar em tabela'">
+                <mat-icon>{{ viewMode === 'table' ? 'view_module' : 'table_rows' }}</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- Table View -->
+          <div class="table-container" *ngIf="viewMode === 'table'">
+            <table mat-table [dataSource]="dataSource" class="modern-table">
+
+              <ng-container matColumnDef="donor">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="header-content">
+                    <mat-icon>person</mat-icon>
+                    <span>Doador</span>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let donation">
+                  <div class="donor-info">
+                    <div class="donor-avatar">
+                      <mat-icon>account_circle</mat-icon>
+                    </div>
+                    <div class="donor-details">
+                      <div class="donor-name">{{ donation.donorName || 'N/A' }}</div>
+                      <div class="donor-cpf">{{ (donation.donorCpf || '') | mask: '000.000.000-00' }}</div>
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="bloodType">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="header-content">
+                    <mat-icon>bloodtype</mat-icon>
+                    <span>Tipo Sanguíneo</span>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let donation">
+                  <div class="blood-type-container">
+                    <span class="blood-type-badge" [ngClass]="getBloodTypeClass(donation.bloodType)">
+                      <mat-icon>bloodtype</mat-icon>
+                      <span>{{ donation.bloodType }}</span>
+                    </span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="header-content">
+                    <mat-icon>calendar_today</mat-icon>
+                    <span>Data da Coleta</span>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let donation">
+                  <div class="date-info">
+                    <div class="date-main">{{ donation.collectionDate | date: 'dd/MM/yyyy' }}</div>
+                    <div class="date-relative">{{ getRelativeDate(donation.collectionDate) }}</div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="header-content">
+                    <mat-icon>local_drink</mat-icon>
+                    <span>Volume</span>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let donation">
+                  <div class="quantity-info">
+                    <div class="quantity-main">{{ (donation.quantity * 1000) }}ml</div>
+                    <div class="quantity-impact">{{ getImpactText(donation.quantity) }}</div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="header-content">
+                    <mat-icon>settings</mat-icon>
+                    <span>Ações</span>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let donation">
+                  <div class="action-buttons">
+                    <button mat-icon-button color="primary" [routerLink]="['/donation-detail', donation.id]"
+                      matTooltip="Ver detalhes" class="action-view">
+                      <mat-icon>visibility</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewDonationDetails(row)"
+                class="clickable-row"></tr>
+            </table>
+          </div>
+
+          <!-- Cards View -->
+          <div class="cards-container" *ngIf="viewMode === 'cards'">
+            <div class="donation-card" *ngFor="let donation of getFilteredDonations(); trackBy: trackByDonation"
+              (click)="viewDonationDetails(donation)">
+
+              <div class="card-header">
+                <div class="donor-section">
+                  <div class="donor-avatar">
+                    <mat-icon>account_circle</mat-icon>
+                  </div>
+                  <div class="donor-info">
+                    <div class="donor-name">{{ donation.donorName || 'N/A' }}</div>
+                    <div class="donor-cpf">{{ (donation.donorCpf || '') | mask: '000.000.000-00' }}</div>
+                  </div>
+                </div>
+
+                <div class="blood-type-section">
+                  <span class="blood-type-badge" [ngClass]="getBloodTypeClass(donation.bloodType)">
+                    {{ donation.bloodType }}
+                  </span>
+                </div>
               </div>
-            </td>
-          </ng-container>
 
-          <ng-container matColumnDef="bloodType">
-            <th mat-header-cell *matHeaderCellDef>Tipo Sanguíneo</th>
-            <td mat-cell *matCellDef="let donation">
-              <span class="blood-type-badge" [ngClass]="getBloodTypeClass(donation.bloodtype)">
-                <mat-icon>bloodtype</mat-icon>
-                {{ donation.bloodType }}
-              </span>
-            </td>
-          </ng-container>
+              <div class="card-content">
+                <div class="info-row">
+                  <div class="info-item">
+                    <mat-icon>calendar_today</mat-icon>
+                    <div class="info-details">
+                      <span class="info-label">Data da Coleta</span>
+                      <span class="info-value">{{ donation.collectionDate | date: 'dd/MM/yyyy' }}</span>
+                    </div>
+                  </div>
 
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef>Data</th>
-            <td mat-cell *matCellDef="let donation">
-              <div class="date-info">
-                <div class="date">{{ donation.collectionDate | date: 'dd/MM/yyyy' }}</div>
+                  <div class="info-item">
+                    <mat-icon>local_drink</mat-icon>
+                    <div class="info-details">
+                      <span class="info-label">Volume</span>
+                      <span class="info-value">{{ (donation.quantity * 1000) }}ml</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="status-row">
+                  <div class="impact-info">
+                    <mat-icon>favorite</mat-icon>
+                    <span>{{ getImpactText(donation.quantity) }}</span>
+                  </div>
+                </div>
               </div>
-            </td>
-          </ng-container>
 
-          <ng-container matColumnDef="quantity">
-            <th mat-header-cell *matHeaderCellDef>Quantidade</th>
-            <td mat-cell *matCellDef="let donation">
-              <div class="quantity-info">
-                <span class="quantity">{{ (donation.quantity * 1000) }}ml</span>
-                <span class="quantity-label">Coletado</span>
-              </div>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Ações</th>
-            <td mat-cell *matCellDef="let donation">
-              <div class="action-buttons">
-                <button mat-icon-button color="primary" [routerLink]="['/donation-detail', donation.id]"
-                  matTooltip="Visualizar">
+              <div class="card-actions">
+                <button mat-icon-button [routerLink]="['/donation-detail', donation.id]" matTooltip="Ver detalhes"
+                  (click)="$event.stopPropagation()">
                   <mat-icon>visibility</mat-icon>
                 </button>
               </div>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Estado vazio -->
+      <!-- Empty State -->
       <div class="empty-state" *ngIf="donations.length === 0">
-        <mat-icon>history</mat-icon>
-        <h3>Nenhuma doação encontrada</h3>
-        <p>O histórico de doações aparecerá aqui quando houver registros</p>
-        <button mat-raised-button color="primary" routerLink="/donation-create">
-          <mat-icon>add</mat-icon>
-          Registrar Primeira Doação
-        </button>
+        <div class="empty-container">
+          <div class="empty-icon">
+            <mat-icon>history</mat-icon>
+          </div>
+          <h3>Nenhuma Doação Registrada</h3>
+          <p>O histórico de doações aparecerá aqui quando houver registros no seu local.</p>
+
+          <div class="empty-actions">
+            <button mat-raised-button color="primary" routerLink="/donation-create" class="primary-action">
+              <mat-icon>add</mat-icon>
+              <span>Registrar Primeira Doação</span>
+            </button>
+
+            <button mat-stroked-button class="secondary-action" (click)="ngOnInit()">
+              <mat-icon>refresh</mat-icon>
+              <span>Atualizar</span>
+            </button>
+          </div>
+
+          <div class="empty-info">
+            <div class="info-card">
+              <mat-icon>info</mat-icon>
+              <div class="info-content">
+                <h4>Como funciona?</h4>
+                <p>Registre doações de sangue para acompanhar o histórico e gerar relatórios do seu local.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </mat-card-content>
-  </mat-card>
+
+      <!-- Loading State -->
+      <div class="loading-section" *ngIf="isLoading">
+        <div class="loading-container">
+          <div class="loading-spinner">
+            <mat-icon>hourglass_empty</mat-icon>
+          </div>
+          <h3>Carregando Histórico</h3>
+          <p>Buscando doações do seu local...</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
