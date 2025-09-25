@@ -585,6 +585,7 @@ body {
 
 /* Footer moderno */
 .modern-footer {
+    height: 10px;
     background: linear-gradient(135deg, #0d47a1 0%, #1565c0 50%, #1976d2 100%);
     color: white;
     padding: 20px 32px;
@@ -598,6 +599,7 @@ body {
 .footer-content {
     max-width: 1400px;
     margin: 0 auto;
+    margin-top: -10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
