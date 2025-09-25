@@ -71,7 +71,7 @@
         <form [formGroup]="clinicForm">
 
           <!-- Personal Information Section -->
-          <div class="form-section personal-info">
+          <div class="form-section personal-info" style="margin-bottom: 25px;">
             <div class="section-card">
               <div class="section-header">
                 <div class="header-icon">
@@ -169,7 +169,7 @@
           </div>
 
           <!-- Clinic Information Section -->
-          <div class="form-section clinic-info">
+          <div class="form-section clinic-info" style="margin-bottom: 25px;">
             <div class="section-card">
               <div class="section-header">
                 <div class="header-icon">
@@ -219,7 +219,7 @@
           </div>
 
           <!-- Address Information Section -->
-          <div class="form-section address-info">
+          <div class="form-section address-info" style="margin-bottom: 25px;">
             <div class="section-card">
               <div class="section-header">
                 <div class="header-icon">
@@ -414,35 +414,6 @@
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- Form Validation Summary -->
-  <div class="validation-summary" *ngIf="showValidationSummary()">
-    <div class="summary-card">
-      <div class="summary-header">
-        <mat-icon>info</mat-icon>
-        <h4>Complete os campos obrigatórios</h4>
-      </div>
-      <div class="summary-content">
-        <div class="validation-item" *ngIf="!isPersonalInfoValid() && hasPersonalInfoErrors()">
-          <mat-icon>person</mat-icon>
-          <span>Informações Pessoais incompletas</span>
-        </div>
-        <div class="validation-item" *ngIf="!isClinicInfoValid() && hasClinicInfoErrors()">
-          <mat-icon>local_hospital</mat-icon>
-          <span>Informações da Clínica incompletas</span>
-        </div>
-        <div class="validation-item" *ngIf="!isAddressInfoValid() && hasAddressInfoErrors()">
-          <mat-icon>location_on</mat-icon>
-          <span>Endereço incompleto</span>
-        </div>
-        <div class="validation-item"
-          *ngIf="clinicForm.get('acceptTerms')?.touched && !clinicForm.get('acceptTerms')?.value">
-          <mat-icon>gavel</mat-icon>
-          <span>Aceite os termos para continuar</span>
-        </div>
-      </div>
     </div>
   </div>
 </div>
