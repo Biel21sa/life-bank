@@ -282,7 +282,6 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  align-self: flex-start;
 }
 
 .stat-card.total-benefits .stat-icon {

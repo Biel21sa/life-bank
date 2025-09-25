@@ -28,10 +28,13 @@
       <div class="stats-grid">
         <div class="stat-card total-benefits">
           <div class="stat-indicator"></div>
-          <div class="stat-icon">
-            <mat-icon>card_giftcard</mat-icon>
+          <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="stat-icon">
+              <mat-icon>card_giftcard</mat-icon>
+            </div>
           </div>
-          <div class="stat-content">
+          <div class="stat-content"
+            style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
             <div class="stat-number">{{getTotalBenefits()}}</div>
             <div class="stat-label">Total de Benefícios</div>
             <div class="stat-trend positive">
@@ -43,10 +46,13 @@
 
         <div class="stat-card available-benefits">
           <div class="stat-indicator"></div>
-          <div class="stat-icon">
-            <mat-icon>check_circle</mat-icon>
+          <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="stat-icon">
+              <mat-icon>check_circle</mat-icon>
+            </div>
           </div>
-          <div class="stat-content">
+          <div class="stat-content"
+            style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
             <div class="stat-number">{{getAvailableBenefits()}}</div>
             <div class="stat-label">Disponíveis para Uso</div>
             <div class="stat-trend positive">
@@ -58,10 +64,13 @@
 
         <div class="stat-card total-value">
           <div class="stat-indicator"></div>
-          <div class="stat-icon">
-            <mat-icon>savings</mat-icon>
+          <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="stat-icon">
+              <mat-icon>savings</mat-icon>
+            </div>
           </div>
-          <div class="stat-content">
+          <div class="stat-content"
+            style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
             <div class="stat-number">{{getTotalValue().toFixed(1)}}%</div>
             <div class="stat-label">Desconto Total Disponível</div>
             <div class="stat-trend positive">
@@ -73,10 +82,13 @@
 
         <div class="stat-card usage-stats">
           <div class="stat-indicator"></div>
-          <div class="stat-icon">
-            <mat-icon>analytics</mat-icon>
+          <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="stat-icon">
+              <mat-icon>analytics</mat-icon>
+            </div>
           </div>
-          <div class="stat-content">
+          <div class="stat-content"
+            style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
             <div class="stat-number">{{getUsagePercentage()}}%</div>
             <div class="stat-label">Taxa de Utilização</div>
             <div class="stat-trend" [ngClass]="getUsagePercentage() > 50 ? 'positive' : 'neutral'">
@@ -136,6 +148,7 @@
   <!-- Benefits List Section -->
   <div class="benefits-section">
     <div class="benefits-container-inner">
+
 
       <!-- Section Header -->
       <div class="section-header">
@@ -225,10 +238,6 @@
 
             <!-- Card Actions -->
             <div class="card-actions">
-              <button mat-stroked-button class="action-button secondary" (click)="viewDetails(benefit)">
-                <mat-icon>visibility</mat-icon>
-                <span>Ver Detalhes</span>
-              </button>
 
               <button mat-raised-button color="primary" class="action-button primary"
                 [disabled]="getBenefitStatus(benefit) !== 'available'" (click)="useBenefit(benefit)"

@@ -220,11 +220,6 @@ export class BenefitListComponent implements OnInit {
     return `Expira em ${days} dias`;
   }
 
-
-  viewDetails(benefit: Benefit) {
-    this.toastr.info(`Detalhes do benefício: ${benefit.description}`, 'Informação');
-  }
-
   useBenefit(benefit: Benefit) {
     if (this.getBenefitStatus(benefit) !== 'available') {
       this.toastr.warning('Este benefício não está disponível para uso.');
