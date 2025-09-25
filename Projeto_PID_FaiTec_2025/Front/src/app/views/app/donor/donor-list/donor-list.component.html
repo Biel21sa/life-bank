@@ -305,8 +305,8 @@
                       <mat-icon>edit</mat-icon>
                     </button>
 
-                    <button mat-icon-button color="accent" [routerLink]="['/donor/edit', donor.id]"
-                      matTooltip="Editar doador" class="action-edit">
+                    <button mat-icon-button (click)="deleteDonor(donor.id!)" matTooltip="Editar doador"
+                      class="action-delete">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </div>
@@ -376,10 +376,6 @@
 
                   <button mat-icon-button [routerLink]="['/donor/edit', donor.id]" matTooltip="Editar">
                     <mat-icon>delete</mat-icon>
-                  </button>
-
-                  <button mat-icon-button (click)="contactDonor(donor)" matTooltip="Contatar">
-                    <mat-icon>email</mat-icon>
                   </button>
 
                 </div>

@@ -90,7 +90,6 @@ export class DonorListComponent implements OnInit {
     return new Set(this.donors.map(d => d.bloodType).filter(Boolean)).size;
   }
 
-  /** ---- Filtros ---- **/
   getFilteredCount(): number {
     return this.dataSource.filteredData.length;
   }
@@ -129,28 +128,12 @@ export class DonorListComponent implements OnInit {
     this.loadDonors();
   }
 
-  printList() {
-    window.print();
-  }
-
-  showStatistics() {
-    this.toastr.info('Função de estatísticas em desenvolvimento.');
-  }
-
   toggleView() {
     this.viewMode = this.viewMode === 'table' ? 'cards' : 'table';
   }
 
   trackByDonorId(index: number, donor: User) {
     return donor.id;
-  }
-
-  contactDonor(donor: User) {
-    this.toastr.info(`Contato enviado para ${donor.name}`);
-  }
-
-  viewHistory(donor: User) {
-    this.toastr.info(`Histórico doador ${donor.name}`);
   }
 
   async deleteDonor(donorId: string) {
