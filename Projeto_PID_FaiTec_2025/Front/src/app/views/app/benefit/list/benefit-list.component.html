@@ -235,37 +235,12 @@
                 </div>
               </div>
             </div>
-
-            <!-- Card Actions -->
-            <div class="card-actions">
-
-              <button mat-raised-button color="primary" class="action-button primary"
-                [disabled]="getBenefitStatus(benefit) !== 'available'" (click)="useBenefit(benefit)"
-                *ngIf="getBenefitStatus(benefit) === 'available'">
-                <mat-icon>redeem</mat-icon>
-                <span>Usar Benefício</span>
-              </button>
-
-              <button mat-stroked-button class="action-button disabled" disabled
-                *ngIf="getBenefitStatus(benefit) !== 'available'">
-                <mat-icon>{{getBenefitStatus(benefit) === 'used' ? 'done' : 'block'}}</mat-icon>
-                <span>{{getBenefitStatus(benefit) === 'used' ? 'Utilizado' : 'Expirado'}}</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Card Footer -->
-          <div class="card-footer" *ngIf="getBenefitStatus(benefit) === 'available'">
-            <div class="urgency-indicator" [ngClass]="getUrgencyClass(benefit.expirationDate)">
-              <mat-icon>{{getUrgencyIcon(benefit.expirationDate)}}</mat-icon>
-              <span>{{getUrgencyText(benefit.expirationDate)}}</span>
-            </div>
           </div>
         </div>
       </div>
 
       <!-- Call to Action -->
-      <div class="cta-section" *ngIf="!loading && filteredBenefits.length > 0">
+      <div class="cta-section">
         <div class="cta-card">
           <div class="cta-icon">
             <mat-icon>favorite</mat-icon>
@@ -276,7 +251,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </div>

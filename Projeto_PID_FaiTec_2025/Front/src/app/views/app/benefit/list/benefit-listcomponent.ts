@@ -7,13 +7,14 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
-import { Benefit } from '../../../../domain/model/benefit';
 import { AuthenticationService } from '../../../../services/security/authentication.service';
 import { BenefitReadService } from '../../../../services/benefit/benefit-read.service';
 import { Router } from '@angular/router';
+import { Benefit } from '../../../../domain/model/benefit';
 
 @Component({
   selector: 'app-benefit-list',
+  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,
@@ -176,23 +177,29 @@ export class BenefitListComponent implements OnInit {
 
   getDaysUntilExpiration(expirationDate: Date): number {
     const now = new Date();
-    const diff = expirationDate.getTime() - now.getTime();
-    return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+    const diff = new Date(expirationDate).getTime() - now.getTime();
+    const dias = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    return Math.max(0, dias);
   }
 
   getExpirationClass(expirationDate: Date): string {
     const now = new Date();
-    const diff = expirationDate.getTime() - now.getTime();
+    const expDate = new Date(expirationDate);
+    const diff = expDate.getTime() - now.getTime();
     const days = diff / (1000 * 60 * 60 * 24);
 
-    if (days <= 0) return 'expired';
-    if (days <= 7) return 'near-expiration';
-    return 'valid';
+    if (days <= 0) {
+      return 'expired';
+    }
+    if (days <= 7) {
+      return 'expiring-soon';
+    }
+    return '';
   }
 
   getUrgencyClass(expirationDate: Date): string {
     const now = new Date();
-    const diff = expirationDate.getTime() - now.getTime();
+    const diff = new Date(expirationDate).getTime() - now.getTime();
     const days = diff / (1000 * 60 * 60 * 24);
 
     if (days <= 0) return 'expired';
@@ -202,7 +209,7 @@ export class BenefitListComponent implements OnInit {
 
   getUrgencyIcon(expirationDate: Date): string {
     const now = new Date();
-    const diff = expirationDate.getTime() - now.getTime();
+    const diff = new Date(expirationDate).getTime() - now.getTime();
     const days = diff / (1000 * 60 * 60 * 24);
 
     if (days <= 0) return 'event_busy';
@@ -212,7 +219,7 @@ export class BenefitListComponent implements OnInit {
 
   getUrgencyText(expirationDate: Date): string {
     const now = new Date();
-    const diff = expirationDate.getTime() - now.getTime();
+    const diff = new Date(expirationDate).getTime() - now.getTime();
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
     if (days <= 0) return 'Expirado';

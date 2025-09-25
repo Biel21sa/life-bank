@@ -693,6 +693,7 @@
 
 /* Card Header */
 .card-header {
+  height: 155px;
   position: relative;
   padding: 32px;
   color: white;
@@ -706,6 +707,7 @@
   right: 0;
   bottom: 0;
   opacity: 0.9;
+  z-index: 0;
 }
 
 .benefit-card.status-available .header-background {
@@ -738,6 +740,9 @@
   margin-bottom: 8px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   letter-spacing: -0.02em;
+  color: white;
+  z-index: 2;
+  position: relative;
 }
 
 .amount-label {
@@ -788,6 +793,7 @@
 
 /* Card Content */
 .card-content {
+  height: 260px;
   padding: 32px;
 }
 
