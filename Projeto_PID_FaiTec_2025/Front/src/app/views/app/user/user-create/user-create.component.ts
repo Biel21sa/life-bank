@@ -249,7 +249,7 @@ export class UserCreateComponent implements OnInit {
   }
 
   getDonationLocationName(id: string): string | undefined {
-    const numericId = String(id);
+    const numericId = Number(id);
     return this.donationLocations.find(loc => loc.id === numericId)?.name;
   }
 
@@ -290,6 +290,10 @@ export class UserCreateComponent implements OnInit {
       case UserRole.CLINIC: return 'Dados da Clínica';
       default: return 'Dados Específicos';
     }
+  }
+
+  getRoleLabel(role: any): string {
+    return this.userRoleLabels[role as keyof typeof this.userRoleLabels] || '';
   }
 
   getFormSummary(): string {

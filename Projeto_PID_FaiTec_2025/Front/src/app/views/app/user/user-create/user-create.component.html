@@ -116,12 +116,11 @@
                   <mat-label>Tipo de Usuário</mat-label>
                   <mat-select formControlName="role" required>
                     <mat-select-trigger>
-                      <span>{{ userRoleLabels[userForm.get('role')?.value] }}</span>
+                      <span>{{ getRoleLabel(userForm.get('role')?.value) }}</span>
                     </mat-select-trigger>
                     <mat-option *ngFor="let role of userRoles" [value]="role">
                       <div class="role-option">
-                        <mat-icon>{{ getRoleIcon(role) }}</mat-icon>
-                        <span>{{ userRoleLabels[role] }}</span>
+                        <span>{{ getRoleLabel(role) }}</span>
                       </div>
                     </mat-option>
                   </mat-select>
@@ -268,6 +267,10 @@
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Tipo Sanguíneo</mat-label>
                   <mat-select formControlName="bloodType" required>
+                    <mat-select-trigger>
+                      {{ userForm.get('bloodType')?.value }}
+                    </mat-select-trigger>
+                
                     <mat-option value="A+">
                       <div class="blood-type-option">
                         <span class="blood-badge type-a-pos">A+</span>
@@ -320,10 +323,15 @@
                   <mat-icon matSuffix>bloodtype</mat-icon>
                   <mat-hint>Tipo sanguíneo do doador</mat-hint>
                 </mat-form-field>
-
+                
+                
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Gênero</mat-label>
                   <mat-select formControlName="gender" required>
+                    <mat-select-trigger>
+                      {{ userForm.get('gender')?.value === 'MASCULINO' ? 'Masculino' : 'Feminino' }}
+                    </mat-select-trigger>
+                
                     <mat-option value="MASCULINO">
                       <div class="gender-option">
                         <mat-icon>male</mat-icon>
@@ -340,6 +348,7 @@
                   <mat-icon matSuffix>person</mat-icon>
                   <mat-hint>Gênero do doador</mat-hint>
                 </mat-form-field>
+                
               </div>
             </div>
           </div>
@@ -379,12 +388,10 @@
                   <mat-label>Município</mat-label>
                   <mat-select formControlName="municipalityId" required>
                     <mat-select-trigger>
-                      <mat-icon>location_on</mat-icon>
                       <span>{{ getMunicipalityName(userForm.get('municipalityId')?.value) }}</span>
                     </mat-select-trigger>
                     <mat-option *ngFor="let municipality of municipalities" [value]="municipality.id">
                       <div class="municipality-option">
-                        <mat-icon>location_on</mat-icon>
                         <span>{{ municipality.name }} - {{ municipality.state }}</span>
                       </div>
                     </mat-option>
@@ -413,7 +420,7 @@
             <div class="card-body">
               <div class="terms-section">
                 <div class="terms-content">
-                  <mat-checkbox formControlName="acceptTerms" class="terms-checkbox">
+                  <mat-checkbox formControlName="acceptTerms" class="terms-checkbox" color="accent">
                     <span class="terms-text">
                       Eu aceito os
                       <a href="https://garrulous-baker-391.notion.site/Pol-tica-de-Privacidade-e-Tratamento-de-Dados-Pessoais-27711d0f05c380649016e02c17f7c821?pvs=143"
