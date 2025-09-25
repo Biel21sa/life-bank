@@ -1,84 +1,322 @@
-<div class="history-container">
-  <div class="header-section">
-    <h1>Meu Histórico de Doações</h1>
-    <p>Acompanhe todas as suas contribuições para salvar vidas</p>
-  </div>
+<div class="donation-history-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+      <div class="floating-element element-5"></div>
+    </div>
 
-  <!-- Cards de Estatísticas -->
-  <div class="stats-section">
-    <div class="stats-grid">
-      <mat-card class="stat-card">
-        <div class="stat-icon">
-          <mat-icon>favorite</mat-icon>
+    <div class="hero-content">
+      <div class="hero-icon">
+        <mat-icon>favorite</mat-icon>
+      </div>
+      <h1>Minha Jornada de Doações</h1>
+      <p class="hero-subtitle">Cada doação sua é um ato de heroísmo que salva vidas</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="stat-number">{{ getTotalDonations() }}</span>
+          <span class="stat-label">Doações</span>
         </div>
-        <div class="stat-content">
-          <div class="stat-number">{{getTotalDonations()}}</div>
-          <div class="stat-label">Doações Realizadas</div>
+        <div class="hero-stat">
+          <span class="stat-number">{{ getTotalDonations() * 3 }}</span>
+          <span class="stat-label">Vidas Salvas</span>
         </div>
-      </mat-card>
-
-      <mat-card class="stat-card">
-        <div class="stat-icon">
-          <mat-icon>bloodtype</mat-icon>
-        </div>
-        <div class="stat-content">
-          <div class="stat-number">{{getTotalQuantity()}} ml</div>
-          <div class="stat-label">Volume Total Doado</div>
-        </div>
-      </mat-card>
-
-      <mat-card class="stat-card">
-        <div class="stat-icon">
-          <mat-icon>people</mat-icon>
-        </div>
-        <div class="stat-content">
-          <div class="stat-number">{{getTotalDonations() * 3}}</div>
-          <div class="stat-label">Vidas Impactadas</div>
-        </div>
-      </mat-card>
+      </div>
     </div>
   </div>
 
-  <!-- Lista de Doações -->
-  <div class="donations-section">
-    <h2>Histórico</h2>
+  <!-- Content Section -->
+  <div class="content-section">
+    <div class="content-container">
 
-    <div *ngIf="loading" class="loading-container">
-      <mat-icon>hourglass_empty</mat-icon>
-      <p>Carregando histórico...</p>
-    </div>
-
-    <div *ngIf="!loading && donations.length === 0" class="empty-state">
-      <mat-icon>inbox</mat-icon>
-      <h3>Nenhuma doação encontrada</h3>
-      <p>Você ainda não realizou nenhuma doação. Que tal começar hoje?</p>
-    </div>
-
-    <div class="donations-grid" *ngIf="!loading && donations.length > 0">
-      <mat-card class="donation-card" *ngFor="let donation of donations" (click)="viewDonationDetails(donation.id!)">
-        <div class="card-header">
-          <div class="date-section">
-            <div class="date-value">{{donation.collectionDate | date:'dd/MM'}}</div>
-            <div class="date-year">{{donation.collectionDate | date:'yyyy'}}</div>
+      <!-- Impact Dashboard -->
+      <div class="impact-section">
+        <div class="impact-header">
+          <div class="header-icon">
+            <mat-icon>insights</mat-icon>
           </div>
-          <div class="quantity-badge">
-            <mat-icon>bloodtype</mat-icon>
-            <span>{{donation.quantity}} ml</span>
+          <div class="header-content">
+            <h2>Seu Impacto no Mundo</h2>
+            <p>Veja como suas doações estão transformando vidas</p>
           </div>
         </div>
 
-        <mat-card-content>
-          <div class="location-section">
-            <mat-icon>location_on</mat-icon>
-            <h4>{{donation.donationLocation?.name || 'Local não informado'}}</h4>
+        <div class="impact-grid">
+          <div class="impact-card total-donations">
+            <div class="card-indicator"></div>
+            <div class="card-icon">
+              <mat-icon>volunteer_activism</mat-icon>
+            </div>
+            <div class="card-content">
+              <div class="impact-number">{{ getTotalDonations() }}</div>
+              <div class="impact-label">Doações Realizadas</div>
+              <div class="impact-description">
+                <mat-icon>trending_up</mat-icon>
+                <span>Cada doação conta!</span>
+              </div>
+            </div>
+            <div class="card-badge">
+              <span>Herói</span>
+            </div>
           </div>
 
-          <div class="action-section">
-            <span>Ver detalhes</span>
-            <mat-icon>arrow_forward</mat-icon>
+          <div class="impact-card total-volume">
+            <div class="card-indicator"></div>
+            <div class="card-icon">
+              <mat-icon>bloodtype</mat-icon>
+            </div>
+            <div class="card-content">
+              <div class="impact-number">{{ getTotalQuantity() }}</div>
+              <div class="impact-unit">ml</div>
+              <div class="impact-label">Volume Total Doado</div>
+              <div class="impact-description">
+                <mat-icon>water_drop</mat-icon>
+                <span>Sangue que salva</span>
+              </div>
+            </div>
+            <div class="card-badge success">
+              <span>Vital</span>
+            </div>
           </div>
-        </mat-card-content>
-      </mat-card>
+
+          <div class="impact-card lives-saved">
+            <div class="card-indicator"></div>
+            <div class="card-icon">
+              <mat-icon>people</mat-icon>
+            </div>
+            <div class="card-content">
+              <div class="impact-number">{{ getTotalDonations() * 3 }}</div>
+              <div class="impact-label">Vidas Impactadas</div>
+              <div class="impact-description">
+                <mat-icon>favorite</mat-icon>
+                <span>Famílias gratas</span>
+              </div>
+            </div>
+            <div class="card-badge warning">
+              <span>Impacto</span>
+            </div>
+          </div>
+
+          <div class="impact-card time-donated">
+            <div class="card-indicator"></div>
+            <div class="card-icon">
+              <mat-icon>schedule</mat-icon>
+            </div>
+            <div class="card-content">
+              <div class="impact-number">{{ getTimeDonating() }}</div>
+              <div class="impact-label">{{ getTimeDonating() === 1 ? 'Mês' : 'Meses' }} Doando</div>
+              <div class="impact-description">
+                <mat-icon>star</mat-icon>
+                <span>Compromisso social</span>
+              </div>
+            </div>
+            <div class="card-badge info">
+              <span>Fidelidade</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recognition Section -->
+      <div class="recognition-section" *ngIf="getTotalDonations() > 0">
+        <div class="recognition-card">
+          <div class="recognition-header">
+            <div class="recognition-icon">
+              <mat-icon>military_tech</mat-icon>
+            </div>
+            <div class="recognition-content">
+              <h3>{{ getRecognitionTitle() }}</h3>
+              <p>{{ getRecognitionMessage() }}</p>
+            </div>
+            <div class="recognition-badge">
+              <mat-icon>{{ getRecognitionIcon() }}</mat-icon>
+            </div>
+          </div>
+
+          <div class="recognition-progress">
+            <div class="progress-info">
+              <span>Progresso para próximo nível</span>
+              <span>{{ getTotalDonations() }}/{{ getNextLevelTarget() }}</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline Section -->
+      <div class="timeline-section">
+        <div class="timeline-header">
+          <div class="header-icon">
+            <mat-icon>timeline</mat-icon>
+          </div>
+          <div class="header-content">
+            <h2>Sua Linha do Tempo</h2>
+            <p>Acompanhe sua jornada de doações ao longo do tempo</p>
+          </div>
+          <div class="header-actions">
+            <button mat-icon-button (click)="toggleTimelineView()"
+              [matTooltip]="timelineView === 'list' ? 'Visualizar em timeline' : 'Visualizar em lista'">
+              <mat-icon>{{ timelineView === 'list' ? 'view_timeline' : 'view_list' }}</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-section" *ngIf="loading">
+          <div class="loading-card">
+            <div class="loading-content">
+              <div class="loading-spinner">
+                <mat-icon>hourglass_empty</mat-icon>
+              </div>
+              <h3>Carregando Sua Jornada</h3>
+              <p>Buscando suas contribuições heroicas...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state-section" *ngIf="!loading && donations.length === 0">
+          <div class="empty-state-card">
+            <div class="empty-state-content">
+              <div class="empty-icon">
+                <mat-icon>volunteer_activism</mat-icon>
+              </div>
+              <h3>Sua Jornada Começa Aqui</h3>
+              <p>Você ainda não realizou nenhuma doação. Que tal começar hoje e se tornar um herói?</p>
+              <div class="empty-actions">
+                <button mat-raised-button color="primary" (click)="startDonationJourney()" class="primary-action">
+                  <mat-icon>favorite</mat-icon>
+                  <span>Começar a Doar</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Donations List -->
+        <div class="donations-container" *ngIf="!loading && donations.length > 0">
+
+          <!-- List View -->
+          <div class="donations-list" *ngIf="timelineView === 'list'">
+            <div class="donation-card" *ngFor="let donation of donations; trackBy: trackByDonationId; let i = index"
+              (click)="viewDonationDetails(donation.id!)" [style.animation-delay.ms]="i * 100">
+
+              <div class="card-header">
+                <div class="donation-date">
+                  <div class="date-day">{{ donation.collectionDate | date:'dd' }}</div>
+                  <div class="date-month">{{ donation.collectionDate | date:'MMM' | uppercase }}</div>
+                  <div class="date-year">{{ donation.collectionDate | date:'yyyy' }}</div>
+                </div>
+
+                <div class="donation-info">
+                  <h4>Doação #{{ donations.length - i }}</h4>
+                  <p class="donation-time">{{ getRelativeTime(donation.collectionDate) }}</p>
+                </div>
+
+                <div class="donation-volume">
+                  <div class="volume-badge">
+                    <mat-icon>bloodtype</mat-icon>
+                    <span>{{ donation.quantity }} ml</span>
+                  </div>
+                  <div class="lives-impact">
+                    <mat-icon>people</mat-icon>
+                    <span>3 vidas</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div class="location-info">
+                  <mat-icon>location_on</mat-icon>
+                  <span>{{ donation.donationLocation?.name || 'Local não informado' }}</span>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <div class="impact-message">
+                  <mat-icon>favorite</mat-icon>
+                  <span>Obrigado por salvar vidas!</span>
+                </div>
+                <div class="view-details">
+                  <span>Ver detalhes</span>
+                  <mat-icon>arrow_forward</mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline View -->
+          <div class="donations-timeline" *ngIf="timelineView === 'timeline'">
+            <div class="timeline-container">
+              <div class="timeline-line"></div>
+
+              <div class="timeline-item" *ngFor="let donation of donations; trackBy: trackByDonationId; let i = index"
+                [ngClass]="{ 'timeline-left': i % 2 === 0, 'timeline-right': i % 2 === 1 }"
+                [style.animation-delay.ms]="i * 150">
+
+                <div class="timeline-marker">
+                  <div class="marker-icon">
+                    <mat-icon>favorite</mat-icon>
+                  </div>
+                  <div class="marker-date">{{ donation.collectionDate | date:'dd/MM' }}</div>
+                </div>
+
+                <div class="timeline-content" (click)="viewDonationDetails(donation.id!)">
+                  <div class="timeline-card">
+                    <div class="timeline-header">
+                      <h4>Doação #{{ donations.length - i }}</h4>
+                      <span class="timeline-time">{{ getRelativeTime(donation.collectionDate) }}</span>
+                    </div>
+
+                    <div class="timeline-body">
+                      <div class="timeline-stats">
+                        <div class="stat-item">
+                          <mat-icon>bloodtype</mat-icon>
+                          <span>{{ donation.quantity }} ml</span>
+                        </div>
+                        <div class="stat-item">
+                          <mat-icon>people</mat-icon>
+                          <span>3 vidas salvas</span>
+                        </div>
+                      </div>
+
+                      <div class="timeline-location">
+                        <mat-icon>location_on</mat-icon>
+                        <span>{{ donation.donationLocation?.name || 'Local não informado' }}</span>
+                      </div>
+                    </div>
+
+                    <div class="timeline-footer">
+                      <span class="gratitude-message">Obrigado por ser um herói!</span>
+                      <mat-icon>arrow_forward</mat-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Call to Action Section -->
+      <div class="cta-section" *ngIf="donations.length > 0">
+        <div class="cta-card">
+          <div class="cta-content">
+            <div class="cta-icon">
+              <mat-icon>favorite</mat-icon>
+            </div>
+            <div class="cta-text">
+              <h3>Continue Salvando Vidas</h3>
+              <p>Sua próxima doação pode ser a diferença entre a vida e a morte para alguém</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
