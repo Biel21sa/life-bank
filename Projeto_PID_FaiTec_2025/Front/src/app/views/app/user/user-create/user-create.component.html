@@ -1,184 +1,480 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Criar Usuário</h1>
-    <p>Cadastre um novo usuário no sistema</p>
+<div class="user-create-container">
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+      <div class="floating-element element-5"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-icon">
+        <mat-icon>person_add</mat-icon>
+      </div>
+      <h1>Cadastrar Novo Usuário</h1>
+      <p class="hero-subtitle">Registre um novo membro na plataforma Life Bank</p>
+    </div>
   </div>
 
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>person_add</mat-icon>
-        Formulário de Cadastro
-      </mat-card-title>
-    </mat-card-header>
+  <div class="content-section">
+    <div class="content-container">
 
-    <mat-card-content>
-      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-
-        <!-- Informações Pessoais -->
-        <div class="section">
-          <h3>Informações Pessoais</h3>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Nome Completo</mat-label>
-            <input matInput formControlName="name" required>
-            <mat-icon matSuffix>person</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Tipo de Usuário</mat-label>
-            <mat-select formControlName="role" required>
-              <mat-option *ngFor="let role of userRoles" [value]="role">
-                {{ userRoleLabels[role] }}
-              </mat-option>
-            </mat-select>
-            <mat-icon matSuffix>badge</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>CPF</mat-label>
-            <input matInput formControlName="cpf" (input)="applyCpfMask($event)" placeholder="000.000.000-00"
-              maxlength="14" required>
-            <mat-icon matSuffix>credit_card</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="email" required>
-            <mat-icon matSuffix>email</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Telefone</mat-label>
-            <input matInput formControlName="phone" (input)="applyPhoneMask($event)" placeholder="(00) 00000-0000"
-              maxlength="15" required>
-            <mat-icon matSuffix>phone</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Senha</mat-label>
-            <input matInput type="password" formControlName="password" required>
-            <mat-icon matSuffix>lock</mat-icon>
-          </mat-form-field>
+      <div class="progress-section" style="margin-top: 25px;">
+        <div class="progress-header">
+          <div class="header-icon">
+            <mat-icon>assignment</mat-icon>
+          </div>
+          <div class="header-content">
+            <h2>Progresso do Cadastro</h2>
+            <p>Acompanhe o preenchimento das informações</p>
+          </div>
         </div>
 
-        <!-- Endereço -->
-        <div class="section">
-          <h3>Endereço</h3>
+        <div class="progress-steps">
+          <div class="step" [ngClass]="getStepClass('personal')">
+            <div class="step-icon">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div class="step-content">
+              <div class="step-title">Dados Pessoais</div>
+              <div class="step-description">Informações básicas</div>
+            </div>
+            <div class="step-indicator" [ngClass]="getStepIndicatorClass('personal')">
+              <mat-icon>{{ getStepIcon('personal') }}</mat-icon>
+            </div>
+          </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Rua</mat-label>
-            <input matInput formControlName="street" required>
-            <mat-icon matSuffix>home</mat-icon>
-          </mat-form-field>
+          <div class="step" [ngClass]="getStepClass('address')">
+            <div class="step-icon">
+              <mat-icon>home</mat-icon>
+            </div>
+            <div class="step-content">
+              <div class="step-title">Endereço</div>
+              <div class="step-description">Localização</div>
+            </div>
+            <div class="step-indicator" [ngClass]="getStepIndicatorClass('address')">
+              <mat-icon>{{ getStepIcon('address') }}</mat-icon>
+            </div>
+          </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Número</mat-label>
-            <input matInput formControlName="number" type="number" required>
-            <mat-icon matSuffix>tag</mat-icon>
-          </mat-form-field>
+          <div class="step" [ngClass]="getStepClass('specific')" *ngIf="selectedRole">
+            <div class="step-icon">
+              <mat-icon>{{ getRoleIcon(selectedRole) }}</mat-icon>
+            </div>
+            <div class="step-content">
+              <div class="step-title">{{ getRoleTitle(selectedRole) }}</div>
+              <div class="step-description">Dados específicos</div>
+            </div>
+            <div class="step-indicator" [ngClass]="getStepIndicatorClass('specific')">
+              <mat-icon>{{ getStepIcon('specific') }}</mat-icon>
+            </div>
+          </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Bairro</mat-label>
-            <input matInput formControlName="neighborhood" required>
-            <mat-icon matSuffix>location_city</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>CEP</mat-label>
-            <input matInput formControlName="postalCode" (input)="applyCepMask($event)" placeholder="00000-000"
-              maxlength="9" required>
-            <mat-icon matSuffix>place</mat-icon>
-          </mat-form-field>
+          <div class="step" [ngClass]="getStepClass('terms')">
+            <div class="step-icon">
+              <mat-icon>verified_user</mat-icon>
+            </div>
+            <div class="step-content">
+              <div class="step-title">Termos</div>
+              <div class="step-description">Aceite final</div>
+            </div>
+            <div class="step-indicator" [ngClass]="getStepIndicatorClass('terms')">
+              <mat-icon>{{ getStepIcon('terms') }}</mat-icon>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <!-- Campos Específicos -->
-        <div class="section" *ngIf="selectedRole === 'ADMINISTRATOR'">
-          <h3>Informações do Administrador</h3>
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Local de Doação</mat-label>
-            <mat-select formControlName="donationLocationId" required>
-              <mat-option *ngFor="let location of donationLocations" [value]="location.id">
-                {{ location.name }}
-              </mat-option>
-            </mat-select>
-            <mat-icon matSuffix>business</mat-icon>
-          </mat-form-field>
-        </div>
+      <div class="form-section">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
-        <div class="section" *ngIf="selectedRole === 'USER'">
-          <h3>Informações do Doador</h3>
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Tipo Sanguíneo</mat-label>
-            <mat-select formControlName="bloodType" required>
-              <mat-option value="A+">A+</mat-option>
-              <mat-option value="A-">A-</mat-option>
-              <mat-option value="B+">B+</mat-option>
-              <mat-option value="B-">B-</mat-option>
-              <mat-option value="AB+">AB+</mat-option>
-              <mat-option value="AB-">AB-</mat-option>
-              <mat-option value="O+">O+</mat-option>
-              <mat-option value="O-">O-</mat-option>
-            </mat-select>
-            <mat-icon matSuffix>bloodtype</mat-icon>
-          </mat-form-field>
+          <div class="form-card personal-info" [ngClass]="getSectionClass('personal')">
+            <div class="card-header">
+              <div class="header-icon">
+                <mat-icon>person</mat-icon>
+              </div>
+              <div class="header-content">
+                <h3>Informações Pessoais</h3>
+                <p>Dados básicos do usuário</p>
+              </div>
+              <div class="header-status" [ngClass]="getSectionStatusClass('personal')">
+                <mat-icon>{{ getSectionStatusIcon('personal') }}</mat-icon>
+              </div>
+            </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Gênero</mat-label>
-            <mat-select formControlName="gender" required>
-              <mat-option value="MASCULINO">Masculino</mat-option>
-              <mat-option value="FEMININO">Feminino</mat-option>
-            </mat-select>
-            <mat-icon matSuffix>person</mat-icon>
-          </mat-form-field>
-        </div>
+            <div class="card-body">
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Nome Completo</mat-label>
+                  <input matInput formControlName="name" required>
+                  <mat-icon matSuffix>person</mat-icon>
+                  <mat-hint>Digite o nome completo do usuário</mat-hint>
+                </mat-form-field>
 
-        <div class="section" *ngIf="selectedRole === 'CLINIC'">
-          <h3>Informações da Clínica</h3>
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Nome da Clínica</mat-label>
-            <input matInput formControlName="nameClinic" required>
-            <mat-icon matSuffix>local_hospital</mat-icon>
-          </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Tipo de Usuário</mat-label>
+                  <mat-select formControlName="role" required>
+                    <mat-select-trigger>
+                      <span>{{ userRoleLabels[userForm.get('role')?.value] }}</span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let role of userRoles" [value]="role">
+                      <div class="role-option">
+                        <mat-icon>{{ getRoleIcon(role) }}</mat-icon>
+                        <span>{{ userRoleLabels[role] }}</span>
+                      </div>
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>badge</mat-icon>
+                  <mat-hint>Selecione o tipo de acesso</mat-hint>
+                </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>CNPJ</mat-label>
-            <input matInput formControlName="cnpj" (input)="applyCnpjMask($event)" placeholder="00.000.000/0000-00"
-              maxlength="18" required>
-            <mat-icon matSuffix>business_center</mat-icon>
-          </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>CPF</mat-label>
+                  <input matInput formControlName="cpf" (input)="applyCpfMask($event)" placeholder="000.000.000-00"
+                    maxlength="14" required>
+                  <mat-icon matSuffix>credit_card</mat-icon>
+                  <mat-hint>Documento de identificação</mat-hint>
+                </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Município</mat-label>
-            <mat-select formControlName="municipalityId" required>
-              <mat-option *ngFor="let municipality of municipalities" [value]="municipality.id">
-                {{ municipality.name }} - {{ municipality.state }}
-              </mat-option>
-            </mat-select>
-            <mat-icon matSuffix>location_on</mat-icon>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-checkbox formControlName="acceptTerms">
-            Eu aceito os <a href="https://garrulous-baker-391.notion.site/Pol-tica-de-Privacidade-e-Tratamento-de-Dados-Pessoais-27711d0f05c380649016e02c17f7c821?pvs=143" target="_blank">Termos de Uso e Política de Privacidade</a>
-            da empresa.
-          </mat-checkbox>
-          <mat-error *ngIf="userForm.get('acceptTerms')?.touched && userForm.get('acceptTerms')?.hasError('required')">
-            Você deve aceitar os termos para continuar.
-          </mat-error>
-        </div>
-      </form>
-    </mat-card-content>
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Email</mat-label>
+                  <input matInput type="email" formControlName="email" required>
+                  <mat-icon matSuffix>email</mat-icon>
+                  <mat-hint>Email para acesso ao sistema</mat-hint>
+                </mat-form-field>
 
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!userForm.valid">
-        <mat-icon>save</mat-icon>
-        Criar Usuário
-      </button>
-      <button mat-button (click)="onCancel()">
-        <mat-icon>cancel</mat-icon>
-        Cancelar
-      </button>
-    </mat-card-actions>
-  </mat-card>
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Telefone</mat-label>
+                  <input matInput formControlName="phone" (input)="applyPhoneMask($event)" placeholder="(00) 00000-0000"
+                    maxlength="15" required>
+                  <mat-icon matSuffix>phone</mat-icon>
+                  <mat-hint>Número para contato</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Senha</mat-label>
+                  <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+                  <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+                    <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                  </button>
+                  <mat-hint>Senha de acesso ao sistema</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-card address-info" [ngClass]="getSectionClass('address')">
+            <div class="card-header">
+              <div class="header-icon">
+                <mat-icon>home</mat-icon>
+              </div>
+              <div class="header-content">
+                <h3>Endereço Residencial</h3>
+                <p>Localização do usuário</p>
+              </div>
+              <div class="header-status" [ngClass]="getSectionStatusClass('address')">
+                <mat-icon>{{ getSectionStatusIcon('address') }}</mat-icon>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field full-width">
+                  <mat-label>Rua</mat-label>
+                  <input matInput formControlName="street" required>
+                  <mat-icon matSuffix>location_on</mat-icon>
+                  <mat-hint>Nome da rua ou avenida</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Número</mat-label>
+                  <input matInput formControlName="number" type="number" required>
+                  <mat-icon matSuffix>tag</mat-icon>
+                  <mat-hint>Número da residência</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Bairro</mat-label>
+                  <input matInput formControlName="neighborhood" required>
+                  <mat-icon matSuffix>location_city</mat-icon>
+                  <mat-hint>Nome do bairro</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>CEP</mat-label>
+                  <input matInput formControlName="postalCode" (input)="applyCepMask($event)" placeholder="00000-000"
+                    maxlength="9" required>
+                  <mat-icon matSuffix>place</mat-icon>
+                  <mat-hint>Código postal</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-card admin-info" [ngClass]="getSectionClass('specific')"
+            *ngIf="selectedRole === 'ADMINISTRATOR'">
+            <div class="card-header">
+              <div class="header-icon">
+                <mat-icon>admin_panel_settings</mat-icon>
+              </div>
+              <div class="header-content">
+                <h3>Informações do Administrador</h3>
+                <p>Configurações específicas para administradores</p>
+              </div>
+              <div class="header-status" [ngClass]="getSectionStatusClass('specific')">
+                <mat-icon>{{ getSectionStatusIcon('specific') }}</mat-icon>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field full-width">
+                  <mat-label>Local de Doação</mat-label>
+                  <mat-select formControlName="donationLocationId" required>
+                    <mat-select-trigger>
+                      <span>{{ getDonationLocationName(userForm.get('donationLocationId')?.value) }}</span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let location of donationLocations" [value]="location.id">
+                      <div class="location-option">
+                        <mat-icon>business</mat-icon>
+                        <span>{{ location.name }}</span>
+                      </div>
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>business</mat-icon>
+                  <mat-hint>Local que será administrado</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-card donor-info" [ngClass]="getSectionClass('specific')" *ngIf="selectedRole === 'USER'">
+            <div class="card-header">
+              <div class="header-icon">
+                <mat-icon>volunteer_activism</mat-icon>
+              </div>
+              <div class="header-content">
+                <h3>Informações do Doador</h3>
+                <p>Dados específicos para doação de sangue</p>
+              </div>
+              <div class="header-status" [ngClass]="getSectionStatusClass('specific')">
+                <mat-icon>{{ getSectionStatusIcon('specific') }}</mat-icon>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Tipo Sanguíneo</mat-label>
+                  <mat-select formControlName="bloodType" required>
+                    <mat-option value="A+">
+                      <div class="blood-type-option">
+                        <span class="blood-badge type-a-pos">A+</span>
+                        <span>Tipo A Positivo</span>
+                      </div>
+                    </mat-option>
+                    <mat-option value="A-">
+                      <div class="blood-type-option">
+                        <span class="blood-badge type-a-neg">A-</span>
+                        <span>Tipo A Negativo</span>
+                      </div>
+                    </mat-option>
+                    <mat-option value="B+">
+                      <div class="blood-type-option">
+                        <span class="blood-badge type-b-pos">B+</span>
+                        <span>Tipo B Positivo</span>
+                      </div>
+                    </mat-option>
+                    <mat-option value="B-">
+                      <div class="blood-type-option">
+                        <span class="blood-badge type-b-neg">B-</span>
+                        <span>Tipo B Negativo</span>
+                      </div>
+                    </mat-option>
+                    <mat-option value="AB+">
+                      <div class="blood-type-option">
+                        <span class="blood-badge type-ab-pos">AB+</span>
+                        <span>Tipo AB Positivo</span>
+                      </div>
+                    </mat-option>
+                    <mat-option value="AB-">
+                      <div class="blood-type-option">
+                        <span class="blood-badge type-ab-neg">AB-</span>
+                        <span>Tipo AB Negativo</span>
+                      </div>
+                    </mat-option>
+                    <mat-option value="O+">
+                      <div class="blood-type-option">
+                        <span class="blood-badge type-o-pos">O+</span>
+                        <span>Tipo O Positivo</span>
+                      </div>
+                    </mat-option>
+                    <mat-option value="O-">
+                      <div class="blood-type-option">
+                        <span class="blood-badge type-o-neg">O-</span>
+                        <span>Tipo O Negativo</span>
+                      </div>
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>bloodtype</mat-icon>
+                  <mat-hint>Tipo sanguíneo do doador</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Gênero</mat-label>
+                  <mat-select formControlName="gender" required>
+                    <mat-option value="MASCULINO">
+                      <div class="gender-option">
+                        <mat-icon>male</mat-icon>
+                        <span>Masculino</span>
+                      </div>
+                    </mat-option>
+                    <mat-option value="FEMININO">
+                      <div class="gender-option">
+                        <mat-icon>female</mat-icon>
+                        <span>Feminino</span>
+                      </div>
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>person</mat-icon>
+                  <mat-hint>Gênero do doador</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-card clinic-info" [ngClass]="getSectionClass('specific')" *ngIf="selectedRole === 'CLINIC'">
+            <div class="card-header">
+              <div class="header-icon">
+                <mat-icon>local_hospital</mat-icon>
+              </div>
+              <div class="header-content">
+                <h3>Informações da Clínica</h3>
+                <p>Dados institucionais da clínica</p>
+              </div>
+              <div class="header-status" [ngClass]="getSectionStatusClass('specific')">
+                <mat-icon>{{ getSectionStatusIcon('specific') }}</mat-icon>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field full-width">
+                  <mat-label>Nome da Clínica</mat-label>
+                  <input matInput formControlName="nameClinic" required>
+                  <mat-icon matSuffix>local_hospital</mat-icon>
+                  <mat-hint>Razão social da clínica</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>CNPJ</mat-label>
+                  <input matInput formControlName="cnpj" (input)="applyCnpjMask($event)"
+                    placeholder="00.000.000/0000-00" maxlength="18" required>
+                  <mat-icon matSuffix>business_center</mat-icon>
+                  <mat-hint>Documento da empresa</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Município</mat-label>
+                  <mat-select formControlName="municipalityId" required>
+                    <mat-select-trigger>
+                      <mat-icon>location_on</mat-icon>
+                      <span>{{ getMunicipalityName(userForm.get('municipalityId')?.value) }}</span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let municipality of municipalities" [value]="municipality.id">
+                      <div class="municipality-option">
+                        <mat-icon>location_on</mat-icon>
+                        <span>{{ municipality.name }} - {{ municipality.state }}</span>
+                      </div>
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>location_on</mat-icon>
+                  <mat-hint>Localização da clínica</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-card terms-info" [ngClass]="getSectionClass('terms')">
+            <div class="card-header">
+              <div class="header-icon">
+                <mat-icon>verified_user</mat-icon>
+              </div>
+              <div class="header-content">
+                <h3>Termos e Condições</h3>
+                <p>Aceite dos termos de uso e política de privacidade</p>
+              </div>
+              <div class="header-status" [ngClass]="getSectionStatusClass('terms')">
+                <mat-icon>{{ getSectionStatusIcon('terms') }}</mat-icon>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="terms-section">
+                <div class="terms-content">
+                  <mat-checkbox formControlName="acceptTerms" class="terms-checkbox">
+                    <span class="terms-text">
+                      Eu aceito os
+                      <a href="https://garrulous-baker-391.notion.site/Pol-tica-de-Privacidade-e-Tratamento-de-Dados-Pessoais-27711d0f05c380649016e02c17f7c821?pvs=143"
+                        target="_blank" class="terms-link">
+                        Termos de Uso e Política de Privacidade
+                      </a>
+                      da Life Bank.
+                    </span>
+                  </mat-checkbox>
+
+                  <div class="terms-info-box">
+                    <div class="info-icon">
+                      <mat-icon>info</mat-icon>
+                    </div>
+                    <div class="info-content">
+                      <h4>Proteção de Dados</h4>
+                      <p>Seus dados são protegidos conforme a LGPD e utilizados apenas para os fins do sistema de doação
+                        de sangue.</p>
+                    </div>
+                  </div>
+
+                  <mat-error
+                    *ngIf="userForm.get('acceptTerms')?.touched && userForm.get('acceptTerms')?.hasError('required')"
+                    class="terms-error">
+                    <mat-icon>error</mat-icon>
+                    <span>Você deve aceitar os termos para continuar.</span>
+                  </mat-error>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="actions-content">
+              <div class="form-summary">
+                <div class="summary-icon">
+                  <mat-icon>assignment_turned_in</mat-icon>
+                </div>
+                <div class="summary-text">
+                  <h4>Resumo do Cadastro</h4>
+                  <p>{{ getFormSummary() }}</p>
+                </div>
+              </div>
+
+              <div class="action-buttons">
+                <button mat-stroked-button type="button" (click)="onCancel()" class="cancel-button">
+                  <mat-icon>cancel</mat-icon>
+                  <span>Cancelar</span>
+                </button>
+
+                <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid || isSubmitting"
+                  class="submit-button">
+                  <mat-icon *ngIf="!isSubmitting">save</mat-icon>
+                  <mat-icon *ngIf="isSubmitting" class="spinning">hourglass_empty</mat-icon>
+                  <span>{{ isSubmitting ? 'Criando...' : 'Criar Usuário' }}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
