@@ -1,60 +1,288 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Detalhes do Local de Doação</h1>
-    <p>Visualize as informações completas do local de doação</p>
+<div class="donation-location-detail-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="location-icon">
+        <mat-icon>place</mat-icon>
+      </div>
+      <h1>Detalhes do Local de Doação</h1>
+      <p class="hero-subtitle">Visualize as informações completas do local de doação</p>
+    </div>
   </div>
 
-  <mat-card *ngIf="donationLocation">
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>add_location</mat-icon>
-        {{ donationLocation.name }}
-      </mat-card-title>
-    </mat-card-header>
+  <!-- Content Section -->
+  <div class="content-section">
+    <div class="content-container">
 
-    <mat-card-content>
-      <div class="section">
-        <h3>Informações Básicas</h3>
-        <div class="detail-row">
-          <strong>Nome:</strong>
-          <span>{{ donationLocation.name }}</span>
+      <!-- Location Header -->
+      <div class="location-header" *ngIf="donationLocation">
+        <div class="location-avatar">
+          <div class="avatar-background"></div>
+          <mat-icon>place</mat-icon>
+        </div>
+
+        <div class="location-info">
+          <h2>{{ donationLocation.name }}</h2>
+          <div class="location-badges">
+            <span class="status-badge active">
+              <mat-icon>check_circle</mat-icon>
+              <span>Ativo</span>
+            </span>
+            <span class="type-badge">
+              <mat-icon>local_hospital</mat-icon>
+              <span>Local de Doação</span>
+            </span>
+          </div>
+          <div class="location-stats">
+            <div class="stat-item">
+              <mat-icon>location_on</mat-icon>
+              <span>{{ getFullAddress() }}</span>
+            </div>
+            <div class="stat-item">
+              <mat-icon>public</mat-icon>
+              <span>{{ donationLocation.municipality.name }}, {{ donationLocation.municipality.state }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="location-actions">
+          <button mat-icon-button class="action-button" [routerLink]="['/donation-location/edit', donationLocation.id]"
+            matTooltip="Editar local">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button mat-icon-button class="action-button" (click)="viewOnMap()" matTooltip="Ver no mapa">
+            <mat-icon>map</mat-icon>
+          </button>
         </div>
       </div>
 
-      <div class="section">
-        <h3>Endereço</h3>
-        <div class="detail-row">
-          <strong>Rua:</strong>
-          <span>{{ donationLocation.street }}</span>
+      <!-- Information Cards -->
+      <div class="info-cards" *ngIf="donationLocation">
+
+        <!-- Basic Information -->
+        <div class="info-card basic-info">
+          <div class="card-header">
+            <div class="header-icon">
+              <mat-icon>business</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Informações Básicas</h3>
+              <p>Dados principais do estabelecimento</p>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>business</mat-icon>
+                </div>
+                <div class="item-content">
+                  <div class="item-label">Nome do Local</div>
+                  <div class="item-value">{{ donationLocation.name }}</div>
+                </div>
+                <div class="item-actions">
+                  <button mat-icon-button class="copy-button" (click)="copyToClipboard(donationLocation.name, 'Nome')"
+                    matTooltip="Copiar nome">
+                    <mat-icon>content_copy</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>category</mat-icon>
+                </div>
+                <div class="item-content">
+                  <div class="item-label">Tipo de Estabelecimento</div>
+                  <div class="item-value">Local de Doação de Sangue</div>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>schedule</mat-icon>
+                </div>
+                <div class="item-content">
+                  <div class="item-label">Status Operacional</div>
+                  <div class="item-value status-active">
+                    <mat-icon>check_circle</mat-icon>
+                    <span>Ativo e Funcionando</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>today</mat-icon>
+                </div>
+                <div class="item-content">
+                  <div class="item-label">Data de Cadastro</div>
+                  <div class="item-value">{{ getCurrentDate() }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="detail-row">
-          <strong>Número:</strong>
-          <span>{{ donationLocation.number }}</span>
+
+        <!-- Address Information -->
+        <div class="info-card address-info">
+          <div class="card-header">
+            <div class="header-icon">
+              <mat-icon>location_on</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Endereço Completo</h3>
+              <p>Localização física do estabelecimento</p>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="address-summary">
+              <div class="summary-icon">
+                <mat-icon>location_on</mat-icon>
+              </div>
+              <div class="summary-content">
+                <div class="address-line">{{ donationLocation.street }}, {{ donationLocation.number }}</div>
+                <div class="address-line">{{ donationLocation.neighborhood }}</div>
+                <div class="address-line">{{ donationLocation.municipality.name }}, {{
+                  donationLocation.municipality.state }}</div>
+                <div class="address-line">CEP: {{ donationLocation.postalCode | mask: '00000-000' }}</div>
+              </div>
+              <div class="summary-actions">
+                <button mat-stroked-button class="map-button" (click)="viewOnMap()">
+                  <mat-icon>map</mat-icon>
+                  <span>Ver no Mapa</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>home</mat-icon>
+                </div>
+                <div class="item-content">
+                  <div class="item-label">Logradouro</div>
+                  <div class="item-value">{{ donationLocation.street }}</div>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>tag</mat-icon>
+                </div>
+                <div class="item-content">
+                  <div class="item-label">Número</div>
+                  <div class="item-value">{{ donationLocation.number }}</div>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>location_city</mat-icon>
+                </div>
+                <div class="item-content">
+                  <div class="item-label">Bairro</div>
+                  <div class="item-value">{{ donationLocation.neighborhood }}</div>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>place</mat-icon>
+                </div>
+                <div class="item-content">
+                  <div class="item-label">CEP</div>
+                  <div class="item-value">{{ donationLocation.postalCode | mask: '00000-000' }}</div>
+                </div>
+                <div class="item-actions">
+                  <button mat-icon-button class="copy-button"
+                    (click)="copyToClipboard(donationLocation.postalCode, 'CEP')" matTooltip="Copiar CEP">
+                    <mat-icon>content_copy</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>public</mat-icon>
+                </div>
+                <div class="item-content">
+                  <div class="item-label">Município</div>
+                  <div class="item-value">{{ donationLocation.municipality.name }}</div>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="item-icon">
+                  <mat-icon>flag</mat-icon>
+                </div>
+                <div class="item-content">
+                  <div class="item-label">Estado</div>
+                  <div class="item-value">{{ donationLocation.municipality.state }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="detail-row">
-          <strong>Bairro:</strong>
-          <span>{{ donationLocation.neighborhood }}</span>
-        </div>
-        <div class="detail-row">
-          <strong>CEP:</strong>
-          <span>{{ donationLocation.postalCode | mask: '00000-000' }}</span>
-        </div>
-        <div class="detail-row">
-          <strong>Município:</strong>
-          <span>{{ donationLocation.municipality.name }}, {{ donationLocation.municipality.state }}</span>
+
+        <!-- Navigation Actions -->
+        <div class="navigation-actions">
+          <button mat-stroked-button routerLink="/donation-location/list" class="back-button">
+            <mat-icon>arrow_back</mat-icon>
+            <span>Voltar à Lista</span>
+          </button>
+
+          <div class="primary-actions">
+            <button mat-raised-button color="primary" [routerLink]="['/donation-location/edit', donationLocation.id]"
+              class="edit-button">
+              <mat-icon>edit</mat-icon>
+              <span>Editar Local</span>
+            </button>
+          </div>
         </div>
       </div>
-    </mat-card-content>
+    </div>
 
-    <mat-card-actions>
-      <button mat-raised-button color="primary" [routerLink]="['/donation-location/edit', donationLocation.id]">
-        <mat-icon>edit</mat-icon>
-        Editar
-      </button>
-      <button mat-button routerLink="/donation-location/list">
-        <mat-icon>arrow_back</mat-icon>
-        Voltar
-      </button>
-    </mat-card-actions>
-  </mat-card>
+    <!-- Loading State -->
+    <div class="loading-section" *ngIf="isLoading">
+      <div class="loading-content">
+        <div class="loading-spinner">
+          <mat-icon>hourglass_empty</mat-icon>
+        </div>
+        <h3>Carregando Informações</h3>
+        <p>Aguarde enquanto buscamos os dados do local...</p>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-section" *ngIf="hasError && !isLoading">
+      <div class="error-content">
+        <div class="error-icon">
+          <mat-icon>error_outline</mat-icon>
+        </div>
+        <h3>Erro ao carregar informações</h3>
+        <p>Não foi possível carregar os dados do local de doação</p>
+        <div class="error-actions">
+          <button mat-raised-button color="primary" (click)="retryLoad()">
+            <mat-icon>refresh</mat-icon>
+            <span>Tentar Novamente</span>
+          </button>
+          <button mat-stroked-button routerLink="/donation-location/list">
+            <mat-icon>arrow_back</mat-icon>
+            <span>Voltar à Lista</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
