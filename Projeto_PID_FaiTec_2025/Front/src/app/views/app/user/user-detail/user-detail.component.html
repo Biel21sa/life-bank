@@ -8,7 +8,7 @@
       <div class="floating-element element-4"></div>
       <div class="floating-element element-5"></div>
     </div>
-    
+
     <div class="hero-content">
       <div class="hero-icon">
         <mat-icon>person</mat-icon>
@@ -21,14 +21,14 @@
   <!-- Content Section -->
   <div class="content-section">
     <div class="content-container">
-      
+
       <!-- User Header -->
       <div class="user-header" *ngIf="user">
         <div class="user-avatar">
           <div class="avatar-background"></div>
           <mat-icon>{{ getRoleIcon(user.role) }}</mat-icon>
         </div>
-        
+
         <div class="user-info">
           <h2>{{ user.name }}</h2>
           <div class="user-badges">
@@ -48,9 +48,10 @@
             </div>
           </div>
         </div>
-        
+
         <div class="user-actions">
-          <button mat-icon-button class="action-button" [routerLink]="['/user/edit', user.id]" matTooltip="Editar usuário">
+          <button mat-icon-button class="action-button" [routerLink]="['/user/edit', user.id]"
+            matTooltip="Editar usuário">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
@@ -58,7 +59,7 @@
 
       <!-- Information Cards -->
       <div class="info-cards" *ngIf="user">
-        
+
         <!-- Personal Information -->
         <div class="info-card personal-info">
           <div class="card-header">
@@ -70,7 +71,7 @@
               <p>Dados básicos do usuário</p>
             </div>
           </div>
-          
+
           <div class="card-body">
             <div class="info-grid">
               <div class="info-item">
@@ -127,7 +128,7 @@
               <p>Localização do usuário</p>
             </div>
           </div>
-          
+
           <div class="card-body">
             <div class="address-summary">
               <div class="summary-icon">
@@ -145,7 +146,7 @@
                 </button>
               </div>
             </div>
-            
+
             <div class="info-grid">
               <div class="info-item">
                 <div class="item-icon">
@@ -201,7 +202,7 @@
               <p>Configurações específicas para administradores</p>
             </div>
           </div>
-          
+
           <div class="card-body">
             <div class="info-grid">
               <div class="info-item featured">
@@ -234,7 +235,7 @@
               <p>Dados específicos para doação de sangue</p>
             </div>
           </div>
-          
+
           <div class="card-body">
             <div class="donor-highlight">
               <div class="blood-type-display">
@@ -246,7 +247,7 @@
                   <div class="blood-description">Tipo Sanguíneo</div>
                 </div>
               </div>
-              
+
               <div class="donor-stats">
                 <div class="stat-card">
                   <div class="stat-icon">
@@ -257,7 +258,7 @@
                     <div class="stat-label">Doações</div>
                   </div>
                 </div>
-                
+
                 <div class="stat-card">
                   <div class="stat-icon">
                     <mat-icon>schedule</mat-icon>
@@ -269,7 +270,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="info-grid">
               <div class="info-item" *ngIf="user.donor?.gender">
                 <div class="item-icon">
@@ -295,7 +296,7 @@
               <p>Dados institucionais da clínica</p>
             </div>
           </div>
-          
+
           <div class="card-body">
             <div class="info-grid">
               <div class="info-item featured" *ngIf="user.nameClinic">
@@ -331,29 +332,29 @@
           </div>
         </div>
 
-      <!-- Navigation Actions -->
-      <div class="navigation-actions">
-        <button mat-stroked-button routerLink="/user/list" class="back-button">
-          <mat-icon>arrow_back</mat-icon>
-          <span>Voltar à Lista</span>
-        </button>
-        
-        <div class="primary-actions">
-          <button mat-raised-button color="primary" [routerLink]="['/user/edit', user?.id]" class="edit-button">
-            <mat-icon>edit</mat-icon>
-            <span>Editar Usuário</span>
+        <!-- Navigation Actions -->
+        <div class="navigation-actions">
+          <button mat-stroked-button routerLink="/user/list" class="back-button">
+            <mat-icon>arrow_back</mat-icon>
+            <span>Voltar à Lista</span>
           </button>
+
+          <div class="primary-actions">
+            <button mat-raised-button color="primary" [routerLink]="['/user/edit', user.id]" class="edit-button">
+              <mat-icon>edit</mat-icon>
+              <span>Editar Usuário</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Loading State -->
-  <div class="loading-section" *ngIf="!user">
-    <div class="loading-content">
-      <div class="loading-spinner"></div>
-      <h3>Carregando Informações</h3>
-      <p>Aguarde enquanto buscamos os dados do usuário...</p>
+    <!-- Loading State -->
+    <div class="loading-section" *ngIf="!user">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <h3>Carregando Informações</h3>
+        <p>Aguarde enquanto buscamos os dados do usuário...</p>
+      </div>
     </div>
   </div>
-</div>

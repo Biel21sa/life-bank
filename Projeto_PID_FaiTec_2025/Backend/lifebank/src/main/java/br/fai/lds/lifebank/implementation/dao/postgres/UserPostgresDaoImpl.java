@@ -110,7 +110,7 @@ public class UserPostgresDaoImpl implements UserDao {
         final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                 "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
                 "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
-                "d.id as donor_id, d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
+                "d.id as donor_id, d.gender as gender, d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
                 "FROM user_model u " +
                 "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
                 "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
@@ -143,7 +143,7 @@ public class UserPostgresDaoImpl implements UserDao {
         final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                 "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
                 "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
-                "d.id as donor_id, d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
+                "d.id as donor_id, d.gender as gender, d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
                 "FROM user_model u " +
                 "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
                 "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
@@ -202,7 +202,7 @@ public class UserPostgresDaoImpl implements UserDao {
 
             // Atualizar tabelas específicas baseado no tipo de usuário
             if (entity.getRole() == UserModel.UserRole.USER && entity.getBloodType() != null) {
-                updateDonor(id, entity.getBloodType());
+                updateDonor(id, entity.getBloodType(), entity.getGender());
             } else if (entity.getRole() == UserModel.UserRole.CLINIC) {
                 updateClinic(id, entity.getNameClinic(), entity.getCnpj());
             }
@@ -223,7 +223,7 @@ public class UserPostgresDaoImpl implements UserDao {
         final String sql = "SELECT u.*, dl.id as dl_id, dl.name as dl_name, dl.street as dl_street, " +
                 "dl.neighborhood as dl_neighborhood, dl.number as dl_number, dl.postal_code as dl_postal_code, " +
                 "dl.municipality_id as dl_municipality_id, m.name as m_name, m.state as m_state, " +
-                "d.id as donor_id, d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
+                "d.id as donor_id, d.gender as gender, d.blood_type as donor_blood_type, c.name as clinic_name, c.cnpj as clinic_cnpj " +
                 "FROM user_model u " +
                 "LEFT JOIN donation_location dl ON u.donation_location_id = dl.id " +
                 "LEFT JOIN municipality m ON dl.municipality_id = m.id " +
@@ -297,11 +297,12 @@ public class UserPostgresDaoImpl implements UserDao {
         }
     }
 
-    private void updateDonor(int userId, String bloodType) throws SQLException {
-        String sql = "UPDATE donor SET blood_type = ? WHERE user_id = ?";
+    private void updateDonor(int userId, String bloodType, String gender) throws SQLException {
+        String sql = "UPDATE donor SET blood_type = ?, gender = ? WHERE user_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, bloodType);
-            stmt.setInt(2, userId);
+            stmt.setString(2, gender);
+            stmt.setInt(3, userId);
             stmt.executeUpdate();
         }
     }
@@ -334,6 +335,7 @@ public class UserPostgresDaoImpl implements UserDao {
 
         if (user.getRole() == UserModel.UserRole.USER && rs.getObject("donor_blood_type") != null) {
             user.setBloodType(rs.getString("donor_blood_type"));
+            user.setGender(rs.getString("gender"));
             if (rs.getObject("donor_id") != null) {
                 user.setDonorId(rs.getInt("donor_id"));
             }
