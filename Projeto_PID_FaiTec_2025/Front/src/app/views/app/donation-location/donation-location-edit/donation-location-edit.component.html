@@ -1,84 +1,261 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Editar Local de Doação</h1>
-    <p>Atualize as informações do local de doação</p>
+<div class="donation-location-edit-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="location-icon">
+        <mat-icon>edit_location</mat-icon>
+      </div>
+      <h1>Editar Local de Doação</h1>
+      <p class="hero-subtitle">Atualize as informações do local de doação no sistema</p>
+    </div>
   </div>
 
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>edit_location</mat-icon>
-        Formulário de Edição
-      </mat-card-title>
-    </mat-card-header>
+  <!-- Main Content -->
+  <div class="content-section">
+    <div class="content-container">
 
-    <mat-card-content>
-      <form [formGroup]="donationLocationForm" (ngSubmit)="onSubmit()">
-
-        <!-- Informações Básicas -->
-        <div class="section">
-          <h3>Informações Básicas</h3>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Nome do Local</mat-label>
-            <input matInput formControlName="name" required>
-            <mat-icon matSuffix>business</mat-icon>
-          </mat-form-field>
-        </div>
-
-        <!-- Endereço -->
-        <div class="section">
-          <h3>Endereço</h3>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Rua</mat-label>
-            <input matInput formControlName="street" required>
-            <mat-icon matSuffix>home</mat-icon>
-          </mat-form-field>
-
-          <div class="form-row">
-            <mat-form-field appearance="outline" class="form-field-70">
-              <mat-label>Número</mat-label>
-              <input matInput formControlName="number" type="number" required>
-              <mat-icon matSuffix>tag</mat-icon>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="form-field-30">
-              <mat-label>CEP</mat-label>
-              <input matInput formControlName="postalCode" mask="00000-000" required>
-              <mat-icon matSuffix>place</mat-icon>
-            </mat-form-field>
+      <!-- Progress Indicator -->
+      <div class="progress-section">
+        <div class="progress-card">
+          <div class="progress-header">
+            <div class="header-icon">
+              <mat-icon>edit</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Formulário de Edição</h3>
+              <p>Atualize as informações do local de doação</p>
+            </div>
           </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Bairro</mat-label>
-            <input matInput formControlName="neighborhood" required>
-            <mat-icon matSuffix>location_city</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Município</mat-label>
-            <mat-select formControlName="municipalityId" required>
-              <mat-option *ngFor="let municipality of municipalities" [value]="municipality.id">
-                {{ municipality.name }} - {{ municipality.state }}
-              </mat-option>
-            </mat-select>
-            <mat-icon matSuffix>location_on</mat-icon>
-          </mat-form-field>
+          <div class="progress-steps">
+            <div class="step active">
+              <div class="step-icon">
+                <mat-icon>business</mat-icon>
+              </div>
+              <span>Informações Básicas</span>
+            </div>
+            <div class="step-divider"></div>
+            <div class="step active">
+              <div class="step-icon">
+                <mat-icon>location_on</mat-icon>
+              </div>
+              <span>Endereço</span>
+            </div>
+            <div class="step-divider"></div>
+            <div class="step active">
+              <div class="step-icon">
+                <mat-icon>save</mat-icon>
+              </div>
+              <span>Salvar Alterações</span>
+            </div>
+          </div>
         </div>
+      </div>
 
-      </form>
-    </mat-card-content>
+      <!-- Form Section -->
+      <div class="form-section">
+        <div class="form-card">
+          <form [formGroup]="donationLocationForm" (ngSubmit)="onSubmit()">
 
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!donationLocationForm.valid">
-        <mat-icon>save</mat-icon>
-        Atualizar Local
-      </button>
-      <button mat-button (click)="onCancel()">
-        <mat-icon>cancel</mat-icon>
-        Cancelar
-      </button>
-    </mat-card-actions>
-  </mat-card>
+            <!-- Informações Básicas -->
+            <div class="form-group">
+              <div class="group-header">
+                <div class="group-icon">
+                  <mat-icon>business</mat-icon>
+                </div>
+                <div class="group-content">
+                  <h3>Informações Básicas</h3>
+                  <p>Dados principais do local de doação</p>
+                </div>
+              </div>
+
+              <div class="fields-container">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Nome do Local</mat-label>
+                  <input matInput formControlName="name" placeholder="Ex: Hemocentro Central" required>
+                  <mat-icon matSuffix>business</mat-icon>
+                  <mat-hint>Nome que identificará o local no sistema</mat-hint>
+                  <mat-error *ngIf="donationLocationForm.get('name')?.hasError('required')">
+                    Nome é obrigatório
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Endereço -->
+            <div class="form-group">
+              <div class="group-header">
+                <div class="group-icon">
+                  <mat-icon>location_on</mat-icon>
+                </div>
+                <div class="group-content">
+                  <h3>Endereço Completo</h3>
+                  <p>Localização física do estabelecimento</p>
+                </div>
+              </div>
+
+              <div class="fields-container">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Rua</mat-label>
+                  <input matInput formControlName="street" placeholder="Nome da rua ou avenida" required>
+                  <mat-icon matSuffix>home</mat-icon>
+                  <mat-error *ngIf="donationLocationForm.get('street')?.hasError('required')">
+                    Rua é obrigatória
+                  </mat-error>
+                </mat-form-field>
+
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="form-field-40">
+                    <mat-label>Número</mat-label>
+                    <input matInput formControlName="number" type="number" placeholder="123" required>
+                    <mat-icon matSuffix>tag</mat-icon>
+                    <mat-error *ngIf="donationLocationForm.get('number')?.hasError('required')">
+                      Número é obrigatório
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="form-field-60">
+                    <mat-label>CEP</mat-label>
+                    <input matInput formControlName="postalCode" mask="00000-000" placeholder="00000-000" required>
+                    <mat-icon matSuffix>place</mat-icon>
+                    <mat-hint>Formato: 00000-000</mat-hint>
+                    <mat-error *ngIf="donationLocationForm.get('postalCode')?.hasError('required')">
+                      CEP é obrigatório
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Bairro</mat-label>
+                  <input matInput formControlName="neighborhood" placeholder="Nome do bairro" required>
+                  <mat-icon matSuffix>location_city</mat-icon>
+                  <mat-error *ngIf="donationLocationForm.get('neighborhood')?.hasError('required')">
+                    Bairro é obrigatório
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Município</mat-label>
+                  <mat-select formControlName="municipalityId" required>
+                    <mat-option value="">Selecione um município</mat-option>
+                    <mat-option *ngFor="let municipality of municipalities" [value]="municipality.id">
+                      {{ municipality.name }} - {{ municipality.state }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>location_on</mat-icon>
+                  <mat-error *ngIf="donationLocationForm.get('municipalityId')?.hasError('required')">
+                    Município é obrigatório
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+              <div class="actions-container">
+                <div class="form-status">
+                  <div class="status-indicator"
+                    [ngClass]="{'valid': donationLocationForm.valid, 'invalid': !donationLocationForm.valid}">
+                    <mat-icon>{{ donationLocationForm.valid ? 'check_circle' : 'error' }}</mat-icon>
+                    <span>{{ donationLocationForm.valid ? 'Formulário válido' : 'Preencha todos os campos obrigatórios'
+                      }}</span>
+                  </div>
+                </div>
+
+                <div class="action-buttons">
+                  <button mat-stroked-button type="button" (click)="onCancel()" class="cancel-button">
+                    <mat-icon>arrow_back</mat-icon>
+                    <span>Cancelar</span>
+                  </button>
+
+                  <button mat-raised-button color="primary" type="submit"
+                    [disabled]="!donationLocationForm.valid || isSubmitting" class="submit-button">
+                    <mat-icon *ngIf="!isSubmitting">save</mat-icon>
+                    <mat-icon *ngIf="isSubmitting" class="spinning">hourglass_empty</mat-icon>
+                    <span>{{ isSubmitting ? 'Salvando...' : 'Atualizar Local' }}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- Changes Summary -->
+      <div class="changes-section" *ngIf="hasChanges()">
+        <div class="changes-card">
+          <div class="changes-header">
+            <div class="changes-icon">
+              <mat-icon>edit_note</mat-icon>
+            </div>
+            <h4>Alterações Detectadas</h4>
+          </div>
+
+          <div class="changes-content">
+            <div class="change-item" *ngFor="let change of getChanges()">
+              <mat-icon>{{ change.icon }}</mat-icon>
+              <div class="change-text">
+                <strong>{{ change.field }}:</strong> {{ change.description }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Help Section -->
+      <div class="help-section">
+        <div class="help-card">
+          <div class="help-header">
+            <div class="help-icon">
+              <mat-icon>help_outline</mat-icon>
+            </div>
+            <h4>Precisa de ajuda?</h4>
+          </div>
+
+          <div class="help-content">
+            <div class="help-item">
+              <mat-icon>info</mat-icon>
+              <div class="help-text">
+                <strong>Edição:</strong> Modifique apenas os campos que deseja alterar
+              </div>
+            </div>
+
+            <div class="help-item">
+              <mat-icon>location_on</mat-icon>
+              <div class="help-text">
+                <strong>Endereço:</strong> Certifique-se de que o endereço está correto e completo
+              </div>
+            </div>
+
+            <div class="help-item">
+              <mat-icon>verified</mat-icon>
+              <div class="help-text">
+                <strong>Validação:</strong> Todos os campos são obrigatórios para salvar
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <div class="loading-content">
+      <div class="loading-spinner">
+        <mat-icon>hourglass_empty</mat-icon>
+      </div>
+      <h3>Carregando dados...</h3>
+      <p>Aguarde enquanto buscamos as informações</p>
+    </div>
+  </div>
 </div>
