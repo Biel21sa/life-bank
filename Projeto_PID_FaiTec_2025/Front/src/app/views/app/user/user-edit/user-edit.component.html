@@ -1,87 +1,480 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Editar Usuário</mat-card-title>
-  </mat-card-header>
+<div class="user-edit-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+      <div class="floating-element element-5"></div>
+    </div>
 
-  <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="update()">
-
-      <!-- Informações Básicas -->
-      <h3>Informações Pessoais</h3>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Nome</mat-label>
-        <input matInput formControlName="name" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Tipo de Usuário</mat-label>
-        <mat-select formControlName="role" required>
-          <mat-option *ngFor="let role of userRoles" [value]="role">
-            {{ userRoleLabels[role] }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>CPF</mat-label>
-        <input matInput formControlName="cpf" mask="000.000.000-00" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Telefone</mat-label>
-        <input matInput formControlName="phone" mask="(00) 00000-0000" required>
-      </mat-form-field>
-
-      <!-- Endereço -->
-      <h3>Endereço</h3>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Rua</mat-label>
-        <input matInput formControlName="street" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Número</mat-label>
-        <input matInput formControlName="number" type="number" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Bairro</mat-label>
-        <input matInput formControlName="neighborhood" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>CEP</mat-label>
-        <input matInput formControlName="postalCode" mask="00000-000" required>
-      </mat-form-field>
-
-      <!-- Campos Específicos por Tipo -->
-      <div *ngIf="selectedRole === 'ADMINISTRATOR'">
-        <h3>Informações do Administrador</h3>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Local de Doação</mat-label>
-          <mat-select formControlName="donationLocationId" required>
-            <mat-option *ngFor="let location of donationLocations" [value]="location.id">
-              {{ location.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+    <div class="hero-content">
+      <div class="hero-icon">
+        <mat-icon>edit</mat-icon>
       </div>
-    </form>
-  </mat-card-content>
+      <h1>Editar Usuário</h1>
+      <p class="hero-subtitle">Atualize as informações do usuário no sistema</p>
+    </div>
+  </div>
 
-  <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="update()" [disabled]="!validateFields()">
-      Atualizar
-    </button>
-    <button mat-button routerLink="/user/list">
-      Cancelar
-    </button>
-  </mat-card-actions>
-</mat-card>
+  <!-- Content Section -->
+  <div class="content-section">
+    <div class="content-container">
+
+      <!-- Change Tracking Card -->
+      <div class="change-tracking-card">
+        <div class="tracking-header">
+          <div class="tracking-icon">
+            <mat-icon>track_changes</mat-icon>
+          </div>
+          <div class="tracking-content">
+            <h3>Status da Edição</h3>
+            <p>Acompanhe as alterações realizadas</p>
+          </div>
+        </div>
+
+        <div class="tracking-body">
+          <div class="tracking-stats">
+            <div class="stat-item" [ngClass]="hasPersonalChanges() ? 'modified' : 'unchanged'">
+              <mat-icon>{{ hasPersonalChanges() ? 'edit' : 'check_circle' }}</mat-icon>
+              <span>Dados Pessoais</span>
+            </div>
+
+            <div class="stat-item" [ngClass]="hasAddressChanges() ? 'modified' : 'unchanged'">
+              <mat-icon>{{ hasAddressChanges() ? 'edit' : 'check_circle' }}</mat-icon>
+              <span>Endereço</span>
+            </div>
+
+            <div class="stat-item" [ngClass]="hasSpecificChanges() ? 'modified' : 'unchanged'">
+              <mat-icon>{{ hasSpecificChanges() ? 'edit' : 'check_circle' }}</mat-icon>
+              <span>Específicos</span>
+            </div>
+
+            <div class="stat-item" [ngClass]="form.valid ? 'valid' : 'invalid'">
+              <mat-icon>{{ form.valid ? 'verified' : 'error' }}</mat-icon>
+              <span>Validação</span>
+            </div>
+          </div>
+
+          <div class="tracking-summary" *ngIf="hasAnyChanges()">
+            <div class="summary-icon">
+              <mat-icon>info</mat-icon>
+            </div>
+            <div class="summary-text">
+              <strong>Alterações detectadas!</strong>
+              <span>Lembre-se de salvar suas modificações.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Sections -->
+      <form [formGroup]="form" (ngSubmit)="update()" class="edit-form">
+
+        <!-- Personal Information Section -->
+        <div class="form-section personal-section" [ngClass]="getPersonalSectionClass()">
+          <div class="section-header">
+            <div class="header-icon">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Informações Pessoais</h3>
+              <p>Dados básicos do usuário</p>
+            </div>
+            <div class="section-status">
+              <div class="status-indicator" [ngClass]="getPersonalStatusClass()">
+                <mat-icon>{{ getPersonalStatusIcon() }}</mat-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-body">
+            <div class="form-grid">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Nome Completo</mat-label>
+                <input matInput formControlName="name" required>
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-hint>Nome completo do usuário</mat-hint>
+                <mat-error *ngIf="form.get('name')?.hasError('required')">
+                  Nome é obrigatório
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>CPF</mat-label>
+                <input matInput formControlName="cpf" mask="000.000.000-00" required>
+                <mat-icon matSuffix>credit_card</mat-icon>
+                <mat-hint>Documento de identificação</mat-hint>
+                <mat-error *ngIf="form.get('cpf')?.hasError('required')">
+                  CPF é obrigatório
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" required>
+                <mat-icon matSuffix>email</mat-icon>
+                <mat-hint>Endereço de email válido</mat-hint>
+                <mat-error *ngIf="form.get('email')?.hasError('required')">
+                  Email é obrigatório
+                </mat-error>
+                <mat-error *ngIf="form.get('email')?.hasError('email')">
+                  Email deve ter formato válido
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Telefone</mat-label>
+                <input matInput formControlName="phone" mask="(00) 00000-0000" required>
+                <mat-icon matSuffix>phone</mat-icon>
+                <mat-hint>Número de contato</mat-hint>
+                <mat-error *ngIf="form.get('phone')?.hasError('required')">
+                  Telefone é obrigatório
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="field-status" *ngIf="hasPersonalChanges()">
+              <mat-icon>edit</mat-icon>
+              <span>Campos modificados nesta seção</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address Section -->
+        <div class="form-section address-section" [ngClass]="getAddressSectionClass()">
+          <div class="section-header">
+            <div class="header-icon">
+              <mat-icon>home</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Endereço Residencial</h3>
+              <p>Localização do usuário</p>
+            </div>
+            <div class="section-status">
+              <div class="status-indicator" [ngClass]="getAddressStatusClass()">
+                <mat-icon>{{ getAddressStatusIcon() }}</mat-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-body">
+            <div class="form-grid">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Rua</mat-label>
+                <input matInput formControlName="street" required>
+                <mat-icon matSuffix>home</mat-icon>
+                <mat-hint>Nome da rua ou avenida</mat-hint>
+                <mat-error *ngIf="form.get('street')?.hasError('required')">
+                  Rua é obrigatória
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Número</mat-label>
+                <input matInput formControlName="number" type="number" required>
+                <mat-icon matSuffix>tag</mat-icon>
+                <mat-hint>Número da residência</mat-hint>
+                <mat-error *ngIf="form.get('number')?.hasError('required')">
+                  Número é obrigatório
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Bairro</mat-label>
+                <input matInput formControlName="neighborhood" required>
+                <mat-icon matSuffix>location_city</mat-icon>
+                <mat-hint>Nome do bairro</mat-hint>
+                <mat-error *ngIf="form.get('neighborhood')?.hasError('required')">
+                  Bairro é obrigatório
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>CEP</mat-label>
+                <input matInput formControlName="postalCode" mask="00000-000" required>
+                <mat-icon matSuffix>place</mat-icon>
+                <mat-hint>Código postal</mat-hint>
+                <mat-error *ngIf="form.get('postalCode')?.hasError('required')">
+                  CEP é obrigatório
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="field-status" *ngIf="hasAddressChanges()">
+              <mat-icon>edit</mat-icon>
+              <span>Campos modificados nesta seção</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Administrator Specific Section -->
+        <div class="form-section admin-section" *ngIf="selectedRole === 'ADMINISTRATOR'"
+          [ngClass]="getAdminSectionClass()">
+          <div class="section-header">
+            <div class="header-icon">
+              <mat-icon>admin_panel_settings</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>{{ getRoleTitle(selectedRole) }}</h3>
+              <p>Configurações específicas para administradores</p>
+            </div>
+            <div class="section-status">
+              <div class="status-indicator" [ngClass]="getSpecificStatusClass()">
+                <mat-icon>{{ getSpecificStatusIcon() }}</mat-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-body">
+            <div class="form-grid">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Local de Doação</mat-label>
+                <mat-select formControlName="donationLocationId" required>
+                  <mat-select-trigger>
+                    <span>{{ getDonationLocationName(form.get('donationLocationId')?.value) }}</span>
+                  </mat-select-trigger>
+                  <mat-option *ngFor="let location of donationLocations" [value]="location.id">
+                    <div class="location-option">
+                      <mat-icon>business</mat-icon>
+                      <span>{{ location.name }}</span>
+                    </div>
+                  </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>business</mat-icon>
+                <mat-hint>Local de trabalho do administrador</mat-hint>
+                <mat-error *ngIf="form.get('donationLocationId')?.hasError('required')">
+                  Local de doação é obrigatório
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="field-status" *ngIf="hasSpecificChanges()">
+              <mat-icon>edit</mat-icon>
+              <span>Campos modificados nesta seção</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- User/Donor Specific Section -->
+        <div class="form-section donor-section" *ngIf="selectedRole === 'USER'" [ngClass]="getDonorSectionClass()">
+          <div class="section-header">
+            <div class="header-icon">
+              <mat-icon>volunteer_activism</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>{{ getRoleTitle(selectedRole) }}</h3>
+              <p>Informações específicas para doadores</p>
+            </div>
+            <div class="section-status">
+              <div class="status-indicator" [ngClass]="getSpecificStatusClass()">
+                <mat-icon>{{ getSpecificStatusIcon() }}</mat-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-body">
+            <div class="form-grid">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Tipo Sanguíneo</mat-label>
+                <mat-select formControlName="bloodType" required>
+                  <mat-select-trigger>
+                    {{ form.get('bloodType')?.value }}
+                  </mat-select-trigger>
+                  <mat-option value="A+">
+                    <div class="blood-option">
+                      <span class="blood-type-badge a-positive">A+</span>
+                      <span>A Positivo</span>
+                    </div>
+                  </mat-option>
+                  <mat-option value="A-">
+                    <div class="blood-option">
+                      <span class="blood-type-badge a-negative">A-</span>
+                      <span>A Negativo</span>
+                    </div>
+                  </mat-option>
+                  <mat-option value="B+">
+                    <div class="blood-option">
+                      <span class="blood-type-badge b-positive">B+</span>
+                      <span>B Positivo</span>
+                    </div>
+                  </mat-option>
+                  <mat-option value="B-">
+                    <div class="blood-option">
+                      <span class="blood-type-badge b-negative">B-</span>
+                      <span>B Negativo</span>
+                    </div>
+                  </mat-option>
+                  <mat-option value="AB+">
+                    <div class="blood-option">
+                      <span class="blood-type-badge ab-positive">AB+</span>
+                      <span>AB Positivo</span>
+                    </div>
+                  </mat-option>
+                  <mat-option value="AB-">
+                    <div class="blood-option">
+                      <span class="blood-type-badge ab-negative">AB-</span>
+                      <span>AB Negativo</span>
+                    </div>
+                  </mat-option>
+                  <mat-option value="O+">
+                    <div class="blood-option">
+                      <span class="blood-type-badge o-positive">O+</span>
+                      <span>O Positivo</span>
+                    </div>
+                  </mat-option>
+                  <mat-option value="O-">
+                    <div class="blood-option">
+                      <span class="blood-type-badge o-negative">O-</span>
+                      <span>O Negativo</span>
+                    </div>
+                  </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>bloodtype</mat-icon>
+                <mat-hint>Tipo sanguíneo do doador</mat-hint>
+                <mat-error *ngIf="form.get('bloodType')?.hasError('required')">
+                  Tipo sanguíneo é obrigatório
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Gênero</mat-label>
+                <mat-select formControlName="gender">
+                  <mat-select-trigger>
+                    {{ form.get('gender')?.value === 'MASCULINO' ? 'Masculino' : 'Feminino' }}
+                  </mat-select-trigger>
+                  <mat-option value="MASCULINO">
+                    <div class="gender-option">
+                      <mat-icon>male</mat-icon>
+                      <span>Masculino</span>
+                    </div>
+                  </mat-option>
+                  <mat-option value="FEMININO">
+                    <div class="gender-option">
+                      <mat-icon>female</mat-icon>
+                      <span>Feminino</span>
+                    </div>
+                  </mat-option>
+                  <mat-option value="OUTRO">
+                    <div class="gender-option">
+                      <mat-icon>person</mat-icon>
+                      <span>Outro</span>
+                    </div>
+                  </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-hint>Gênero do doador</mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div class="field-status" *ngIf="hasSpecificChanges()">
+              <mat-icon>edit</mat-icon>
+              <span>Campos modificados nesta seção</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clinic Specific Section -->
+        <div class="form-section clinic-section" *ngIf="selectedRole === 'CLINIC'" [ngClass]="getClinicSectionClass()">
+          <div class="section-header">
+            <div class="header-icon">
+              <mat-icon>local_hospital</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>{{ getRoleTitle(selectedRole) }}</h3>
+              <p>Informações específicas para clínicas</p>
+            </div>
+            <div class="section-status">
+              <div class="status-indicator" [ngClass]="getSpecificStatusClass()">
+                <mat-icon>{{ getSpecificStatusIcon() }}</mat-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-body">
+            <div class="form-grid">
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Nome da Clínica</mat-label>
+                <input matInput formControlName="nameClinic" required>
+                <mat-icon matSuffix>local_hospital</mat-icon>
+                <mat-hint>Razão social da clínica</mat-hint>
+                <mat-error *ngIf="form.get('nameClinic')?.hasError('required')">
+                  Nome da clínica é obrigatório
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field">
+                <mat-label>CNPJ</mat-label>
+                <input matInput formControlName="cnpj" mask="00.000.000/0000-00" required>
+                <mat-icon matSuffix>business_center</mat-icon>
+                <mat-hint>Documento da empresa</mat-hint>
+                <mat-error *ngIf="form.get('cnpj')?.hasError('required')">
+                  CNPJ é obrigatório
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="field-status" *ngIf="hasSpecificChanges()">
+              <mat-icon>edit</mat-icon>
+              <span>Campos modificados nesta seção</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Summary -->
+        <div class="form-summary">
+          <div class="summary-header">
+            <div class="summary-icon">
+              <mat-icon>summarize</mat-icon>
+            </div>
+            <div class="summary-content">
+              <h3>Resumo das Alterações</h3>
+              <p>{{ getFormSummary() }}</p>
+            </div>
+          </div>
+
+          <div class="summary-stats">
+            <div class="summary-stat">
+              <span class="stat-label">Status:</span>
+              <span class="stat-value" [ngClass]="form.valid ? 'valid' : 'invalid'">
+                {{ form.valid ? 'Válido' : 'Inválido' }}
+              </span>
+            </div>
+
+            <div class="summary-stat" *ngIf="hasAnyChanges()">
+              <span class="stat-label">Alterações:</span>
+              <span class="stat-value modified">Detectadas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button mat-stroked-button type="button" routerLink="/user/list" class="cancel-button">
+            <mat-icon>arrow_back</mat-icon>
+            <span>Cancelar</span>
+          </button>
+
+          <div class="primary-actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!validateFields() || isSubmitting"
+              class="save-button">
+              <mat-icon *ngIf="!isSubmitting">save</mat-icon>
+              <mat-icon *ngIf="isSubmitting" class="spinning">sync</mat-icon>
+              <span>{{ isSubmitting ? 'Salvando...' : 'Salvar Alterações' }}</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" *ngIf="isSubmitting">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <h3>Salvando Alterações</h3>
+      <p>Aguarde enquanto atualizamos as informações...</p>
+    </div>
+  </div>
+</div>
