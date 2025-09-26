@@ -1,108 +1,401 @@
-<div class="container">
-    <div class="page-header">
-        <h1>Gerenciamento de Locais de Doação</h1>
-        <p>Visualize e gerencie todos os locais de doação do sistema</p>
+<div class="donation-location-list-container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-background">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+            <div class="floating-element element-4"></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="location-icon">
+                <mat-icon>add_location</mat-icon>
+            </div>
+            <h1>Gerenciamento de Locais de Doação</h1>
+            <p class="hero-subtitle">Visualize e gerencie todos os locais de doação do sistema</p>
+        </div>
     </div>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>
-                <mat-icon>add_location</mat-icon>
-                Lista de Locais de Doação
-            </mat-card-title>
-        </mat-card-header>
+    <!-- Main Content -->
+    <div class="content-section">
+        <div class="content-container">
 
-        <mat-card-content>
-            <div class="table-actions">
-                <div class="search-box">
-                    <mat-form-field appearance="outline" class="search-field">
-                        <mat-label>Buscar locais</mat-label>
-                        <input matInput (keyup)="applyFilter($event)" placeholder="Nome, endereço ou bairro">
-                        <mat-icon matSuffix>search</mat-icon>
-                    </mat-form-field>
+            <!-- Statistics Dashboard -->
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card total">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <mat-icon>add_location</mat-icon>
+                            </div>
+                            <div class="stat-badge">Total</div>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">{{ donationLocations.length }}</div>
+                            <div class="stat-label">Locais Cadastrados</div>
+                            <div class="stat-trend positive">
+                                <mat-icon>trending_up</mat-icon>
+                                <span>+15% este mês</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card active">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <mat-icon>verified_user</mat-icon>
+                            </div>
+                            <div class="stat-badge">Ativos</div>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">{{ getActiveLocationsCount() }}</div>
+                            <div class="stat-label">Locais Ativos</div>
+                            <div class="stat-trend positive">
+                                <mat-icon>check_circle</mat-icon>
+                                <span>100% operacionais</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card recent">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <mat-icon>schedule</mat-icon>
+                            </div>
+                            <div class="stat-badge">Recentes</div>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">{{ getRecentLocationsCount() }}</div>
+                            <div class="stat-label">Últimos 30 dias</div>
+                            <div class="stat-trend neutral">
+                                <mat-icon>access_time</mat-icon>
+                                <span>Novos cadastros</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card coverage">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <mat-icon>map</mat-icon>
+                            </div>
+                            <div class="stat-badge">Cobertura</div>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number">{{ getCitiesCount() }}</div>
+                            <div class="stat-label">Cidades Atendidas</div>
+                            <div class="stat-trend positive">
+                                <mat-icon>trending_up</mat-icon>
+                                <span>+2 novas cidades</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <button mat-raised-button color="primary" routerLink="/donation-location/create">
-                    <mat-icon>add</mat-icon>
-                    Novo Local
-                </button>
             </div>
 
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef>Nome</th>
-                    <td mat-cell *matCellDef="let location">{{ location.name }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="address">
-                    <th mat-header-cell *matHeaderCellDef>Endereço</th>
-                    <td mat-cell *matCellDef="let location">{{ location.street }}, {{ location.number }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="neighborhood">
-                    <th mat-header-cell *matHeaderCellDef>Bairro</th>
-                    <td mat-cell *matCellDef="let location">{{ location.neighborhood }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="municipality">
-                    <th mat-header-cell *matHeaderCellDef>Município</th>
-                    <td mat-cell *matCellDef="let location">{{ location.municipality.name }}, {{
-                        location.municipality.state }}</td>
-                </ng-container>
-
-                <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef>Ações</th>
-                    <td mat-cell *matCellDef="let location">
-                        <div class="action-buttons">
-                            <button mat-icon-button color="primary"
-                                [routerLink]="['/donation-location/detail', location.id]" matTooltip="Visualizar">
-                                <mat-icon>visibility</mat-icon>
-                            </button>
-                            <button mat-icon-button color="accent"
-                                [routerLink]="['/donation-location/edit', location.id]" matTooltip="Editar">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                            <!-- <button mat-icon-button color="warn" (click)="deleteLocation(location.id!)" matTooltip="Excluir">
-                                <mat-icon>delete</mat-icon>
-                            </button> -->
+            <!-- Filters and Actions Section -->
+            <div class="filters-section">
+                <div class="filters-card">
+                    <div class="filters-header">
+                        <div class="header-icon">
+                            <mat-icon>filter_list</mat-icon>
                         </div>
-                    </td>
-                </ng-container>
+                        <div class="header-content">
+                            <h3>Filtros e Ações</h3>
+                            <p>Busque e gerencie locais de doação de forma eficiente</p>
+                        </div>
+                    </div>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-        </mat-card-content>
-    </mat-card>
+                    <div class="filters-content">
+                        <div class="search-section">
+                            <mat-form-field appearance="outline" class="search-field">
+                                <mat-label>Buscar locais de doação</mat-label>
+                                <input matInput (keyup)="applyFilter($event)"
+                                    placeholder="Nome, endereço, bairro ou cidade" #searchInput>
+                                <mat-icon matPrefix>search</mat-icon>
+                                <button mat-icon-button matSuffix *ngIf="searchInput.value"
+                                    (click)="clearSearch(searchInput)" matTooltip="Limpar busca">
+                                    <mat-icon>clear</mat-icon>
+                                </button>
+                            </mat-form-field>
+
+                            <div class="search-results" *ngIf="searchInput.value">
+                                <div class="results-info">
+                                    <mat-icon>info</mat-icon>
+                                    <span>{{ getFilteredCount() }} resultado(s) encontrado(s)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="actions-section">
+                            <button mat-raised-button color="primary" class="primary-action"
+                                routerLink="/donation-location/create">
+                                <mat-icon>add</mat-icon>
+                                <span>Novo Local</span>
+                            </button>
+
+                            <button mat-icon-button class="refresh-action" (click)="refreshData()"
+                                matTooltip="Atualizar dados">
+                                <mat-icon>refresh</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Locations Table Section -->
+            <div class="table-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <div class="header-icon">
+                            <mat-icon>view_list</mat-icon>
+                        </div>
+                        <div class="header-content">
+                            <h3>Lista de Locais de Doação</h3>
+                            <p>{{ donationLocations.length }} local(is) cadastrado(s) no sistema</p>
+                        </div>
+                        <div class="header-actions">
+                            <button mat-icon-button [matMenuTriggerFor]="viewMenu" matTooltip="Opções de visualização"
+                                style="display: flex; justify-content: center; align-items: center;">
+                                <mat-icon
+                                    style="display: flex; justify-content: center; align-items: center;">more_vert</mat-icon>
+                            </button>
+
+                            <mat-menu #viewMenu="matMenu">
+                                <button mat-menu-item (click)="toggleCompactView()">
+                                    <mat-icon>{{isCompactView ? 'view_comfortable' : 'view_compact'}}</mat-icon>
+                                    <span>{{isCompactView ? 'Visualização Normal' : 'Visualização Compacta'}}</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+
+                    <!-- Table View -->
+                    <div class="table-content" *ngIf="!isCardView">
+                        <div class="table-container" [ngClass]="{'compact': isCompactView}">
+                            <table mat-table [dataSource]="dataSource" class="modern-table">
+
+                                <!-- Icon Column -->
+                                <ng-container matColumnDef="icon">
+                                    <th mat-header-cell *matHeaderCellDef></th>
+                                    <td mat-cell *matCellDef="let location">
+                                        <div class="location-avatar">
+                                            <div class="avatar-icon">
+                                                <mat-icon>place</mat-icon>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="header-cell">
+                                            <mat-icon>business</mat-icon>
+                                            <span>Local</span>
+                                        </div>
+                                    </th>
+                                    <td mat-cell *matCellDef="let location">
+                                        <div class="location-info">
+                                            <div class="location-name">{{ location.name }}</div>
+                                            <div class="location-type">Local de Doação</div>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Address Column -->
+                                <ng-container matColumnDef="address">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="header-cell">
+                                            <mat-icon>location_on</mat-icon>
+                                            <span>Endereço</span>
+                                        </div>
+                                    </th>
+                                    <td mat-cell *matCellDef="let location">
+                                        <div class="address-info">
+                                            <div class="street">{{ location.street }}, {{ location.number }}</div>
+                                            <div class="neighborhood">{{ location.neighborhood }}</div>
+                                            <div class="postal-code" *ngIf="location.postalCode">CEP: {{
+                                                location.postalCode }}</div>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Municipality Column -->
+                                <ng-container matColumnDef="municipality">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="header-cell">
+                                            <mat-icon>location_city</mat-icon>
+                                            <span>Município</span>
+                                        </div>
+                                    </th>
+                                    <td mat-cell *matCellDef="let location">
+                                        <div class="municipality-info">
+                                            <div class="city">{{ location.municipality.name }}</div>
+                                            <div class="state">{{ location.municipality.state }}</div>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Status Column -->
+                                <ng-container matColumnDef="status">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="header-cell">
+                                            <mat-icon>info</mat-icon>
+                                            <span>Status</span>
+                                        </div>
+                                    </th>
+                                    <td mat-cell *matCellDef="let location">
+                                        <div class="status-info">
+                                            <div class="status-badge active">
+                                                <div class="status-indicator"></div>
+                                                <span>Ativo</span>
+                                            </div>
+                                            <div class="capacity-info">Capacidade: Alta</div>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Actions Column -->
+                                <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div class="header-cell">
+                                            <mat-icon>settings</mat-icon>
+                                            <span>Ações</span>
+                                        </div>
+                                    </th>
+                                    <td mat-cell *matCellDef="let location">
+                                        <div class="action-buttons">
+                                            <button mat-icon-button class="action-view"
+                                                [routerLink]="['/donation-location/detail', location.id]"
+                                                matTooltip="Visualizar detalhes">
+                                                <mat-icon>visibility</mat-icon>
+                                            </button>
+
+                                            <button mat-icon-button class="action-edit"
+                                                [routerLink]="['/donation-location/edit', location.id]"
+                                                matTooltip="Editar local">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+
+                                            <button mat-icon-button class="action-map" (click)="viewOnMap(location)"
+                                                matTooltip="Ver no mapa">
+                                                <mat-icon>map</mat-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                    [ngClass]="{'highlighted': isRowHighlighted(row)}" (click)="selectRow(row)"></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Card View -->
+                    <div class="cards-content" *ngIf="isCardView">
+                        <div class="cards-grid">
+                            <div class="location-card"
+                                *ngFor="let location of dataSource.filteredData; trackBy: trackByLocationId"
+                                [ngClass]="{'selected': selectedLocation?.id === location.id}"
+                                (click)="selectLocation(location)">
+
+                                <div class="card-header">
+                                    <div class="location-avatar">
+                                        <div class="avatar-icon">
+                                            <mat-icon>place</mat-icon>
+                                        </div>
+                                    </div>
+                                    <div class="location-status">
+                                        <div class="status-badge active">
+                                            <mat-icon>check_circle</mat-icon>
+                                            <span>Ativo</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-content">
+                                    <div class="location-title">
+                                        <h4>{{ location.name }}</h4>
+                                        <p>Local de Doação</p>
+                                    </div>
+
+                                    <div class="address-info">
+                                        <div class="street">
+                                            <mat-icon>location_on</mat-icon>
+                                            <span>{{ location.street }}, {{ location.number }}</span>
+                                        </div>
+                                        <div class="neighborhood">{{ location.neighborhood }}</div>
+                                        <div class="city">{{ location.municipality.name }}, {{
+                                            location.municipality.state }}</div>
+                                    </div>
+
+                                    <div class="capacity-info">
+                                        <div class="capacity-indicator">
+                                            <mat-icon>people</mat-icon>
+                                            <span>Capacidade: Alta</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-actions">
+                                    <button mat-icon-button class="action-view"
+                                        [routerLink]="['/donation-location/detail', location.id]"
+                                        matTooltip="Ver detalhes">
+                                        <mat-icon>visibility</mat-icon>
+                                    </button>
+
+                                    <button mat-icon-button class="action-edit"
+                                        [routerLink]="['/donation-location/edit', location.id]" matTooltip="Editar">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+
+                                    <button mat-icon-button class="action-map"
+                                        (click)="viewOnMap(location); $event.stopPropagation()"
+                                        matTooltip="Ver no mapa">
+                                        <mat-icon>map</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state-section" *ngIf="donationLocations.length === 0 && !isLoading">
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <mat-icon>add_location</mat-icon>
+                    </div>
+                    <h3>Nenhum local de doação encontrado</h3>
+                    <p>Comece cadastrando o primeiro local de doação no sistema</p>
+                    <div class="empty-actions">
+                        <button mat-raised-button color="primary" routerLink="/donation-location/create">
+                            <mat-icon>add</mat-icon>
+                            <span>Cadastrar Primeiro Local</span>
+                        </button>
+                        <button mat-stroked-button (click)="ngOnInit()">
+                            <mat-icon>refresh</mat-icon>
+                            <span>Atualizar Lista</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-section" *ngIf="isLoading">
+                <div class="loading-container">
+                    <div class="loading-spinner">
+                        <mat-icon>hourglass_empty</mat-icon>
+                    </div>
+                    <h3>Carregando locais de doação...</h3>
+                    <p>Aguarde enquanto buscamos as informações</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
-
-<style>
-    .table-actions {
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .search-box {
-        flex: 1;
-        max-width: 400px;
-    }
-
-    .search-field {
-        width: 100%;
-    }
-
-    .action-buttons {
-        display: flex;
-        gap: 8px;
-    }
-
-    .mat-mdc-table {
-        width: 100%;
-    }
-
-    .mat-mdc-header-cell {
-        font-weight: 600;
-    }
-</style>
