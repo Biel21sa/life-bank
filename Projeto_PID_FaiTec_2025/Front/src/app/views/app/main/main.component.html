@@ -7,7 +7,8 @@
 
         <div class="logo-section" routerLink="/" (click)="sidenav.close()">
             <div class="logo-icon">
-                <img src="assets/img/svg/logo.svg" alt="LifeBank Logo" style="width: 25px; height: 25px; margin-left: 2px;">
+                <img src="assets/img/svg/logo.svg" alt="LifeBank Logo"
+                    style="width: 25px; height: 25px; margin-left: 2px;">
             </div>
             <span class="logo-title">LifeBank</span>
         </div>
@@ -53,7 +54,8 @@
             <!-- Header do sidenav -->
             <div class="sidenav-header">
                 <div class="sidenav-logo">
-                    <img src="assets/img/svg/logo.svg" alt="LifeBank Logo" style="width: 30px; height: 30px; margin-right: 5px; margin-bottom: 3px;">
+                    <img src="assets/img/svg/logo.svg" alt="LifeBank Logo"
+                        style="width: 30px; height: 30px; margin-right: 5px; margin-bottom: 3px;">
                     <span>LifeBank</span>
                 </div>
                 <p class="sidenav-subtitle">Sistema de Gestão</p>
@@ -237,6 +239,22 @@
                         </a>
                     </mat-nav-list>
                 </mat-expansion-panel>
+
+                <mat-expansion-panel *ngIf="isClinic()" [class.mat-elevation-z0]="true" class="nav-panel">
+                    <mat-expansion-panel-header class="panel-header">
+                        <div class="header-content">
+                            <mat-icon>support_agent</mat-icon>
+                            <span>Suporte</span>
+                        </div>
+                    </mat-expansion-panel-header>
+                    <mat-nav-list class="sub-menu">
+                        <a mat-list-item routerLink="/benefit/verification" (click)="sidenav.close()"
+                            class="sub-menu-item">
+                            <mat-icon>chat</mat-icon>
+                            <span>Chat</span>
+                        </a>
+                    </mat-nav-list>
+                </mat-expansion-panel>
             </mat-nav-list>
         </mat-sidenav>
 
@@ -253,7 +271,8 @@
     <footer class="modern-footer">
         <div class="footer-content">
             <div class="footer-info">
-                <img src="assets/img/svg/logo.svg" alt="LifeBank Logo" style="width: 20px; height: 20px; margin-right: -10px; margin-bottom: 5px;">
+                <img src="assets/img/svg/logo.svg" alt="LifeBank Logo"
+                    style="width: 20px; height: 20px; margin-right: -10px; margin-bottom: 5px;">
                 <span>&copy; 2025 LifeBank. Todos os direitos reservados.</span>
             </div>
             <div class="footer-links">
