@@ -21,10 +21,9 @@ public class MessagesPostgresDaoImpl implements MessagesDao {
     @Override
     public int create(MessagesModel entity) {
         final String sql = "INSERT INTO messages (sender_id, receiver_id, message, sent_at) " +
-                "VALUES (?, ?, ?, ?) RETURNING id";
+                "VALUES (?, ?, ?, COALESCE(?, CURRENT_TIMESTAMP)) RETURNING id";
 
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, entity.getSenderId());
             ps.setInt(2, entity.getReceiverId());
             ps.setString(3, entity.getMessage());
@@ -35,15 +34,12 @@ public class MessagesPostgresDaoImpl implements MessagesDao {
                 ps.setNull(4, java.sql.Types.TIMESTAMP);
             }
 
-            ResultSet rs = ps.executeQuery();
-            int generatedId = 0;
-            if (rs.next()) {
-                generatedId = rs.getInt("id");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id");
+                }
             }
-
-            rs.close();
-            ps.close();
-            return generatedId;
+            return 0;
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao criar mensagem", e);
         }
