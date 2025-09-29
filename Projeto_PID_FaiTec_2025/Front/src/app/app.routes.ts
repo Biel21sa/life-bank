@@ -198,7 +198,7 @@ export const routes: Routes = [
                 canActivate: [ClinicGuard]
             },
             {
-                path: 'donor-chat',
+                path: 'user-chat',
                 component: DonorChatComponent,
                 canActivate: [UserGuard]
             },

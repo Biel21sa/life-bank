@@ -223,6 +223,21 @@
                     </mat-nav-list>
                 </mat-expansion-panel>
 
+                <mat-expansion-panel *ngIf="isUser()" [class.mat-elevation-z0]="true" class="nav-panel">
+                    <mat-expansion-panel-header class="panel-header">
+                        <div class="header-content">
+                            <mat-icon>support_agent</mat-icon>
+                            <span>Suporte</span>
+                        </div>
+                    </mat-expansion-panel-header>
+                    <mat-nav-list class="sub-menu">
+                        <a mat-list-item routerLink="/user-chat" (click)="sidenav.close()" class="sub-menu-item">
+                            <mat-icon>chat</mat-icon>
+                            <span>Chat</span>
+                        </a>
+                    </mat-nav-list>
+                </mat-expansion-panel>
+
                 <!-- Benefícios -->
                 <mat-expansion-panel *ngIf="isClinic()" [class.mat-elevation-z0]="true" class="nav-panel">
                     <mat-expansion-panel-header class="panel-header">
@@ -248,8 +263,7 @@
                         </div>
                     </mat-expansion-panel-header>
                     <mat-nav-list class="sub-menu">
-                        <a mat-list-item routerLink="/benefit/verification" (click)="sidenav.close()"
-                            class="sub-menu-item">
+                        <a mat-list-item routerLink="/clinic-chat" (click)="sidenav.close()" class="sub-menu-item">
                             <mat-icon>chat</mat-icon>
                             <span>Chat</span>
                         </a>
