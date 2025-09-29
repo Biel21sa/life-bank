@@ -103,6 +103,6 @@ export class UserHomeComponent implements OnInit {
   }
 
   navigateToChat() {
-    this.router.navigate(['/donor-chat']);
+    this.router.navigate(['/user-chat']);
   }
 }
