@@ -36,14 +36,12 @@ export class ClinicChatComponent implements OnInit, OnDestroy, AfterViewChecked 
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
   @ViewChild('messageInput') messageInput!: ElementRef;
 
-  // Data properties
   donors: DonorWithMeta[] = [];
   filteredDonors: DonorWithMeta[] = [];
   selectedDonor: DonorWithMeta | null = null;
   messages: Message[] = [];
   currentUser: User | null = null;
 
-  // UI state properties
   newMessage: string = '';
   searchTerm: string = '';
   isLoadingDonors = false;
@@ -52,13 +50,10 @@ export class ClinicChatComponent implements OnInit, OnDestroy, AfterViewChecked 
   isTyping = false;
   showChatInfo = false;
 
-  // Typing and online status
   private typingTimeout: any;
-  private onlineUsers: Set<string> = new Set();
   private lastMessageCount = 0;
   private shouldScrollToBottom = true;
 
-  // Observables and subscriptions
   private destroy$ = new Subject<void>();
   private searchSubject = new Subject<string>();
 
@@ -132,7 +127,6 @@ export class ClinicChatComponent implements OnInit, OnDestroy, AfterViewChecked 
         this.donors = donorList.map(donor => ({
           ...donor,
           unreadCount: Math.floor(Math.random() * 5),
-          isOnline: this.onlineUsers.has(donor.id!),
           lastSeen: new Date(Date.now() - Math.random() * 86400000)
         }));
 
