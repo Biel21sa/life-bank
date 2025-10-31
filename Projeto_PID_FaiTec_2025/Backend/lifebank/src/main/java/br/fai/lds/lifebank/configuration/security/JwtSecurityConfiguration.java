@@ -21,29 +21,12 @@ import java.util.List;
 
 @Profile("jwt")
 @Configuration
-public class JwtSecurityConfiguration {
+public class JwtSecurityConfiguration extends BasicSecurityConfiguration{
 
     private final JwtRequestFilter jwtRequestFilter;
 
     public JwtSecurityConfiguration(JwtRequestFilter jwtRequestFilter) {
         this.jwtRequestFilter = jwtRequestFilter;
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.applyPermitDefaultValues();
-        configuration.setAllowedMethods(List.of(
-                "GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
     }
 
     @Bean
@@ -61,7 +44,8 @@ public class JwtSecurityConfiguration {
                                                 "/v3/api-docs/**",
                                                 "/authenticate"
                                         ).permitAll()
-                                        .requestMatchers("/api/user/**").hasAuthority(UserModel.UserRole.USER.name())
+                                        .requestMatchers("/api/user/**").hasAnyAuthority(UserModel.UserRole.USER.name(),
+                                                UserModel.UserRole.ADMINISTRATOR.name())
                                         .anyRequest().authenticated()
                 )
                 .sessionManagement(

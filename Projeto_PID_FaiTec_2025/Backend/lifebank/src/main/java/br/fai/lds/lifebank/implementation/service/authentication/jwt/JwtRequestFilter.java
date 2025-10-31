@@ -36,6 +36,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")){
             try {
+                jwtToken = requestTokenHeader.substring(7);
                 email = jwtService.getEmailFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
                 System.out.println("Nao foi possivel obter o token!");
