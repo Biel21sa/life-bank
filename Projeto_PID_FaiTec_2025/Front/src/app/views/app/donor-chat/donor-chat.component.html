@@ -1,0 +1,198 @@
+<div class="clinic-chat-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="chat-icon">
+        <mat-icon>chat</mat-icon>
+      </div>
+      <h1>Chat do Doador</h1>
+      <p class="hero-subtitle">Comunicação direta com clínicas</p>
+    </div>
+  </div>
+
+  <!-- Main Chat Interface -->
+  <div class="chat-interface">
+    <div class="chat-wrapper">
+
+      <!-- Sidebar - Clinics List -->
+      <div class="clinics-sidebar">
+        <div class="sidebar-header">
+          <div class="header-icon">
+            <mat-icon>local_hospital</mat-icon>
+          </div>
+          <div class="header-content">
+            <h3>Clínicas</h3>
+            <p>{{ clinics.length }} contatos disponíveis</p>
+          </div>
+          <div class="header-actions">
+            <button mat-icon-button class="refresh-button" (click)="loadClinics()" matTooltip="Atualizar lista">
+              <mat-icon [class.spinning]="isLoadingClinics">refresh</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="search-section">
+          <div class="search-input">
+            <mat-icon>search</mat-icon>
+            <input type="text" placeholder="Buscar clínica..." [(ngModel)]="searchTerm" (input)="filterClinics()">
+          </div>
+        </div>
+
+        <div class="clinics-list">
+          <div class="clinic-item" *ngFor="let clinic of filteredClinics; trackBy: trackByClinic"
+            (click)="selectClinic(clinic)" [class.selected]="selectedClinic?.id === clinic.id">
+
+            <div class="clinic-avatar">
+              <div class="avatar-background" [style.background]="getClinicAvatarColor(clinic)"></div>
+              <span class="avatar-initials">{{ getClinicInitials(clinic) }}</span>
+            </div>
+
+            <div class="clinic-info">
+              <div class="clinic-name">{{ clinic.name }}</div>
+              <div class="clinic-email">{{ clinic.email }}</div>
+              <div class="last-message" *ngIf="getLastMessage(clinic)">
+                {{ getLastMessage(clinic)?.message | slice:0:30 }}{{ getLastMessage(clinic)?.message &&
+                getLastMessage(clinic)!.message.length > 30 ? '...' : '' }}
+              </div>
+            </div>
+
+            <div class="clinic-meta">
+              <div class="message-time" *ngIf="getLastMessage(clinic)">
+                {{ getLastMessage(clinic)?.sentAt | date:'short' }}
+              </div>
+            </div>
+          </div>
+
+          <div class="empty-clinics" *ngIf="filteredClinics.length === 0 && !isLoadingClinics">
+            <div class="empty-icon">
+              <mat-icon>person_search</mat-icon>
+            </div>
+            <h4>Nenhum doador encontrado</h4>
+            <p>Tente ajustar os termos de busca</p>
+          </div>
+
+          <div class="loading-clinics" *ngIf="isLoadingClinics">
+            <div class="loading-spinner">
+              <mat-icon class="spinning">hourglass_empty</mat-icon>
+            </div>
+            <p>Carregando doadores...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Chat Area -->
+      <div class="chat-main" *ngIf="selectedClinic">
+        <!-- Chat Header -->
+        <div class="chat-header">
+          <div class="chat-user-info">
+            <div class="user-avatar">
+              <div class="avatar-background" [style.background]="getClinicAvatarColor(selectedClinic)"></div>
+              <span class="avatar-initials">{{ getClinicInitials(selectedClinic) }}</span>
+            </div>
+
+            <div class="user-details">
+              <h3>{{ selectedClinic.name }}</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Messages Container -->
+        <div class="messages-container" #messagesContainer>
+          <div class="messages-wrapper">
+
+            <!-- Date Separator -->
+            <div class="date-separator" *ngFor="let date of getUniqueDates(); trackBy: trackByDate">
+              <div class="separator-line"></div>
+              <div class="separator-text">{{ date | date:'fullDate' }}</div>
+              <div class="separator-line"></div>
+            </div>
+
+            <!-- Messages -->
+            <div class="message-group" *ngFor="let message of messages; trackBy: trackByMessage"
+              [class.sent]="message.senderId.toString() === currentUser?.id"
+              [class.received]="message.senderId.toString() !== currentUser?.id">
+
+              <div class="message-bubble">
+                <div class="message-content">{{ message.message }}</div>
+                <div class="message-meta">
+                  <span class="message-time">{{ message.sentAt | date:'short' }}</span>
+                  <mat-icon class="message-status" *ngIf="message.senderId.toString() === currentUser?.id">
+                    {{ getMessageStatus(message) }}
+                  </mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty Messages State -->
+          <div class="empty-messages" *ngIf="messages.length === 0 && !isLoadingMessages">
+            <div class="empty-icon">
+              <mat-icon>chat_bubble_outline</mat-icon>
+            </div>
+            <h4>Nenhuma mensagem ainda</h4>
+            <p>Inicie a conversa enviando uma mensagem</p>
+          </div>
+
+          <!-- Loading Messages -->
+          <div class="loading-messages" *ngIf="isLoadingMessages">
+            <div class="loading-spinner">
+              <mat-icon class="spinning">hourglass_empty</mat-icon>
+            </div>
+            <p>Carregando mensagens...</p>
+          </div>
+        </div>
+
+        <!-- Message Input -->
+        <div class="message-input-section">
+          <div class="input-wrapper">
+
+            <textarea class="message-input" [(ngModel)]="newMessage" placeholder="Digite sua mensagem..."
+              (keydown)="handleEnterKey($event)" (input)="handleTyping()" #messageInput rows="1"
+              maxlength="1000"></textarea>
+
+            <div class="input-actions-right">
+              <button mat-icon-button class="send-button" (click)="sendMessage()" [disabled]="!canSendMessage()"
+                [class.sending]="isSendingMessage" matTooltip="Enviar mensagem">
+                <mat-icon *ngIf="!isSendingMessage">send</mat-icon>
+                <mat-icon *ngIf="isSendingMessage" class="spinning">hourglass_empty</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="input-footer">
+            <div class="character-count">
+              {{ newMessage.length }}/1000
+            </div>
+            <div class="input-hints" *ngIf="newMessage.length === 0">
+              Pressione Enter para enviar, Shift+Enter para nova linha
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Selection State -->
+      <div class="no-selection" *ngIf="!selectedClinic">
+        <div class="no-selection-content">
+          <div class="no-selection-icon">
+            <mat-icon>chat</mat-icon>
+          </div>
+          <h3>Selecione um doador</h3>
+          <p>Escolha um doador da lista para iniciar uma conversa</p>
+          <div class="quick-actions">
+            <button mat-stroked-button (click)="loadClinics()" class="refresh-clinics-button">
+              <mat-icon>refresh</mat-icon>
+              <span>Atualizar Lista</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,109 +1,416 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Editar Clínica</h1>
-    <p>Atualize as informações da clínica</p>
+<div class="clinic-edit-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="clinic-icon">
+        <mat-icon>edit</mat-icon>
+      </div>
+      <h1>Editar Clínica</h1>
+      <p class="hero-subtitle">Atualize as informações da clínica parceira no sistema</p>
+    </div>
   </div>
 
-  <mat-card *ngIf="clinicForm">
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>edit</mat-icon>
-        Formulário de Edição
-      </mat-card-title>
-    </mat-card-header>
+  <!-- Main Content -->
+  <div class="content-section" *ngIf="clinicForm">
+    <div class="content-container">
 
-    <mat-card-content>
-      <form [formGroup]="clinicForm" (ngSubmit)="onSubmit()">
-
-        <!-- Informações Pessoais -->
-        <div class="section">
-          <h3>Informações Pessoais</h3>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Nome Completo</mat-label>
-            <input matInput formControlName="name" required>
-            <mat-icon matSuffix>person</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>CPF</mat-label>
-            <input matInput formControlName="cpf" mask="000.000.000-00" required>
-            <mat-icon matSuffix>credit_card</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="email" required>
-            <mat-icon matSuffix>email</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Telefone</mat-label>
-            <input matInput formControlName="phone" mask="(00) 00000-0000" required>
-            <mat-icon matSuffix>phone</mat-icon>
-          </mat-form-field>
-        </div>
-
-        <!-- Informações da Clínica -->
-        <div class="section">
-          <h3>Informações da Clínica</h3>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Nome da Clínica</mat-label>
-            <input matInput formControlName="nameClinic" required>
-            <mat-icon matSuffix>local_hospital</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>CNPJ</mat-label>
-            <input matInput formControlName="cnpj" mask="00.000.000/0000-00" required>
-            <mat-icon matSuffix>business_center</mat-icon>
-          </mat-form-field>
-        </div>
-
-        <!-- Endereço -->
-        <div class="section">
-          <h3>Endereço</h3>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Rua</mat-label>
-            <input matInput formControlName="street" required>
-            <mat-icon matSuffix>home</mat-icon>
-          </mat-form-field>
-
-          <div class="form-row">
-            <mat-form-field appearance="outline" class="form-field-70">
-              <mat-label>Número</mat-label>
-              <input matInput formControlName="number" required>
-              <mat-icon matSuffix>tag</mat-icon>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="form-field-30">
-              <mat-label>CEP</mat-label>
-              <input matInput formControlName="postalCode" mask="00000-000" required>
-              <mat-icon matSuffix>place</mat-icon>
-            </mat-form-field>
+      <!-- Edit Status Section -->
+      <div class="edit-status-section">
+        <div class="status-card">
+          <div class="status-header">
+            <div class="status-icon">
+              <mat-icon>info</mat-icon>
+            </div>
+            <div class="status-content">
+              <h3>Status da Edição</h3>
+              <p>Acompanhe as alterações realizadas nos dados</p>
+            </div>
           </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Bairro</mat-label>
-            <input matInput formControlName="neighborhood" required>
-            <mat-icon matSuffix>location_city</mat-icon>
-          </mat-form-field>
+          <div class="status-indicators">
+            <div class="indicator" [ngClass]="{'modified': hasPersonalChanges(), 'pristine': !hasPersonalChanges()}">
+              <div class="indicator-icon">
+                <mat-icon>{{hasPersonalChanges() ? 'edit' : 'check_circle'}}</mat-icon>
+              </div>
+              <span class="indicator-label">Dados Pessoais</span>
+              <span class="indicator-status">{{hasPersonalChanges() ? 'Modificado' : 'Inalterado'}}</span>
+            </div>
+
+            <div class="indicator" [ngClass]="{'modified': hasClinicChanges(), 'pristine': !hasClinicChanges()}">
+              <div class="indicator-icon">
+                <mat-icon>{{hasClinicChanges() ? 'edit' : 'check_circle'}}</mat-icon>
+              </div>
+              <span class="indicator-label">Dados da Clínica</span>
+              <span class="indicator-status">{{hasClinicChanges() ? 'Modificado' : 'Inalterado'}}</span>
+            </div>
+
+            <div class="indicator" [ngClass]="{'modified': hasAddressChanges(), 'pristine': !hasAddressChanges()}">
+              <div class="indicator-icon">
+                <mat-icon>{{hasAddressChanges() ? 'edit' : 'check_circle'}}</mat-icon>
+              </div>
+              <span class="indicator-label">Endereço</span>
+              <span class="indicator-status">{{hasAddressChanges() ? 'Modificado' : 'Inalterado'}}</span>
+            </div>
+          </div>
+
+          <div class="changes-summary" *ngIf="hasAnyChanges()">
+            <div class="summary-icon">
+              <mat-icon>warning</mat-icon>
+            </div>
+            <div class="summary-text">
+              <span class="summary-title">Alterações Pendentes</span>
+              <span class="summary-subtitle">Lembre-se de salvar as modificações</span>
+            </div>
+          </div>
         </div>
+      </div>
 
-      </form>
-    </mat-card-content>
+      <!-- Form Sections -->
+      <div class="form-sections">
+        <form [formGroup]="clinicForm">
 
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!clinicForm.valid">
-        <mat-icon>save</mat-icon>
-        Atualizar Clínica
-      </button>
-      <button mat-button (click)="onCancel()">
-        <mat-icon>cancel</mat-icon>
-        Cancelar
-      </button>
-    </mat-card-actions>
-  </mat-card>
+          <!-- Personal Information Section -->
+          <div class="form-section personal-info" style="margin-bottom: 20px;">
+            <div class="section-card" [ngClass]="{'modified': hasPersonalChanges()}">
+              <div class="section-header">
+                <div class="header-icon">
+                  <mat-icon>person</mat-icon>
+                </div>
+                <div class="header-content">
+                  <h3>Informações Pessoais</h3>
+                  <p>Dados do responsável pela clínica</p>
+                </div>
+                <div class="section-status">
+                  <div class="status-indicator"
+                    [ngClass]="{'valid': isPersonalInfoValid(), 'invalid': !isPersonalInfoValid() && hasPersonalInfoErrors(), 'modified': hasPersonalChanges()}">
+                    <mat-icon>{{isPersonalInfoValid() ? (hasPersonalChanges() ? 'edit' : 'check_circle') :
+                      'error'}}</mat-icon>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section-content">
+                <form [formGroup]="clinicForm">
+                  <div class="form-grid">
+                    <div class="form-group full-width">
+                      <mat-form-field appearance="outline" class="modern-field">
+                        <mat-label>Nome Completo</mat-label>
+                        <input matInput formControlName="name" placeholder="Digite o nome completo">
+                        <mat-icon matPrefix>person</mat-icon>
+                        <mat-hint>Nome do responsável pela clínica</mat-hint>
+                        <mat-error *ngIf="clinicForm.get('name')?.hasError('required')">
+                          Nome é obrigatório
+                        </mat-error>
+                      </mat-form-field>
+                      <div class="field-status" *ngIf="isFieldModified('name')">
+                        <mat-icon>edit</mat-icon>
+                        <span>Campo modificado</span>
+                      </div>
+                    </div>
+
+                    <div class="form-group half-width">
+                      <mat-form-field appearance="outline" class="modern-field">
+                        <mat-label>CPF</mat-label>
+                        <input matInput formControlName="cpf" mask="000.000.000-00" placeholder="000.000.000-00">
+                        <mat-icon matPrefix>credit_card</mat-icon>
+                        <mat-hint>Documento de identificação</mat-hint>
+                        <mat-error *ngIf="clinicForm.get('cpf')?.hasError('required')">
+                          CPF é obrigatório
+                        </mat-error>
+                      </mat-form-field>
+                      <div class="field-status" *ngIf="isFieldModified('cpf')">
+                        <mat-icon>edit</mat-icon>
+                        <span>Campo modificado</span>
+                      </div>
+                    </div>
+
+                    <div class="form-group half-width">
+                      <mat-form-field appearance="outline" class="modern-field">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" formControlName="email" placeholder="email@exemplo.com">
+                        <mat-icon matPrefix>email</mat-icon>
+                        <mat-hint>Email para acesso ao sistema</mat-hint>
+                        <mat-error *ngIf="clinicForm.get('email')?.hasError('required')">
+                          Email é obrigatório
+                        </mat-error>
+                        <mat-error *ngIf="clinicForm.get('email')?.hasError('email')">
+                          Email deve ter formato válido
+                        </mat-error>
+                      </mat-form-field>
+                      <div class="field-status" *ngIf="isFieldModified('email')">
+                        <mat-icon>edit</mat-icon>
+                        <span>Campo modificado</span>
+                      </div>
+                    </div>
+
+                    <div class="form-group half-width">
+                      <mat-form-field appearance="outline" class="modern-field">
+                        <mat-label>Telefone</mat-label>
+                        <input matInput formControlName="phone" mask="(00) 00000-0000" placeholder="(00) 00000-0000">
+                        <mat-icon matPrefix>phone</mat-icon>
+                        <mat-hint>Número para contato</mat-hint>
+                        <mat-error *ngIf="clinicForm.get('phone')?.hasError('required')">
+                          Telefone é obrigatório
+                        </mat-error>
+                      </mat-form-field>
+                      <div class="field-status" *ngIf="isFieldModified('phone')">
+                        <mat-icon>edit</mat-icon>
+                        <span>Campo modificado</span>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Clinic Information Section -->
+          <div class="form-section clinic-info" style="margin-bottom: 20px;">
+            <div class="section-card" [ngClass]="{'modified': hasClinicChanges()}">
+              <div class="section-header">
+                <div class="header-icon">
+                  <mat-icon>local_hospital</mat-icon>
+                </div>
+                <div class="header-content">
+                  <h3>Informações da Clínica</h3>
+                  <p>Dados institucionais da clínica</p>
+                </div>
+                <div class="section-status">
+                  <div class="status-indicator"
+                    [ngClass]="{'valid': isClinicInfoValid(), 'invalid': !isClinicInfoValid() && hasClinicInfoErrors(), 'modified': hasClinicChanges()}">
+                    <mat-icon>{{isClinicInfoValid() ? (hasClinicChanges() ? 'edit' : 'check_circle') :
+                      'error'}}</mat-icon>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section-content">
+                <div class="form-grid">
+                  <div class="form-group full-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Nome da Clínica</mat-label>
+                      <input matInput formControlName="nameClinic" placeholder="Digite o nome da clínica">
+                      <mat-icon matPrefix>local_hospital</mat-icon>
+                      <mat-hint>Razão social ou nome fantasia</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('nameClinic')?.hasError('required')">
+                        Nome da clínica é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                    <div class="field-status" *ngIf="isFieldModified('nameClinic')">
+                      <mat-icon>edit</mat-icon>
+                      <span>Campo modificado</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group full-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>CNPJ</mat-label>
+                      <input matInput formControlName="cnpj" mask="00.000.000/0000-00" placeholder="00.000.000/0000-00">
+                      <mat-icon matPrefix>business_center</mat-icon>
+                      <mat-hint>Cadastro Nacional de Pessoa Jurídica</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('cnpj')?.hasError('required')">
+                        CNPJ é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                    <div class="field-status" *ngIf="isFieldModified('cnpj')">
+                      <mat-icon>edit</mat-icon>
+                      <span>Campo modificado</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address Information Section -->
+          <div class="form-section address-info">
+            <div class="section-card" [ngClass]="{'modified': hasAddressChanges()}">
+              <div class="section-header">
+                <div class="header-icon">
+                  <mat-icon>location_on</mat-icon>
+                </div>
+                <div class="header-content">
+                  <h3>Endereço da Clínica</h3>
+                  <p>Localização física da clínica</p>
+                </div>
+                <div class="section-status">
+                  <div class="status-indicator"
+                    [ngClass]="{'valid': isAddressInfoValid(), 'invalid': !isAddressInfoValid() && hasAddressInfoErrors(), 'modified': hasAddressChanges()}">
+                    <mat-icon>{{isAddressInfoValid() ? (hasAddressChanges() ? 'edit' : 'check_circle') :
+                      'error'}}</mat-icon>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section-content">
+                <div class="form-grid">
+                  <div class="form-group full-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Rua</mat-label>
+                      <input matInput formControlName="street" placeholder="Digite o nome da rua">
+                      <mat-icon matPrefix>home</mat-icon>
+                      <mat-hint>Nome da rua ou avenida</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('street')?.hasError('required')">
+                        Rua é obrigatória
+                      </mat-error>
+                    </mat-form-field>
+                    <div class="field-status" *ngIf="isFieldModified('street')">
+                      <mat-icon>edit</mat-icon>
+                      <span>Campo modificado</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group half-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Número</mat-label>
+                      <input matInput formControlName="number" placeholder="123">
+                      <mat-icon matPrefix>tag</mat-icon>
+                      <mat-hint>Número do endereço</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('number')?.hasError('required')">
+                        Número é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                    <div class="field-status" *ngIf="isFieldModified('number')">
+                      <mat-icon>edit</mat-icon>
+                      <span>Campo modificado</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group half-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>CEP</mat-label>
+                      <input matInput formControlName="postalCode" mask="00000-000" placeholder="00000-000">
+                      <mat-icon matPrefix>place</mat-icon>
+                      <mat-hint>Código de Endereçamento Postal</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('postalCode')?.hasError('required')">
+                        CEP é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                    <div class="field-status" *ngIf="isFieldModified('postalCode')">
+                      <mat-icon>edit</mat-icon>
+                      <span>Campo modificado</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group full-width">
+                    <mat-form-field appearance="outline" class="modern-field">
+                      <mat-label>Bairro</mat-label>
+                      <input matInput formControlName="neighborhood" placeholder="Digite o bairro">
+                      <mat-icon matPrefix>location_city</mat-icon>
+                      <mat-hint>Nome do bairro</mat-hint>
+                      <mat-error *ngIf="clinicForm.get('neighborhood')?.hasError('required')">
+                        Bairro é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+                    <div class="field-status" *ngIf="isFieldModified('neighborhood')">
+                      <mat-icon>edit</mat-icon>
+                      <span>Campo modificado</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Actions Section -->
+      <div class="actions-section">
+        <div class="actions-container">
+          <div class="actions-left">
+            <button mat-stroked-button class="cancel-button" (click)="onCancel()">
+              <mat-icon>arrow_back</mat-icon>
+              <span>Cancelar</span>
+            </button>
+
+            <button mat-stroked-button class="reset-button" *ngIf="hasAnyChanges()" (click)="resetForm()">
+              <mat-icon>refresh</mat-icon>
+              <span>Desfazer Alterações</span>
+            </button>
+          </div>
+
+          <div class="actions-right">
+            <div class="form-summary" *ngIf="clinicForm.valid && hasAnyChanges()">
+              <div class="summary-icon">
+                <mat-icon>edit</mat-icon>
+              </div>
+              <div class="summary-text">
+                <span class="summary-title">Pronto para Salvar</span>
+                <span class="summary-subtitle">{{getChangesCount()}} alteração(ões) pendente(s)</span>
+              </div>
+            </div>
+
+            <button mat-raised-button color="primary" class="submit-button"
+              [disabled]="!clinicForm.valid || !hasAnyChanges() || isSubmitting" (click)="onSubmit()">
+              <mat-icon *ngIf="!isSubmitting">save</mat-icon>
+              <mat-icon *ngIf="isSubmitting" class="spinning">hourglass_empty</mat-icon>
+              <span>{{isSubmitting ? 'Salvando...' : 'Salvar Alterações'}}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-section" *ngIf="!clinicForm">
+    <div class="loading-container">
+      <div class="loading-spinner">
+        <mat-icon>hourglass_empty</mat-icon>
+      </div>
+      <h3>Carregando dados...</h3>
+      <p>Aguarde enquanto buscamos as informações da clínica</p>
+    </div>
+  </div>
+
+  <!-- Changes Preview Modal -->
+  <div class="changes-preview" *ngIf="showChangesPreview">
+    <div class="preview-overlay" (click)="closeChangesPreview()"></div>
+    <div class="preview-modal">
+      <div class="preview-header">
+        <h3>Resumo das Alterações</h3>
+        <button mat-icon-button (click)="closeChangesPreview()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <div class="preview-content">
+        <div class="change-item" *ngFor="let change of getChangedFields()">
+          <div class="change-field">
+            <mat-icon>{{change.icon}}</mat-icon>
+            <span class="field-name">{{change.label}}</span>
+          </div>
+          <div class="change-values">
+            <div class="old-value">
+              <span class="value-label">Valor Anterior:</span>
+              <span class="value-text">{{change.oldValue || 'Vazio'}}</span>
+            </div>
+            <div class="new-value">
+              <span class="value-label">Novo Valor:</span>
+              <span class="value-text">{{change.newValue || 'Vazio'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-actions">
+        <button mat-stroked-button (click)="closeChangesPreview()">
+          <mat-icon>close</mat-icon>
+          <span>Fechar</span>
+        </button>
+        <button mat-raised-button color="primary" (click)="confirmSave()">
+          <mat-icon>save</mat-icon>
+          <span>Confirmar e Salvar</span>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

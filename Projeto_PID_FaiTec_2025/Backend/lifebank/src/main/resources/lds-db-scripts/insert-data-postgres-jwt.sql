@@ -38,15 +38,14 @@ VALUES
 
 INSERT INTO blood_stock (blood_type, minimum_stock, maximum_stock, current_stock, donation_location_id)
 VALUES
-('O+', 2.00, 10.00, 0.45, 1),
-('A+', 2.00, 10.00, 0.00, 1),
-('O-', 2.00, 10.00, 0.00, 1),
-('A-', 2.00, 10.00, 0.00, 1),
-('B+', 2.00, 10.00, 0.00, 1),
-('AB+', 2.00, 10.00, 0.00, 1),
-('AB-', 2.00, 10.00, 0.00, 1),
-('B-', 2.00, 10.00, 0.00, 1);
-
+('O+', 1.00, 6.00, 0.45, 1),
+('A+', 1.00, 6.00, 0.00, 1),
+('O-', 1.00, 6.00, 0.00, 1),
+('A-', 1.00, 6.00, 0.00, 1),
+('B+', 1.00, 6.00, 0.00, 1),
+('AB+', 1.00, 6.00, 0.00, 1),
+('AB-', 1.00, 6.00, 0.00, 1),
+('B-', 1.00, 6.00, 0.00, 1);
 
 INSERT INTO donation (quantity, collection_date, expiration_date, donor_id, donation_location_id, blood_id)
 VALUES
@@ -162,8 +161,8 @@ INSERT INTO donation (quantity, collection_date, expiration_date, donor_id, dona
 (0.45, '2025-04-15', '2025-05-15', 1, 1, 14),
 (0.45, '2025-04-20', '2025-05-20', 2, 1, 15);
 
-INSERT INTO mensagens (remetente_id, destinatario_id, mensagem)
-VALUES (1, 2, 'Oi Maria, tudo bem?');
+INSERT INTO messages (sender_id, receiver_id, message)
+VALUES (1, 2, 'Olá, tudo bem?');
 
-INSERT INTO mensagens (remetente_id, destinatario_id, mensagem)
-VALUES (2, 1, 'Oi João! Estou bem e você?');
+INSERT INTO messages (sender_id, receiver_id, message)
+VALUES (2, 1, 'Estou bem, e você?');

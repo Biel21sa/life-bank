@@ -1,122 +1,370 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Gerenciamento de Usuários</h1>
-    <p>Visualize e gerencie todos os usuários do sistema</p>
-  </div>
+<div class="user-list-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
 
-  <!-- Cards de estatísticas -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <mat-icon>people</mat-icon>
-      <div class="stat-number">{{ users.length }}</div>
-      <div class="stat-label">Total de Usuários</div>
-    </div>
-    <div class="stat-card">
-      <mat-icon>admin_panel_settings</mat-icon>
-      <div class="stat-number">{{ getCountByRole('ADMINISTRATOR') }}</div>
-      <div class="stat-label">Administradores</div>
-    </div>
-    <div class="stat-card">
-      <mat-icon>volunteer_activism</mat-icon>
-      <div class="stat-number">{{ getCountByRole('USER') }}</div>
-      <div class="stat-label">Doadores</div>
-    </div>
-    <div class="stat-card">
-      <mat-icon>local_hospital</mat-icon>
-      <div class="stat-number">{{ getCountByRole('CLINIC') }}</div>
-      <div class="stat-label">Clínicas</div>
-    </div>
-  </div>
-
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
+    <div class="hero-content">
+      <div class="user-icon">
         <mat-icon>people</mat-icon>
-        Lista de Usuários
-      </mat-card-title>
-    </mat-card-header>
+      </div>
+      <h1>Gerenciamento de Usuários</h1>
+      <p class="hero-subtitle">Visualize e gerencie todos os usuários do sistema de doação de sangue</p>
+    </div>
+  </div>
 
-    <mat-card-content>
-      <div class="table-actions">
-        <div class="search-box">
-          <mat-form-field appearance="outline" class="search-field">
-            <mat-label>Buscar usuários</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Nome, email ou CPF">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
+  <!-- Main Content -->
+  <div class="content-section">
+    <div class="content-container">
+
+      <!-- Statistics Dashboard -->
+      <div class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-card total">
+            <div class="stat-header">
+              <div class="stat-icon">
+                <mat-icon>people</mat-icon>
+              </div>
+              <div class="stat-badge">Total</div>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">{{ users.length }}</div>
+              <div class="stat-label">Usuários Cadastrados</div>
+              <div class="stat-trend positive">
+                <mat-icon>trending_up</mat-icon>
+                <span>+12% este mês</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card active">
+            <div class="stat-header">
+              <div class="stat-icon">
+                <mat-icon>admin_panel_settings</mat-icon>
+              </div>
+              <div class="stat-badge">Admins</div>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">{{ getCountByRole('ADMINISTRATOR') }}</div>
+              <div class="stat-label">Administradores</div>
+              <div class="stat-trend neutral">
+                <mat-icon>check_circle</mat-icon>
+                <span>Sem alteração</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card recent">
+            <div class="stat-header">
+              <div class="stat-icon">
+                <mat-icon>volunteer_activism</mat-icon>
+              </div>
+              <div class="stat-badge">Doadores</div>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">{{ getCountByRole('USER') }}</div>
+              <div class="stat-label">Doadores Ativos</div>
+              <div class="stat-trend positive">
+                <mat-icon>trending_up</mat-icon>
+                <span>+8% este mês</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card verification">
+            <div class="stat-header">
+              <div class="stat-icon">
+                <mat-icon>local_hospital</mat-icon>
+              </div>
+              <div class="stat-badge">Clínicas</div>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">{{ getCountByRole('CLINIC') }}</div>
+              <div class="stat-label">Clínicas Parceiras</div>
+              <div class="stat-trend positive">
+                <mat-icon>trending_up</mat-icon>
+                <span>+3% este mês</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="action-buttons">
-          <button mat-raised-button color="primary" routerLink="/user/create">
-            <mat-icon>add</mat-icon>
-            Novo Usuário
-          </button>
+      </div>
+
+      <!-- Filters and Actions Section -->
+      <div class="filters-section">
+        <div class="filters-card">
+          <div class="filters-header">
+            <div class="header-icon">
+              <mat-icon>filter_list</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Filtros e Ações</h3>
+              <p>Busque e gerencie usuários de forma eficiente</p>
+            </div>
+          </div>
+
+          <div class="filters-content">
+            <div class="search-section">
+              <mat-form-field appearance="outline" class="search-field">
+                <mat-label>Buscar usuários</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Nome, email, CPF ou telefone" #searchInput>
+                <mat-icon matPrefix>search</mat-icon>
+                <button mat-icon-button matSuffix *ngIf="searchInput.value" (click)="clearSearch(searchInput)"
+                  matTooltip="Limpar busca">
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </mat-form-field>
+
+              <div class="search-results" *ngIf="searchInput.value">
+                <div class="results-info">
+                  <mat-icon>info</mat-icon>
+                  <span>{{ getFilteredCount() }} resultado(s) encontrado(s)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="actions-section">
+              <button mat-raised-button color="primary" class="primary-action" routerLink="/user/create">
+                <mat-icon>add</mat-icon>
+                <span>Novo Usuário</span>
+              </button>
+
+              <button mat-icon-button class="refresh-action" (click)="refreshData()" matTooltip="Atualizar dados">
+                <mat-icon>refresh</mat-icon>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="table-container">
-        <table mat-table [dataSource]="dataSource" class="modern-table">
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Nome</th>
-            <td mat-cell *matCellDef="let user">
-              <div class="user-info">
-                <div class="user-name">{{ user.name }}</div>
-                <div class="user-email">{{ user.email }}</div>
-              </div>
-            </td>
-          </ng-container>
+      <!-- Users Table Section -->
+      <div class="table-section">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="header-icon">
+              <mat-icon>view_list</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Lista de Usuários</h3>
+              <p>{{ users.length }} usuário(s) cadastrado(s) no sistema</p>
+            </div>
+            <div class="header-actions">
+              <button mat-icon-button [matMenuTriggerFor]="viewMenu" matTooltip="Opções de visualização"
+                style="display: flex; justify-content: center; align-items: center;">
+                <mat-icon style="display: flex; justify-content: center; align-items: center;">more_vert</mat-icon>
+              </button>
 
-          <ng-container matColumnDef="role">
-            <th mat-header-cell *matHeaderCellDef>Tipo</th>
-            <td mat-cell *matCellDef="let user">
-              <span class="role-badge" [ngClass]="getRoleClass(user.role)">
-                <mat-icon>{{ getRoleIcon(user.role) }}</mat-icon>
-                {{ getUserRoleLabel(user.role) }}
-              </span>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="contact">
-            <th mat-header-cell *matHeaderCellDef>Contato</th>
-            <td mat-cell *matCellDef="let user">
-              <div class="contact-info">
-                <div class="phone">{{ user.phone | mask: '(00) 00000-0000' }}</div>
-              </div>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Ações</th>
-            <td mat-cell *matCellDef="let user">
-              <div class="action-buttons">
-                <button mat-icon-button color="primary" [routerLink]="['/user/detail', user.id]"
-                  matTooltip="Visualizar">
-                  <mat-icon>visibility</mat-icon>
+              <mat-menu #viewMenu="matMenu">
+                <button mat-menu-item (click)="toggleCompactView()">
+                  <mat-icon>{{isCompactView ? 'view_comfortable' : 'view_compact'}}</mat-icon>
+                  <span>{{isCompactView ? 'Visualização Normal' : 'Visualização Compacta'}}</span>
                 </button>
-                <button mat-icon-button color="accent" [routerLink]="['/user/edit', user.id]" matTooltip="Editar">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="warn" (click)="deleteUser(user.id!)" matTooltip="Excluir">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-            </td>
-          </ng-container>
+              </mat-menu>
+            </div>
+          </div>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+          <!-- Table View -->
+          <div class="table-content" *ngIf="!isCardView">
+            <div class="table-container" [ngClass]="{'compact': isCompactView}">
+              <table mat-table [dataSource]="dataSource" class="modern-table">
+
+                <!-- Avatar Column -->
+                <ng-container matColumnDef="avatar">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let user">
+                    <div class="user-avatar">
+                      <div class="avatar-icon" [style.background]="getUserAvatarColor(user.name)">
+                        <span>{{ getUserInitials(user.name) }}</span>
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <div class="header-cell">
+                      <mat-icon>person</mat-icon>
+                      <span>Usuário</span>
+                    </div>
+                  </th>
+                  <td mat-cell *matCellDef="let user">
+                    <div class="user-info">
+                      <div class="user-name">{{ user.name }}</div>
+                      <div class="user-email">{{ user.email }}</div>
+                      <div class="user-id">ID: {{ user.id }}</div>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <!-- Role Column -->
+                <ng-container matColumnDef="role">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <div class="header-cell">
+                      <mat-icon>badge</mat-icon>
+                      <span>Tipo</span>
+                    </div>
+                  </th>
+                  <td mat-cell *matCellDef="let user">
+                    <div class="role-info">
+                      <div class="role-badge" [ngClass]="getRoleClass(user.role)">
+                        <mat-icon>{{ getRoleIcon(user.role) }}</mat-icon>
+                        <span>{{ getUserRoleLabel(user.role) }}</span>
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <!-- Contact Column -->
+                <ng-container matColumnDef="contact">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <div class="header-cell">
+                      <mat-icon>phone</mat-icon>
+                      <span>Contato</span>
+                    </div>
+                  </th>
+                  <td mat-cell *matCellDef="let user">
+                    <div class="contact-info">
+                      <div class="phone" *ngIf="user.phone">
+                        <mat-icon>phone</mat-icon>
+                        <span>{{ user.phone | mask: '(00) 00000-0000' }}</span>
+                      </div>
+                      <div class="email-link">
+                        <mat-icon>email</mat-icon>
+                        <a href="mailto:{{ user.email }}">Enviar email</a>
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <div class="header-cell">
+                      <mat-icon>settings</mat-icon>
+                      <span>Ações</span>
+                    </div>
+                  </th>
+                  <td mat-cell *matCellDef="let user">
+                    <div class="action-buttons">
+                      <button mat-icon-button class="action-view" [routerLink]="['/user/detail', user.id]"
+                        matTooltip="Visualizar detalhes">
+                        <mat-icon>visibility</mat-icon>
+                      </button>
+
+                      <button mat-icon-button class="action-edit" [routerLink]="['/user/edit', user.id]"
+                        matTooltip="Editar usuário">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+
+                      <button mat-icon-button (click)="deleteUser(user.id!)" class="action-delete"
+                        matTooltip="Excluir usuário">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                  [ngClass]="{'highlighted': isRowHighlighted(row)}" (click)="selectRow(row)"></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Card View -->
+          <div class="cards-content" *ngIf="isCardView">
+            <div class="cards-grid">
+              <div class="user-card" *ngFor="let user of dataSource.filteredData; trackBy: trackByUserId"
+                [ngClass]="{'selected': selectedUser?.id === user.id}" (click)="selectUser(user)">
+
+                <div class="card-header">
+                  <div class="user-avatar">
+                    <div class="avatar-icon" [style.background]="getUserAvatarColor(user.name)">
+                      <span>{{ getUserInitials(user.name) }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-content">
+                  <div class="user-title">
+                    <h4>{{ user.name }}</h4>
+                    <p>{{ user.email }}</p>
+                  </div>
+
+                  <div class="role-info">
+                    <div class="role-badge" [ngClass]="getRoleClass(user.role)">
+                      <mat-icon>{{ getRoleIcon(user.role) }}</mat-icon>
+                      <span>{{ getUserRoleLabel(user.role) }}</span>
+                    </div>
+                  </div>
+
+                  <div class="contact-info" *ngIf="user.phone">
+                    <div class="phone">
+                      <mat-icon>phone</mat-icon>
+                      <span>{{ user.phone | mask: '(00) 00000-0000' }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-actions">
+                  <button mat-icon-button class="action-view" [routerLink]="['/user/detail', user.id]"
+                    matTooltip="Ver detalhes">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+
+                  <button mat-icon-button class="action-edit" [routerLink]="['/user/edit', user.id]"
+                    matTooltip="Editar">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+
+                  <button mat-icon-button (click)="deleteUser(user.id!)" class="action-delete"
+                    matTooltip="Excluir usuário">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Estado vazio -->
-      <div class="empty-state" *ngIf="users.length === 0">
-        <mat-icon>people_outline</mat-icon>
-        <h3>Nenhum usuário encontrado</h3>
-        <p>Comece criando o primeiro usuário do sistema</p>
-        <button mat-raised-button color="primary" routerLink="/user/create">
-          <mat-icon>add</mat-icon>
-          Criar Primeiro Usuário
-        </button>
+      <!-- Empty State -->
+      <div class="empty-state-section" *ngIf="users.length === 0 && !isLoading">
+        <div class="empty-state">
+          <div class="empty-icon">
+            <mat-icon>people</mat-icon>
+          </div>
+          <h3>Nenhum usuário encontrado</h3>
+          <p>Comece cadastrando o primeiro usuário no sistema</p>
+          <div class="empty-actions">
+            <button mat-raised-button color="primary" routerLink="/user/create">
+              <mat-icon>add</mat-icon>
+              <span>Cadastrar Primeiro Usuário</span>
+            </button>
+            <button mat-stroked-button (click)="ngOnInit()">
+              <mat-icon>refresh</mat-icon>
+              <span>Atualizar Lista</span>
+            </button>
+          </div>
+        </div>
       </div>
-    </mat-card-content>
-  </mat-card>
+
+      <!-- Loading State -->
+      <div class="loading-section" *ngIf="isLoading">
+        <div class="loading-container">
+          <div class="loading-spinner">
+            <mat-icon>hourglass_empty</mat-icon>
+          </div>
+          <h3>Carregando usuários...</h3>
+          <p>Aguarde enquanto buscamos as informações</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>

@@ -10,6 +10,7 @@ import br.fai.lds.lifebank.port.dao.clinic.ClinicDao;
 import br.fai.lds.lifebank.port.dao.donation.DonationDao;
 import br.fai.lds.lifebank.port.dao.donationlocation.DonationLocationDao;
 import br.fai.lds.lifebank.port.dao.donor.DonorDao;
+import br.fai.lds.lifebank.port.dao.messages.MessagesDao;
 import br.fai.lds.lifebank.port.dao.municipality.MunicipalityDao;
 import br.fai.lds.lifebank.port.dao.user.UserDao;
 import br.fai.lds.lifebank.port.service.authentication.AuthenticationService;
@@ -106,6 +107,11 @@ public class AppConfiguration {
     @Bean
     public BloodStockDao getBloodStockDao(final Connection connection) {
         return new BloodStockPostgresDaoImpl(connection);
+    }
+
+    @Bean
+    public MessagesDao getMessagesDao(final Connection connection) {
+        return new MessagesPostgresDaoImpl(connection);
     }
 
     @Bean

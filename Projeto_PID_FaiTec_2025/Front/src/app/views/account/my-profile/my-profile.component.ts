@@ -193,4 +193,13 @@ export class MyProfileComponent implements OnInit {
     };
     return texts[strength as keyof typeof texts];
   }
+
+  get hasUppercase(): boolean {
+    return /[A-Z]/.test(this.passwordForm.get('newPassword')?.value || '');
+  }
+
+  get hasNumber(): boolean {
+    return /[0-9]/.test(this.passwordForm.get('newPassword')?.value || '');
+  }
+
 }

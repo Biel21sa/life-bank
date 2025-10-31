@@ -1,140 +1,323 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Detalhes da Clínica</h1>
-    <p>Visualize as informações completas da clínica</p>
-  </div>
+<div class="clinic-detail-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+    </div>
 
-  <mat-card *ngIf="clinic">
-    <mat-card-header>
-      <div class="user-avatar">
+    <div class="hero-content">
+      <div class="clinic-icon">
         <mat-icon>local_hospital</mat-icon>
       </div>
-      <div class="user-title-info">
-        <h2 *ngIf="isAdministrator()">{{ clinic.name }}</h2>
-        <span class="clinic-badge">
-          <mat-icon>local_hospital</mat-icon>
-          {{ clinic.nameClinic }}
-        </span>
-      </div>
-    </mat-card-header>
+      <h1>Detalhes da Clínica</h1>
+      <p class="hero-subtitle">Visualize as informações completas da clínica parceira</p>
+    </div>
+  </div>
 
-    <mat-card-content>
-      <!-- Informações Pessoais -->
-      <div class="section">
-        <h3>
-          <mat-icon>person</mat-icon>
-          Informações Pessoais
-        </h3>
-        <div class="detail-grid">
-          <div *ngIf="isAdministrator()" class="detail-item">
-            <mat-icon>person</mat-icon>
-            <div class="detail-content">
-              <strong>Nome Completo</strong>
-              <span>{{ clinic.name }}</span>
+  <!-- Main Content -->
+  <div class="content-section" *ngIf="clinic">
+    <div class="content-container">
+
+      <!-- Clinic Header Card -->
+      <div class="clinic-header-section">
+        <div class="clinic-header-card">
+          <div class="clinic-avatar">
+            <div class="avatar-background"></div>
+            <div class="avatar-icon">
+              <mat-icon>local_hospital</mat-icon>
             </div>
           </div>
-          <div class="detail-item">
-            <mat-icon>email</mat-icon>
-            <div class="detail-content">
-              <strong>Email</strong>
-              <span>{{ clinic.email }}</span>
+
+          <div class="clinic-info">
+            <div class="clinic-title">
+              <h2 *ngIf="isAdministrator()">{{ clinic.name }}</h2>
+              <h2 *ngIf="!isAdministrator()">{{ clinic.nameClinic }}</h2>
+              <div class="clinic-badges">
+                <div class="clinic-badge primary">
+                  <mat-icon>local_hospital</mat-icon>
+                  <span>{{ clinic.nameClinic }}</span>
+                </div>
+                <div class="clinic-badge secondary" *ngIf="isAdministrator()">
+                  <mat-icon>verified</mat-icon>
+                  <span>Clínica Verificada</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="clinic-stats">
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <mat-icon>email</mat-icon>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-label">Email</span>
+                  <span class="stat-value">{{ clinic.email }}</span>
+                </div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <mat-icon>phone</mat-icon>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-label">Telefone</span>
+                  <span class="stat-value">{{ clinic.phone | mask: '(00) 00000-0000' }}</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div *ngIf="isAdministrator()" class="detail-item">
-            <mat-icon>credit_card</mat-icon>
-            <div class="detail-content">
-              <strong>CPF</strong>
-              <span>{{ clinic.cpf | mask: '000.000.000-00' }}</span>
+
+          <div class="clinic-actions">
+            <button mat-raised-button color="primary" *ngIf="isAdministrator()"
+              [routerLink]="['/clinic/edit', clinic.id]" class="edit-button">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Information Sections -->
+      <div class="info-sections">
+
+        <!-- Personal Information Section -->
+        <div class="info-section personal-info" *ngIf="isAdministrator()">
+          <div class="section-card">
+            <div class="section-header">
+              <div class="header-icon">
+                <mat-icon>person</mat-icon>
+              </div>
+              <div class="header-content">
+                <h3>Informações Pessoais</h3>
+                <p>Dados do responsável pela clínica</p>
+              </div>
+            </div>
+
+            <div class="section-content">
+              <div class="details-grid">
+                <div class="detail-card">
+                  <div class="detail-icon">
+                    <mat-icon>person</mat-icon>
+                  </div>
+                  <div class="detail-content">
+                    <span class="detail-label">Nome Completo</span>
+                    <span class="detail-value">{{ clinic.name }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-card">
+                  <div class="detail-icon">
+                    <mat-icon>credit_card</mat-icon>
+                  </div>
+                  <div class="detail-content">
+                    <span class="detail-label">CPF</span>
+                    <span class="detail-value">{{ clinic.cpf | mask: '000.000.000-00' }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-card">
+                  <div class="detail-icon">
+                    <mat-icon>email</mat-icon>
+                  </div>
+                  <div class="detail-content">
+                    <span class="detail-label">Email</span>
+                    <span class="detail-value">{{ clinic.email }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-card">
+                  <div class="detail-icon">
+                    <mat-icon>phone</mat-icon>
+                  </div>
+                  <div class="detail-content">
+                    <span class="detail-label">Telefone</span>
+                    <span class="detail-value">{{ clinic.phone | mask: '(00) 00000-0000' }}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="detail-item">
-            <mat-icon>phone</mat-icon>
-            <div class="detail-content">
-              <strong>Telefone</strong>
-              <span>{{ clinic.phone | mask: '(00) 00000-0000' }}</span>
+        </div>
+
+        <!-- Clinic Information Section -->
+        <div class="info-section clinic-info">
+          <div class="section-card">
+            <div class="section-header">
+              <div class="header-icon">
+                <mat-icon>local_hospital</mat-icon>
+              </div>
+              <div class="header-content">
+                <h3>Informações da Clínica</h3>
+                <p>Dados institucionais e identificação</p>
+              </div>
+            </div>
+
+            <div class="section-content">
+              <div class="details-grid">
+                <div class="detail-card featured">
+                  <div class="detail-icon">
+                    <mat-icon>local_hospital</mat-icon>
+                  </div>
+                  <div class="detail-content">
+                    <span class="detail-label">Nome da Clínica</span>
+                    <span class="detail-value">{{ clinic.nameClinic }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-card">
+                  <div class="detail-icon">
+                    <mat-icon>business_center</mat-icon>
+                  </div>
+                  <div class="detail-content">
+                    <span class="detail-label">CNPJ</span>
+                    <span class="detail-value">{{ clinic.cnpj! | mask: '00.000.000/0000-00' }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-card">
+                  <div class="detail-icon">
+                    <mat-icon>verified</mat-icon>
+                  </div>
+                  <div class="detail-content">
+                    <span class="detail-label">Status</span>
+                    <span class="detail-value status-active">
+                      <mat-icon>check_circle</mat-icon>
+                      Ativa
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address Information Section -->
+        <div class="info-section address-info">
+          <div class="section-card">
+            <div class="section-header">
+              <div class="header-icon">
+                <mat-icon>location_on</mat-icon>
+              </div>
+              <div class="header-content">
+                <h3>Endereço</h3>
+                <p>Localização física da clínica</p>
+              </div>
+              <div class="header-actions">
+                <button mat-icon-button class="map-button" (click)="openMap()">
+                  <mat-icon>map</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="section-content">
+              <div class="address-summary">
+                <div class="address-main">
+                  <mat-icon>home</mat-icon>
+                  <span>{{ getFullAddress() }}</span>
+                </div>
+              </div>
+
+              <div class="details-grid">
+                <div class="detail-card">
+                  <div class="detail-icon">
+                    <mat-icon>home</mat-icon>
+                  </div>
+                  <div class="detail-content">
+                    <span class="detail-label">Rua</span>
+                    <span class="detail-value">{{ clinic.street }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-card">
+                  <div class="detail-icon">
+                    <mat-icon>tag</mat-icon>
+                  </div>
+                  <div class="detail-content">
+                    <span class="detail-label">Número</span>
+                    <span class="detail-value">{{ clinic.number }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-card">
+                  <div class="detail-icon">
+                    <mat-icon>location_city</mat-icon>
+                  </div>
+                  <div class="detail-content">
+                    <span class="detail-label">Bairro</span>
+                    <span class="detail-value">{{ clinic.neighborhood }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-card">
+                  <div class="detail-icon">
+                    <mat-icon>place</mat-icon>
+                  </div>
+                  <div class="detail-content">
+                    <span class="detail-label">CEP</span>
+                    <span class="detail-value">{{ clinic.postalCode | mask: '00000-000' }}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Informações da Clínica -->
-      <div class="section">
-        <h3>
-          <mat-icon>local_hospital</mat-icon>
-          Informações da Clínica
-        </h3>
-        <div class="detail-grid">
-          <div class="detail-item">
-            <mat-icon>local_hospital</mat-icon>
-            <div class="detail-content">
-              <strong>Nome da Clínica</strong>
-              <span>{{ clinic.nameClinic }}</span>
-            </div>
+      <!-- Navigation Actions -->
+      <div class="navigation-section">
+        <div class="navigation-card">
+          <div class="nav-left">
+            <button mat-stroked-button class="back-button" routerLink="/clinic/list">
+              <mat-icon>arrow_back</mat-icon>
+              <span>Voltar à Lista</span>
+            </button>
           </div>
-          <div class="detail-item">
-            <mat-icon>business_center</mat-icon>
-            <div class="detail-content">
-              <strong>CNPJ</strong>
-              <span>{{ clinic.cnpj! | mask: '00.000.000/0000-00' }}</span>
-            </div>
+
+          <div class="nav-right">
+            <button mat-raised-button color="primary" *ngIf="isAdministrator()"
+              [routerLink]="['/clinic/edit', clinic.id]" class="primary-action">
+              <mat-icon>edit</mat-icon>
+              <span>Editar Clínica</span>
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- Endereço -->
-      <div class="section">
-        <h3>
-          <mat-icon>home</mat-icon>
-          Endereço
-        </h3>
-        <div class="detail-grid">
-          <div class="detail-item">
-            <mat-icon>home</mat-icon>
-            <div class="detail-content">
-              <strong>Rua</strong>
-              <span>{{ clinic.street }}</span>
-            </div>
-          </div>
-          <div class="detail-item">
-            <mat-icon>tag</mat-icon>
-            <div class="detail-content">
-              <strong>Número</strong>
-              <span>{{ clinic.number }}</span>
-            </div>
-          </div>
-          <div class="detail-item">
-            <mat-icon>location_city</mat-icon>
-            <div class="detail-content">
-              <strong>Bairro</strong>
-              <span>{{ clinic.neighborhood }}</span>
-            </div>
-          </div>
-          <div class="detail-item">
-            <mat-icon>place</mat-icon>
-            <div class="detail-content">
-              <strong>CEP</strong>
-              <span>{{ clinic.postalCode | mask: '00000-000' }}</span>
-            </div>
-          </div>
-        </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-section" *ngIf="!clinic">
+    <div class="loading-container">
+      <div class="loading-spinner">
+        <mat-icon>hourglass_empty</mat-icon>
       </div>
-    </mat-card-content>
+      <h3>Carregando informações...</h3>
+      <p>Aguarde enquanto buscamos os dados da clínica</p>
+    </div>
+  </div>
 
-    <mat-card-actions>
-      <button mat-raised-button color="primary" *ngIf="isAdministrator()" [routerLink]="['/clinic/edit', clinic.id]">
-        <mat-icon>edit</mat-icon>
-        Editar Clínica
-      </button>
-      <button mat-button routerLink="/clinic/list">
-        <mat-icon>arrow_back</mat-icon>
-        Voltar à Lista
-      </button>
-    </mat-card-actions>
-  </mat-card>
-
-  <!-- Loading state -->
-  <div class="loading-container" *ngIf="!clinic">
-    <div class="loading-spinner"></div>
-    <p>Carregando informações da clínica...</p>
+  <!-- Error State -->
+  <div class="error-section" *ngIf="hasError">
+    <div class="error-container">
+      <div class="error-icon">
+        <mat-icon>error_outline</mat-icon>
+      </div>
+      <h3>Erro ao carregar dados</h3>
+      <p>Não foi possível carregar as informações da clínica</p>
+      <div class="error-actions">
+        <button mat-raised-button color="primary" (click)="ngOnInit()">
+          <mat-icon>refresh</mat-icon>
+          <span>Tentar Novamente</span>
+        </button>
+        <button mat-stroked-button routerLink="/clinic/list">
+          <mat-icon>arrow_back</mat-icon>
+          <span>Voltar à Lista</span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>

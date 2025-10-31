@@ -1,100 +1,256 @@
 <div class="benefits-container">
-  <div class="header-section">
-    <h1>Meus Benefícios</h1>
-    <p>Acompanhe seus benefícios e recompensas por suas doações</p>
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="benefits-icon">
+        <mat-icon>card_giftcard</mat-icon>
+      </div>
+      <h1>Meus Benefícios</h1>
+      <p class="hero-subtitle">Acompanhe suas recompensas e descontos conquistados através das doações</p>
+    </div>
   </div>
 
-  <!-- Cards de Estatísticas -->
+  <!-- Stats Dashboard -->
   <div class="stats-section">
-    <div class="stats-grid">
-      <mat-card class="stat-card">
-        <div class="stat-icon">
+    <div class="stats-container">
+      <div class="stats-header">
+        <h2>Resumo dos Benefícios</h2>
+        <p>Visão geral das suas recompensas</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card total-benefits">
+          <div class="stat-indicator"></div>
+          <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="stat-icon">
+              <mat-icon>card_giftcard</mat-icon>
+            </div>
+          </div>
+          <div class="stat-content"
+            style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="stat-number">{{getTotalBenefits()}}</div>
+            <div class="stat-label">Total de Benefícios</div>
+            <div class="stat-trend positive">
+              <mat-icon>trending_up</mat-icon>
+              <span>Conquistados</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card available-benefits">
+          <div class="stat-indicator"></div>
+          <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="stat-icon">
+              <mat-icon>check_circle</mat-icon>
+            </div>
+          </div>
+          <div class="stat-content"
+            style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="stat-number">{{getAvailableBenefits()}}</div>
+            <div class="stat-label">Disponíveis para Uso</div>
+            <div class="stat-trend positive">
+              <mat-icon>schedule</mat-icon>
+              <span>Prontos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card total-value">
+          <div class="stat-indicator"></div>
+          <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="stat-icon">
+              <mat-icon>savings</mat-icon>
+            </div>
+          </div>
+          <div class="stat-content"
+            style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="stat-number">{{getTotalValue().toFixed(1)}}%</div>
+            <div class="stat-label">Desconto Total Disponível</div>
+            <div class="stat-trend positive">
+              <mat-icon>local_offer</mat-icon>
+              <span>Economia</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card usage-stats">
+          <div class="stat-indicator"></div>
+          <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="stat-icon">
+              <mat-icon>analytics</mat-icon>
+            </div>
+          </div>
+          <div class="stat-content"
+            style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="stat-number">{{getUsagePercentage()}}%</div>
+            <div class="stat-label">Taxa de Utilização</div>
+            <div class="stat-trend" [ngClass]="getUsagePercentage() > 50 ? 'positive' : 'neutral'">
+              <mat-icon>{{getUsagePercentage() > 50 ? 'trending_up' : 'trending_flat'}}</mat-icon>
+              <span>{{getUsagePercentage() > 50 ? 'Ótimo' : 'Regular'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="filters-container">
+      <div class="filters-card">
+        <div class="filters-header">
+          <div class="header-icon">
+            <mat-icon>filter_list</mat-icon>
+          </div>
+          <div class="header-content">
+            <h3>Filtros</h3>
+            <p>Organize seus benefícios por status</p>
+          </div>
+        </div>
+
+        <div class="filters-content">
+          <div class="filter-group">
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Status do Benefício</mat-label>
+              <mat-select [(value)]="selectedFilter" (selectionChange)="onFilterChange()">
+                <mat-select-trigger>
+                  {{ getSelectedFilterLabel() }}
+                </mat-select-trigger>
+                <mat-option *ngFor="let option of filterOptions" [value]="option.value">
+                  <div class="option-content">
+                    <mat-icon>{{getFilterIcon(option.value)}}</mat-icon>
+                    <span>{{option.label}}</span>
+                  </div>
+                </mat-option>
+              </mat-select>
+              <mat-hint>Filtrar benefícios por status atual</mat-hint>
+            </mat-form-field>
+
+            <div class="filter-summary">
+              <div class="summary-item">
+                <mat-icon>visibility</mat-icon>
+                <span>{{filteredBenefits.length}} benefício(s) exibido(s)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Benefits List Section -->
+  <div class="benefits-section">
+    <div class="benefits-container-inner">
+
+
+      <!-- Section Header -->
+      <div class="section-header">
+        <div class="header-left">
+          <h2>Lista de Benefícios</h2>
+          <p>Seus descontos e recompensas conquistadas</p>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading-container" *ngIf="loading">
+        <div class="loading-spinner">
+          <mat-icon>hourglass_empty</mat-icon>
+        </div>
+        <h3>Carregando benefícios...</h3>
+        <p>Aguarde enquanto buscamos suas recompensas</p>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="!loading && filteredBenefits.length === 0">
+        <div class="empty-icon">
           <mat-icon>card_giftcard</mat-icon>
         </div>
-        <div class="stat-content">
-          <div class="stat-number">{{getTotalBenefits()}}</div>
-          <div class="stat-label">Total de Benefícios</div>
+        <h3>{{getEmptyStateTitle()}}</h3>
+        <p>{{getEmptyStateMessage()}}</p>
+        <div class="empty-actions">
+          <button mat-stroked-button (click)="clearFilters()" *ngIf="selectedFilter !== 'all'">
+            <mat-icon>refresh</mat-icon>
+            <span>Limpar Filtros</span>
+          </button>
+          <button mat-raised-button color="primary" (click)="goToDonation()" *ngIf="selectedFilter === 'all'">
+            <mat-icon>favorite</mat-icon>
+            <span>Fazer Doação</span>
+          </button>
         </div>
-      </mat-card>
+      </div>
 
-      <mat-card class="stat-card">
-        <div class="stat-icon">
-          <mat-icon>check_circle</mat-icon>
-        </div>
-        <div class="stat-content">
-          <div class="stat-number">{{getAvailableBenefits()}}</div>
-          <div class="stat-label">Disponíveis</div>
-        </div>
-      </mat-card>
+      <!-- Benefits Grid -->
+      <div class="benefits-grid" *ngIf="!loading && filteredBenefits.length > 0">
+        <div class="benefit-card" *ngFor="let benefit of filteredBenefits; let i = index"
+          [style.animation-delay.ms]="i * 100" [ngClass]="'status-' + getBenefitStatus(benefit)">
 
-      <mat-card class="stat-card">
-        <div class="stat-icon">
-          <mat-icon>attach_money</mat-icon>
-        </div>
-        <div class="stat-content">
-          <div class="stat-number"> {{getTotalValue().toFixed(2)}}%</div>
-          <div class="stat-label">Desconto Total Disponível</div>
-        </div>
-      </mat-card>
-    </div>
-  </div>
-
-  <!-- Filtros -->
-  <div class="filter-section">
-    <mat-card class="filter-card">
-      <mat-card-content>
-        <mat-form-field appearance="outline">
-          <mat-label>Filtrar por Status</mat-label>
-          <mat-select [(value)]="selectedFilter" (selectionChange)="onFilterChange()">
-            <mat-option *ngFor="let option of filterOptions" [value]="option.value">
-              {{option.label}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <!-- Lista de Benefícios -->
-  <div class="benefits-section">
-    <h2>Lista de Benefícios</h2>
-
-    <div *ngIf="loading" class="loading-container">
-      <mat-icon>hourglass_empty</mat-icon>
-      <p>Carregando benefícios...</p>
-    </div>
-
-    <div *ngIf="!loading && filteredBenefits.length === 0" class="empty-state">
-      <mat-icon>inbox</mat-icon>
-      <h3>Nenhum benefício encontrado</h3>
-      <p>Não há benefícios para o filtro selecionado.</p>
-    </div>
-
-    <div class="benefits-grid" *ngIf="!loading && filteredBenefits.length > 0">
-      <mat-card class="benefit-card" *ngFor="let benefit of filteredBenefits">
-        <div class="card-header">
-          <div class="amount-section">
-            <div class="amount-value">{{benefit.amount.toFixed(2)}}%</div>
-            <div class="amount-label">Desconto do Benefício</div>
-          </div>
-          <div class="status-badge" [class]="'status-' + getBenefitStatus(benefit)">
-            <mat-icon>{{getBenefitStatus(benefit) === 'available' ? 'check_circle' : getBenefitStatus(benefit) ===
-              'used' ? 'done' : 'schedule'}}</mat-icon>
-            <span>{{getStatusText(getBenefitStatus(benefit))}}</span>
-          </div>
-        </div>
-
-        <mat-card-content>
-          <div class="description-section">
-            <h4>{{benefit.description}}</h4>
+          <!-- Card Header -->
+          <div class="card-header">
+            <div class="header-background"></div>
+            <div class="amount-section">
+              <div class="amount-value">{{benefit.amount.toFixed(1)}}%</div>
+              <div class="amount-label">Desconto</div>
+            </div>
+            <div class="status-section">
+              <div class="status-badge" [ngClass]="'badge-' + getBenefitStatus(benefit)">
+                <mat-icon>{{getStatusIcon(getBenefitStatus(benefit))}}</mat-icon>
+                <span>{{getStatusText(getBenefitStatus(benefit))}}</span>
+              </div>
+            </div>
           </div>
 
-          <div class="expiry-section">
-            <mat-icon>schedule</mat-icon>
-            <span>Válido até {{benefit.expirationDate | date:'dd/MM/yyyy'}}</span>
+          <!-- Card Content -->
+          <div class="card-content">
+            <div class="description-section">
+              <h4>{{benefit.description}}</h4>
+            </div>
+
+            <div class="details-section">
+              <div class="detail-item">
+                <div class="detail-icon">
+                  <mat-icon>schedule</mat-icon>
+                </div>
+                <div class="detail-content">
+                  <span class="detail-label">Válido até</span>
+                  <span class="detail-value" [ngClass]="getExpirationClass(benefit.expirationDate)">
+                    {{benefit.expirationDate | date:'dd/MM/yyyy'}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="detail-item" *ngIf="getBenefitStatus(benefit) === 'available'">
+                <div class="detail-icon">
+                  <mat-icon>info</mat-icon>
+                </div>
+                <div class="detail-content">
+                  <span class="detail-label">Dias restantes</span>
+                  <span class="detail-value">{{getDaysUntilExpiration(benefit.expirationDate)}}</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </mat-card-content>
-      </mat-card>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="cta-section">
+        <div class="cta-card">
+          <div class="cta-icon">
+            <mat-icon>favorite</mat-icon>
+          </div>
+          <div class="cta-content">
+            <h3>Continue Doando, Continue Ganhando!</h3>
+            <p>Faça mais doações e desbloqueie novos benefícios exclusivos</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

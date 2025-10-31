@@ -1,77 +1,307 @@
 <div class="reports-container">
-  <div class="header-section">
-    <h1>Relatórios e Gráficos</h1>
-    <p>Analise dados e tendências das doações de sangue</p>
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="analytics-icon">
+        <mat-icon>analytics</mat-icon>
+      </div>
+      <h1>Relatórios e Analytics</h1>
+      <p class="hero-subtitle">Análise dados e tendências das doações com visualizações interativas</p>
+    </div>
   </div>
 
+  <!-- Quick Stats Section -->
+  <div class="stats-section">
+    <div class="stats-container">
+      <div class="stats-header">
+        <h2>Visão Geral</h2>
+        <p>Principais métricas do período selecionado</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card primary">
+          <div class="stat-icon">
+            <mat-icon>bloodtype</mat-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">1,247</div>
+            <div class="stat-label">Total de Doações</div>
+            <div class="stat-trend positive">
+              <mat-icon>trending_up</mat-icon>
+              <span>+12% vs mês anterior</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card secondary">
+          <div class="stat-icon">
+            <mat-icon>people</mat-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">892</div>
+            <div class="stat-label">Doadores Únicos</div>
+            <div class="stat-trend positive">
+              <mat-icon>trending_up</mat-icon>
+              <span>+8% vs mês anterior</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card accent">
+          <div class="stat-icon">
+            <mat-icon>local_hospital</mat-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">23</div>
+            <div class="stat-label">Locais Ativos</div>
+            <div class="stat-trend stable">
+              <mat-icon>trending_flat</mat-icon>
+              <span>Estável</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card success">
+          <div class="stat-icon">
+            <mat-icon>favorite</mat-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">3,741</div>
+            <div class="stat-label">Vidas Impactadas</div>
+            <div class="stat-trend positive">
+              <mat-icon>trending_up</mat-icon>
+              <span>+12% vs mês anterior</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls Section -->
   <div class="controls-section">
-    <mat-card class="controls-card">
-      <mat-card-content>
+    <div class="controls-container">
+      <div class="controls-header">
+        <div class="header-content">
+          <h2>Configurações de Análise</h2>
+          <p>Personalize a visualização dos dados</p>
+        </div>
+      </div>
+
+      <div class="controls-card">
         <div class="controls-grid">
-          <mat-form-field appearance="outline">
-            <mat-label>Tipo de Gráfico</mat-label>
-            <mat-select [(value)]="selectedChart" (selectionChange)="onChartChange()">
-              <mat-option *ngFor="let option of chartOptions" [value]="option.value">
-                <mat-icon>{{option.icon}}</mat-icon>
-                {{option.label}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          
-          <mat-form-field appearance="outline">
-            <mat-label>Ano</mat-label>
-            <mat-select [(value)]="selectedYear" (selectionChange)="onYearChange()">
-              <mat-option *ngFor="let year of availableYears" [value]="year">
-                {{year}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <div class="control-group">
+            <div class="control-label">
+              <mat-icon>bar_chart</mat-icon>
+              <span>Tipo de Gráfico</span>
+            </div>
+            <mat-form-field appearance="outline" class="control-field">
+              <mat-label>Selecione o tipo</mat-label>
+              <mat-select [(value)]="selectedChart" (selectionChange)="onChartChange()">
+                <mat-select-trigger>
+                  {{ getSelectedChartLabel() }}
+                </mat-select-trigger>
+                <mat-option *ngFor="let option of chartOptions" [value]="option.value">
+                  <div class="option-content">
+                    <mat-icon>{{ option.icon }}</mat-icon>
+                    <span>{{ option.label }}</span>
+                  </div>
+                </mat-option>
+              </mat-select>
+              <mat-hint>Escolha como visualizar os dados</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <mat-icon>calendar_today</mat-icon>
+              <span>Período</span>
+            </div>
+            <mat-form-field appearance="outline" class="control-field">
+              <mat-label>Ano de análise</mat-label>
+              <mat-select [(value)]="selectedYear" (selectionChange)="onYearChange()">
+                <mat-option *ngFor="let year of availableYears" [value]="year">
+                  {{year}}
+                </mat-option>
+              </mat-select>
+              <mat-hint>Dados disponíveis por ano</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="control-actions">
+            <button mat-raised-button color="primary" class="refresh-button" (click)="onChartChange()">
+              <mat-icon>refresh</mat-icon>
+              <span>Atualizar</span>
+            </button>
+          </div>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </div>
+    </div>
   </div>
 
+  <!-- Chart Section -->
   <div class="chart-section">
-    <mat-card class="chart-card">
-      <mat-card-header>
-        <mat-card-title>
-          <mat-icon>{{getSelectedChartIcon()}}</mat-icon>
-          {{getSelectedChartLabel()}}
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="chart-container">
-          <canvas id="reportsChart"></canvas>
+    <div class="chart-container-wrapper">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="header-left">
+            <div class="chart-icon">
+              <mat-icon>{{getSelectedChartIcon()}}</mat-icon>
+            </div>
+            <div class="chart-title">
+              <h3>{{getSelectedChartLabel()}}</h3>
+              <p>Dados de {{selectedYear}}</p>
+            </div>
+          </div>
         </div>
-      </mat-card-content>
-    </mat-card>
+
+        <div class="chart-content">
+          <div class="chart-container">
+            <canvas id="reportsChart"></canvas>
+          </div>
+
+          <!-- Loading State -->
+          <div class="chart-loading" *ngIf="!chart">
+            <div class="loading-spinner">
+              <mat-icon>analytics</mat-icon>
+            </div>
+            <p>Carregando dados...</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="info-section">
-    <div class="info-cards">
-      <mat-card class="info-card" *ngIf="selectedChart === 'evolution'">
-        <mat-icon>info</mat-icon>
-        <div class="info-content">
-          <h4>Evolução de Doações</h4>
-          <p>Visualize a tendência de doações ao longo dos meses para identificar sazonalidades e padrões.</p>
+  <!-- Insights Section -->
+  <div class="insights-section">
+    <div class="insights-container">
+      <div class="insights-header">
+        <h2>Insights e Análises</h2>
+        <p>Interpretação dos dados e recomendações</p>
+      </div>
+
+      <div class="insights-grid">
+        <!-- Insight para Evolução de Doações -->
+        <div class="insight-card" *ngIf="selectedChart === 'evolution'">
+          <div class="insight-header">
+            <div class="insight-icon evolution">
+              <mat-icon>show_chart</mat-icon>
+            </div>
+            <div class="insight-title">
+              <h4>Evolução de Doações</h4>
+              <span class="insight-badge">Tendência Temporal</span>
+            </div>
+          </div>
+          <div class="insight-content">
+            <p>Visualize a tendência de doações ao longo dos meses para identificar sazonalidades e padrões de
+              comportamento dos doadores.</p>
+            <div class="insight-metrics">
+              <div class="metric-item">
+                <mat-icon>trending_up</mat-icon>
+                <span>Pico em Dezembro</span>
+              </div>
+              <div class="metric-item">
+                <mat-icon>trending_down</mat-icon>
+                <span>Baixa em Fevereiro</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </mat-card>
-      
-      <mat-card class="info-card" *ngIf="selectedChart === 'bloodType'">
-        <mat-icon>info</mat-icon>
-        <div class="info-content">
-          <h4>Doações por Tipo Sanguíneo</h4>
-          <p>Analise a distribuição das doações por tipo sanguíneo para otimizar campanhas específicas.</p>
+
+        <!-- Insight para Doações por Tipo Sanguíneo -->
+        <div class="insight-card" *ngIf="selectedChart === 'bloodType'">
+          <div class="insight-header">
+            <div class="insight-icon bloodtype">
+              <mat-icon>pie_chart</mat-icon>
+            </div>
+            <div class="insight-title">
+              <h4>Distribuição por Tipo Sanguíneo</h4>
+              <span class="insight-badge">Análise Demográfica</span>
+            </div>
+          </div>
+          <div class="insight-content">
+            <p>Analise a distribuição das doações por tipo sanguíneo para otimizar campanhas específicas e identificar
+              necessidades.</p>
+            <div class="insight-metrics">
+              <div class="metric-item">
+                <mat-icon>bloodtype</mat-icon>
+                <span>O+ mais comum</span>
+              </div>
+              <div class="metric-item">
+                <mat-icon>priority_high</mat-icon>
+                <span>AB- necessário</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </mat-card>
-      
-      <mat-card class="info-card" *ngIf="selectedChart === 'evolutionByType'">
-        <mat-icon>info</mat-icon>
-        <div class="info-content">
-          <h4>Evolução por Tipo Sanguíneo</h4>
-          <p>Compare a evolução das doações de cada tipo sanguíneo ao longo do ano para identificar tendências específicas.</p>
+
+        <!-- Insight para Evolução por Tipo -->
+        <div class="insight-card" *ngIf="selectedChart === 'evolutionByType'">
+          <div class="insight-header">
+            <div class="insight-icon multiline">
+              <mat-icon>multiline_chart</mat-icon>
+            </div>
+            <div class="insight-title">
+              <h4>Evolução por Tipo Sanguíneo</h4>
+              <span class="insight-badge">Análise Comparativa</span>
+            </div>
+          </div>
+          <div class="insight-content">
+            <p>Compare a evolução das doações de cada tipo sanguíneo ao longo do ano para identificar tendências
+              específicas por grupo.</p>
+            <div class="insight-metrics">
+              <div class="metric-item">
+                <mat-icon>compare_arrows</mat-icon>
+                <span>Variação por tipo</span>
+              </div>
+              <div class="metric-item">
+                <mat-icon>insights</mat-icon>
+                <span>Padrões sazonais</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </mat-card>
+
+        <!-- Card de Recomendações -->
+        <div class="recommendations-card">
+          <div class="recommendations-header">
+            <div class="recommendations-icon">
+              <mat-icon>lightbulb</mat-icon>
+            </div>
+            <h4>Recomendações</h4>
+          </div>
+          <div class="recommendations-content">
+            <div class="recommendation-item">
+              <mat-icon>campaign</mat-icon>
+              <div class="recommendation-text">
+                <h5>Campanhas Direcionadas</h5>
+                <p>Foque em tipos sanguíneos com menor volume de doações</p>
+              </div>
+            </div>
+            <div class="recommendation-item">
+              <mat-icon>schedule</mat-icon>
+              <div class="recommendation-text">
+                <h5>Planejamento Sazonal</h5>
+                <p>Intensifique campanhas nos meses de menor doação</p>
+              </div>
+            </div>
+            <div class="recommendation-item">
+              <mat-icon>group</mat-icon>
+              <div class="recommendation-text">
+                <h5>Engajamento</h5>
+                <p>Desenvolva estratégias para reter doadores regulares</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

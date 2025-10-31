@@ -1,98 +1,325 @@
 <div class="home-container">
-    <!-- Hero Section -->
+    <!-- Hero Section Aprimorada -->
     <div class="hero-section">
+        <div class="hero-background">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+            <div class="floating-element element-4"></div>
+        </div>
+
         <div class="hero-content">
             <div class="logo-section">
                 <div class="logo-icon">
                     <mat-icon>local_hospital</mat-icon>
                 </div>
-                <h1>Painel Da Clínica</h1>
-                <p class="hero-subtitle">Verique os benefícios dos doadores</p>
+                <h1>Painel da Clínica</h1>
+                <p class="hero-subtitle">Verifique benefícios e atenda doadores com excelência</p>
             </div>
 
             <div class="hero-description">
                 <p>
                     Controle total sobre os benefícios dos doadores.
-                    Monitore todos os benefícios que o doador possuí.
+                    Monitore e valide todos os benefícios disponíveis de forma rápida e segura.
                 </p>
-            </div>
-        </div>
-    </div>
 
-    <!-- Stats Section -->
-    <div class="stats-section">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <mat-icon>people</mat-icon>
-                <div class="stat-number">1,247</div>
-                <div class="stat-label">Doadores Cadastrados</div>
-            </div>
-            <div class="stat-card">
-                <mat-icon>local_hospital</mat-icon>
-                <div class="stat-number">23</div>
-                <div class="stat-label">Clínicas Ativas</div>
-            </div>
-            <div class="stat-card">
-                <mat-icon>bloodtype</mat-icon>
-                <div class="stat-number">3,892</div>
-                <div class="stat-label">Doações Registradas</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Navigation Cards -->
-    <div class="navigation-section">
-        <h2>Gerenciamento</h2>
-        <div class="navigation-grid">
-
-            <mat-card class="nav-card" (click)="navigateToBenefits()">
-                <div class="card-icon">
-                    <mat-icon>card_giftcard</mat-icon>
-                </div>
-                <mat-card-content>
-                    <h3>Verficar Benefício</h3>
-                    <p>Verifique se o doador contém um benefício ativo</p>
-                </mat-card-content>
-                <mat-card-actions>
-                    <button mat-button color="primary">
-                        Acessar
-                        <mat-icon>arrow_forward</mat-icon>
+                <div class="hero-actions">
+                    <button mat-raised-button color="accent" class="hero-button" (click)="navigateToBenefits()">
+                        <mat-icon>verified</mat-icon>
+                        <span>Verificar Benefício</span>
                     </button>
-                </mat-card-actions>
-            </mat-card>
-
+                    <button mat-stroked-button class="hero-button-secondary" (click)="navigateToChat()">
+                        <mat-icon>help</mat-icon>
+                        <span>Suporte</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Features Section -->
+    <!-- Stats Section Aprimorada -->
+    <div class="stats-section">
+        <div class="stats-container">
+            <div class="stats-header">
+                <h2>Estatísticas da Clínica</h2>
+                <p>Dados atualizados em tempo real do sistema</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card primary">
+                    <div class="stat-icon">
+                        <mat-icon>people</mat-icon>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">1,247</div>
+                        <div class="stat-label">Doadores Cadastrados</div>
+                        <div class="stat-trend positive">
+                            <mat-icon>trending_up</mat-icon>
+                            <span>+12% este mês</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card secondary">
+                    <div class="stat-icon">
+                        <mat-icon>card_giftcard</mat-icon>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">Benefícios Ativos</div>
+                        <div class="stat-trend positive">
+                            <mat-icon>trending_up</mat-icon>
+                            <span>+8 novos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card accent">
+                    <div class="stat-icon">
+                        <mat-icon>verified</mat-icon>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">89</div>
+                        <div class="stat-label">Verificações Hoje</div>
+                        <div class="stat-trend positive">
+                            <mat-icon>trending_up</mat-icon>
+                            <span>+15% hoje</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card success">
+                    <div class="stat-icon">
+                        <mat-icon>thumb_up</mat-icon>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Satisfação</div>
+                        <div class="stat-trend stable">
+                            <mat-icon>trending_flat</mat-icon>
+                            <span>Excelente</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Cards Aprimoradas -->
+    <div class="navigation-section">
+        <div class="navigation-container">
+            <div class="section-header">
+                <h2>Serviços da Clínica</h2>
+                <p>Acesse rapidamente as principais funcionalidades para atendimento aos doadores</p>
+            </div>
+
+            <div class="navigation-grid">
+                <mat-card class="nav-card primary-card" (click)="navigateToBenefits()">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <mat-icon>card_giftcard</mat-icon>
+                        </div>
+                        <div class="card-badge">Principal</div>
+                    </div>
+                    <mat-card-content>
+                        <h3>Verificar Benefício</h3>
+                        <p>Verifique se o doador possui um benefício ativo e válido para utilização</p>
+                        <div class="card-stats">
+                            <span class="stat-item">
+                                <mat-icon>schedule</mat-icon>
+                                <span>Verificação instantânea</span>
+                            </span>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" class="action-button">
+                            <span>Acessar</span>
+                            <mat-icon>arrow_forward</mat-icon>
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+
+                <mat-card class="nav-card accent-card" (click)="navigateToChat()">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <mat-icon>support_agent</mat-icon>
+                        </div>
+                        <div class="card-badge">Suporte</div>
+                    </div>
+                    <mat-card-content>
+                        <h3>Suporte ao Doador</h3>
+                        <p>Acesse informações e suporte para auxiliar doadores com dúvidas</p>
+                        <div class="card-stats">
+                            <span class="stat-item">
+                                <mat-icon>help_center</mat-icon>
+                                <span>24/7 disponível</span>
+                            </span>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" class="action-button">
+                            <span>Acessar</span>
+                            <mat-icon>arrow_forward</mat-icon>
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+
+                <mat-card class="nav-card info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <mat-icon>info</mat-icon>
+                        </div>
+                        <div class="card-badge">Informações</div>
+                    </div>
+                    <mat-card-content>
+                        <h3>Informações da Clínica</h3>
+                        <p>Consulte dados, configurações e informações gerais da clínica</p>
+                        <div class="card-stats">
+                            <span class="stat-item">
+                                <mat-icon>business</mat-icon>
+                                <span>Credenciada</span>
+                            </span>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" class="action-button"
+                            [routerLink]="['/clinic/detail', user!.id]">
+                            <span>Ver Detalhes</span>
+                            <mat-icon>arrow_forward</mat-icon>
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section Aprimorada -->
     <div class="features-section">
-        <h2>Por que escolher o Life Bank?</h2>
-        <div class="features-grid">
-
-            <div class="feature-item">
-                <mat-icon>security</mat-icon>
-                <h4>Segurança Total</h4>
-                <p>Dados protegidos com criptografia avançada e controle de acesso rigoroso</p>
+        <div class="features-container">
+            <div class="section-header">
+                <h2>Por que escolher o Life Bank?</h2>
+                <p>Tecnologia avançada para facilitar o atendimento aos doadores</p>
             </div>
 
-            <div class="feature-item">
-                <mat-icon>speed</mat-icon>
-                <h4>Agilidade</h4>
-                <p>Processos otimizados para localização rápida de sangue compatível</p>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <mat-icon>security</mat-icon>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Segurança Total</h4>
+                        <p>Dados protegidos com criptografia avançada e controle de acesso rigoroso</p>
+                        <div class="feature-highlight">
+                            <mat-icon>verified_user</mat-icon>
+                            <span>Certificado ISO 27001</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <mat-icon>speed</mat-icon>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Verificação Rápida</h4>
+                        <p>Processos otimizados para verificação instantânea de benefícios</p>
+                        <div class="feature-highlight">
+                            <mat-icon>flash_on</mat-icon>
+                            <span>Resposta em < 1 segundo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <mat-icon>support</mat-icon>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Suporte Dedicado</h4>
+                        <p>Equipe especializada para auxiliar clínicas e doadores</p>
+                        <div class="feature-highlight">
+                            <mat-icon>headset_mic</mat-icon>
+                            <span>Suporte 24/7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <mat-icon>mobile_friendly</mat-icon>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Interface Intuitiva</h4>
+                        <p>Design responsivo e fácil de usar em qualquer dispositivo</p>
+                        <div class="feature-highlight">
+                            <mat-icon>devices</mat-icon>
+                            <span>Multi-plataforma</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits Info Section -->
+    <div class="benefits-info-section">
+        <div class="benefits-container">
+            <div class="section-header">
+                <h2>Como Funciona a Verificação</h2>
+                <p>Processo simples e seguro para validar benefícios dos doadores</p>
             </div>
 
-            <div class="feature-item">
-                <mat-icon>notifications_active</mat-icon>
-                <h4>Notificações</h4>
-                <p>Alertas automáticos sobre estoque baixo e campanhas de doação</p>
-            </div>
+            <div class="process-steps">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Identificação</h4>
+                        <p>Solicite o documento ou código do doador</p>
+                    </div>
+                </div>
 
-            <div class="feature-item">
-                <mat-icon>mobile_friendly</mat-icon>
-                <h4>Responsivo</h4>
-                <p>Acesse de qualquer dispositivo com interface adaptável</p>
-            </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Verificação</h4>
+                        <p>Sistema valida automaticamente os benefícios</p>
+                    </div>
+                </div>
 
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Confirmação</h4>
+                        <p>Resultado instantâneo com detalhes do benefício</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Atendimento</h4>
+                        <p>Proceda com o atendimento conforme benefício</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action Section -->
+    <div class="cta-section">
+        <div class="cta-content">
+            <h2>Pronto para verificar benefícios?</h2>
+            <p>Comece agora a verificação de benefícios e ofereça o melhor atendimento aos doadores</p>
+            <div class="cta-actions">
+                <button mat-raised-button color="primary" class="cta-button" (click)="navigateToBenefits()">
+                    <mat-icon>verified</mat-icon>
+                    <span>Verificar Benefício</span>
+                </button>
+                <button mat-stroked-button class="cta-button-secondary">
+                    <mat-icon>help</mat-icon>
+                    <span>Manual de Uso</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>

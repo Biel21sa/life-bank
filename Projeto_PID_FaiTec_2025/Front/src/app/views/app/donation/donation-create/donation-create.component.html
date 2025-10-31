@@ -1,58 +1,411 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Registrar Doação</h1>
-    <p>Registre uma nova doação de sangue no sistema</p>
+<div class="donation-create-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="donation-icon">
+        <mat-icon>volunteer_activism</mat-icon>
+      </div>
+      <h1>Registrar Nova Doação</h1>
+      <p class="hero-subtitle">Registre uma nova doação de sangue e salve vidas</p>
+    </div>
   </div>
 
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>volunteer_activism</mat-icon>
-        Formulário de Registro de Doação
-      </mat-card-title>
-    </mat-card-header>
+  <!-- Main Content -->
+  <div class="content-section">
+    <div class="content-container">
 
-    <mat-card-content>
-      <form [formGroup]="donationForm" (ngSubmit)="onSubmit()">
+      <!-- Impact Section -->
+      <div class="impact-section">
+        <div class="impact-card">
+          <div class="impact-header">
+            <div class="impact-icon">
+              <mat-icon>favorite</mat-icon>
+            </div>
+            <div class="impact-content">
+              <h3>Impacto da Doação</h3>
+              <p>Cada doação pode salvar até 3 vidas</p>
+            </div>
+          </div>
 
-        <!-- Informações do Doador -->
-        <div class="section">
-          <h3>Informações do Doador</h3>
+          <div class="impact-stats">
+            <div class="stat-item">
+              <div class="stat-icon">
+                <mat-icon>people</mat-icon>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Vidas Salvas</div>
+              </div>
+            </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Selecionar Doador</mat-label>
-            <mat-select formControlName="donorId" required>
-              <mat-option *ngFor="let donor of donors" [value]="donor.id">
-                {{ donor?.user?.name }}, {{ donor?.bloodType }}, {{ (donor?.user?.cpf || '') | mask: '000.000.000-00' }}
-              </mat-option>
-            </mat-select>
-            <mat-icon matSuffix>person</mat-icon>
-          </mat-form-field>
+            <div class="stat-item">
+              <div class="stat-icon">
+                <mat-icon>local_drink</mat-icon>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">450ml</div>
+                <div class="stat-label">Volume Padrão</div>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-icon">
+                <mat-icon>schedule</mat-icon>
+              </div>
+              <div class="stat-content">
+                <div class="stat-number">42</div>
+                <div class="stat-label">Dias de Validade</div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <!-- Informações da Doação -->
-        <div class="section">
-          <h3>Informações da Doação</h3>
+      <!-- Form Section -->
+      <div class="form-section">
+        <div class="form-card">
+          <div class="form-header">
+            <div class="header-icon">
+              <mat-icon>assignment</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Dados da Doação</h3>
+              <p>Preencha as informações necessárias para o registro</p>
+            </div>
+            <div class="form-progress">
+              <div class="progress-step active">
+                <div class="step-number">1</div>
+                <span>Doador</span>
+              </div>
+              <div class="progress-line"></div>
+              <div class="progress-step" [ngClass]="{'active': donationForm.get('donorId')?.valid}">
+                <div class="step-number">2</div>
+                <span>Quantidade</span>
+              </div>
+              <div class="progress-line"></div>
+              <div class="progress-step" [ngClass]="{'active': donationForm.valid}">
+                <div class="step-number">3</div>
+                <span>Confirmar</span>
+              </div>
+            </div>
+          </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Quantidade (ml)</mat-label>
-            <input matInput type="number" formControlName="quantity" min="100" max="500" required>
-            <mat-icon matSuffix>local_drink</mat-icon>
-          </mat-form-field>
+          <div class="form-content">
+            <form [formGroup]="donationForm" (ngSubmit)="onSubmit()">
+
+              <!-- Donor Selection Section -->
+              <div class="form-section-card donor-section">
+                <div class="section-header">
+                  <div class="section-icon">
+                    <mat-icon>person_search</mat-icon>
+                  </div>
+                  <div class="section-content">
+                    <h4>Seleção do Doador</h4>
+                    <p>Escolha o doador que realizará a doação</p>
+                  </div>
+                  <div class="section-status">
+                    <div class="status-indicator"
+                      [ngClass]="{'valid': donationForm.get('donorId')?.valid, 'invalid': donationForm.get('donorId')?.invalid && donationForm.get('donorId')?.touched}">
+                      <mat-icon>{{donationForm.get('donorId')?.valid ? 'check_circle' : 'error'}}</mat-icon>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="section-body">
+                  <div class="donor-search-info" *ngIf="donors.length === 0">
+                    <div class="info-icon">
+                      <mat-icon>info</mat-icon>
+                    </div>
+                    <div class="info-content">
+                      <h5>Nenhum doador apto encontrado</h5>
+                      <p>Verifique se existem doadores aptos para doação no sistema</p>
+                    </div>
+                  </div>
+
+                  <div class="donor-selection" *ngIf="donors.length > 0">
+                    <mat-form-field appearance="outline" class="donor-field">
+                      <mat-label>Selecionar Doador</mat-label>
+                      <mat-select formControlName="donorId" placeholder="Escolha um doador">
+                        <mat-select-trigger>
+                          {{ getSelectedDonorName() }}
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let donor of donors" [value]="donor.id">
+                          <div class="donor-option">
+                            <div class="donor-info">
+                              <div class="donor-name">{{ donor?.user?.name }}</div>
+                              <div class="donor-details">
+                                <span class="blood-type">{{ donor?.bloodType }}</span>
+                                <span class="cpf">{{ (donor?.user?.cpf || '') | mask: '000.000.000-00' }}</span>
+                              </div>
+                            </div>
+                            <div class="donor-status">
+                              <div class="status-badge apto">
+                                <mat-icon>check_circle</mat-icon>
+                                <span>Apto</span>
+                              </div>
+                            </div>
+                          </div>
+                        </mat-option>
+                      </mat-select>
+
+                      <mat-icon matPrefix>person</mat-icon>
+                      <mat-hint>Apenas doadores aptos são exibidos</mat-hint>
+                      <mat-error *ngIf="donationForm.get('donorId')?.hasError('required')">
+                        Seleção do doador é obrigatória
+                      </mat-error>
+                    </mat-form-field>
+
+                    <div class="selected-donor-info" *ngIf="getSelectedDonor()">
+                      <div class="donor-card">
+                        <div class="donor-avatar">
+                          <mat-icon>person</mat-icon>
+                        </div>
+                        <div class="donor-details">
+                          <h5 style="margin-top: 25px; margin-right: 20px;">{{ getSelectedDonor()?.user?.name }}</h5>
+                          <div class="donor-meta">
+                            <div class="meta-item">
+                              <mat-icon>bloodtype</mat-icon>
+                              <span>Tipo: {{ getSelectedDonor()?.bloodType }}</span>
+                            </div>
+                            <div class="meta-item">
+                              <mat-icon>credit_card</mat-icon>
+                              <span>CPF: {{ (getSelectedDonor()?.user?.cpf || '') | mask: '000.000.000-00' }}</span>
+                            </div>
+                            <div class="meta-item">
+                              <mat-icon>email</mat-icon>
+                              <span>{{ getSelectedDonor()?.user?.email }}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="donor-status-badge">
+                          <mat-icon>verified</mat-icon>
+                          <span>Verificado</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Donation Details Section -->
+              <div class="form-section-card donation-section">
+                <div class="section-header">
+                  <div class="section-icon">
+                    <mat-icon>local_drink</mat-icon>
+                  </div>
+                  <div class="section-content">
+                    <h4>Detalhes da Doação</h4>
+                    <p>Defina a quantidade de sangue coletada</p>
+                  </div>
+                  <div class="section-status">
+                    <div class="status-indicator"
+                      [ngClass]="{'valid': donationForm.get('quantity')?.valid, 'invalid': donationForm.get('quantity')?.invalid && donationForm.get('quantity')?.touched}">
+                      <mat-icon>{{donationForm.get('quantity')?.valid ? 'check_circle' : 'error'}}</mat-icon>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="section-body">
+                  <div class="quantity-selection">
+                    <mat-form-field appearance="outline" class="quantity-field">
+                      <mat-label>Quantidade (ml)</mat-label>
+                      <input matInput type="number" formControlName="quantity" min="100" max="500" placeholder="450">
+                      <mat-icon matPrefix>local_drink</mat-icon>
+                      <span matSuffix>ml</span>
+                      <mat-hint>Volume entre 100ml e 500ml</mat-hint>
+                      <mat-error *ngIf="donationForm.get('quantity')?.hasError('required')">
+                        Quantidade é obrigatória
+                      </mat-error>
+                      <mat-error *ngIf="donationForm.get('quantity')?.hasError('min')">
+                        Quantidade mínima é 100ml
+                      </mat-error>
+                      <mat-error *ngIf="donationForm.get('quantity')?.hasError('max')">
+                        Quantidade máxima é 500ml
+                      </mat-error>
+                    </mat-form-field>
+
+                    <div class="quantity-presets">
+                      <h5>Quantidades Padrão</h5>
+                      <div class="preset-buttons">
+                        <button type="button" mat-stroked-button class="preset-button"
+                          [ngClass]="{'selected': donationForm.get('quantity')?.value === 350}"
+                          (click)="setQuantity(350)">
+                          <mat-icon>local_drink</mat-icon>
+                          <span>350ml</span>
+                          <small>Padrão Menor</small>
+                        </button>
+
+                        <button type="button" mat-stroked-button class="preset-button recommended"
+                          [ngClass]="{'selected': donationForm.get('quantity')?.value === 450}"
+                          (click)="setQuantity(450)">
+                          <mat-icon>local_drink</mat-icon>
+                          <span>450ml</span>
+                          <small>Recomendado</small>
+                        </button>
+
+                        <button type="button" mat-stroked-button class="preset-button"
+                          [ngClass]="{'selected': donationForm.get('quantity')?.value === 500}"
+                          (click)="setQuantity(500)">
+                          <mat-icon>local_drink</mat-icon>
+                          <span>500ml</span>
+                          <small>Máximo</small>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="donation-info" *ngIf="donationForm.get('quantity')?.valid">
+                    <div class="info-grid">
+                      <div class="info-item">
+                        <div class="info-icon">
+                          <mat-icon>schedule</mat-icon>
+                        </div>
+                        <div class="info-content">
+                          <span class="info-label">Data de Coleta</span>
+                          <span class="info-value">{{ getCurrentDate() | date:'dd/MM/yyyy' }}</span>
+                        </div>
+                      </div>
+
+                      <div class="info-item">
+                        <div class="info-icon">
+                          <mat-icon>event</mat-icon>
+                        </div>
+                        <div class="info-content">
+                          <span class="info-label">Data de Validade</span>
+                          <span class="info-value">{{ getExpirationDate() | date:'dd/MM/yyyy' }}</span>
+                        </div>
+                      </div>
+
+                      <div class="info-item">
+                        <div class="info-icon">
+                          <mat-icon>science</mat-icon>
+                        </div>
+                        <div class="info-content">
+                          <span class="info-label">Volume em Litros</span>
+                          <span class="info-value">{{ (donationForm.get('quantity')?.value / 1000) | number:'1.3-3'
+                            }}L</span>
+                        </div>
+                      </div>
+
+                      <div class="info-item">
+                        <div class="info-icon">
+                          <mat-icon>people</mat-icon>
+                        </div>
+                        <div class="info-content">
+                          <span class="info-label">Vidas Impactadas</span>
+                          <span class="info-value">Até 3 pessoas</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </div>
         </div>
+      </div>
 
-      </form>
-    </mat-card-content>
+      <!-- Summary Section -->
+      <div class="summary-section" *ngIf="donationForm.valid">
+        <div class="summary-card">
+          <div class="summary-header">
+            <div class="summary-icon">
+              <mat-icon>assignment_turned_in</mat-icon>
+            </div>
+            <div class="summary-content">
+              <h3>Resumo da Doação</h3>
+              <p>Confirme os dados antes de registrar</p>
+            </div>
+          </div>
 
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!donationForm.valid">
-        <mat-icon>save</mat-icon>
-        Registrar Doação
-      </button>
-      <button mat-button (click)="onCancel()">
-        <mat-icon>cancel</mat-icon>
-        Cancelar
-      </button>
-    </mat-card-actions>
-  </mat-card>
+          <div class="summary-body">
+            <div class="summary-grid">
+              <div class="summary-item">
+                <div class="item-label">Doador</div>
+                <div class="item-value">{{ getSelectedDonor()?.user?.name }}</div>
+              </div>
+
+              <div class="summary-item">
+                <div class="item-label">Tipo Sanguíneo</div>
+                <div class="item-value blood-type">{{ getSelectedDonor()?.bloodType }}</div>
+              </div>
+
+              <div class="summary-item">
+                <div class="item-label">Quantidade</div>
+                <div class="item-value">{{ donationForm.get('quantity')?.value }}ml</div>
+              </div>
+
+              <div class="summary-item">
+                <div class="item-label">Data de Coleta</div>
+                <div class="item-value">{{ getCurrentDate() | date:'dd/MM/yyyy HH:mm' }}</div>
+              </div>
+            </div>
+
+            <div class="impact-reminder">
+              <div class="reminder-icon">
+                <mat-icon>favorite</mat-icon>
+              </div>
+              <div class="reminder-content">
+                <h5>Impacto Social</h5>
+                <p>Esta doação de {{ donationForm.get('quantity')?.value }}ml pode salvar até <strong>3 vidas</strong> e
+                  ficará disponível por <strong>42 dias</strong>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions Section -->
+      <div class="actions-section">
+        <div class="actions-container">
+          <div class="actions-left">
+            <button mat-stroked-button class="cancel-button" (click)="onCancel()">
+              <mat-icon>arrow_back</mat-icon>
+              <span>Cancelar</span>
+            </button>
+          </div>
+
+          <div class="actions-right">
+            <div class="form-validation" *ngIf="!donationForm.valid">
+              <div class="validation-icon">
+                <mat-icon>error</mat-icon>
+              </div>
+              <div class="validation-text">
+                <span class="validation-title">Formulário Incompleto</span>
+                <span class="validation-subtitle">Preencha todos os campos obrigatórios</span>
+              </div>
+            </div>
+
+            <button mat-raised-button color="primary" class="submit-button"
+              [disabled]="!donationForm.valid || isSubmitting" (click)="onSubmit()">
+              <mat-icon *ngIf="!isSubmitting">save</mat-icon>
+              <mat-icon *ngIf="isSubmitting" class="spinning">hourglass_empty</mat-icon>
+              <span>{{isSubmitting ? 'Registrando...' : 'Registrar Doação'}}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-section" *ngIf="isLoading">
+    <div class="loading-container">
+      <div class="loading-spinner">
+        <mat-icon>hourglass_empty</mat-icon>
+      </div>
+      <h3>Carregando dados...</h3>
+      <p>Aguarde enquanto buscamos os doadores disponíveis</p>
+    </div>
+  </div>
+
 </div>

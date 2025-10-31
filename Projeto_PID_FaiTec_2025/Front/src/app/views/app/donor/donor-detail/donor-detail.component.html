@@ -1,136 +1,291 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Detalhes do Doador</h1>
-    <p>Visualize as informações completas do doador de sangue</p>
-  </div>
+<div class="donor-detail-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
 
-  <mat-card *ngIf="donor">
-    <mat-card-header>
-      <div class="user-avatar">
+    <div class="hero-content">
+      <div class="donor-icon">
         <mat-icon>volunteer_activism</mat-icon>
       </div>
-      <div class="user-title-info">
-        <h2>{{ donor.name }}</h2>
-        <span class="blood-type-badge" [ngClass]="getBloodTypeClass(donor.bloodType)" *ngIf="donor.bloodType">
-          <mat-icon>bloodtype</mat-icon>
-          {{ donor.bloodType }}
-        </span>
-      </div>
-    </mat-card-header>
-
-    <mat-card-content>
-      <!-- Informações Pessoais -->
-      <div class="section">
-        <h3>
-          <mat-icon>person</mat-icon>
-          Informações Pessoais
-        </h3>
-        <div class="detail-grid">
-          <div class="detail-item">
-            <mat-icon>person</mat-icon>
-            <div class="detail-content">
-              <strong>Nome Completo</strong>
-              <span>{{ donor.name }}</span>
-            </div>
-          </div>
-          <div class="detail-item">
-            <mat-icon>email</mat-icon>
-            <div class="detail-content">
-              <strong>Email</strong>
-              <span>{{ donor.email }}</span>
-            </div>
-          </div>
-          <div class="detail-item">
-            <mat-icon>credit_card</mat-icon>
-            <div class="detail-content">
-              <strong>CPF</strong>
-              <span>{{ donor.cpf | mask: '000.000.000-00' }}</span>
-            </div>
-          </div>
-          <div class="detail-item">
-            <mat-icon>phone</mat-icon>
-            <div class="detail-content">
-              <strong>Telefone</strong>
-              <span>{{ donor.phone | mask: '(00) 00000-0000' }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Informações do Doador -->
-      <div class="section">
-        <h3>
-          <mat-icon>bloodtype</mat-icon>
-          Informações do Doador
-        </h3>
-        <div class="detail-grid">
-          <div class="detail-item">
-            <mat-icon>bloodtype</mat-icon>
-            <div class="detail-content">
-              <strong>Tipo Sanguíneo</strong>
-              <span class="blood-type-display" [ngClass]="getBloodTypeClass(donor.bloodType)" *ngIf="donor.bloodType">
-                {{ donor.bloodType }}
-              </span>
-              <span *ngIf="!donor.bloodType" class="no-blood-type">Não informado</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Endereço -->
-      <div class="section">
-        <h3>
-          <mat-icon>home</mat-icon>
-          Endereço
-        </h3>
-        <div class="detail-grid">
-          <div class="detail-item">
-            <mat-icon>home</mat-icon>
-            <div class="detail-content">
-              <strong>Rua</strong>
-              <span>{{ donor.street }}</span>
-            </div>
-          </div>
-          <div class="detail-item">
-            <mat-icon>tag</mat-icon>
-            <div class="detail-content">
-              <strong>Número</strong>
-              <span>{{ donor.number }}</span>
-            </div>
-          </div>
-          <div class="detail-item">
-            <mat-icon>location_city</mat-icon>
-            <div class="detail-content">
-              <strong>Bairro</strong>
-              <span>{{ donor.neighborhood }}</span>
-            </div>
-          </div>
-          <div class="detail-item">
-            <mat-icon>place</mat-icon>
-            <div class="detail-content">
-              <strong>CEP</strong>
-              <span>{{ donor.postalCode | mask: '00000-000' }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </mat-card-content>
-
-    <mat-card-actions>
-      <button mat-raised-button color="primary" [routerLink]="['/donor/edit', donor.id]">
-        <mat-icon>edit</mat-icon>
-        Editar Doador
-      </button>
-      <button mat-button routerLink="/donor/list">
-        <mat-icon>arrow_back</mat-icon>
-        Voltar à Lista
-      </button>
-    </mat-card-actions>
-  </mat-card>
-
-  <!-- Loading state -->
-  <div class="loading-container" *ngIf="!donor">
-    <div class="loading-spinner"></div>
-    <p>Carregando informações do doador...</p>
+      <h1>Detalhes do Doador</h1>
+      <p class="hero-subtitle">Visualize as informações completas do herói que salva vidas</p>
+    </div>
   </div>
-</div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <div class="content-container">
+
+      <!-- Donor Header Card -->
+      <div class="donor-header-section" *ngIf="donor">
+        <div class="donor-header-card">
+          <div class="donor-avatar">
+            <div class="avatar-background"></div>
+            <mat-icon>volunteer_activism</mat-icon>
+          </div>
+
+          <div class="donor-info">
+            <h2>{{ donor.name }}</h2>
+            <div class="donor-badges">
+              <div class="status-badge active">
+                <mat-icon>verified</mat-icon>
+                <span>Doador Ativo</span>
+              </div>
+              <div class="blood-type-badge" [ngClass]="getBloodTypeClass(donor.bloodType)" *ngIf="donor.bloodType">
+                <mat-icon>bloodtype</mat-icon>
+                <span>{{ donor.bloodType }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Information Cards -->
+      <div class="information-section" *ngIf="donor">
+
+        <!-- Personal Information Card -->
+        <div class="info-card personal-card">
+          <div class="card-header">
+            <div class="header-indicator"></div>
+            <div class="header-icon">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Informações Pessoais</h3>
+              <p>Dados básicos de identificação</p>
+            </div>
+            <div class="header-actions">
+              <button mat-icon-button class="header-action" (click)="editPersonalInfo()"
+                matTooltip="Editar informações">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-icon">
+                  <mat-icon>person</mat-icon>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">Nome Completo</div>
+                  <div class="info-value">{{ donor.name }}</div>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <mat-icon>email</mat-icon>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">Email</div>
+                  <div class="info-value">{{ donor.email }}</div>
+                  <div class="info-action">
+                    <button mat-button class="copy-button" (click)="copyToClipboard(donor.email)">
+                      <mat-icon>content_copy</mat-icon>
+                      Copiar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <mat-icon>credit_card</mat-icon>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">CPF</div>
+                  <div class="info-value">{{ donor.cpf | mask: '000.000.000-00' }}</div>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <mat-icon>phone</mat-icon>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">Telefone</div>
+                  <div class="info-value">{{ donor.phone | mask: '(00) 00000-0000' }}</div>
+                  <div class="info-action">
+                    <button mat-button class="call-button" (click)="callDonor(donor.phone)">
+                      <mat-icon>call</mat-icon>
+                      Ligar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Donor Information Card -->
+        <div class="info-card donor-card">
+          <div class="card-header">
+            <div class="header-indicator"></div>
+            <div class="header-icon">
+              <mat-icon>bloodtype</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Informações do Doador</h3>
+              <p>Dados específicos para doação de sangue</p>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="donor-details">
+              <div class="blood-type-section">
+                <div class="blood-type-display" [ngClass]="getBloodTypeClass(donor.bloodType)" *ngIf="donor.bloodType">
+                  <div class="blood-type-icon">
+                    <mat-icon>bloodtype</mat-icon>
+                  </div>
+                  <div class="blood-type-info">
+                    <div class="blood-type-value">{{ donor.bloodType }}</div>
+                    <div class="blood-type-name">{{ getBloodTypeName(donor.bloodType) }}</div>
+                  </div>
+                </div>
+
+                <div class="no-blood-type" *ngIf="!donor.bloodType">
+                  <mat-icon>warning</mat-icon>
+                  <span>Tipo sanguíneo não informado</span>
+                  <button mat-button class="update-button" (click)="updateBloodType()">
+                    <mat-icon>add</mat-icon>
+                    Atualizar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address Information Card -->
+        <div class="info-card address-card">
+          <div class="card-header">
+            <div class="header-indicator"></div>
+            <div class="header-icon">
+              <mat-icon>home</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Endereço Residencial</h3>
+              <p>Localização para contato e logística</p>
+            </div>
+            <div class="header-actions">
+              <button mat-icon-button class="header-action" (click)="openMap()" matTooltip="Ver no mapa">
+                <mat-icon>map</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="address-display">
+              <div class="address-main">
+                <div class="address-icon">
+                  <mat-icon>location_on</mat-icon>
+                </div>
+                <div class="address-content">
+                  <div class="address-line">
+                    {{ donor.street }}, {{ donor.number }}
+                  </div>
+                  <div class="address-line">
+                    {{ donor.neighborhood }}
+                  </div>
+                  <div class="address-line">
+                    CEP: {{ donor.postalCode | mask: '00000-000' }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="address-grid" style="margin-top: 20px;">
+              <div class="address-item">
+                <div class="address-item-icon">
+                  <mat-icon>home</mat-icon>
+                </div>
+                <div class="address-item-content">
+                  <div class="address-item-label">Rua/Avenida</div>
+                  <div class="address-item-value">{{ donor.street }}</div>
+                </div>
+              </div>
+
+              <div class="address-item">
+                <div class="address-item-icon">
+                  <mat-icon>tag</mat-icon>
+                </div>
+                <div class="address-item-content">
+                  <div class="address-item-label">Número</div>
+                  <div class="address-item-value">{{ donor.number }}</div>
+                </div>
+              </div>
+
+              <div class="address-item">
+                <div class="address-item-icon">
+                  <mat-icon>location_city</mat-icon>
+                </div>
+                <div class="address-item-content">
+                  <div class="address-item-label">Bairro</div>
+                  <div class="address-item-value">{{ donor.neighborhood }}</div>
+                </div>
+              </div>
+
+              <div class="address-item">
+                <div class="address-item-icon">
+                  <mat-icon>place</mat-icon>
+                </div>
+                <div class="address-item-content">
+                  <div class="address-item-label">CEP</div>
+                  <div class="address-item-value">{{ donor.postalCode | mask: '00000-000' }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Actions -->
+        <div class="navigation-section">
+          <div class="navigation-card">
+            <div class="navigation-content">
+              <div class="navigation-info">
+                <div class="info-icon">
+                  <mat-icon>info</mat-icon>
+                </div>
+                <div class="info-text">
+                  <h4>Informações Completas</h4>
+                  <p>Todos os dados do doador foram carregados com sucesso</p>
+                </div>
+              </div>
+
+              <div class="navigation-buttons">
+                <button mat-stroked-button class="back-button" routerLink="/donor/list">
+                  <mat-icon>arrow_back</mat-icon>
+                  <span>Voltar à Lista</span>
+                </button>
+
+                <button mat-raised-button color="primary" class="edit-button" [routerLink]="['/donor/edit', donor!.id]">
+                  <mat-icon>edit</mat-icon>
+                  <span>Editar Doador</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-section" *ngIf="!donor">
+          <div class="loading-card">
+            <div class="loading-content">
+              <div class="loading-spinner">
+                <mat-icon>hourglass_empty</mat-icon>
+              </div>
+              <h3>Carregando Informações</h3>
+              <p>Buscando dados do doador...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

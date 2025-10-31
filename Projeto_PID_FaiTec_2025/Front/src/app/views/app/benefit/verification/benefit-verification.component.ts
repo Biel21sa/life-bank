@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, FormControl } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,6 +13,7 @@ import { Benefit } from '../../../../domain/model/benefit';
 import { BenefitReadService } from '../../../../services/benefit/benefit-read.service';
 import { BenefitUpdateService } from '../../../../services/benefit/benefit-update.service';
 import { NgxMaskDirective } from 'ngx-mask';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-benefit-verification',
@@ -27,16 +28,21 @@ import { NgxMaskDirective } from 'ngx-mask';
         MatTableModule,
         FormsModule,
         NgxMaskDirective,
+        MatIconModule,
         MatRadioModule
     ],
     templateUrl: './benefit-verification.component.html',
     styleUrls: ['./benefit-verification.component.css']
 })
-export class BenefitVerificationComponent implements OnInit {
+export class BenefitVerificationComponent {
     cpfForm: FormGroup;
     benefits: Benefit[] = [];
     displayedColumns: string[] = ['select', 'description', 'amount', 'expirationDate', 'used'];
     selectedBenefitControl: FormControl<Benefit | null>;
+
+    searchPerformed = false;
+    isSearching = false;
+    isConfirming = false;
 
     constructor(
         private fb: FormBuilder,
@@ -50,9 +56,6 @@ export class BenefitVerificationComponent implements OnInit {
         });
         this.selectedBenefitControl = new FormControl<Benefit | null>(null);
     }
-    ngOnInit(): void {
-        // No initialization needed for now
-    }
 
     searchBenefits() {
         if (this.cpfForm.invalid) {
@@ -60,17 +63,31 @@ export class BenefitVerificationComponent implements OnInit {
             return;
         }
 
+        this.isSearching = true;
+        this.searchPerformed = true;
+
         const cpf = this.cpfForm.value.cpf;
         this.benefitReadService.getBenefitsByDonorCpf(cpf).subscribe({
             next: (data) => {
                 this.benefits = data;
                 this.selectedBenefitControl.setValue(null);
+                this.isSearching = false;
                 if (data.length === 0) {
                     this.toastr.info('Nenhum benefício encontrado para este CPF');
                 }
             },
-            error: () => this.toastr.error('Nenhum benefício encontrado para este CPF')
+            error: () => {
+                this.toastr.error('Erro ao buscar benefícios');
+                this.isSearching = false;
+            }
         });
+    }
+
+    clearSearch() {
+        this.benefits = [];
+        this.selectedBenefitControl.setValue(null);
+        this.searchPerformed = false;
+        this.cpfForm.reset();
     }
 
     onConfirm() {
@@ -80,19 +97,67 @@ export class BenefitVerificationComponent implements OnInit {
             return;
         }
 
+        this.isConfirming = true;
         this.benefitUpdateService.update(selected.id!).subscribe({
             next: () => {
-                this.toastr.success(`Benefício "${selected.description}" selecionado com sucesso!`);
+                this.toastr.success(`Benefício "${selected.description}" confirmado com sucesso!`);
+                this.isConfirming = false;
+                this.router.navigate(['/clinic-home']);
             },
             error: () => {
-                this.toastr.error('Erro ao utilizar o benefício. Tente novamente.')
+                this.toastr.error('Erro ao utilizar o benefício. Tente novamente.');
+                this.isConfirming = false;
             }
         });
-
-        this.router.navigate(['/clinic-home']);
     }
 
     goBack() {
         this.router.navigate(['/clinic-home']);
+    }
+
+    getAvailableCount(): number {
+        return this.benefits.filter(b => !b.used && !this.isExpired(b)).length;
+    }
+
+    getUsedCount(): number {
+        return this.benefits.filter(b => b.used).length;
+    }
+
+    isExpired(benefit: Benefit): boolean {
+        return new Date(benefit.expirationDate) < new Date();
+    }
+
+    getDaysUntilExpiration(expirationDate: Date | string): number {
+        const exp = new Date(expirationDate).getTime();
+        const today = new Date().getTime();
+        return Math.max(Math.ceil((exp - today) / (1000 * 60 * 60 * 24)), 0);
+    }
+
+    getBenefitStatusClass(benefit: Benefit): string {
+        if (benefit.used) return 'status-used';
+        if (this.isExpired(benefit)) return 'status-expired';
+        return 'status-available';
+    }
+
+    getBenefitStatusIcon(benefit: Benefit): string {
+        if (benefit.used) return 'done';
+        if (this.isExpired(benefit)) return 'cancel';
+        return 'check_circle';
+    }
+
+    getBenefitStatusText(benefit: Benefit): string {
+        if (benefit.used) return 'Utilizado';
+        if (this.isExpired(benefit)) return 'Expirado';
+        return 'Disponível';
+    }
+
+    getExpirationClass(expirationDate: Date | string): string {
+        return this.isExpired({ expirationDate } as Benefit) ? 'expired' : 'valid';
+    }
+
+    showBenefitDetails(benefit: Benefit) {
+        this.toastr.info(
+            `${benefit.description} - ${benefit.amount}% até ${new Date(benefit.expirationDate).toLocaleDateString()}`
+        );
     }
 }

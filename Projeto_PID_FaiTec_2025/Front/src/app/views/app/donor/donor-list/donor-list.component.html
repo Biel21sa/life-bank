@@ -1,129 +1,421 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Gerenciamento de Doadores</h1>
-    <p>Visualize e gerencie todos os doadores de sangue</p>
-  </div>
+<div class="donor-list-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
 
-  <!-- Cards de estatísticas -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <mat-icon>volunteer_activism</mat-icon>
-      <div class="stat-number">{{ donors.length }}</div>
-      <div class="stat-label">Total de Doadores</div>
+    <div class="hero-content">
+      <div class="hero-icon">
+        <mat-icon>volunteer_activism</mat-icon>
+      </div>
+      <h1>Gerenciamento de Doadores</h1>
+      <p class="hero-subtitle">Visualize e gerencie todos os heróis que salvam vidas</p>
     </div>
   </div>
 
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>volunteer_activism</mat-icon>
-        Lista de Doadores
-      </mat-card-title>
-    </mat-card-header>
+  <!-- Content Section -->
+  <div class="content-section">
+    <div class="content-container">
 
-    <mat-card-content>
-      <div class="table-actions">
-        <div class="search-box">
-          <mat-form-field appearance="outline" class="search-field">
-            <mat-label>Buscar doadores</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Nome, email ou tipo sanguíneo">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
+      <!-- Statistics Dashboard -->
+      <div class="stats-section">
+        <div class="stats-header">
+          <div class="header-icon">
+            <mat-icon>analytics</mat-icon>
+          </div>
+          <div class="header-content">
+            <h2>Visão Geral dos Doadores</h2>
+            <p>Estatísticas e métricas importantes</p>
+          </div>
         </div>
-        <div class="action-buttons">
-          <button mat-raised-button color="primary" routerLink="/donor/create">
-            <mat-icon>add</mat-icon>
-            Novo Doador
-          </button>
+
+        <div class="stats-grid">
+          <div class="stat-card total-donors">
+            <div class="card-indicator"></div>
+            <div class="card-icon">
+              <mat-icon>volunteer_activism</mat-icon>
+            </div>
+            <div class="card-content">
+              <div class="stat-number">{{ donors.length }}</div>
+              <div class="stat-label">Total de Doadores</div>
+              <div class="stat-trend">
+                <mat-icon>trending_up</mat-icon>
+                <span>+12% este mês</span>
+              </div>
+            </div>
+            <div class="card-badge">
+              <span>Ativos</span>
+            </div>
+          </div>
+
+          <div class="stat-card active-donors">
+            <div class="card-indicator"></div>
+            <div class="card-icon">
+              <mat-icon>check_circle</mat-icon>
+            </div>
+            <div class="card-content">
+              <div class="stat-number">{{ getAptoDonorsCount() }}</div>
+              <div class="stat-label">Doadores Aptos</div>
+              <div class="stat-trend">
+                <mat-icon>trending_up</mat-icon>
+                <span>{{ getAptoPercentage() }}% do total</span>
+              </div>
+            </div>
+            <div class="card-badge success">
+              <span>Disponíveis</span>
+            </div>
+          </div>
+
+          <div class="stat-card blood-types">
+            <div class="card-indicator"></div>
+            <div class="card-icon">
+              <mat-icon>bloodtype</mat-icon>
+            </div>
+            <div class="card-content">
+              <div class="stat-number">{{ getBloodTypesCount() }}</div>
+              <div class="stat-label">Tipos Sanguíneos</div>
+              <div class="stat-trend">
+                <mat-icon>diversity_3</mat-icon>
+                <span>Diversidade completa</span>
+              </div>
+            </div>
+            <div class="card-badge info">
+              <span>Variados</span>
+            </div>
+          </div>
+
+          <div class="stat-card recent-donors">
+            <div class="card-indicator"></div>
+            <div class="card-icon">
+              <mat-icon>schedule</mat-icon>
+            </div>
+            <div class="card-content">
+              <div class="stat-number">{{ donors.length / 2 }}</div>
+              <div class="stat-label">Novos este Mês</div>
+              <div class="stat-trend">
+                <mat-icon>person_add</mat-icon>
+                <span>Crescimento constante</span>
+              </div>
+            </div>
+            <div class="card-badge warning">
+              <span>Recentes</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="table-container">
-        <table mat-table [dataSource]="dataSource" class="modern-table">
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Nome</th>
-            <td mat-cell *matCellDef="let donor">
-              <div class="user-info">
-                <div class="user-name">{{ donor.name }}</div>
-                <div class="user-email">{{ donor.email }}</div>
-              </div>
-            </td>
-          </ng-container>
+      <!-- Filters and Actions Section -->
+      <div class="filters-section">
+        <div class="filters-card">
+          <div class="filters-header">
+            <div class="header-icon">
+              <mat-icon>filter_list</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Filtros e Ações</h3>
+              <p>{{ getFilteredCount() }} doador(es) encontrado(s)</p>
+            </div>
+            <div class="header-actions">
+              <button mat-icon-button (click)="clearFilters()" matTooltip="Limpar filtros">
+                <mat-icon>clear</mat-icon>
+              </button>
+            </div>
+          </div>
 
-          <ng-container matColumnDef="bloodType">
-            <th mat-header-cell *matHeaderCellDef>Tipo Sanguíneo</th>
-            <td mat-cell *matCellDef="let donor">
-              <span class="blood-type-badge" [ngClass]="getBloodTypeClass(donor.bloodType)" *ngIf="donor.bloodType">
-                <mat-icon>bloodtype</mat-icon>
-                {{ donor.bloodType }}
-              </span>
-              <span *ngIf="!donor.bloodType" class="no-blood-type">Não informado</span>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="contact">
-            <th mat-header-cell *matHeaderCellDef>Contato</th>
-            <td mat-cell *matCellDef="let donor">
-              <div class="contact-info">
-                <div class="phone">{{ donor.phone | mask: '(00) 00000-0000' }}</div>
-                <div class="cpf">{{ donor.cpf | mask: '000.000.000-00' }}</div>
-              </div>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="address">
-            <th mat-header-cell *matHeaderCellDef>Endereço</th>
-            <td mat-cell *matCellDef="let donor">
-              <div class="address-info">
-                <div class="street">{{ donor.street }}, {{ donor.number }}</div>
-                <div class="neighborhood">{{ donor.neighborhood }}</div>
-              </div>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="apto">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let donor">
-              <span class="status-badge" [ngClass]="donor.apto ? 'status-apto' : 'status-inapto'">
-                <mat-icon>{{ donor.apto ? 'check_circle' : 'cancel' }}</mat-icon>
-                {{ donor.apto ? 'Apto' : 'Inapto' }}
-              </span>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Ações</th>
-            <td mat-cell *matCellDef="let donor">
+          <div class="filters-body">
+            <div class="search-section">
               <div class="action-buttons">
-                <button mat-icon-button color="primary" [routerLink]="['/donor/detail', donor.id]"
-                  matTooltip="Visualizar">
-                  <mat-icon>visibility</mat-icon>
-                </button>
-                <button mat-icon-button color="accent" [routerLink]="['/donor/edit', donor.id]" matTooltip="Editar">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="warn" (click)="deleteDonor(donor.id!)" matTooltip="Excluir">
-                  <mat-icon>delete</mat-icon>
+                <button mat-raised-button color="primary" routerLink="/donor/create" class="primary-action">
+                  <mat-icon>add</mat-icon>
+                  <span>Novo Doador</span>
                 </button>
               </div>
-            </td>
-          </ng-container>
+              <mat-form-field appearance="outline" class="search-field">
+                <mat-label>Buscar doadores</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Nome, email, CPF ou tipo sanguíneo"
+                  #searchInput>
+                <mat-icon matSuffix>search</mat-icon>
+                <mat-hint>Digite para filtrar em tempo real</mat-hint>
+              </mat-form-field>
+            </div>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+            <div class="blood-type-filters">
+              <div class="filter-label">
+                <mat-icon>bloodtype</mat-icon>
+                <span>Filtrar por tipo sanguíneo:</span>
+              </div>
+              <div class="blood-type-chips">
+                <mat-chip-set>
+                  <mat-chip *ngFor="let type of bloodTypes" (click)="toggleBloodTypeFilter(type)"
+                    [ngClass]="[getBloodTypeClass(type), selectedBloodTypes.includes(type) ? 'selected' : '']">
+                    <mat-icon>bloodtype</mat-icon>
+                    {{ type }} ({{ getCountByBloodType(type) }})
+                  </mat-chip>
+                </mat-chip-set>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Estado vazio -->
-      <div class="empty-state" *ngIf="donors.length === 0">
-        <mat-icon>volunteer_activism</mat-icon>
-        <h3>Nenhum doador encontrado</h3>
-        <p>Comece cadastrando o primeiro doador</p>
-        <button mat-raised-button color="primary" routerLink="/donor/create">
-          <mat-icon>add</mat-icon>
-          Cadastrar Primeiro Doador
-        </button>
+      <!-- Table Section -->
+      <div class="table-section" *ngIf="donors.length > 0">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="header-icon">
+              <mat-icon>table_view</mat-icon>
+            </div>
+            <div class="header-content">
+              <h3>Lista de Doadores</h3>
+              <p>Visualização detalhada dos dados</p>
+            </div>
+            <div class="header-actions">
+              <button mat-icon-button (click)="toggleView()"
+                [matTooltip]="viewMode === 'table' ? 'Visualizar em cards' : 'Visualizar em tabela'">
+                <mat-icon>{{ viewMode === 'table' ? 'view_module' : 'table_view' }}</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- Table View -->
+          <div class="table-container" *ngIf="viewMode === 'table'">
+            <table mat-table [dataSource]="dataSource" class="modern-table">
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="header-cell">
+                    <mat-icon>person</mat-icon>
+                    <span>Doador</span>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let donor">
+                  <div class="donor-info">
+                    <div class="donor-avatar">
+                      <mat-icon>person</mat-icon>
+                    </div>
+                    <div class="donor-details">
+                      <div class="donor-name">{{ donor.name }}</div>
+                      <div class="donor-email">{{ donor.email }}</div>
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="bloodType">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="header-cell">
+                    <mat-icon>bloodtype</mat-icon>
+                    <span>Tipo Sanguíneo</span>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let donor">
+                  <div class="blood-type-cell">
+                    <span class="blood-type-badge" [ngClass]="getBloodTypeClass(donor.bloodType)"
+                      *ngIf="donor.bloodType">
+                      <mat-icon>bloodtype</mat-icon>
+                      {{ donor.bloodType }}
+                    </span>
+                    <span *ngIf="!donor.bloodType" class="no-blood-type">
+                      <mat-icon>help_outline</mat-icon>
+                      Não informado
+                    </span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="contact">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="header-cell">
+                    <mat-icon>contact_phone</mat-icon>
+                    <span>Contato</span>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let donor">
+                  <div class="contact-info">
+                    <div class="contact-item">
+                      <mat-icon>phone</mat-icon>
+                      <span>{{ donor.phone | mask: '(00) 00000-0000' }}</span>
+                    </div>
+                    <div class="contact-item">
+                      <mat-icon>credit_card</mat-icon>
+                      <span>{{ donor.cpf | mask: '000.000.000-00' }}</span>
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="header-cell">
+                    <mat-icon>home</mat-icon>
+                    <span>Endereço</span>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let donor">
+                  <div class="address-info">
+                    <div class="address-line">
+                      <mat-icon>location_on</mat-icon>
+                      <span>{{ donor.street }}, {{ donor.number }}</span>
+                    </div>
+                    <div class="address-line">
+                      <mat-icon>location_city</mat-icon>
+                      <span>{{ donor.neighborhood }}</span>
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="header-cell">
+                    <mat-icon>health_and_safety</mat-icon>
+                    <span>Status</span>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let donor">
+                  <div class="status-cell">
+                    <span class="status-badge" [ngClass]="donor.apto ? 'status-apto' : 'status-inapto'">
+                      <mat-icon>{{ donor.apto ? 'check_circle' : 'cancel' }}</mat-icon>
+                      {{ donor.apto ? 'Apto' : 'Inapto' }}
+                    </span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>
+                  <div class="header-cell">
+                    <mat-icon>settings</mat-icon>
+                    <span>Ações</span>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let donor">
+                  <div class="action-buttons">
+                    <button mat-icon-button color="primary" [routerLink]="['/donor/detail', donor.id]"
+                      matTooltip="Visualizar detalhes" class="action-view">
+                      <mat-icon>visibility</mat-icon>
+                    </button>
+
+                    <button mat-icon-button color="accent" [routerLink]="['/donor/edit', donor.id]"
+                      matTooltip="Editar doador" class="action-edit">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+
+                    <button mat-icon-button (click)="deleteDonor(donor.id!)" matTooltip="Editar doador"
+                      class="action-delete">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                [ngClass]="{ 'row-apto': row.apto, 'row-inapto': !row.apto }"></tr>
+            </table>
+          </div>
+
+          <!-- Cards View -->
+          <div class="cards-container" *ngIf="viewMode === 'cards'">
+            <div class="donor-cards-grid">
+              <div class="donor-card" *ngFor="let donor of dataSource.filteredData; trackBy: trackByDonorId"
+                [ngClass]="{ 'card-apto': donor.apto, 'card-inapto': !donor.apto }">
+
+                <div class="card-header">
+                  <div class="donor-avatar">
+                    <mat-icon>person</mat-icon>
+                  </div>
+                  <div class="donor-info">
+                    <h4>{{ donor.name }}</h4>
+                    <p>{{ donor.email }}</p>
+                  </div>
+                  <div class="card-status">
+                    <span class="status-indicator" [ngClass]="donor.apto ? 'apto' : 'inapto'">
+                      <mat-icon>{{ donor.apto ? 'check_circle' : 'cancel' }}</mat-icon>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <div class="info-row">
+                    <div class="info-item">
+                      <mat-icon>bloodtype</mat-icon>
+                      <span class="blood-type-badge" [ngClass]="getBloodTypeClass(donor.bloodType)"
+                        *ngIf="donor.bloodType">
+                        {{ donor.bloodType }}
+                      </span>
+                      <span *ngIf="!donor.bloodType" class="no-data">Não informado</span>
+                    </div>
+
+                    <div class="info-item">
+                      <mat-icon>phone</mat-icon>
+                      <span>{{ donor.phone | mask: '(00) 00000-0000' }}</span>
+                    </div>
+                  </div>
+
+                  <div class="info-row">
+                    <div class="info-item full-width">
+                      <mat-icon>home</mat-icon>
+                      <span>{{ donor.street }}, {{ donor.number }} - {{ donor.neighborhood }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-actions">
+                  <button mat-icon-button [routerLink]="['/donor/detail', donor.id]" matTooltip="Ver detalhes">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+
+                  <button mat-icon-button [routerLink]="['/donor/edit', donor.id]" matTooltip="Editar">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+
+                  <button mat-icon-button [routerLink]="['/donor/edit', donor.id]" matTooltip="Editar">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </mat-card-content>
-  </mat-card>
+
+      <!-- Empty State -->
+      <div class="empty-state-section" *ngIf="donors.length === 0">
+        <div class="empty-state-card">
+          <div class="empty-state-content">
+            <div class="empty-icon">
+              <mat-icon>volunteer_activism</mat-icon>
+            </div>
+            <h3>Nenhum doador encontrado</h3>
+            <p>Comece cadastrando o primeiro herói que salvará vidas</p>
+            <div class="empty-actions">
+              <button mat-raised-button color="primary" routerLink="/donor/create" class="primary-action">
+                <mat-icon>add</mat-icon>
+                <span>Cadastrar Primeiro Doador</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading-section" *ngIf="isLoading">
+        <div class="loading-card">
+          <div class="loading-content">
+            <div class="loading-spinner">
+              <mat-icon>hourglass_empty</mat-icon>
+            </div>
+            <h3>Carregando Doadores</h3>
+            <p>Buscando informações dos heróis...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

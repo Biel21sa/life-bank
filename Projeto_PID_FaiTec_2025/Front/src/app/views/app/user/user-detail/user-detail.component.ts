@@ -10,6 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
 
 
 @Component({
@@ -22,6 +24,8 @@ import { NgxMaskPipe } from 'ngx-mask';
     MatIconModule,
     CommonModule,
     NgxMaskPipe,
+    MatMenuModule,
+    MatListModule
   ],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.css'
@@ -51,6 +55,18 @@ export class UserDetailComponent implements OnInit {
   async loadUserById(userId: string) {
     this.user = await this.userReadService.findById(userId);
     console.log(this.user);
+  }
+
+  getFullAddress(): string {
+    if (!this.user) return '';
+    const { street, number, neighborhood, postalCode } = this.user;
+    return `${street || ''}, ${number || ''} - ${neighborhood || ''}, CEP: ${postalCode || ''}`;
+  }
+
+  openMap(): void {
+    if (!this.user) return;
+    const query = encodeURIComponent(this.getFullAddress());
+    window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
   }
 
   getRoleClass(role: UserRole): string {

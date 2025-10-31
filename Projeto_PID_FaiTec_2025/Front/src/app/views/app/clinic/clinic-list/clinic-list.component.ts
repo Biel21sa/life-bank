@@ -15,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
 import { AuthenticationService } from '../../../../services/security/authentication.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-clinic-list',
@@ -30,6 +32,8 @@ import { AuthenticationService } from '../../../../services/security/authenticat
     MatFormFieldModule,
     MatInputModule,
     NgxMaskPipe,
+    MatMenuModule,
+    MatListModule
   ],
   templateUrl: './clinic-list.component.html',
   styleUrl: './clinic-list.component.css'
@@ -39,6 +43,11 @@ export class ClinicListComponent implements OnInit {
   clinics: User[] = [];
   dataSource = new MatTableDataSource(this.clinics);
   displayedColumns: string[] = ['name', 'clinic', 'contact', 'address', 'actions'];
+
+  isCardView = false;
+  isCompactView = false;
+  selectedClinic?: User;
+  isLoading = false;
 
   constructor(
     private userReadService: UserReadService,
@@ -52,13 +61,16 @@ export class ClinicListComponent implements OnInit {
   }
 
   async loadClinics() {
-    let clinicList = await this.userReadService.findByRole(UserRole.CLINIC);
-    if (clinicList == null) {
-      return;
+    this.isLoading = true;
+    try {
+      let clinicList = await this.userReadService.findByRole(UserRole.CLINIC);
+      if (clinicList) {
+        this.clinics = clinicList;
+        this.dataSource.data = this.clinics;
+      }
+    } finally {
+      this.isLoading = false;
     }
-
-    this.clinics = clinicList;
-    this.dataSource.data = this.clinics;
   }
 
   applyFilter(event: Event) {
@@ -66,8 +78,33 @@ export class ClinicListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  clearSearch(input: HTMLInputElement) {
+    input.value = '';
+    this.dataSource.filter = '';
+  }
+
+  getFilteredCount(): number {
+    return this.dataSource.filteredData.length;
+  }
+
   isAdministrator(): boolean {
     return this.authenticationService.isAdministrator();
+  }
+
+  refreshData() {
+    this.loadClinics();
+  }
+
+  contactClinic(clinic: User) {
+    window.open(`mailto:${clinic.email}?subject=Contato com a clínica ${clinic.nameClinic}`, '_blank');
+  }
+
+  viewReports(clinic: User) {
+    this.toastr.info(`Visualizando relatórios da clínica ${clinic.nameClinic}`);
+  }
+
+  viewHistory(clinic: User) {
+    this.toastr.info(`Visualizando histórico da clínica ${clinic.nameClinic}`);
   }
 
   async deleteClinic(clinicId: string) {
@@ -81,5 +118,29 @@ export class ClinicListComponent implements OnInit {
         console.error(error);
       }
     }
+  }
+
+  toggleCompactView() {
+    this.isCompactView = !this.isCompactView;
+  }
+
+  toggleCardView() {
+    this.isCardView = !this.isCardView;
+  }
+
+  isRowHighlighted(row: User): boolean {
+    return this.selectedClinic?.id === row.id;
+  }
+
+  selectRow(row: User) {
+    this.selectedClinic = row;
+  }
+
+  selectClinic(clinic: User) {
+    this.selectedClinic = clinic;
+  }
+
+  trackByClinicId(index: number, clinic: User) {
+    return clinic.id;
   }
 }

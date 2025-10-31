@@ -38,6 +38,8 @@ import { UserGuard } from './guards/user.guard';
 import { BenefitListComponent } from './views/app/benefit/list/benefit-listcomponent';
 import { BenefitVerificationComponent } from './views/app/benefit/verification/benefit-verification.component';
 import { ClinicGuard } from './guards/clinic.guard';
+import { ClinicChatComponent } from './views/app/clinic-chat/clinic-chat.component';
+import { DonorChatComponent } from './views/app/donor-chat/donor-chat.component';
 
 export const routes: Routes = [
     {
@@ -189,6 +191,16 @@ export const routes: Routes = [
                 path: 'benefit/verification',
                 component: BenefitVerificationComponent,
                 canActivate: [ClinicGuard]
+            },
+            {
+                path: 'clinic-chat',
+                component: ClinicChatComponent,
+                canActivate: [ClinicGuard]
+            },
+            {
+                path: 'user-chat',
+                component: DonorChatComponent,
+                canActivate: [UserGuard]
             },
             {
                 path: 'donation-location',

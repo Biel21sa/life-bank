@@ -1,78 +1,291 @@
 <div class="verification-container">
-    <mat-card class="verification-card">
-        <mat-card-header>
-            <mat-card-title>Verificação de Benefício</mat-card-title>
-            <mat-card-subtitle>Informe o CPF do doador para buscar os benefícios</mat-card-subtitle>
-        </mat-card-header>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-background">
+            <div class="floating-element element-1"></div>
+            <div class="floating-element element-2"></div>
+            <div class="floating-element element-3"></div>
+        </div>
 
-        <mat-card-content>
-            <!-- Campo CPF -->
-            <form [formGroup]="cpfForm" (ngSubmit)="searchBenefits()" class="cpf-form">
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>CPF do Doador</mat-label>
-                    <input matInput formControlName="cpf" mask="000.000.000-00"
-                        placeholder="Digite o CPF (somente números)">
-                    <mat-error *ngIf="cpfForm.get('cpf')?.hasError('required')">CPF é obrigatório</mat-error>
-                    <mat-error *ngIf="cpfForm.get('cpf')?.hasError('pattern')">CPF inválido</mat-error>
-                </mat-form-field>
-
-                <button mat-raised-button color="primary" type="submit">Buscar Benefícios</button>
-            </form>
-
-            <!-- Lista de Benefícios -->
-            <div class="table-container" *ngIf="benefits.length > 0">
-                <mat-radio-group [formControl]="selectedBenefitControl">
-                    <table mat-table [dataSource]="benefits" class="benefit-table">
-
-                        <!-- Select -->
-                        <ng-container matColumnDef="select">
-                            <th mat-header-cell *matHeaderCellDef>Selecionar</th>
-                            <td mat-cell *matCellDef="let benefit">
-                                <mat-radio-button [value]="benefit"></mat-radio-button>
-                            </td>
-                        </ng-container>
-
-
-                        <!-- Description -->
-                        <ng-container matColumnDef="description">
-                            <th mat-header-cell *matHeaderCellDef>Descrição</th>
-                            <td mat-cell *matCellDef="let benefit">{{benefit.description}}</td>
-                        </ng-container>
-
-                        <!-- Amount -->
-                        <ng-container matColumnDef="amount">
-                            <th mat-header-cell *matHeaderCellDef>Valor</th>
-                            <td mat-cell *matCellDef="let benefit">{{benefit.amount}}%</td>
-                        </ng-container>
-
-                        <!-- Expiration Date -->
-                        <ng-container matColumnDef="expirationDate">
-                            <th mat-header-cell *matHeaderCellDef>Validade</th>
-                            <td mat-cell *matCellDef="let benefit">{{benefit.expirationDate | date:'dd/MM/yyyy'}}</td>
-                        </ng-container>
-
-                        <!-- Used -->
-                        <ng-container matColumnDef="used">
-                            <th mat-header-cell *matHeaderCellDef>Status</th>
-                            <td mat-cell *matCellDef="let benefit">
-                                <span [ngClass]="{'used': benefit.used, 'available': !benefit.used}">
-                                    {{benefit.used ? 'Usado' : 'Disponível'}}
-                                </span>
-                            </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-                </mat-radio-group>
+        <div class="hero-content">
+            <div class="verification-icon">
+                <mat-icon>verified_user</mat-icon>
             </div>
-        </mat-card-content>
+            <h1>Verificação de Benefícios</h1>
+            <p class="hero-subtitle">Valide e confirme o uso de benefícios dos doadores</p>
+        </div>
+    </div>
 
-        <mat-card-actions class="card-actions">
-            <button mat-button (click)="goBack()">Cancelar</button>
-            <button mat-raised-button color="primary" (click)="onConfirm()" [disabled]="!selectedBenefitControl.value">
-                Confirmar Benefício
-            </button>
-        </mat-card-actions>
-    </mat-card>
+    <!-- Main Content -->
+    <div class="content-section">
+        <div class="content-container">
+
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="search-card">
+                    <div class="search-header">
+                        <div class="header-icon">
+                            <mat-icon>search</mat-icon>
+                        </div>
+                        <div class="header-content">
+                            <h3>Buscar Doador</h3>
+                            <p>Informe o CPF para localizar os benefícios disponíveis</p>
+                        </div>
+                    </div>
+
+                    <div class="search-content">
+                        <form [formGroup]="cpfForm" (ngSubmit)="searchBenefits()" class="cpf-form">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="cpf-field">
+                                    <mat-label>CPF do Doador</mat-label>
+                                    <input matInput formControlName="cpf" mask="000.000.000-00"
+                                        placeholder="000.000.000-00">
+                                    <mat-icon matPrefix>person</mat-icon>
+                                    <mat-hint>Digite apenas os números do CPF</mat-hint>
+                                    <mat-error *ngIf="cpfForm.get('cpf')?.hasError('required')">
+                                        CPF é obrigatório
+                                    </mat-error>
+                                    <mat-error *ngIf="cpfForm.get('cpf')?.hasError('pattern')">
+                                        CPF deve conter 11 dígitos
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <button mat-raised-button color="primary" type="submit" class="search-button"
+                                    [disabled]="cpfForm.invalid || isSearching">
+                                    <mat-icon *ngIf="!isSearching">search</mat-icon>
+                                    <mat-icon *ngIf="isSearching" class="spinning">hourglass_empty</mat-icon>
+                                    <span>{{isSearching ? 'Buscando...' : 'Buscar Benefícios'}}</span>
+                                </button>
+                            </div>
+
+                            <!-- Search Tips -->
+                            <div class="search-tips">
+                                <div class="tip-item">
+                                    <mat-icon>info</mat-icon>
+                                    <span>O CPF deve estar cadastrado no sistema</span>
+                                </div>
+                                <div class="tip-item">
+                                    <mat-icon>security</mat-icon>
+                                    <span>Dados protegidos pela LGPD</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" *ngIf="searchPerformed">
+
+                <!-- No Results -->
+                <div class="no-results" *ngIf="benefits.length === 0 && !isSearching">
+                    <div class="no-results-card">
+                        <div class="no-results-icon">
+                            <mat-icon>search_off</mat-icon>
+                        </div>
+                        <h3>Nenhum benefício encontrado</h3>
+                        <p>Não foram encontrados benefícios disponíveis para este CPF.</p>
+                        <div class="no-results-actions">
+                            <button mat-stroked-button (click)="clearSearch()">
+                                <mat-icon>refresh</mat-icon>
+                                <span>Nova Busca</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Benefits Found -->
+                <div class="benefits-found" *ngIf="benefits.length > 0">
+                    <div class="benefits-header">
+                        <div class="header-left">
+                            <div class="header-icon">
+                                <mat-icon>card_giftcard</mat-icon>
+                            </div>
+                            <div class="header-content">
+                                <h3>Benefícios Encontrados</h3>
+                                <p>{{benefits.length}} benefício(s) localizado(s) para este doador</p>
+                            </div>
+                        </div>
+                        <div class="header-stats">
+                            <div class="stat-item available">
+                                <mat-icon>check_circle</mat-icon>
+                                <span>{{getAvailableCount()}} disponível(is)</span>
+                            </div>
+                            <div class="stat-item used" *ngIf="getUsedCount() > 0">
+                                <mat-icon>done</mat-icon>
+                                <span>{{getUsedCount()}} utilizado(s)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="benefits-content">
+                        <mat-radio-group [formControl]="selectedBenefitControl" class="benefits-list">
+
+                            <div class="benefit-item" *ngFor="let benefit of benefits; let i = index"
+                                [style.animation-delay.ms]="i * 100"
+                                [ngClass]="{'selected': selectedBenefitControl.value === benefit, 'disabled': benefit.used || isExpired(benefit)}">
+
+                                <!-- Selection Radio -->
+                                <div class="selection-section">
+                                    <mat-radio-button [value]="benefit" [disabled]="benefit.used || isExpired(benefit)">
+                                    </mat-radio-button>
+                                </div>
+
+                                <!-- Benefit Info -->
+                                <div class="benefit-info">
+                                    <div class="benefit-header">
+                                        <div class="benefit-title">
+                                            <h4>{{benefit.description}}</h4>
+                                            <div class="benefit-amount">{{benefit.amount.toFixed(1)}}% de desconto</div>
+                                        </div>
+                                        <div class="benefit-status">
+                                            <div class="status-badge" [ngClass]="getBenefitStatusClass(benefit)">
+                                                <mat-icon>{{getBenefitStatusIcon(benefit)}}</mat-icon>
+                                                <span>{{getBenefitStatusText(benefit)}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="benefit-details">
+                                        <div class="detail-item">
+                                            <mat-icon>schedule</mat-icon>
+                                            <span class="detail-label">Válido até:</span>
+                                            <span class="detail-value"
+                                                [ngClass]="getExpirationClass(benefit.expirationDate)">
+                                                {{benefit.expirationDate | date:'dd/MM/yyyy'}}
+                                            </span>
+                                        </div>
+
+                                        <div class="detail-item" *ngIf="!benefit.used && !isExpired(benefit)">
+                                            <mat-icon>info</mat-icon>
+                                            <span class="detail-label">Dias restantes:</span>
+                                            <span
+                                                class="detail-value">{{getDaysUntilExpiration(benefit.expirationDate)}}</span>
+                                        </div>
+
+                                        <div class="detail-item" *ngIf="benefit.used">
+                                            <mat-icon>event</mat-icon>
+                                            <span class="detail-label">Data de uso:</span>
+                                            <span class="detail-value">{{benefit.expirationDate|
+                                                date:'dd/MM/yyyy'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Benefit Actions -->
+                                <div class="benefit-actions" *ngIf="!benefit.used && !isExpired(benefit)">
+                                    <button mat-icon-button class="info-button" (click)="showBenefitDetails(benefit)"
+                                        matTooltip="Ver detalhes">
+                                        <mat-icon>info</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selection Summary -->
+            <div class="selection-summary" *ngIf="selectedBenefitControl.value">
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <div class="summary-icon">
+                            <mat-icon>check_circle</mat-icon>
+                        </div>
+                        <div class="summary-content">
+                            <h4>Benefício Selecionado</h4>
+                            <p>Confirme o uso do benefício abaixo</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-details">
+                        <div class="selected-benefit">
+                            <div class="benefit-summary">
+                                <div class="summary-item">
+                                    <span class="summary-label">Descrição:</span>
+                                    <span class="summary-value">{{selectedBenefitControl.value.description}}</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Desconto:</span>
+                                    <span
+                                        class="summary-value highlight">{{selectedBenefitControl.value.amount.toFixed(1)}}%</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Validade:</span>
+                                    <span class="summary-value">{{selectedBenefitControl.value.expirationDate |
+                                        date:'dd/MM/yyyy'}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions Section -->
+            <div class="actions-section">
+                <div class="actions-container">
+                    <div class="actions-left">
+                        <button mat-stroked-button class="cancel-button" (click)="goBack()">
+                            <mat-icon>arrow_back</mat-icon>
+                            <span>Voltar</span>
+                        </button>
+
+                        <button mat-stroked-button class="clear-button" (click)="clearSearch()" *ngIf="searchPerformed">
+                            <mat-icon>refresh</mat-icon>
+                            <span>Nova Busca</span>
+                        </button>
+                    </div>
+
+                    <div class="actions-right">
+                        <div class="action-summary" *ngIf="selectedBenefitControl.value">
+                            <div class="summary-text">
+                                <span
+                                    class="summary-discount">{{selectedBenefitControl.value.amount.toFixed(1)}}%</span>
+                                <span class="summary-label">de desconto</span>
+                            </div>
+                        </div>
+
+                        <button mat-raised-button color="primary" class="confirm-button"
+                            [disabled]="!selectedBenefitControl.value || isConfirming" (click)="onConfirm()">
+                            <mat-icon *ngIf="!isConfirming">check</mat-icon>
+                            <mat-icon *ngIf="isConfirming" class="spinning">hourglass_empty</mat-icon>
+                            <span>{{isConfirming ? 'Confirmando...' : 'Confirmar Benefício'}}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Process Steps Indicator -->
+    <div class="steps-indicator" *ngIf="!searchPerformed || benefits.length > 0">
+        <div class="steps-container">
+            <div class="step" [ngClass]="{'active': true, 'completed': searchPerformed}">
+                <div class="step-icon">
+                    <mat-icon>{{searchPerformed ? 'check' : 'search'}}</mat-icon>
+                </div>
+                <span class="step-label">Buscar CPF</span>
+            </div>
+
+            <div class="step-connector" [ngClass]="{'active': searchPerformed}"></div>
+
+            <div class="step" [ngClass]="{'active': searchPerformed, 'completed': selectedBenefitControl.value}">
+                <div class="step-icon">
+                    <mat-icon>{{selectedBenefitControl.value ? 'check' : 'radio_button_unchecked'}}</mat-icon>
+                </div>
+                <span class="step-label">Selecionar Benefício</span>
+            </div>
+
+            <div class="step-connector" [ngClass]="{'active': selectedBenefitControl.value}"></div>
+
+            <div class="step" [ngClass]="{'active': selectedBenefitControl.value}">
+                <div class="step-icon">
+                    <mat-icon>verified_user</mat-icon>
+                </div>
+                <span class="step-label">Confirmar Uso</span>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,88 +1,160 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Meu Perfil</h1>
-    <p>Gerencie suas informações pessoais e configurações de conta</p>
+<div class="profile-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="profile-avatar">
+        <div class="avatar-icon">
+          <mat-icon>account_circle</mat-icon>
+        </div>
+      </div>
+      <h1>Meu Perfil</h1>
+      <p class="hero-subtitle">Gerencie suas informações pessoais e configurações de conta</p>
+    </div>
   </div>
 
-  <!-- Tabs de navegação -->
-  <mat-tab-group class="profile-tabs" [(selectedIndex)]="selectedTab">
+  <!-- Profile Navigation -->
+  <div class="profile-navigation">
+    <div class="nav-container">
+      <mat-tab-group class="profile-tabs" [(selectedIndex)]="selectedTab" animationDuration="300ms">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>person</mat-icon>
+            <span>Dados Pessoais</span>
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>security</mat-icon>
+            <span>Segurança</span>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
 
-    <!-- Tab Dados Pessoais -->
-    <mat-tab label="Dados Pessoais">
-      <div class="tab-content">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>
+  <!-- Tab Content -->
+  <div class="content-section">
+    <div class="content-container">
+
+      <!-- Tab Dados Pessoais -->
+      <div class="tab-content" *ngIf="selectedTab === 0">
+        <div class="form-card">
+          <div class="card-header">
+            <div class="header-icon">
               <mat-icon>person</mat-icon>
-              Informações Pessoais
-            </mat-card-title>
-          </mat-card-header>
+            </div>
+            <div class="header-content">
+              <h2>Informações Pessoais</h2>
+              <p>Mantenha seus dados sempre atualizados</p>
+            </div>
+          </div>
 
-          <mat-card-content>
-            <form [formGroup]="dataForm" (ngSubmit)="updateData()">
+          <form [formGroup]="dataForm" (ngSubmit)="updateData()" class="profile-form">
 
-              <div class="section">
-                <h3>Dados Básicos</h3>
+            <!-- Dados Básicos -->
+            <div class="form-section">
+              <div class="section-header">
+                <div class="section-icon">
+                  <mat-icon>badge</mat-icon>
+                </div>
+                <div class="section-title">
+                  <h3>Dados Básicos</h3>
+                  <p>Informações principais da sua conta</p>
+                </div>
+              </div>
 
-                <mat-form-field appearance="outline" class="full-width">
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Nome Completo</mat-label>
                   <input matInput formControlName="name" required>
                   <mat-icon matSuffix>person</mat-icon>
+                  <mat-hint>Digite seu nome completo</mat-hint>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Email</mat-label>
                   <input matInput formControlName="email" readonly>
                   <mat-icon matSuffix>email</mat-icon>
+                  <mat-hint>Email não pode ser alterado</mat-hint>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="form-field">
                   <mat-label>CPF</mat-label>
                   <input matInput formControlName="cpf" mask="000.000.000-00" required>
                   <mat-icon matSuffix>credit_card</mat-icon>
+                  <mat-hint>Formato: 000.000.000-00</mat-hint>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Telefone</mat-label>
                   <input matInput formControlName="phone" mask="(00) 00000-0000" required>
                   <mat-icon matSuffix>phone</mat-icon>
+                  <mat-hint>Formato: (00) 00000-0000</mat-hint>
                 </mat-form-field>
               </div>
+            </div>
 
-              <div class="section">
-                <h3>Endereço</h3>
+            <!-- Endereço -->
+            <div class="form-section">
+              <div class="section-header">
+                <div class="section-icon">
+                  <mat-icon>location_on</mat-icon>
+                </div>
+                <div class="section-title">
+                  <h3>Endereço</h3>
+                  <p>Informações de localização</p>
+                </div>
+              </div>
 
-                <mat-form-field appearance="outline" class="full-width">
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field full-width">
                   <mat-label>Rua</mat-label>
                   <input matInput formControlName="street" required>
                   <mat-icon matSuffix>home</mat-icon>
+                  <mat-hint>Nome da rua ou avenida</mat-hint>
                 </mat-form-field>
 
-                <div class="form-row">
-                  <mat-form-field appearance="outline" class="form-field-70">
-                    <mat-label>Número</mat-label>
-                    <input matInput formControlName="number" required>
-                    <mat-icon matSuffix>tag</mat-icon>
-                  </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Número</mat-label>
+                  <input matInput formControlName="number" required>
+                  <mat-icon matSuffix>tag</mat-icon>
+                </mat-form-field>
 
-                  <mat-form-field appearance="outline" class="form-field-30">
-                    <mat-label>CEP</mat-label>
-                    <input matInput formControlName="postalCode" mask="00000-000" required>
-                    <mat-icon matSuffix>place</mat-icon>
-                  </mat-form-field>
-                </div>
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>CEP</mat-label>
+                  <input matInput formControlName="postalCode" mask="00000-000" required>
+                  <mat-icon matSuffix>place</mat-icon>
+                  <mat-hint>Formato: 00000-000</mat-hint>
+                </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="form-field full-width">
                   <mat-label>Bairro</mat-label>
                   <input matInput formControlName="neighborhood" required>
                   <mat-icon matSuffix>location_city</mat-icon>
                 </mat-form-field>
               </div>
+            </div>
 
-              <!-- Campos específicos por tipo de usuário -->
-              <div class="section" *ngIf="user?.role === 'ADMINISTRATOR'">
-                <h3>Informações do Administrador</h3>
-                <mat-form-field appearance="outline" class="full-width">
+            <!-- Informações Específicas por Tipo de Usuário -->
+            <div class="form-section" *ngIf="user?.role === 'ADMINISTRATOR'">
+              <div class="section-header">
+                <div class="section-icon">
+                  <mat-icon>admin_panel_settings</mat-icon>
+                </div>
+                <div class="section-title">
+                  <h3>Informações do Administrador</h3>
+                  <p>Configurações administrativas</p>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field full-width">
                   <mat-label>Local de Doação</mat-label>
                   <mat-select formControlName="donationLocationId">
                     <mat-option *ngFor="let location of donationLocations" [value]="location.id">
@@ -90,12 +162,24 @@
                     </mat-option>
                   </mat-select>
                   <mat-icon matSuffix>business</mat-icon>
+                  <mat-hint>Selecione o local de doação vinculado</mat-hint>
                 </mat-form-field>
               </div>
+            </div>
 
-              <div class="section" *ngIf="user?.role === 'USER'">
-                <h3>Informações do Doador</h3>
-                <mat-form-field appearance="outline" class="full-width">
+            <div class="form-section" *ngIf="user?.role === 'USER'">
+              <div class="section-header">
+                <div class="section-icon">
+                  <mat-icon>bloodtype</mat-icon>
+                </div>
+                <div class="section-title">
+                  <h3>Informações do Doador</h3>
+                  <p>Dados específicos para doação</p>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Tipo Sanguíneo</mat-label>
                   <mat-select formControlName="bloodType">
                     <mat-option value="A+">A+</mat-option>
@@ -108,114 +192,196 @@
                     <mat-option value="O-">O-</mat-option>
                   </mat-select>
                   <mat-icon matSuffix>bloodtype</mat-icon>
+                  <mat-hint>Seu tipo sanguíneo</mat-hint>
                 </mat-form-field>
               </div>
+            </div>
 
-              <div class="section" *ngIf="user?.role === 'CLINIC'">
-                <h3>Informações da Clínica</h3>
-                <mat-form-field appearance="outline" class="full-width">
+            <div class="form-section" *ngIf="user?.role === 'CLINIC'">
+              <div class="section-header">
+                <div class="section-icon">
+                  <mat-icon>local_hospital</mat-icon>
+                </div>
+                <div class="section-title">
+                  <h3>Informações da Clínica</h3>
+                  <p>Dados institucionais</p>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field full-width">
                   <mat-label>Nome da Clínica</mat-label>
                   <input matInput formControlName="nameClinic">
                   <mat-icon matSuffix>local_hospital</mat-icon>
+                  <mat-hint>Razão social da clínica</mat-hint>
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="full-width">
+
+                <mat-form-field appearance="outline" class="form-field">
                   <mat-label>CNPJ</mat-label>
                   <input matInput formControlName="cnpj" mask="00.000.000/0000-00">
                   <mat-icon matSuffix>business_center</mat-icon>
+                  <mat-hint>Formato: 00.000.000/0000-00</mat-hint>
                 </mat-form-field>
               </div>
+            </div>
 
-            </form>
-          </mat-card-content>
-
-          <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="updateData()" [disabled]="!dataForm.valid">
-              <mat-icon>save</mat-icon>
-              Salvar Alterações
-            </button>
-            <button mat-button type="button" (click)="resetDataForm()">
-              <mat-icon>refresh</mat-icon>
-              Cancelar
-            </button>
-          </mat-card-actions>
-        </mat-card>
+            <!-- Form Actions -->
+            <div class="form-actions">
+              <button mat-raised-button color="primary" type="submit" [disabled]="!dataForm.valid" class="save-button">
+                <mat-icon>save</mat-icon>
+                <span>Salvar Alterações</span>
+              </button>
+              <button mat-stroked-button type="button" (click)="resetDataForm()" class="cancel-button">
+                <mat-icon>refresh</mat-icon>
+                <span>Cancelar</span>
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </mat-tab>
 
-    <!-- Tab Alterar Senha -->
-    <mat-tab label="Alterar Senha">
-      <div class="tab-content">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>
-              <mat-icon>lock</mat-icon>
-              Segurança da Conta
-            </mat-card-title>
-          </mat-card-header>
+      <!-- Tab Alterar Senha -->
+      <div class="tab-content" *ngIf="selectedTab === 1">
+        <div class="form-card">
+          <div class="card-header">
+            <div class="header-icon">
+              <mat-icon>security</mat-icon>
+            </div>
+            <div class="header-content">
+              <h2>Segurança da Conta</h2>
+              <p>Mantenha sua conta protegida com uma senha forte</p>
+            </div>
+          </div>
 
-          <mat-card-content>
-            <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
+          <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="profile-form">
 
-              <div class="section">
-                <h3>Alterar Senha</h3>
+            <!-- Alterar Senha -->
+            <div class="form-section">
+              <div class="section-header">
+                <div class="section-icon">
+                  <mat-icon>lock</mat-icon>
+                </div>
+                <div class="section-title">
+                  <h3>Alterar Senha</h3>
+                  <p>Crie uma senha forte para proteger sua conta</p>
+                </div>
+              </div>
 
-                <mat-form-field appearance="outline" class="full-width">
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="form-field full-width">
                   <mat-label>Senha Atual</mat-label>
                   <input matInput [type]="hideCurrentPassword ? 'password' : 'text'" formControlName="oldPassword"
                     required>
                   <button mat-icon-button matSuffix (click)="hideCurrentPassword = !hideCurrentPassword" type="button">
                     <mat-icon>{{hideCurrentPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                   </button>
+                  <mat-hint>Digite sua senha atual</mat-hint>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="form-field full-width">
                   <mat-label>Nova Senha</mat-label>
                   <input matInput [type]="hideNewPassword ? 'password' : 'text'" formControlName="newPassword" required>
                   <button mat-icon-button matSuffix (click)="hideNewPassword = !hideNewPassword" type="button">
                     <mat-icon>{{hideNewPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                   </button>
+                  <mat-hint>Mínimo 8 caracteres</mat-hint>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="form-field full-width">
                   <mat-label>Confirmar Nova Senha</mat-label>
                   <input matInput [type]="hideConfirmPassword ? 'password' : 'text'"
                     formControlName="confirmNewPassword" required>
                   <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" type="button">
                     <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                   </button>
+                  <mat-hint>Repita a nova senha</mat-hint>
                 </mat-form-field>
 
                 <!-- Indicador de força da senha -->
-                <div class="password-strength" *ngIf="passwordForm.get('newPassword')?.value">
-                  <div class="strength-label">Força da senha:</div>
+                <div class="password-strength-container" *ngIf="passwordForm.get('newPassword')?.value">
+                  <div class="strength-header">
+                    <mat-icon>shield</mat-icon>
+                    <span>Força da senha</span>
+                  </div>
                   <div class="strength-bar">
                     <div class="strength-fill" [ngClass]="getPasswordStrength()"></div>
                   </div>
-                  <div class="strength-text">{{ getPasswordStrengthText() }}</div>
+                  <div class="strength-text" [ngClass]="getPasswordStrength()">
+                    {{ getPasswordStrengthText() }}
+                  </div>
+                  <div class="strength-tips">
+                    <div class="tip-item" [class.completed]="passwordForm.get('newPassword')?.value?.length >= 8">
+                      <mat-icon>{{passwordForm.get('newPassword')?.value?.length >= 8 ? 'check_circle' :
+                        'radio_button_unchecked'}}</mat-icon>
+                      <span>Mínimo 8 caracteres</span>
+                    </div>
+                    <div class="tip-item" [class.completed]="hasUppercase">
+                      <mat-icon>{{ hasUppercase ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+                      <span>Pelo menos uma letra maiúscula</span>
+                    </div>
+
+                    <div class="tip-item" [class.completed]="hasNumber">
+                      <mat-icon>{{ hasNumber ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+                      <span>Pelo menos um número</span>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Mensagem de erro para senhas diferentes -->
-                <mat-error *ngIf="passwordForm.hasError('passwordMismatch')">
-                  As senhas não coincidem
-                </mat-error>
+                <div class="error-message" *ngIf="passwordForm.hasError('passwordMismatch')">
+                  <mat-icon>error</mat-icon>
+                  <span>As senhas não coincidem</span>
+                </div>
               </div>
+            </div>
 
-            </form>
-          </mat-card-content>
+            <!-- Security Tips -->
+            <div class="security-tips">
+              <div class="tips-header">
+                <mat-icon>tips_and_updates</mat-icon>
+                <h4>Dicas de Segurança</h4>
+              </div>
+              <div class="tips-list">
+                <div class="tip-card">
+                  <mat-icon>password</mat-icon>
+                  <div class="tip-content">
+                    <h5>Use uma senha única</h5>
+                    <p>Não reutilize senhas de outras contas</p>
+                  </div>
+                </div>
+                <div class="tip-card">
+                  <mat-icon>update</mat-icon>
+                  <div class="tip-content">
+                    <h5>Atualize regularmente</h5>
+                    <p>Troque sua senha periodicamente</p>
+                  </div>
+                </div>
+                <div class="tip-card">
+                  <mat-icon>security</mat-icon>
+                  <div class="tip-content">
+                    <h5>Mantenha em segredo</h5>
+                    <p>Nunca compartilhe sua senha</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="updatePassword()" [disabled]="!passwordForm.valid">
-              <mat-icon>security</mat-icon>
-              Alterar Senha
-            </button>
-            <button mat-button type="button" (click)="resetPasswordForm()">
-              <mat-icon>refresh</mat-icon>
-              Cancelar
-            </button>
-          </mat-card-actions>
-        </mat-card>
+            <!-- Form Actions -->
+            <div class="form-actions">
+              <button mat-raised-button color="primary" type="submit" [disabled]="!passwordForm.valid"
+                class="save-button">
+                <mat-icon>security</mat-icon>
+                <span>Alterar Senha</span>
+              </button>
+              <button mat-stroked-button type="button" (click)="resetPasswordForm()" class="cancel-button">
+                <mat-icon>refresh</mat-icon>
+                <span>Cancelar</span>
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </mat-tab>
 
-  </mat-tab-group>
+    </div>
+  </div>
 </div>

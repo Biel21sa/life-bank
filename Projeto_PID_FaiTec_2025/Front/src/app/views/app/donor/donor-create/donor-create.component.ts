@@ -27,7 +27,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatIconModule,
     MatCheckboxModule,
     NgxMaskDirective
   ],
@@ -36,6 +35,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 })
 export class DonorCreateComponent {
   donorForm: FormGroup;
+  isSubmitting = false;
 
   constructor(
     private fb: FormBuilder,
@@ -48,7 +48,7 @@ export class DonorCreateComponent {
       cpf: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       bloodType: ['', Validators.required],
       gender: ['', Validators.required],
       street: ['', Validators.required],
@@ -61,6 +61,8 @@ export class DonorCreateComponent {
 
   onSubmit() {
     if (this.donorForm.valid) {
+      this.isSubmitting = true;
+
       const donor: User = {
         ...this.donorForm.value,
         role: UserRole.USER
@@ -74,6 +76,10 @@ export class DonorCreateComponent {
         error: (error) => {
           this.toastr.error('Erro ao cadastrar doador');
           console.error('Erro ao criar doador:', error);
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          this.isSubmitting = false;
         }
       });
     }
@@ -81,5 +87,52 @@ export class DonorCreateComponent {
 
   onCancel() {
     this.router.navigate(['/donor/list']);
+  }
+
+  getStepClass(step: string): string {
+    const controlMap: Record<string, string[]> = {
+      personal: ['name', 'cpf', 'phone', 'email', 'password'],
+      donor: ['bloodType', 'gender'],
+      address: ['street', 'number', 'neighborhood', 'postalCode'],
+      terms: ['acceptTerms']
+    };
+
+    const controls = controlMap[step] || [];
+    const allValid = controls.every(c => this.donorForm.get(c)?.valid);
+
+    return allValid ? 'step completed' : 'step pending';
+  }
+
+  getStepIcon(step: string): string {
+    return this.getStepClass(step).includes('completed') ? 'check_circle' : 'hourglass_empty';
+  }
+
+  getSectionClass(section: string): string {
+    const controlsMap: Record<string, string[]> = {
+      personal: ['name', 'cpf', 'phone', 'email', 'password'],
+      donor: ['bloodType', 'gender'],
+      address: ['street', 'number', 'neighborhood', 'postalCode'],
+      terms: ['acceptTerms']
+    };
+
+    const controls = controlsMap[section] || [];
+    const allValid = controls.every(c => this.donorForm.get(c)?.valid);
+
+    return allValid ? 'section-card completed' : 'section-card incomplete';
+  }
+
+  getSectionStatusIcon(section: string): string {
+    return this.getSectionClass(section).includes('completed') ? 'check_circle' : 'error';
+  }
+
+  showValidationSummary(): boolean {
+    return this.donorForm.invalid && this.donorForm.touched;
+  }
+
+  getValidationMessage(): string {
+    if (this.donorForm.get('acceptTerms')?.invalid) {
+      return 'Você deve aceitar os termos antes de continuar.';
+    }
+    return 'Preencha todos os campos obrigatórios para continuar.';
   }
 }

@@ -35,6 +35,17 @@ export class ReportsComponent implements OnInit, OnDestroy {
   chart: Chart | null = null;
   availableYears: number[] = [];
 
+  palette = [
+    '#1976d2',
+    '#42a5f5',
+    '#66bb6a',
+    '#26a69a',
+    '#ab47bc',
+    '#7e57c2',
+    '#4dd0e1',
+    '#90a4ae'
+  ];
+
   chartOptions = [
     { value: 'evolution', label: 'Evolução de Doações', icon: 'show_chart' },
     { value: 'bloodType', label: 'Doações por Tipo Sanguíneo', icon: 'pie_chart' },
@@ -116,29 +127,25 @@ export class ReportsComponent implements OnInit, OnDestroy {
   }
 
   createEvolutionChart(data: DonationEvolutionData[]) {
-    if (this.chart) {
-      this.chart.destroy();
-    }
-  
+    if (this.chart) this.chart.destroy();
+
     const ctx = document.getElementById('reportsChart') as HTMLCanvasElement;
-  
-    // Todos os meses do ano em inglês, para garantir labels completas
-    const allMonthsEnglish = ['January', 'February', 'March', 'April', 'May', 'June', 
-                              'July', 'August', 'September', 'October', 'November', 'December'];
-  
-    // Traduzir meses para português para exibir no gráfico
+    const allMonthsEnglish = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
     const allMonths = allMonthsEnglish.map(m => this.translateMonth(m));
-  
-    // Mapear dados recebidos para o array completo de meses
+
     const dataPerMonth = allMonthsEnglish.map(monthEng => {
       const monthData = data.find(d => d.month === monthEng);
       return monthData ? monthData.totalLiters : 0;
     });
-  
-    // Calcular o maior valor para definir max no eixo Y
+
     const maxValue = Math.max(...dataPerMonth);
     const maxY = maxValue * 1.2;
-  
+
+    const gradient = ctx.getContext('2d')!.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(25, 118, 210, 0.4)');
+    gradient.addColorStop(1, 'rgba(25, 118, 210, 0)');
+
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -147,8 +154,10 @@ export class ReportsComponent implements OnInit, OnDestroy {
           label: 'Litros Doados',
           data: dataPerMonth,
           borderColor: '#1976d2',
-          backgroundColor: 'rgba(25, 118, 210, 0.1)',
+          backgroundColor: gradient,
           borderWidth: 3,
+          pointBackgroundColor: '#1976d2',
+          pointRadius: 5,
           fill: true,
           tension: 0.4
         }]
@@ -158,37 +167,39 @@ export class ReportsComponent implements OnInit, OnDestroy {
         plugins: {
           title: {
             display: true,
-            text: `Evolução de Doações - ${this.selectedYear}`
+            text: `📈 Evolução de Doações - ${this.selectedYear}`,
+            font: { size: 18, weight: 'bold' }
+          },
+          tooltip: {
+            backgroundColor: '#424242',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            callbacks: {
+              label: (ctx) => `${ctx.parsed.y} litros`
+            }
           }
         },
         scales: {
           y: {
             beginAtZero: true,
             max: maxY,
-            title: {
-              display: true,
-              text: 'Quantidade (Litros)'
-            }
+            grid: { color: '#e0e0e0' },
+            title: { display: true, text: 'Quantidade (Litros)' }
           },
           x: {
-            title: {
-              display: true,
-              text: 'Mês'
-            }
+            grid: { display: false },
+            title: { display: true, text: 'Mês' }
           }
         }
       }
     });
   }
-  
+
   createBloodTypeChart(data: DonationByBloodTypeData[]) {
-    if (this.chart) {
-      this.chart.destroy();
-    }
+    if (this.chart) this.chart.destroy();
 
     const ctx = document.getElementById('reportsChart') as HTMLCanvasElement;
-
-    const colors = ['#1976d2', '#1565c0', '#0d47a1', '#42a5f5', '#64b5f6', '#90caf9', '#bbdefb', '#e3f2fd'];
+    const colors = this.palette.slice(0, data.length);
 
     this.chart = new Chart(ctx, {
       type: 'pie',
@@ -196,8 +207,8 @@ export class ReportsComponent implements OnInit, OnDestroy {
         labels: data.map(d => d.bloodType),
         datasets: [{
           data: data.map(d => d.totalLiters),
-          backgroundColor: colors.slice(0, data.length),
-          borderColor: '#ffffff',
+          backgroundColor: colors,
+          borderColor: '#fff',
           borderWidth: 2
         }]
       },
@@ -206,11 +217,15 @@ export class ReportsComponent implements OnInit, OnDestroy {
         plugins: {
           title: {
             display: true,
-            text: `Doações por Tipo Sanguíneo - ${this.selectedYear}`
+            text: `🩸 Doações por Tipo Sanguíneo - ${this.selectedYear}`,
+            font: { size: 18, weight: 'bold' }
           },
-          legend: {
-            position: 'right'
-          }
+          tooltip: {
+            callbacks: {
+              label: (ctx) => `${ctx.label}: ${ctx.parsed} L`
+            }
+          },
+          legend: { position: 'right' }
         }
       }
     });
@@ -227,77 +242,61 @@ export class ReportsComponent implements OnInit, OnDestroy {
   }
 
   createEvolutionByTypeChart(data: DonationEvolutionByTypeData[]) {
-    if (this.chart) {
-      this.chart.destroy();
-    }
-  
+    if (this.chart) this.chart.destroy();
+
     const ctx = document.getElementById('reportsChart') as HTMLCanvasElement;
-
-    const allMonthsEnglish = ['January', 'February', 'March', 'April', 'May', 'June', 
-                              'July', 'August', 'September', 'October', 'November', 'December'];
-
+    const allMonthsEnglish = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
     const allMonths = allMonthsEnglish.map(m => this.translateMonth(m));
 
     const bloodTypes = [...new Set(data.flatMap(d => d.data.map(item => item.bloodType)))];
-    const colors = ['#1976d2', '#1565c0', '#0d47a1', '#42a5f5', '#64b5f6', '#90caf9', '#bbdefb', '#e3f2fd'];
 
-    const datasets = bloodTypes.map((bloodType, index) => ({
+    const datasets = bloodTypes.map((bloodType, i) => ({
       label: bloodType,
       data: allMonthsEnglish.map(monthEng => {
         const monthData = data.find(d => d.month === monthEng);
         const typeData = monthData?.data.find(item => item.bloodType === bloodType);
         return typeData?.totalLiters || 0;
       }),
-      backgroundColor: colors[index % colors.length]
+      backgroundColor: this.palette[i % this.palette.length]
     }));
-  
-    const totalPerMonth = allMonthsEnglish.map(monthEng => {
-      const monthData = data.find(d => d.month === monthEng);
-      if (!monthData) return 0;
-      return monthData.data.reduce((sum, item) => sum + item.totalLiters, 0);
-    });
 
-    const maxTotal = Math.max(...totalPerMonth);
-  
-    const maxY = maxTotal * 1.06;
-  
+    const maxTotal = Math.max(...datasets.flatMap(d => d.data));
+    const maxY = maxTotal * 1.1;
+
     this.chart = new Chart(ctx, {
       type: 'bar',
-      data: {
-        labels: allMonths,
-        datasets: datasets
-      },
+      data: { labels: allMonths, datasets },
       options: {
         responsive: true,
         plugins: {
           title: {
             display: true,
-            text: `Evolução por Tipo Sanguíneo - ${this.selectedYear}`
+            text: `📊 Evolução por Tipo Sanguíneo - ${this.selectedYear}`,
+            font: { size: 18, weight: 'bold' }
           },
-          legend: {
-            position: 'top'
-          }
+          tooltip: {
+            callbacks: {
+              label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y} L`
+            }
+          },
+          legend: { position: 'top' }
         },
         scales: {
           y: {
             beginAtZero: true,
             max: maxY,
-            title: {
-              display: true,
-              text: 'Quantidade (Litros)'
-            }
+            grid: { color: '#e0e0e0' },
+            title: { display: true, text: 'Quantidade (Litros)' }
           },
           x: {
-            title: {
-              display: true,
-              text: 'Mês'
-            },
-            stacked: false
+            grid: { display: false },
+            title: { display: true, text: 'Mês' }
           }
         }
       }
     });
-  }  
+  }
 
   ngOnDestroy() {
     if (this.chart) {

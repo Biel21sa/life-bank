@@ -1,137 +1,494 @@
-<div class="container">
-  <div class="page-header">
-    <h1>Cadastrar Doador</h1>
-    <p>Registre um novo doador de sangue no sistema</p>
+<div class="donor-create-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="donor-icon">
+        <mat-icon>volunteer_activism</mat-icon>
+      </div>
+      <h1>Cadastrar Novo Doador</h1>
+      <p class="hero-subtitle">Registre um novo herói que salvará vidas através da doação de sangue</p>
+    </div>
   </div>
 
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>volunteer_activism</mat-icon>
-        Formulário de Cadastro de Doador
-      </mat-card-title>
-    </mat-card-header>
+  <!-- Content Section -->
+  <div class="content-section">
+    <div class="content-container">
 
-    <mat-card-content>
-      <form [formGroup]="donorForm" (ngSubmit)="onSubmit()">
-
-        <!-- Informações Pessoais -->
-        <div class="section">
-          <h3>Informações Pessoais</h3>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Nome Completo</mat-label>
-            <input matInput formControlName="name" required>
-            <mat-icon matSuffix>person</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>CPF</mat-label>
-            <input matInput formControlName="cpf" mask="000.000.000-00" placeholder="000.000.000-00" required>
-            <mat-icon matSuffix>credit_card</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="email" required>
-            <mat-icon matSuffix>email</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Telefone</mat-label>
-            <input matInput formControlName="phone" mask="(00) 00000-0000" placeholder="(00) 00000-0000" required>
-            <mat-icon matSuffix>phone</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Senha</mat-label>
-            <input matInput type="password" formControlName="password" required>
-            <mat-icon matSuffix>lock</mat-icon>
-          </mat-form-field>
-        </div>
-
-        <!-- Informações do Doador -->
-        <div class="section">
-          <h3>Informações do Doador</h3>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Tipo Sanguíneo</mat-label>
-            <mat-select formControlName="bloodType" required>
-              <mat-option value="A+">A+</mat-option>
-              <mat-option value="A-">A-</mat-option>
-              <mat-option value="B+">B+</mat-option>
-              <mat-option value="B-">B-</mat-option>
-              <mat-option value="AB+">AB+</mat-option>
-              <mat-option value="AB-">AB-</mat-option>
-              <mat-option value="O+">O+</mat-option>
-              <mat-option value="O-">O-</mat-option>
-            </mat-select>
-            <mat-icon matSuffix>bloodtype</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Gênero</mat-label>
-            <mat-select formControlName="gender" required>
-              <mat-option value="MASCULINO">Masculino</mat-option>
-              <mat-option value="FEMININO">Feminino</mat-option>
-            </mat-select>
-            <mat-icon matSuffix>person</mat-icon>
-          </mat-form-field>
-        </div>
-
-        <!-- Endereço -->
-        <div class="section">
-          <h3>Endereço</h3>
-
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Rua</mat-label>
-            <input matInput formControlName="street" required>
-            <mat-icon matSuffix>home</mat-icon>
-          </mat-form-field>
-
-          <div class="form-row">
-            <mat-form-field appearance="outline" class="form-field-70">
-              <mat-label>Número</mat-label>
-              <input matInput formControlName="number" required>
-              <mat-icon matSuffix>tag</mat-icon>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="form-field-30">
-              <mat-label>CEP</mat-label>
-              <input matInput formControlName="postalCode" mask="00000-000" placeholder="00000-000" required>
-              <mat-icon matSuffix>place</mat-icon>
-            </mat-form-field>
+      <!-- Progress Indicator -->
+      <div class="progress-section">
+        <div class="progress-card">
+          <div class="progress-header">
+            <div class="progress-icon">
+              <mat-icon>assignment</mat-icon>
+            </div>
+            <div class="progress-content">
+              <h3>Progresso do Cadastro</h3>
+              <p>Complete todas as seções para finalizar o registro</p>
+            </div>
           </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Bairro</mat-label>
-            <input matInput formControlName="neighborhood" required>
-            <mat-icon matSuffix>location_city</mat-icon>
-          </mat-form-field>
-        </div>
+          <div class="progress-steps">
+            <div class="step" [ngClass]="getStepClass('personal')">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">Dados Pessoais</div>
+                <div class="step-description">Informações básicas</div>
+              </div>
+              <div class="step-status">
+                <mat-icon>{{ getStepIcon('personal') }}</mat-icon>
+              </div>
+            </div>
 
-        <div>
-          <mat-checkbox formControlName="acceptTerms">
-            Eu aceito os <a href="/politicas-de-privacidade" target="_blank">Termos de Uso e Política de Privacidade</a>
-            da empresa.
-          </mat-checkbox>
-          <mat-error
-            *ngIf="donorForm.get('acceptTerms')?.touched && donorForm.get('acceptTerms')?.hasError('required')">
-            Você deve aceitar os termos para continuar.
-          </mat-error>
-        </div>
-      </form>
-    </mat-card-content>
+            <div class="step" [ngClass]="getStepClass('donor')">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">Dados do Doador</div>
+                <div class="step-description">Tipo sanguíneo e gênero</div>
+              </div>
+              <div class="step-status">
+                <mat-icon>{{ getStepIcon('donor') }}</mat-icon>
+              </div>
+            </div>
 
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!donorForm.valid">
-        <mat-icon>save</mat-icon>
-        Cadastrar Doador
-      </button>
-      <button mat-button (click)="onCancel()">
-        <mat-icon>cancel</mat-icon>
-        Cancelar
-      </button>
-    </mat-card-actions>
-  </mat-card>
+            <div class="step" [ngClass]="getStepClass('address')">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">Endereço</div>
+                <div class="step-description">Localização residencial</div>
+              </div>
+              <div class="step-status">
+                <mat-icon>{{ getStepIcon('address') }}</mat-icon>
+              </div>
+            </div>
+
+            <div class="step" [ngClass]="getStepClass('terms')">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <div class="step-title">Termos</div>
+                <div class="step-description">Aceite dos termos</div>
+              </div>
+              <div class="step-status">
+                <mat-icon>{{ getStepIcon('terms') }}</mat-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Section -->
+      <div class="form-section">
+        <div class="form-card">
+          <div class="form-header">
+            <div class="form-icon">
+              <mat-icon>person_add</mat-icon>
+            </div>
+            <div class="form-content">
+              <h3>Formulário de Cadastro</h3>
+              <p>Preencha todas as informações necessárias</p>
+            </div>
+            <div class="form-validation" *ngIf="showValidationSummary()">
+              <div class="validation-summary">
+                <mat-icon>warning</mat-icon>
+                <span>{{ getValidationMessage() }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-body">
+            <form [formGroup]="donorForm" (ngSubmit)="onSubmit()">
+
+              <!-- Seção 1: Informações Pessoais -->
+              <div class="section-card personal-section" [ngClass]="getSectionClass('personal')">
+                <div class="section-header">
+                  <div class="section-indicator"></div>
+                  <div class="section-icon">
+                    <mat-icon>person</mat-icon>
+                  </div>
+                  <div class="section-content">
+                    <h4>Informações Pessoais</h4>
+                    <p>Dados básicos de identificação do doador</p>
+                  </div>
+                  <div class="section-status">
+                    <mat-icon>{{ getSectionStatusIcon('personal') }}</mat-icon>
+                  </div>
+                </div>
+
+                <div class="section-body">
+                  <div class="form-grid">
+                    <mat-form-field appearance="outline" class="form-field full-width">
+                      <mat-label>Nome Completo</mat-label>
+                      <input matInput formControlName="name" placeholder="Digite o nome completo" required>
+                      <mat-icon matSuffix>person</mat-icon>
+                      <mat-hint>Nome como consta no documento</mat-hint>
+                      <mat-error *ngIf="donorForm.get('name')?.hasError('required')">
+                        Nome é obrigatório
+                      </mat-error>
+                    </mat-form-field>
+
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>CPF</mat-label>
+                        <input matInput formControlName="cpf" mask="000.000.000-00" placeholder="000.000.000-00"
+                          required>
+                        <mat-icon matSuffix>credit_card</mat-icon>
+                        <mat-hint>Documento de identificação</mat-hint>
+                        <mat-error *ngIf="donorForm.get('cpf')?.hasError('required')">
+                          CPF é obrigatório
+                        </mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Telefone</mat-label>
+                        <input matInput formControlName="phone" mask="(00) 00000-0000" placeholder="(00) 00000-0000"
+                          required>
+                        <mat-icon matSuffix>phone</mat-icon>
+                        <mat-hint>Para contato e notificações</mat-hint>
+                        <mat-error *ngIf="donorForm.get('phone')?.hasError('required')">
+                          Telefone é obrigatório
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" formControlName="email" placeholder="exemplo@email.com" required>
+                        <mat-icon matSuffix>email</mat-icon>
+                        <mat-hint>Para acesso ao sistema</mat-hint>
+                        <mat-error *ngIf="donorForm.get('email')?.hasError('required')">
+                          Email é obrigatório
+                        </mat-error>
+                        <mat-error *ngIf="donorForm.get('email')?.hasError('email')">
+                          Email deve ter formato válido
+                        </mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Senha</mat-label>
+                        <input matInput type="password" formControlName="password" placeholder="Senha segura" required>
+                        <mat-icon matSuffix>lock</mat-icon>
+                        <mat-hint>Mínimo 6 caracteres</mat-hint>
+                        <mat-error *ngIf="donorForm.get('password')?.hasError('required')">
+                          Senha é obrigatória
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Seção 2: Informações do Doador -->
+              <div class="section-card donor-section" [ngClass]="getSectionClass('donor')">
+                <div class="section-header">
+                  <div class="section-indicator"></div>
+                  <div class="section-icon">
+                    <mat-icon>bloodtype</mat-icon>
+                  </div>
+                  <div class="section-content">
+                    <h4>Informações do Doador</h4>
+                    <p>Dados específicos para doação de sangue</p>
+                  </div>
+                  <div class="section-status">
+                    <mat-icon>{{ getSectionStatusIcon('donor') }}</mat-icon>
+                  </div>
+                </div>
+
+                <div class="section-body">
+                  <div class="form-grid">
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Tipo Sanguíneo</mat-label>
+                        <mat-select formControlName="bloodType" required>
+                          <mat-option value="A+">
+                            <div class="blood-type-option">
+                              <mat-icon>bloodtype</mat-icon>
+                              <span>A+ (A Positivo)</span>
+                            </div>
+                          </mat-option>
+                          <mat-option value="A-">
+                            <div class="blood-type-option">
+                              <mat-icon>bloodtype</mat-icon>
+                              <span>A- (A Negativo)</span>
+                            </div>
+                          </mat-option>
+                          <mat-option value="B+">
+                            <div class="blood-type-option">
+                              <mat-icon>bloodtype</mat-icon>
+                              <span>B+ (B Positivo)</span>
+                            </div>
+                          </mat-option>
+                          <mat-option value="B-">
+                            <div class="blood-type-option">
+                              <mat-icon>bloodtype</mat-icon>
+                              <span>B- (B Negativo)</span>
+                            </div>
+                          </mat-option>
+                          <mat-option value="AB+">
+                            <div class="blood-type-option">
+                              <mat-icon>bloodtype</mat-icon>
+                              <span>AB+ (AB Positivo)</span>
+                            </div>
+                          </mat-option>
+                          <mat-option value="AB-">
+                            <div class="blood-type-option">
+                              <mat-icon>bloodtype</mat-icon>
+                              <span>AB- (AB Negativo)</span>
+                            </div>
+                          </mat-option>
+                          <mat-option value="O+">
+                            <div class="blood-type-option">
+                              <mat-icon>bloodtype</mat-icon>
+                              <span>O+ (O Positivo)</span>
+                            </div>
+                          </mat-option>
+                          <mat-option value="O-">
+                            <div class="blood-type-option">
+                              <mat-icon>bloodtype</mat-icon>
+                              <span>O- (O Negativo)</span>
+                            </div>
+                          </mat-option>
+                        </mat-select>
+                        <mat-icon matSuffix>bloodtype</mat-icon>
+                        <mat-hint>Tipo sanguíneo do doador</mat-hint>
+                        <mat-error *ngIf="donorForm.get('bloodType')?.hasError('required')">
+                          Tipo sanguíneo é obrigatório
+                        </mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Gênero</mat-label>
+                        <mat-select formControlName="gender" required>
+                          <mat-option value="MASCULINO">
+                            <div class="gender-option">
+                              <mat-icon>male</mat-icon>
+                              <span>Masculino</span>
+                            </div>
+                          </mat-option>
+                          <mat-option value="FEMININO">
+                            <div class="gender-option">
+                              <mat-icon>female</mat-icon>
+                              <span>Feminino</span>
+                            </div>
+                          </mat-option>
+                        </mat-select>
+                        <mat-icon matSuffix>person</mat-icon>
+                        <mat-hint>Identidade de gênero</mat-hint>
+                        <mat-error *ngIf="donorForm.get('gender')?.hasError('required')">
+                          Gênero é obrigatório
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="donor-info-card">
+                      <div class="info-header">
+                        <mat-icon>info</mat-icon>
+                        <h5>Informações Importantes</h5>
+                      </div>
+                      <div class="info-content">
+                        <ul>
+                          <li>O tipo sanguíneo é fundamental para compatibilidade nas doações</li>
+                          <li>Essas informações são protegidas pela LGPD</li>
+                          <li>Dados utilizados apenas para fins médicos e de doação</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Seção 3: Endereço -->
+              <div class="section-card address-section" [ngClass]="getSectionClass('address')">
+                <div class="section-header">
+                  <div class="section-indicator"></div>
+                  <div class="section-icon">
+                    <mat-icon>home</mat-icon>
+                  </div>
+                  <div class="section-content">
+                    <h4>Endereço Residencial</h4>
+                    <p>Localização para contato e logística</p>
+                  </div>
+                  <div class="section-status">
+                    <mat-icon>{{ getSectionStatusIcon('address') }}</mat-icon>
+                  </div>
+                </div>
+
+                <div class="section-body">
+                  <div class="form-grid">
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field large">
+                        <mat-label>Rua/Avenida</mat-label>
+                        <input matInput formControlName="street" placeholder="Nome da rua ou avenida" required>
+                        <mat-icon matSuffix>home</mat-icon>
+                        <mat-hint>Logradouro completo</mat-hint>
+                        <mat-error *ngIf="donorForm.get('street')?.hasError('required')">
+                          Rua é obrigatória
+                        </mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="form-field small" type="number">
+                        <mat-label>Número</mat-label>
+                        <input matInput formControlName="number" placeholder="123" type="number" required>
+                        <mat-icon matSuffix>tag</mat-icon>
+                        <mat-error *ngIf="donorForm.get('number')?.hasError('required')">
+                          Número é obrigatório
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Bairro</mat-label>
+                        <input matInput formControlName="neighborhood" placeholder="Nome do bairro" required>
+                        <mat-icon matSuffix>location_city</mat-icon>
+                        <mat-hint>Bairro ou distrito</mat-hint>
+                        <mat-error *ngIf="donorForm.get('neighborhood')?.hasError('required')">
+                          Bairro é obrigatório
+                        </mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>CEP</mat-label>
+                        <input matInput formControlName="postalCode" mask="00000-000" placeholder="00000-000" required>
+                        <mat-icon matSuffix>place</mat-icon>
+                        <mat-hint>Código postal</mat-hint>
+                        <mat-error *ngIf="donorForm.get('postalCode')?.hasError('required')">
+                          CEP é obrigatório
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Seção 4: Termos e Condições -->
+              <div class="section-card terms-section" [ngClass]="getSectionClass('terms')">
+                <div class="section-header">
+                  <div class="section-indicator"></div>
+                  <div class="section-icon">
+                    <mat-icon>gavel</mat-icon>
+                  </div>
+                  <div class="section-content">
+                    <h4>Termos e Condições</h4>
+                    <p>Aceite dos termos de uso e política de privacidade</p>
+                  </div>
+                  <div class="section-status">
+                    <mat-icon>{{ getSectionStatusIcon('terms') }}</mat-icon>
+                  </div>
+                </div>
+
+                <div class="section-body">
+                  <div class="terms-content">
+                    <div class="terms-card">
+                      <div class="terms-header">
+                        <mat-icon>security</mat-icon>
+                        <h5>Proteção de Dados e Privacidade</h5>
+                      </div>
+                      <div class="terms-body">
+                        <p>Ao aceitar os termos, você concorda com:</p>
+                        <ul>
+                          <li>Tratamento de dados pessoais conforme LGPD</li>
+                          <li>Uso das informações para fins de doação de sangue</li>
+                          <li>Contato para agendamento e notificações</li>
+                          <li>Compartilhamento com clínicas parceiras quando necessário</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div class="checkbox-container">
+                      <mat-checkbox formControlName="acceptTerms" class="terms-checkbox">
+                        <span class="checkbox-text">
+                          Eu li e aceito os
+                          <a href="https://garrulous-baker-391.notion.site/Pol-tica-de-Privacidade-e-Tratamento-de-Dados-Pessoais-27711d0f05c380649016e02c17f7c821?pvs=143"
+                            target="_blank" class="terms-link">
+                            Termos de Uso e Política de Privacidade
+                          </a>
+                          da empresa.
+                        </span>
+                      </mat-checkbox>
+
+                      <mat-error
+                        *ngIf="donorForm.get('acceptTerms')?.touched && donorForm.get('acceptTerms')?.hasError('required')"
+                        class="terms-error">
+                        <mat-icon>error</mat-icon>
+                        <span>Você deve aceitar os termos para continuar</span>
+                      </mat-error>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions Section -->
+      <div class="actions-section">
+        <div class="actions-card">
+          <div class="actions-content">
+            <div class="actions-info">
+              <div class="info-icon">
+                <mat-icon>info</mat-icon>
+              </div>
+              <div class="info-text">
+                <h4>Pronto para Cadastrar?</h4>
+                <p>Verifique se todas as informações estão corretas antes de finalizar</p>
+              </div>
+            </div>
+
+            <div class="actions-buttons">
+              <button mat-stroked-button class="cancel-button" (click)="onCancel()" type="button">
+                <mat-icon>cancel</mat-icon>
+                <span>Cancelar</span>
+              </button>
+
+              <button mat-raised-button color="primary" class="submit-button" (click)="onSubmit()"
+                [disabled]="!donorForm.valid" type="submit">
+                <mat-icon>{{ isSubmitting ? 'hourglass_empty' : 'save' }}</mat-icon>
+                <span>{{ isSubmitting ? 'Cadastrando...' : 'Cadastrar Doador' }}</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-summary" *ngIf="donorForm.valid">
+            <div class="summary-header">
+              <mat-icon>check_circle</mat-icon>
+              <span>Formulário Completo</span>
+            </div>
+            <div class="summary-content">
+              <div class="summary-item">
+                <span class="summary-label">Nome:</span>
+                <span class="summary-value">{{ donorForm.get('name')?.value }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Tipo Sanguíneo:</span>
+                <span class="summary-value">{{ donorForm.get('bloodType')?.value }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Email:</span>
+                <span class="summary-value">{{ donorForm.get('email')?.value }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading-overlay" *ngIf="isSubmitting">
+        <div class="loading-container">
+          <div class="loading-spinner">
+            <mat-icon>hourglass_empty</mat-icon>
+          </div>
+          <h3>Cadastrando Doador</h3>
+          <p>Processando informações...</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

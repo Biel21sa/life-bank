@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -17,6 +17,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import * as fontawesome from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationService } from '../../../services/security/authentication.service';
+import { UserReadService } from '../../../services/user/user-read.service';
 
 
 @Component({
@@ -39,14 +40,37 @@ import { AuthenticationService } from '../../../services/security/authentication
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
 
   faFooterIcon = fontawesome.faHeartBroken;
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private userReadService: UserReadService,
   ) { }
+
+  userName: string | null = null;
+  userRole: string | null = null;
+
+  ngOnInit() {
+    const userId = this.authenticationService.getUserId?.();
+    if (userId) {
+      this.getUserInfo(userId);
+    }
+  }
+
+  getUserInfo(userId: string) {
+    this.userReadService.findById(userId)
+      .then((user: any) => {
+        this.userName = user?.name || null;
+        this.userRole = user?.role || null;
+      })
+      .catch(() => {
+        this.userName = null;
+        this.userRole = null;
+      });
+  }
 
   isSystemAdmin(): boolean {
     return this.authenticationService.isSystemAdmin();
@@ -83,6 +107,21 @@ export class MainComponent {
         panelElement.close();
       }
     });
+  }
+
+  userRoleDisplay(): string | null {
+    switch (this.userRole) {
+      case 'ADMINISTRATOR':
+        return 'Administrador';
+      case 'USER':
+        return 'Usuário';
+      case 'CLINIC':
+        return 'Clínica';
+      case 'SYSTEM':
+        return 'Sistema';
+      default:
+        return this.userRole;
+    }
   }
 
 }

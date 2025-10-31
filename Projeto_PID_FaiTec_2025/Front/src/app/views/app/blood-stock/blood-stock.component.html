@@ -1,55 +1,277 @@
 <div class="stock-container">
-  <div class="header-section">
-    <h1>Estoque de Sangue</h1>
-    <p>Monitore os níveis de estoque por tipo sanguíneo</p>
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-background">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="stock-icon">
+        <mat-icon>inventory</mat-icon>
+      </div>
+      <h1>Estoque de Sangue</h1>
+      <p class="hero-subtitle">Monitore níveis críticos e gerencie o estoque em tempo real</p>
+    </div>
   </div>
 
-  <!-- Gráfico -->
-  <mat-card class="chart-card">
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>bar_chart</mat-icon>
-        Níveis de Estoque
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="chart-container">
-        <canvas id="stockChart"></canvas>
+  <!-- Alert Section -->
+  <div class="alerts-section" *ngIf="hasAlerts()">
+    <div class="alerts-container">
+      <div class="alert-header">
+        <mat-icon>warning</mat-icon>
+        <h2>Alertas Críticos</h2>
       </div>
-    </mat-card-content>
-  </mat-card>
-
-  <!-- Cards de Estatísticas -->
-  <div class="stats-cards">
-    <mat-card class="stat-card critical" *ngFor="let stock of bloodStockData">
-      <div class="stat-header">
-        <span class="blood-type">{{stock.bloodType}}</span>
-        <mat-icon [class]="getStockStatusClass(stock)">
-          {{getStockStatusIcon(stock)}}
-        </mat-icon>
-      </div>
-      <div class="stat-content">
-        <div class="current-stock">{{stock.currentStock}} L</div>
-        <div class="stock-limits">
-          Min: {{stock.minimumStock}} | Max: {{stock.maximumStock}}
+      <div class="alerts-grid">
+        <div class="alert-card critical" *ngFor="let stock of getCriticalStock()">
+          <div class="alert-icon">
+            <mat-icon>priority_high</mat-icon>
+          </div>
+          <div class="alert-content">
+            <h4>{{stock.bloodType}} - Estoque Crítico</h4>
+            <p>Apenas {{stock.currentStock}}L disponível (mín: {{stock.minimumStock}}L)</p>
+          </div>
+          <div class="alert-action">
+            <button mat-icon-button color="warn" (click)="navigateToDonationCreate()">
+              <mat-icon>add_circle</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
-    </mat-card>
+    </div>
   </div>
 
-  <!-- Botões de Ação -->
-  <div class="action-buttons">
-    <button mat-raised-button color="primary" (click)="openStockLimitsDialog()">
-      <mat-icon>tune</mat-icon>
-      Atualizar Limites de Estoque
-    </button>
-    <button mat-raised-button color="warn" (click)="navigateToBloodWithdrawal()">
-      <mat-icon>remove_circle</mat-icon>
-      Retirar Sangue
-    </button>
-    <button mat-raised-button color="primary" (click)="navigateToDonationCreate()">
-      <mat-icon>add</mat-icon>
-      Registrar Doação
-    </button>
+  <!-- Quick Stats Section -->
+  <div class="stats-section">
+    <div class="stats-container">
+      <div class="stats-header">
+        <h2>Visão Geral do Estoque</h2>
+        <p>Status atual de todos os tipos sanguíneos</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card overview">
+          <div class="stat-icon">
+            <mat-icon>bloodtype</mat-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{getTotalStock()}}L</div>
+            <div class="stat-label">Estoque Total</div>
+            <div class="stat-trend" [ngClass]="getTotalStockTrend()">
+              <mat-icon>{{getTotalStockIcon()}}</mat-icon>
+              <span>{{getTotalStockText()}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card critical-count">
+          <div class="stat-icon">
+            <mat-icon>warning</mat-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{getCriticalCount()}}</div>
+            <div class="stat-label">Tipos Críticos</div>
+            <div class="stat-trend" [ngClass]="getCriticalTrend()">
+              <mat-icon>{{getCriticalIcon()}}</mat-icon>
+              <span>{{getCriticalText()}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card types-available">
+          <div class="stat-icon">
+            <mat-icon>check_circle</mat-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{getAvailableTypes()}}</div>
+            <div class="stat-label">Tipos Disponíveis</div>
+            <div class="stat-trend positive">
+              <mat-icon>trending_up</mat-icon>
+              <span>Em estoque</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card last-update">
+          <div class="stat-icon">
+            <mat-icon>update</mat-icon>
+          </div>
+          <div class="stat-content">
+            <div class="stat-number">{{getLastUpdateTime()}}</div>
+            <div class="stat-label">Última Atualização</div>
+            <div class="stat-trend stable">
+              <mat-icon>schedule</mat-icon>
+              <span>Tempo real</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart Section -->
+  <div class="chart-section">
+    <div class="chart-container-wrapper">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="header-left">
+            <div class="chart-icon">
+              <mat-icon>bar_chart</mat-icon>
+            </div>
+            <div class="chart-title">
+              <h3>Níveis de Estoque por Tipo</h3>
+              <p>Visualização em tempo real dos volumes disponíveis</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-content">
+          <div class="chart-container">
+            <canvas id="stockChart"></canvas>
+          </div>
+
+          <!-- Loading State -->
+          <div class="chart-loading" *ngIf="!chart">
+            <div class="loading-spinner">
+              <mat-icon>inventory</mat-icon>
+            </div>
+            <p>Carregando dados do estoque...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blood Types Grid -->
+  <div class="blood-types-section">
+    <div class="blood-types-container">
+      <div class="section-header">
+        <h2>Detalhes por Tipo Sanguíneo</h2>
+        <p>Monitoramento individual de cada tipo com limites configuráveis</p>
+      </div>
+
+      <div class="blood-types-grid">
+        <div class="blood-type-card" *ngFor="let stock of bloodStockData" [ngClass]="getStockStatusClass(stock)">
+
+          <div class="card-header">
+            <div class="blood-type-display">
+              <div class="blood-type-icon">
+                <mat-icon>bloodtype</mat-icon>
+              </div>
+              <div class="blood-type-info">
+                <span class="blood-type-label">{{stock.bloodType}}</span>
+                <span class="blood-type-status">{{getStockStatusText(stock)}}</span>
+              </div>
+            </div>
+            <div class="status-indicator" [ngClass]="getStockStatusClass(stock)">
+              <mat-icon>{{getStockStatusIcon(stock)}}</mat-icon>
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="stock-display">
+              <div class="current-stock">
+                <span class="stock-number">{{stock.currentStock}}</span>
+                <span class="stock-unit">Litros</span>
+              </div>
+
+              <div class="stock-progress">
+                <div class="progress-bar">
+                  <div class="progress-fill" [style.width.%]="getStockPercentage(stock)"
+                    [ngClass]="getStockStatusClass(stock)">
+                  </div>
+                </div>
+                <div class="progress-labels">
+                  <span class="min-label">{{stock.minimumStock}}L</span>
+                  <span class="max-label">{{stock.maximumStock}}L</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stock-metrics">
+              <div class="metric-item">
+                <mat-icon>trending_down</mat-icon>
+                <span>Mínimo: {{stock.minimumStock}}L</span>
+              </div>
+              <div class="metric-item">
+                <mat-icon>trending_up</mat-icon>
+                <span>Máximo: {{stock.maximumStock}}L</span>
+              </div>
+              <div class="metric-item">
+                <mat-icon>percent</mat-icon>
+                <span>{{getStockPercentage(stock)}}% da capacidade</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions Section -->
+  <div class="actions-section">
+    <div class="actions-container">
+      <div class="actions-header">
+        <h2>Ações Rápidas</h2>
+        <p>Gerencie o estoque com facilidade</p>
+      </div>
+
+      <div class="actions-grid">
+        <div class="action-card primary" (click)="navigateToDonationCreate()">
+          <div class="action-icon">
+            <mat-icon>add_circle</mat-icon>
+          </div>
+          <div class="action-content">
+            <h4>Registrar Doação</h4>
+            <p>Adicione nova doação ao estoque</p>
+          </div>
+          <div class="action-arrow">
+            <mat-icon>arrow_forward</mat-icon>
+          </div>
+        </div>
+
+        <div class="action-card secondary" (click)="navigateToBloodWithdrawal()">
+          <div class="action-icon">
+            <mat-icon>remove_circle</mat-icon>
+          </div>
+          <div class="action-content">
+            <h4>Retirar Sangue</h4>
+            <p>Registre saída do estoque</p>
+          </div>
+          <div class="action-arrow">
+            <mat-icon>arrow_forward</mat-icon>
+          </div>
+        </div>
+
+        <div class="action-card accent" (click)="openStockLimitsDialog()">
+          <div class="action-icon">
+            <mat-icon>tune</mat-icon>
+          </div>
+          <div class="action-content">
+            <h4>Configurar Limites</h4>
+            <p>Ajuste níveis mínimos e máximos</p>
+          </div>
+          <div class="action-arrow">
+            <mat-icon>arrow_forward</mat-icon>
+          </div>
+        </div>
+
+        <div class="action-card info" (click)="navigateToReports()">
+          <div class="action-icon">
+            <mat-icon>assessment</mat-icon>
+          </div>
+          <div class="action-content">
+            <h4>Relatórios</h4>
+            <p>Visualize estatísticas detalhadas</p>
+          </div>
+          <div class="action-arrow">
+            <mat-icon>arrow_forward</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
