@@ -1,0 +1,5 @@
+Precisa ser feito:
+- Melhorar o diagrama de sequencia (precisa mostrar o evento completo passando por todas as entidades)
+- Colocar texto de LGPD
+- Motivo da retirada do sangue colocar  as opções (para uso, fora da validade)
+- Atualizar a documentação

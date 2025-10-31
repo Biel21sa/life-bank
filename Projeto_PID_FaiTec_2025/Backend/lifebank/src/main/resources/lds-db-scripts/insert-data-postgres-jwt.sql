@@ -161,3 +161,8 @@ INSERT INTO donation (quantity, collection_date, expiration_date, donor_id, dona
 (0.45, '2025-04-15', '2025-05-15', 1, 1, 14),
 (0.45, '2025-04-20', '2025-05-20', 2, 1, 15);
 
+INSERT INTO messages (sender_id, receiver_id, message)
+VALUES (1, 2, 'Olá, tudo bem?');
+
+INSERT INTO messages (sender_id, receiver_id, message)
+VALUES (2, 1, 'Estou bem, e você?');
