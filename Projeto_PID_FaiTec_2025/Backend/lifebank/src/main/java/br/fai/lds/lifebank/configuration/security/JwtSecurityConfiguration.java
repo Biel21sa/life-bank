@@ -59,12 +59,9 @@ public class JwtSecurityConfiguration {
                                                 "/swagger-ui/**",
                                                 "/swagger-ui.html",
                                                 "/v3/api-docs/**",
-                                                "/authenticate",
-                                                "/api/user/**"
+                                                "/authenticate"
                                         ).permitAll()
-                                        .requestMatchers(
-                                                "/api/product/**"
-                                        ).hasAuthority(UserModel.UserRole.USER.name())
+                                        .requestMatchers("/api/user/**").hasAuthority(UserModel.UserRole.USER.name())
                                         .anyRequest().authenticated()
                 )
                 .sessionManagement(
@@ -73,7 +70,7 @@ public class JwtSecurityConfiguration {
                 .headers(
                         headers ->
                                 headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
-                ).addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);;
+                ).addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
