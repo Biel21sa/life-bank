@@ -1,11 +1,15 @@
 package br.fai.lds.lifebank.implementation.service.authentication.jwt;
 
+import br.fai.lds.lifebank.domain.UserModel;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -15,36 +19,46 @@ public class JwtService {
 
     private final String secret = "XUFAE3FQG1RLBlgQ93fDSUlj4HfbKi4a1kFl1gDloOg=";
 
-    public String getEmailFromToken(String valor){
-        return "";
+    public String getEmailFromToken(String token){
+        return getClaimFromToken(token, Claims::getSubject);
     }
 
-    public Date getExpirationDateFromTOken(String token){
-        return null;
+    public Date getexpirationdatefromtoken(String token){
+        return getClaimFromToken(token, Claims::getExpiration);
     }
 
-    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsTFunction){
-        return null;
+    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver){
+        Claims claims = getAllClaimsFromToken(token);
+        return claimsResolver.apply(claims);
     }
 
     public Claims getAllClaimsFromToken(String token){
-        return null;
+        return Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token).getBody();
     }
 
     public boolean tokenExpired(String token){
-        return false;
+        final Date expirationDate = getexpirationdatefromtoken(token);
+        return expirationDate.before(new Date());
     }
 
     public boolean validateToken(String token, UserDetails userDetails){
-        return false;
+        final String email = getEmailFromToken(token);
+        return (
+                email.equals(userDetails.getUsername()) && !tokenExpired(token)
+        );
     }
 
-    public String generateToken(String Token, UserDetails userDetails){
-        return "";
+    public String generateToken(UserDetails userDetails, String fullname, UserModel.UserRole role, String email){
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("email", email);
+        claims.put("fullname", fullname);
+        claims.put("role", role);
+        return createToken(claims, userDetails.getUsername());
     }
 
     private String createToken(Map<String, Object> claims, String subjct){
-        return "";
+        return Jwts.builder().setClaims(claims).setSubject(subjct).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis())).signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 
 }
