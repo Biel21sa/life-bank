@@ -43,7 +43,7 @@ public class JwtAuthenticationRestController {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationDto.getEmail());
         final String jwt = jwtService.generateToken(userDetails, authenticatedUser.getName(),
-                authenticatedUser.getRole(), authenticatedUser.getEmail());
+                authenticatedUser.getRole(), authenticatedUser.getEmail(), authenticatedUser.getDonationLocationId(), authenticatedUser.getDonorId(), authenticatedUser.getId());
 
         if (jwt == null || jwt.isEmpty()) {
             throw new InternalError("Invalido");
