@@ -57,7 +57,7 @@ export class AuthenticationService {
     localStorage.clear();
   }
 
-  getAuthenticatedUser(): AuthenticatedUserDto {
+  getAuthenticatedUserWithToken(): AuthenticatedUserDto {
     let email = localStorage.getItem('email');
     let token = localStorage.getItem('token');
     let role = localStorage.getItem('role');
@@ -76,6 +76,35 @@ export class AuthenticationService {
       id: id,
       donationLocationId: donationLocationId ?? undefined,
       donorId: donorId ?? undefined,
+    };
+  }
+
+  getAuthenticatedUser(): User {
+    let email = localStorage.getItem('email');
+    let token = localStorage.getItem('token');
+    let role = localStorage.getItem('role');
+    let id = localStorage.getItem('id');
+    let donationLocationId = localStorage.getItem('donationLocationId');
+    let donorId = localStorage.getItem('donorId');
+
+    if (email == null || token == null || role == null || id == null) {
+      throw new Error('Dados inválidos');
+    }
+
+    return {
+      email: email,
+      password: token,
+      role: role as UserRole,
+      id: id,
+      donationLocationId: donationLocationId ?? undefined,
+      donorId: donorId ?? undefined,
+      name: '',
+      cpf: '',
+      phone: '',
+      street: '',
+      number: '',
+      neighborhood: '',
+      postalCode: ''
     };
   }
 

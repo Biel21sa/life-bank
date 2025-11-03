@@ -18,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
         let authenticatedUser;
         try {
-            authenticatedUser = this.authenticationService.getAuthenticatedUser();
+            authenticatedUser = this.authenticationService.getAuthenticatedUserWithToken();
         } catch (error) {
             console.error(error);
             return next.handle(request);
