@@ -57,7 +57,7 @@ export class AuthenticationService {
     localStorage.clear();
   }
 
-  getAuthenticatedUser(): User {
+  getAuthenticatedUser(): AuthenticatedUserDto {
     let email = localStorage.getItem('email');
     let token = localStorage.getItem('token');
     let role = localStorage.getItem('role');
@@ -71,18 +71,11 @@ export class AuthenticationService {
 
     return {
       email: email,
-      password: token,
+      token: token,
       role: role as UserRole,
       id: id,
       donationLocationId: donationLocationId ?? undefined,
       donorId: donorId ?? undefined,
-      name: '',
-      cpf: '',
-      phone: '',
-      street: '',
-      number: '',
-      neighborhood: '',
-      postalCode: ''
     };
   }
 
