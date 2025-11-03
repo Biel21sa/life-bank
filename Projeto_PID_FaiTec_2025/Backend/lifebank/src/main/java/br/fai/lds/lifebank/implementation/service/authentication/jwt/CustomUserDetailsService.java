@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Email nao encontrado");
         }
 
-        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(userModel.getRole().name()));
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + userModel.getRole().name()));
 
         return new User(userModel.getEmail(), userModel.getPassword(), authorities);
     }
