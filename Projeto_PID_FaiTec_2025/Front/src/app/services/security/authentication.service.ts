@@ -42,7 +42,7 @@ export class AuthenticationService {
   addDataToLocalStorage(user: AuthenticatedUserDto) {
     console.log('adicionando dados no cache...');
     localStorage.setItem('email', user.email);
-    localStorage.setItem('password', user.password);
+    localStorage.setItem('token', user.token);
     localStorage.setItem('role', user.role);
     localStorage.setItem('id', user.id);
     if (user.role === 'ADMINISTRATOR' && user.donationLocationId) {
@@ -59,19 +59,19 @@ export class AuthenticationService {
 
   getAuthenticatedUser(): User {
     let email = localStorage.getItem('email');
-    let password = localStorage.getItem('password');
+    let token = localStorage.getItem('token');
     let role = localStorage.getItem('role');
     let id = localStorage.getItem('id');
     let donationLocationId = localStorage.getItem('donationLocationId');
     let donorId = localStorage.getItem('donorId');
 
-    if (email == null || password == null || role == null || id == null) {
+    if (email == null || token == null || role == null || id == null) {
       throw new Error('Dados inválidos');
     }
 
     return {
       email: email,
-      password: password,
+      password: token,
       role: role as UserRole,
       id: id,
       donationLocationId: donationLocationId ?? undefined,

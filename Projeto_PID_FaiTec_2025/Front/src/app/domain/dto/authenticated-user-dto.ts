@@ -1,6 +1,6 @@
 export interface AuthenticatedUserDto {
     email: string;
-    password: string;
+    token: string;
     role: string;
     id: string;
     donationLocationId?: string;
