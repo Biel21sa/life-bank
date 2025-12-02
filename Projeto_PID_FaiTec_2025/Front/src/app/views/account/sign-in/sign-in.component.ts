@@ -99,16 +99,31 @@ export class SignInComponent {
 
     this.authenticationService.authenticate(credentials)
       .subscribe({
-        next: (value: User) => {
+        next: (value: any) => {
           console.log(value);
+          const token = value.token;
+
+          const payload = token.split('.')[1];
+          console.log(payload);
+
+          const decodedPayload = atob(payload);
+          const decoded = JSON.parse(decodedPayload);
+          console.log(decoded);
+
+          const email = decoded.sub;
+          const fullname = decoded.fullname;
+          const role = decoded.role;
+          const donationLocationId = decoded.donationLocationId;
+          const donorId = decoded.donorId;
+          const id = decoded.id;
 
           let user: AuthenticatedUserDto = {
-            email: value.email,
-            password: credentials.password,
-            role: value.role,
-            id: String(value.id),
-            donationLocationId: String(value.donationLocationId),
-            donorId: String(value.donorId)
+            email: email,
+            token: token,
+            role: role,
+            id: String(id),
+            donationLocationId: String(donationLocationId),
+            donorId: String(donorId)
           };
 
           this.authenticationService.addDataToLocalStorage(user);

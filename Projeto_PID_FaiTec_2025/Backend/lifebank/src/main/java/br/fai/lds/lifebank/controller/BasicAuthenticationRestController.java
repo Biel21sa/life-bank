@@ -3,6 +3,7 @@ package br.fai.lds.lifebank.controller;
 import br.fai.lds.lifebank.domain.UserModel;
 import br.fai.lds.lifebank.domain.dto.AuthenticationDto;
 import br.fai.lds.lifebank.port.service.authentication.AuthenticationService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Profile("basic")
 @RestController
 @RequestMapping("/authenticate")
-public class AuthenticationRestController {
+public class BasicAuthenticationRestController {
+
     private final AuthenticationService authenticationService;
 
-    public AuthenticationRestController(AuthenticationService authenticationService) {
+    public BasicAuthenticationRestController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 
@@ -32,4 +35,5 @@ public class AuthenticationRestController {
 
         return ResponseEntity.ok(authenticatedUser);
     }
+
 }
