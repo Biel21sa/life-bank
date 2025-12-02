@@ -1,0 +1,11 @@
+declare const $: any;
+declare const $$: any;
+declare const browser: any;
+declare const expect: any;
+declare const require: any;
+declare function describe(name: string, fn: () => void): void;
+declare function it(name: string, fn: () => Promise<void>): void;
+declare function beforeEach(fn: () => Promise<void>): void;
+declare function afterEach(fn: () => Promise<void>): void;
+declare function before(fn: () => Promise<void>): void;
+declare function after(fn: () => Promise<void>): void;
